@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.IOUtils;
 import org.openxdata.formtools.util.RedirectUtil;
 
 
@@ -36,7 +35,6 @@ public class DataUploadServlet extends HttpServlet{
 				return;
 			}
 
-			String xml = IOUtils.toString(request.getInputStream(),"UTF-8");
 			//System.out.println(xml);
 			response.setStatus(HttpServletResponse.SC_OK);
 		}

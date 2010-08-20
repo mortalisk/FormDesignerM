@@ -46,8 +46,8 @@ public class MultimediaServlet extends HttpServlet {
 
 		String sFormId = request.getParameter("formId");
 		String xpath = request.getParameter("xpath");
-		String contentType = request.getParameter("contentType");
-		String name = request.getParameter("name");
+		request.getParameter("contentType");
+		request.getParameter("name");
 		
 		if("recentbinary".equals(request.getParameter("action"))){
 			byte[] postData = (byte[])getSessionData(request,sFormId,KEY_MULTIMEDIA_POST_DATA+getFieldKey(sFormId,xpath)); //(byte[])session.getAttribute(KEY_MULTIMEDIA_POST_DATA+getFieldKey(sFormId,xpath));

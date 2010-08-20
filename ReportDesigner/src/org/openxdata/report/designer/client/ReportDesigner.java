@@ -1,4 +1,4 @@
-package org.openxdata.formtools.client;
+package org.openxdata.report.designer.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;

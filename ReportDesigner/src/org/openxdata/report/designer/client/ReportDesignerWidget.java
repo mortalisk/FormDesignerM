@@ -1,4 +1,4 @@
-package org.openxdata.formtools.client;
+package org.openxdata.report.designer.client;
 
 
 /**

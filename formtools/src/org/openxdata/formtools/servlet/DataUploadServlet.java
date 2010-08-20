@@ -19,7 +19,6 @@ public class DataUploadServlet extends HttpServlet{
 
 	public static final long serialVersionUID = 233456789;
 
-
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

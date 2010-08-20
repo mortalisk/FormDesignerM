@@ -2,11 +2,11 @@ The initial source codes of this repository is a refactoring of rev 467 from the
 The above source codes are licensed under the Apache License v.2.0.
 See file source_license.pdf and source_license_apache.txt for details.
 
-The individual authors listed in alfabetical order are:
+The individual authors listed in alphabetical order are:
  * Charles Tumwebaze. Makerere University, Uganda
  * Daniel Kayiwa. Makerere University, Uganda
  * Laiton Namutebi. Makerere University, Uganda
- * Mark Gerard. Makerere University, Uganda
+ * Mark Gerard. Center for Interntional Health, University of Bergen, Norway
  * Simon Muwanga. Makerere University, Uganda
  * Sneha Jonnalagadda, Handsrel, India
 

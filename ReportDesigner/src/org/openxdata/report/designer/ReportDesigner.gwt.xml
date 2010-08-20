@@ -14,7 +14,7 @@
 
 
       <!-- Specify the app entry point class.                         -->
-      <entry-point class='org.openxdata.formtools.client.ReportDesigner'/>
+      <entry-point class='org.openxdata.report.designer.client.ReportDesigner'/>
     
       <!-- Specify the application specific style sheet.              -->
       <stylesheet src='ReportDesigner.css' />

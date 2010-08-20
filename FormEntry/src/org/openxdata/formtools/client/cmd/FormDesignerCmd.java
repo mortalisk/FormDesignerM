@@ -1,8 +1,8 @@
 package org.openxdata.formtools.client.cmd;
 
-import org.openxdata.formtools.client.FormDesignerWidget;
+import org.openxdata.designer.client.FormDesignerWidget;
+import org.openxdata.designer.client.controller.IFormSaveListener;
 import org.openxdata.formtools.client.FormEntryContext;
-import org.openxdata.formtools.client.controller.IFormSaveListener;
 
 import com.google.gwt.user.client.Window;
 

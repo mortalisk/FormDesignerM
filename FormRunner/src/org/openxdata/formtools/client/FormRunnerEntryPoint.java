@@ -98,7 +98,7 @@ public class FormRunnerEntryPoint implements EntryPoint{
 
 	// Set up the JS-callable signature as a global JS function.
 	private static native void publishJS() /*-{
-   		$wnd.authenticationCallback = @org.openxdata.formtools.client.view.FormRunnerView::authenticationCallback(Z);
-   		$wnd.submitForm = @org.openxdata.formtools.client.view.FormRunnerView::submitForm();
+   		$wnd.authenticationCallback = @org.openxdata.sharedlib.client.view.FormRunnerView::authenticationCallback(Z);
+   		$wnd.submitForm = @org.openxdata.sharedlib.client.view.FormRunnerView::submitForm();
 	}-*/;
 }

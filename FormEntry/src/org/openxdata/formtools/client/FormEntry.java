@@ -3,7 +3,7 @@ package org.openxdata.formtools.client;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openxdata.formtools.client.Context;
+import org.openxdata.designer.client.Context;
 import org.openxdata.sharedlib.client.model.Locale;
 import org.openxdata.sharedlib.client.util.FormUtil;
 

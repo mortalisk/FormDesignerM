@@ -4,7 +4,7 @@ package org.openxdata.formtools.client.view.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openxdata.formtools.client.FormDesignerWidget;
+import org.openxdata.designer.client.FormDesignerWidget;
 import org.openxdata.formtools.client.FormEntryContext;
 import org.openxdata.formtools.client.FormRunnerEntryPoint;
 import org.openxdata.formtools.client.cmd.FormDesignerCmd;

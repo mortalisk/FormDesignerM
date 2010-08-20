@@ -38,7 +38,7 @@
       <jvmarg value="${XstartOnFirstThreadFlag}"/>
       <jvmarg value="${d32Flag}"/>
       <!-- Additional arguments like -style PRETTY or -logLevel DEBUG -->
-      <arg value="org.openxdata.formtools.QueryBuilder"/>
+      <arg value="org.openxdata.querybuilder.QueryBuilder"/>
     </java>
   </target>
 
@@ -54,7 +54,7 @@
       <arg value="-startupUrl"/>
       <arg value="QueryBuilder.html"/>
       <!-- Additional arguments like -style PRETTY or -logLevel DEBUG -->
-      <arg value="org.openxdata.formtools.QueryBuilder"/>
+      <arg value="org.openxdata.querybuilder.QueryBuilder"/>
     </java>
   </target>
 

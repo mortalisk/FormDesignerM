@@ -2,9 +2,9 @@ package org.openxdata.formtools.client.view.impl;
 
 import java.util.List;
 
-import org.openxdata.formtools.client.Context;
+import org.openxdata.designer.client.Context;
+import org.openxdata.designer.client.controller.ILocaleListChangeListener;
 import org.openxdata.formtools.client.FormEntryContext;
-import org.openxdata.formtools.client.controller.ILocaleListChangeListener;
 import org.openxdata.formtools.client.listener.FormDefListChangeListener;
 import org.openxdata.formtools.client.model.KeyValue;
 import org.openxdata.sharedlib.client.model.Locale;

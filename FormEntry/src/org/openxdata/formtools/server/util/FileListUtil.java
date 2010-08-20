@@ -16,9 +16,6 @@ public class FileListUtil {
 	public static void listFiles(String prefix, String folderName){
 
 		File folder = new File(folderName);
-		if(folder == null)
-			return;
-
 		for(File file : folder.listFiles())
 			System.out.println(prefix + file.getName());
 	}

@@ -38,7 +38,7 @@
       <jvmarg value="${XstartOnFirstThreadFlag}"/>
       <jvmarg value="${d32Flag}"/>
       <!-- Additional arguments like -style PRETTY or -logLevel DEBUG -->
-      <arg value="org.openxdata.formtools.FormRunner"/>
+      <arg value="org.openxdata.runner.FormRunner"/>
     </java>
   </target>
 
@@ -55,7 +55,7 @@
       <arg value="-startupUrl"/>
       <arg value="FormRunner.html"/>
       <!-- Additional arguments like -style PRETTY or -logLevel DEBUG -->
-      <arg value="org.openxdata.formtools.FormRunner"/>
+      <arg value="org.openxdata.runner.FormRunner"/>
     </java>
   </target>
 

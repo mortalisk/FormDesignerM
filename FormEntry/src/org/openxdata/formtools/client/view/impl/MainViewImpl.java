@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.openxdata.designer.client.FormDesignerWidget;
 import org.openxdata.formtools.client.FormEntryContext;
-import org.openxdata.formtools.client.FormRunnerEntryPoint;
 import org.openxdata.formtools.client.cmd.FormDesignerCmd;
 import org.openxdata.formtools.client.cmd.FormRunnerCmd;
 import org.openxdata.formtools.client.cmd.InitDataLoadCmd;
@@ -18,7 +17,8 @@ import org.openxdata.formtools.client.listener.FormDefLoadListener;
 import org.openxdata.formtools.client.listener.FormSubmitCancelListener;
 import org.openxdata.formtools.client.model.FormDataHeader;
 import org.openxdata.formtools.client.model.KeyValue;
-import org.openxdata.formtools.client.widget.FormRunnerWidget;
+import org.openxdata.runner.client.FormRunnerEntryPoint;
+import org.openxdata.runner.client.widget.FormRunnerWidget;
 import org.openxdata.sharedlib.client.util.FormUtil;
 import org.openxdata.sharedlib.client.view.FormRunnerView.Images;
 

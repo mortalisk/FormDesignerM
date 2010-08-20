@@ -58,7 +58,7 @@ public class DatabaseManager {
 
 	private native void loadData(String key, DatabaseManager x) /*-{
 		$wnd.dataStore.get(key, function(ok, data) {
-      			x.@org.openxdata.formtools.client.database.DatabaseManager::onDataReceived(ZLjava/lang/String;)(ok,data);
+      			x.@org.openxdata.runner.client.database.DatabaseManager::onDataReceived(ZLjava/lang/String;)(ok,data);
     		});
 	}-*/;
 

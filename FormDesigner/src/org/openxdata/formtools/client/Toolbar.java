@@ -4,18 +4,16 @@ import java.util.List;
 
 import org.openxdata.formtools.client.controller.IFormDesignerListener;
 import org.openxdata.formtools.client.controller.ILocaleListChangeListener;
-import org.openxdata.formtools.client.locale.LocaleText;
-import org.openxdata.formtools.client.model.Locale;
 import org.openxdata.formtools.client.util.FormDesignerUtil;
-import org.openxdata.formtools.client.util.FormUtil;
-import org.openxdata.formtools.client.view.FormRunnerView;
+import org.openxdata.formtools.client.vew.widget.images.FormDesignerImages;
+import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.model.Locale;
+import org.openxdata.sharedlib.client.util.FormUtil;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -30,33 +28,6 @@ import com.google.gwt.user.client.ui.PushButton;
  *
  */
 public class Toolbar extends Composite implements ILocaleListChangeListener{
-
-	/**
-	 * Tool bar images.
-	 */
-	public interface Images extends ClientBundle,FormRunnerView.Images {
-		ImageResource newform();
-		ImageResource open();
-		ImageResource save();
-		ImageResource moveup();
-		ImageResource movedown();
-		ImageResource add();
-		ImageResource addchild();
-		ImageResource delete();
-		ImageResource justifyleft();
-		ImageResource justifyright();
-		ImageResource cut();
-		ImageResource copy();
-		ImageResource paste();
-		ImageResource alignTop();
-		ImageResource alignBottom();
-		ImageResource samewidth();
-		ImageResource sameheight();
-		ImageResource samesize();
-		ImageResource undo();
-		ImageResource redo();
-		ImageResource refresh();
-	}
 	 
 	/** Main widget for this tool bar. */
 	private HorizontalPanel panel = new HorizontalPanel();
@@ -91,7 +62,7 @@ public class Toolbar extends Composite implements ILocaleListChangeListener{
 	private ListBox cbLanguages = new ListBox(false);
 	
 	/** The images for the tool bar icons. */
-	private final Images images;
+	private final FormDesignerImages images;
 	
 	/** Listener to the tool bar button click events. */
 	private IFormDesignerListener controller;
@@ -103,7 +74,7 @@ public class Toolbar extends Composite implements ILocaleListChangeListener{
 	 * @param images the images for tool bar icons.
 	 * @param controller listener to the tool bar button click events.
 	 */
-	public Toolbar(Images images,IFormDesignerListener controller){
+	public Toolbar(FormDesignerImages images,IFormDesignerListener controller){
 		this.images = images;
 		this.controller = controller;
 		setupToolbar();

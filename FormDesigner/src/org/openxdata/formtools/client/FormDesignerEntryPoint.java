@@ -3,11 +3,11 @@ package org.openxdata.formtools.client;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openxdata.formtools.client.OpenXdataConstants;
-import org.openxdata.formtools.client.locale.LocaleText;
-import org.openxdata.formtools.client.model.Locale;
 import org.openxdata.formtools.client.util.FormDesignerUtil;
-import org.openxdata.formtools.client.util.FormUtil;
+import org.openxdata.sharedlib.client.OpenXdataConstants;
+import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.model.Locale;
+import org.openxdata.sharedlib.client.util.FormUtil;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.logical.shared.ResizeEvent;
@@ -150,7 +150,7 @@ public class FormDesignerEntryPoint implements EntryPoint ,ResizeHandler{
 	// Set up the JS-callable signature as a global JS function.
 	private native void publishJS() /*-{
    		$wnd.authenticationCallback = @org.openxdata.formtools.client.controller.FormDesignerController::authenticationCallback(Z);
-   		$wnd.submitForm = @org.openxdata.formtools.client.view.FormRunnerView::submitForm();
+   		$wnd.submitForm = @org.openxdata.sharedlib.client.view.FormRunnerView::submitForm();
 	}-*/;
 	
 	

@@ -10,8 +10,8 @@ import java.util.Vector;
 import org.openxdata.formtools.client.FormEntryConstants;
 import org.openxdata.formtools.client.model.FormDataHeader;
 import org.openxdata.formtools.client.model.KeyValue;
-import org.openxdata.formtools.client.xforms.XmlUtil;
-import org.openxdata.formtools.client.xpath.XPathExpression;
+import org.openxdata.sharedlib.client.xforms.XmlUtil;
+import org.openxdata.sharedlib.client.xpath.XPathExpression;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;

@@ -6,9 +6,9 @@ import org.openxdata.formtools.client.model.DisplayField;
 import org.openxdata.formtools.client.model.FilterCondition;
 import org.openxdata.formtools.client.model.FilterConditionGroup;
 import org.openxdata.formtools.client.model.FilterConditionRow;
-import org.openxdata.formtools.client.model.FormDef;
 import org.openxdata.formtools.client.model.SortField;
-import org.openxdata.formtools.client.xforms.XformBuilderUtil;
+import org.openxdata.sharedlib.client.model.FormDef;
+import org.openxdata.sharedlib.client.xforms.XformBuilderUtil;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;

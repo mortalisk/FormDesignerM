@@ -1,7 +1,7 @@
 package org.openxdata.formtools.client.widget;
 
 import org.openxdata.formtools.client.controller.AggregateFunctionListener;
-import org.openxdata.formtools.client.model.QuestionDef;
+import org.openxdata.sharedlib.client.model.QuestionDef;
 
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;

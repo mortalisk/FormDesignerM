@@ -2,16 +2,16 @@ package org.openxdata.formtools.client.view;
 
 import java.util.Vector;
 
-import org.openxdata.formtools.client.OpenXdataConstants;
 import org.openxdata.formtools.client.controller.IConditionController;
-import org.openxdata.formtools.client.locale.LocaleText;
-import org.openxdata.formtools.client.model.Condition;
-import org.openxdata.formtools.client.model.FormDef;
-import org.openxdata.formtools.client.model.QuestionDef;
-import org.openxdata.formtools.client.model.ValidationRule;
-import org.openxdata.formtools.client.util.FormUtil;
 import org.openxdata.formtools.client.widget.skiprule.ConditionWidget;
 import org.openxdata.formtools.client.widget.skiprule.GroupHyperlink;
+import org.openxdata.sharedlib.client.OpenXdataConstants;
+import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.model.Condition;
+import org.openxdata.sharedlib.client.model.FormDef;
+import org.openxdata.sharedlib.client.model.QuestionDef;
+import org.openxdata.sharedlib.client.model.ValidationRule;
+import org.openxdata.sharedlib.client.util.FormUtil;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

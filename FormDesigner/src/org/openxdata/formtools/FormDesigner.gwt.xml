@@ -14,7 +14,7 @@
 	  <inherits name='com.allen_sauer.gwt.dnd.gwt-dnd'/>
 	  <inherits name='com.google.gwt.xml.XML'/>
 	  <inherits name='org.zenika.widget.DatePickerModule'/>                                    -->
-      <inherits name='org.openxdata.formtools.SharedLib'/>
+      <inherits name='org.openxdata.sharedlib.SharedLib'/>
       
       <!-- Specify the app entry point class.                         -->
       <entry-point class='org.openxdata.formtools.client.FormDesignerEntryPoint'/>

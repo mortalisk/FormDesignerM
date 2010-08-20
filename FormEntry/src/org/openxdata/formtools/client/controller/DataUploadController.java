@@ -11,8 +11,8 @@ import org.openxdata.formtools.client.listener.DataListCollectorListener;
 import org.openxdata.formtools.client.listener.DataUploadListener;
 import org.openxdata.formtools.client.listener.FormDataDeleteListener;
 import org.openxdata.formtools.client.listener.LoginInfoListener;
-import org.openxdata.formtools.client.util.FormUtil;
 import org.openxdata.formtools.client.view.impl.LoginInfoDlg;
+import org.openxdata.sharedlib.client.util.FormUtil;
 
 import com.google.gwt.user.client.Window;
 

@@ -2,8 +2,8 @@ package org.openxdata.formtools.client.controller;
 
 import java.util.ArrayList;
 
-import org.openxdata.formtools.client.OpenXdataConstants;
 import org.openxdata.formtools.client.widget.DesignWidgetWrapper;
+import org.openxdata.sharedlib.client.OpenXdataConstants;
 
 import com.allen_sauer.gwt.dnd.client.DragContext;
 import com.allen_sauer.gwt.dnd.client.drop.AbstractPositioningDropController;

@@ -2,8 +2,8 @@ package org.openxdata.formtools.client.util;
 
 import java.util.Vector;
 
-import org.openxdata.formtools.client.model.QuestionDef;
-import org.openxdata.formtools.client.util.FormUtil;
+import org.openxdata.sharedlib.client.model.QuestionDef;
+import org.openxdata.sharedlib.client.util.FormUtil;
 
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.DOM;

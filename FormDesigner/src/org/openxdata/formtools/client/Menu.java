@@ -1,10 +1,10 @@
 package org.openxdata.formtools.client;
 
 import org.openxdata.formtools.client.controller.IFormDesignerListener;
-import org.openxdata.formtools.client.locale.LocaleText;
 import org.openxdata.formtools.client.util.FormDesignerUtil;
+import org.openxdata.formtools.client.vew.widget.images.FormDesignerImages;
+import org.openxdata.sharedlib.client.locale.LocaleText;
 
-import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.MenuBar;
@@ -17,15 +17,8 @@ import com.google.gwt.user.client.ui.MenuBar;
  */
 public class Menu extends Composite {
 
-	/**
-	 * The menu images.
-	 */
-	public interface Images extends Toolbar.Images {
-		ImageResource info();
-	}
-
 	/** The images for menu icons. */
-	private final Images images;
+	private final FormDesignerImages images;
 
 	/** The underlying GWT menu bar. */
 	private MenuBar menuBar;
@@ -40,7 +33,7 @@ public class Menu extends Composite {
 	 * @param images the images for menu icons.
 	 * @param controller the listener to menu item click events.
 	 */
-	public Menu(Images images,IFormDesignerListener controller){
+	public Menu(FormDesignerImages images,IFormDesignerListener controller){
 		this.images = images;
 		this.controller = controller;
 

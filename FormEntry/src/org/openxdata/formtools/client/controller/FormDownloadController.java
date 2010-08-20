@@ -4,10 +4,10 @@ import org.openxdata.formtools.client.FormEntryConstants;
 import org.openxdata.formtools.client.FormEntryContext;
 import org.openxdata.formtools.client.listener.FormDefDownloadListener;
 import org.openxdata.formtools.client.listener.LoginInfoListener;
-import org.openxdata.formtools.client.locale.LocaleText;
-import org.openxdata.formtools.client.util.FormUtil;
 import org.openxdata.formtools.client.util.Utils;
 import org.openxdata.formtools.client.view.impl.LoginInfoDlg;
+import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.util.FormUtil;
 
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;

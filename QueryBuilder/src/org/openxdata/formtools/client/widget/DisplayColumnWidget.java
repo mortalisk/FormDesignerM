@@ -3,9 +3,9 @@ package org.openxdata.formtools.client.widget;
 import org.openxdata.formtools.client.controller.AggregateFunctionListener;
 import org.openxdata.formtools.client.controller.DisplayColumnActionListener;
 import org.openxdata.formtools.client.controller.ItemSelectionListener;
-import org.openxdata.formtools.client.model.FormDef;
-import org.openxdata.formtools.client.model.QuestionDef;
 import org.openxdata.formtools.client.model.SortField;
+import org.openxdata.sharedlib.client.model.FormDef;
+import org.openxdata.sharedlib.client.model.QuestionDef;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;

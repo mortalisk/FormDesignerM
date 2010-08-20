@@ -8,14 +8,15 @@ import org.openxdata.formtools.client.controller.IFormDesignerListener;
 import org.openxdata.formtools.client.controller.IFormSelectionListener;
 import org.openxdata.formtools.client.controller.WidgetPropertyChangeListener;
 import org.openxdata.formtools.client.controller.WidgetSelectionListener;
-import org.openxdata.formtools.client.locale.LocaleText;
-import org.openxdata.formtools.client.model.FormDef;
-import org.openxdata.formtools.client.model.Locale;
 import org.openxdata.formtools.client.util.FormDesignerUtil;
-import org.openxdata.formtools.client.util.FormUtil;
+import org.openxdata.formtools.client.vew.widget.images.FormDesignerImages;
 import org.openxdata.formtools.client.view.FormsTreeView;
 import org.openxdata.formtools.client.view.PaletteView;
 import org.openxdata.formtools.client.view.WidgetPropertiesView;
+import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.model.FormDef;
+import org.openxdata.sharedlib.client.model.Locale;
+import org.openxdata.sharedlib.client.util.FormUtil;
 
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.ui.Composite;
@@ -31,15 +32,6 @@ import com.google.gwt.user.client.ui.Widget;
  *
  */
 public class LeftPanel extends Composite {
-
-	/**
-	 * An image bundle specifying the images for this Widget and aggregating
-	 * images needed in child widgets.
-	 */
-	public interface Images extends FormsTreeView.Images,FormDesignerImages{
-		ImageResource tasksgroup();
-		ImageResource filtersgroup();
-	}
 
 	/** The GWT stack panel which serves as the main or root widget. */
 	private DecoratedStackPanel stackPanel = new DecoratedStackPanel();
@@ -59,14 +51,14 @@ public class LeftPanel extends Composite {
 	 * 
 	 * @param images a bundle that provides the images for this widget
 	 */
-	public LeftPanel(Images images, IFormSelectionListener formSelectionListener) {
-		formsTreeView = new FormsTreeView(images,formSelectionListener);
+	public LeftPanel(FormDesignerImages images, IFormSelectionListener formSelectionListener) {
+		formsTreeView = new FormsTreeView(images, formSelectionListener);
 		widgetPropertiesView = new WidgetPropertiesView();
 		paletteView =  new PaletteView(images);
 
-		add(images,formsTreeView , images.tasksgroup(), LocaleText.get("forms"));
-		add(images,paletteView , images.tasksgroup(),LocaleText.get("palette"));
-		add(images,widgetPropertiesView , images.filtersgroup(), LocaleText.get("widgetProperties"));
+		add(images, formsTreeView , images.tasksgroup(), LocaleText.get("forms"));
+		add(images, paletteView , images.tasksgroup(),LocaleText.get("palette"));
+		add(images, widgetPropertiesView , images.filtersgroup(), LocaleText.get("widgetProperties"));
 
 		formsTreeView.addFormSelectionListener(widgetPropertiesView);
 		FormUtil.maximizeWidget(stackPanel);
@@ -96,7 +88,7 @@ public class LeftPanel extends Composite {
 		return formsTreeView;
 	}
 
-	private void add(Images images, Widget widget, ImageResource imageProto,String caption) {
+	private void add(FormDesignerImages images, Widget widget, ImageResource imageProto,String caption) {
 		stackPanel.add(widget, FormDesignerUtil.createHeaderHTML(imageProto, caption), true);
 	}
 

@@ -2,7 +2,7 @@ package org.openxdata.formtools.client.widget;
 
 import org.openxdata.formtools.client.controller.IFormActionListener;
 import org.openxdata.formtools.client.util.FormDesignerUtil;
-import org.openxdata.formtools.client.util.FormUtil;
+import org.openxdata.sharedlib.client.util.FormUtil;
 
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.resources.client.ImageResource;

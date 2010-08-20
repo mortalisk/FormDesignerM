@@ -1,12 +1,12 @@
 package org.openxdata.formtools.client;
 
-import org.openxdata.formtools.client.OpenXdataConstants;
 import org.openxdata.formtools.client.controller.FormDesignerController;
 import org.openxdata.formtools.client.controller.IFormSaveListener;
-import org.openxdata.formtools.client.model.FormDef;
-import org.openxdata.formtools.client.model.Locale;
-import org.openxdata.formtools.client.util.FormUtil;
-import org.openxdata.formtools.client.view.PreviewView;
+import org.openxdata.formtools.client.vew.widget.images.FormDesignerImages;
+import org.openxdata.sharedlib.client.OpenXdataConstants;
+import org.openxdata.sharedlib.client.model.FormDef;
+import org.openxdata.sharedlib.client.model.Locale;
+import org.openxdata.sharedlib.client.util.FormUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.DOM;
@@ -39,13 +39,7 @@ public class FormDesignerWidget extends Composite{
 	 * Instantiate an application-level image bundle. This object will provide
 	 * programatic access to all the images needed by widgets.
 	 */
-	public static final Images images = (Images) GWT.create(Images.class);
-
-	/**
-	 * An aggragate image bundle that pulls together all the images for this
-	 * application into a single bundle.
-	 */
-	public interface Images extends LeftPanel.Images,Toolbar.Images,Menu.Images,PreviewView.Images,FormDesignerImages {}
+	public static final FormDesignerImages images = (FormDesignerImages) GWT.create(FormDesignerImages.class);
 
 	/**
 	 * Widget used on the right hand side of the form designer. This widget has the

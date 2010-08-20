@@ -1,11 +1,11 @@
 package org.openxdata.formtools.client.widget.skiprule;
 
-import org.openxdata.formtools.client.OpenXdataConstants;
 import org.openxdata.formtools.client.controller.ItemSelectionListener;
-import org.openxdata.formtools.client.locale.LocaleText;
-import org.openxdata.formtools.client.model.ModelConstants;
-import org.openxdata.formtools.client.model.QuestionDef;
 import org.openxdata.formtools.client.widget.SelectItemCommand;
+import org.openxdata.sharedlib.client.OpenXdataConstants;
+import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.model.ModelConstants;
+import org.openxdata.sharedlib.client.model.QuestionDef;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;

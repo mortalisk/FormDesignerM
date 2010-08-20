@@ -7,7 +7,7 @@ import org.openxdata.formtools.client.FormEntryContext;
 import org.openxdata.formtools.client.controller.ILocaleListChangeListener;
 import org.openxdata.formtools.client.listener.FormDefListChangeListener;
 import org.openxdata.formtools.client.model.KeyValue;
-import org.openxdata.formtools.client.model.Locale;
+import org.openxdata.sharedlib.client.model.Locale;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;

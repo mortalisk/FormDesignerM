@@ -1,11 +1,11 @@
 package org.openxdata.formtools.client.view;
 
-import org.openxdata.formtools.client.OpenXdataConstants;
-import org.openxdata.formtools.client.model.FormDef;
 import org.openxdata.formtools.client.sql.SqlBuilder;
 import org.openxdata.formtools.client.sql.XmlBuilder;
-import org.openxdata.formtools.client.util.FormUtil;
-import org.openxdata.formtools.client.xforms.XformParser;
+import org.openxdata.sharedlib.client.OpenXdataConstants;
+import org.openxdata.sharedlib.client.model.FormDef;
+import org.openxdata.sharedlib.client.util.FormUtil;
+import org.openxdata.sharedlib.client.xforms.XformParser;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;

@@ -3,11 +3,11 @@ package org.openxdata.formtools.client.widget;
 import org.openxdata.formtools.client.controller.ConditionController;
 import org.openxdata.formtools.client.controller.FilterRowActionListener;
 import org.openxdata.formtools.client.controller.ItemSelectionListener;
-import org.openxdata.formtools.client.locale.LocaleText;
-import org.openxdata.formtools.client.model.Condition;
-import org.openxdata.formtools.client.model.FormDef;
-import org.openxdata.formtools.client.model.ModelConstants;
-import org.openxdata.formtools.client.model.QuestionDef;
+import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.model.Condition;
+import org.openxdata.sharedlib.client.model.FormDef;
+import org.openxdata.sharedlib.client.model.ModelConstants;
+import org.openxdata.sharedlib.client.model.QuestionDef;
 
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;

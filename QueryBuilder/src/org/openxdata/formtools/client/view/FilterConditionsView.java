@@ -4,17 +4,17 @@ import java.util.HashMap;
 
 import org.openxdata.formtools.client.controller.ConditionController;
 import org.openxdata.formtools.client.controller.FilterRowActionListener;
-import org.openxdata.formtools.client.locale.LocaleText;
-import org.openxdata.formtools.client.model.Condition;
 import org.openxdata.formtools.client.model.FilterCondition;
 import org.openxdata.formtools.client.model.FilterConditionGroup;
-import org.openxdata.formtools.client.model.FormDef;
-import org.openxdata.formtools.client.model.QuestionDef;
 import org.openxdata.formtools.client.sql.XmlBuilder;
 import org.openxdata.formtools.client.widget.AddConditionHyperlink;
 import org.openxdata.formtools.client.widget.ConditionActionHyperlink;
 import org.openxdata.formtools.client.widget.ConditionWidget;
 import org.openxdata.formtools.client.widget.GroupHyperlink;
+import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.model.Condition;
+import org.openxdata.sharedlib.client.model.FormDef;
+import org.openxdata.sharedlib.client.model.QuestionDef;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

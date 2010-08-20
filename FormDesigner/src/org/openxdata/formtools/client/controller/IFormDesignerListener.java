@@ -1,6 +1,6 @@
 package org.openxdata.formtools.client.controller;
 
-import org.openxdata.formtools.client.model.Locale;
+import org.openxdata.sharedlib.client.model.Locale;
 
 import com.google.gwt.user.client.Event;
 

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openxdata.formtools.client.listener.FormListSelectionListener;
-import org.openxdata.formtools.client.locale.LocaleText;
 import org.openxdata.formtools.client.model.KeyValue;
-import org.openxdata.formtools.client.util.FormUtil;
+import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.util.FormUtil;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

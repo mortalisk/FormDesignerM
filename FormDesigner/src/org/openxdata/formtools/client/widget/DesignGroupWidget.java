@@ -1,17 +1,17 @@
 package org.openxdata.formtools.client.widget;
 
-import org.openxdata.formtools.client.OpenXdataConstants;
-import org.openxdata.formtools.client.LeftPanel.Images;
 import org.openxdata.formtools.client.controller.DragDropListener;
 import org.openxdata.formtools.client.controller.IWidgetPopupMenuListener;
 import org.openxdata.formtools.client.controller.WidgetSelectionListener;
-import org.openxdata.formtools.client.locale.LocaleText;
-import org.openxdata.formtools.client.model.FormDef;
 import org.openxdata.formtools.client.util.FormDesignerUtil;
-import org.openxdata.formtools.client.util.FormUtil;
+import org.openxdata.formtools.client.vew.widget.images.FormDesignerImages;
 import org.openxdata.formtools.client.view.DesignGroupView;
 import org.openxdata.formtools.client.view.DesignSurfaceView;
-import org.openxdata.formtools.client.widget.WidgetEx;
+import org.openxdata.sharedlib.client.OpenXdataConstants;
+import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.model.FormDef;
+import org.openxdata.sharedlib.client.util.FormUtil;
+import org.openxdata.sharedlib.client.widget.WidgetEx;
 
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
@@ -55,7 +55,7 @@ public class DesignGroupWidget extends DesignGroupView implements DragDropListen
 	 * @param images
 	 * @param widgetPopupMenuListener
 	 */
-	public DesignGroupWidget(Images images,IWidgetPopupMenuListener widgetPopupMenuListener){
+	public DesignGroupWidget(FormDesignerImages images,IWidgetPopupMenuListener widgetPopupMenuListener){
 		super(images);
 
 		this.currentWidgetSelectionListener = this;
@@ -94,7 +94,7 @@ public class DesignGroupWidget extends DesignGroupView implements DragDropListen
 		rubberBand.addStyleName("rubberBand");
 	}
 
-	public DesignGroupWidget(DesignGroupWidget designGroupWidget, Images images,IWidgetPopupMenuListener widgetPopupMenuListener){
+	public DesignGroupWidget(DesignGroupWidget designGroupWidget, FormDesignerImages images,IWidgetPopupMenuListener widgetPopupMenuListener){
 		this(images,widgetPopupMenuListener);
 
 		this.currentWidgetSelectionListener = this;
@@ -124,7 +124,7 @@ public class DesignGroupWidget extends DesignGroupView implements DragDropListen
 		widgetSelectionListener = designGroupWidget.widgetSelectionListener;
 	}
 
-	public Images getImages(){
+	public FormDesignerImages getImages(){
 		return images;
 	}
 
@@ -363,7 +363,9 @@ public class DesignGroupWidget extends DesignGroupView implements DragDropListen
 			if(nodes.item(i).getNodeType() != Node.ELEMENT_NODE)
 				continue;
 			Element element = (Element)nodes.item(i);
-			DesignWidgetWrapper widget = DesignSurfaceView.loadWidget(element,selectedDragController,selectedPanel,images,widgetPopup,this.widgetPopupMenuListener,this,formDef);
+			DesignWidgetWrapper widget = DesignSurfaceView.loadWidget(element,selectedDragController, 
+					selectedPanel, images, widgetPopup, this.widgetPopupMenuListener, this,formDef);
+			
 			if("true".equals(element.getAttribute(WidgetEx.WIDGET_PROPERTY_HEADER_LABEL))){
 				setHeaderLabel(widget);
 				widget.setBinding(((DesignWidgetWrapper)getParent().getParent()).getBinding());

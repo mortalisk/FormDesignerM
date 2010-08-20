@@ -4,13 +4,13 @@ import java.util.Date;
 
 import org.openxdata.formtools.client.FormEntryConstants;
 import org.openxdata.formtools.client.FormEntryContext;
-import org.openxdata.formtools.client.controller.SubmitListener;
 import org.openxdata.formtools.client.listener.DataLoadListener;
 import org.openxdata.formtools.client.listener.FormSubmitCancelListener;
 import org.openxdata.formtools.client.model.FormDataHeader;
 import org.openxdata.formtools.client.util.Utils;
 import org.openxdata.formtools.client.widget.FormRunnerWidget;
-import org.openxdata.formtools.client.xforms.XmlUtil;
+import org.openxdata.sharedlib.client.controller.SubmitListener;
+import org.openxdata.sharedlib.client.xforms.XmlUtil;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;

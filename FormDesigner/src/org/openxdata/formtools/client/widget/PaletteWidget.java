@@ -1,7 +1,7 @@
 package org.openxdata.formtools.client.widget;
 
-import org.openxdata.formtools.client.util.FormUtil;
-import org.openxdata.formtools.client.view.FormsTreeView.Images;
+import org.openxdata.formtools.client.vew.widget.images.FormDesignerImages;
+import org.openxdata.sharedlib.client.util.FormUtil;
 
 import com.google.gwt.event.dom.client.HasAllMouseHandlers;
 import com.google.gwt.event.dom.client.MouseDownEvent;
@@ -42,7 +42,7 @@ public class PaletteWidget extends Composite implements HasAllMouseHandlers{
 	 * @param images the palette images.
 	 * @param html the name of the widget
 	 */
-	public PaletteWidget(Images images, HTML html){
+	public PaletteWidget(FormDesignerImages images, HTML html){
 		name = html.getText();
 
 		HorizontalPanel hPanel = new HorizontalPanel();

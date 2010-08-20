@@ -6,8 +6,8 @@ import org.openxdata.formtools.client.cmd.FormDefDeleteCmd;
 import org.openxdata.formtools.client.cmd.FormDefLoadCmd;
 import org.openxdata.formtools.client.cmd.FormDownloadCmd;
 import org.openxdata.formtools.client.listener.FormDefDownloadListener;
-import org.openxdata.formtools.client.util.FormUtil;
 import org.openxdata.formtools.client.view.impl.SettingsViewImpl;
+import org.openxdata.sharedlib.client.util.FormUtil;
 
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DeferredCommand;

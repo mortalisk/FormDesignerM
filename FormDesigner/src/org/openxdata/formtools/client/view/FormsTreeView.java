@@ -7,21 +7,21 @@ import java.util.Map;
 import java.util.Vector;
 
 import org.openxdata.formtools.client.Context;
-import org.openxdata.formtools.client.Toolbar;
 import org.openxdata.formtools.client.controller.IFormActionListener;
 import org.openxdata.formtools.client.controller.IFormChangeListener;
 import org.openxdata.formtools.client.controller.IFormDesignerListener;
 import org.openxdata.formtools.client.controller.IFormSelectionListener;
-import org.openxdata.formtools.client.locale.LocaleText;
-import org.openxdata.formtools.client.model.FormDef;
-import org.openxdata.formtools.client.model.ModelConstants;
-import org.openxdata.formtools.client.model.OptionDef;
-import org.openxdata.formtools.client.model.PageDef;
-import org.openxdata.formtools.client.model.QuestionDef;
 import org.openxdata.formtools.client.util.FormDesignerUtil;
-import org.openxdata.formtools.client.util.FormUtil;
+import org.openxdata.formtools.client.vew.widget.images.FormDesignerImages;
 import org.openxdata.formtools.client.widget.CompositeTreeItem;
 import org.openxdata.formtools.client.widget.TreeItemWidget;
+import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.model.FormDef;
+import org.openxdata.sharedlib.client.model.ModelConstants;
+import org.openxdata.sharedlib.client.model.OptionDef;
+import org.openxdata.sharedlib.client.model.PageDef;
+import org.openxdata.sharedlib.client.model.QuestionDef;
+import org.openxdata.sharedlib.client.util.FormUtil;
 
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
@@ -48,19 +48,7 @@ import com.google.gwt.user.client.ui.TreeItem;
  *  www.openxdata.org - Licensed as written in license.txt and original sources of this file and its authors are found in sources.txt.
  *
  */
-public class FormsTreeView extends Composite implements SelectionHandler<TreeItem>,IFormChangeListener,IFormActionListener{
-
-	/**
-	 * Specifies the images that will be bundled for this Composite and specify
-	 * that tree's images should also be included in the same bundle.
-	 */
-	public interface Images extends Toolbar.Images, Tree.Resources {
-		ImageResource drafts();
-		ImageResource markRead();
-		ImageResource templates();
-		ImageResource note();
-		ImageResource lookup();
-	}
+public class FormsTreeView extends Composite implements SelectionHandler<TreeItem>,IFormChangeListener,IFormActionListener {
 
 	/** The main or root widget for displaying the list of forms and their contents
 	 * in a tree view.
@@ -68,7 +56,7 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 	private Tree tree;
 
 	/** The tree images. */
-	private final Images images;
+	private final FormDesignerImages images;
 
 	/** Pop up for displaying tree item context menu. */
 	private PopupPanel popup;
@@ -111,7 +99,7 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 	 * @param images the tree images.
 	 * @param formSelectionListener the form item selection events listener.
 	 */
-	public FormsTreeView(Images images,IFormSelectionListener formSelectionListener) {
+	public FormsTreeView(FormDesignerImages images, IFormSelectionListener formSelectionListener) {
 
 		this.images = images;
 		this.formSelectionListeners.add(formSelectionListener);

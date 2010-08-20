@@ -6,11 +6,11 @@ import org.openxdata.formtools.client.model.DisplayField;
 import org.openxdata.formtools.client.model.FilterCondition;
 import org.openxdata.formtools.client.model.FilterConditionGroup;
 import org.openxdata.formtools.client.model.FilterConditionRow;
-import org.openxdata.formtools.client.model.FormDef;
-import org.openxdata.formtools.client.model.ModelConstants;
-import org.openxdata.formtools.client.model.QuestionDef;
 import org.openxdata.formtools.client.model.SortField;
 import org.openxdata.formtools.client.widget.GroupHyperlink;
+import org.openxdata.sharedlib.client.model.FormDef;
+import org.openxdata.sharedlib.client.model.ModelConstants;
+import org.openxdata.sharedlib.client.model.QuestionDef;
 
 
 /**

@@ -7,13 +7,13 @@ import java.util.List;
 import org.openxdata.formtools.client.controller.DisplayColumnActionListener;
 import org.openxdata.formtools.client.controller.SortColumnActionListener;
 import org.openxdata.formtools.client.model.DisplayField;
-import org.openxdata.formtools.client.model.FormDef;
 import org.openxdata.formtools.client.model.SortField;
 import org.openxdata.formtools.client.sql.XmlBuilder;
 import org.openxdata.formtools.client.widget.ColumnActionHyperlink;
 import org.openxdata.formtools.client.widget.DisplayColumnWidget;
 import org.openxdata.formtools.client.widget.SortColumnActionHyperlink;
 import org.openxdata.formtools.client.widget.SortColumnWidget;
+import org.openxdata.sharedlib.client.model.FormDef;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

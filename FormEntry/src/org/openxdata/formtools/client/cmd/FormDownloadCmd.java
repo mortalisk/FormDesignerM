@@ -7,9 +7,9 @@ import org.openxdata.formtools.client.FormEntryContext;
 import org.openxdata.formtools.client.listener.FormDefDownloadListener;
 import org.openxdata.formtools.client.listener.FormListSelectionListener;
 import org.openxdata.formtools.client.model.KeyValue;
-import org.openxdata.formtools.client.util.FormUtil;
 import org.openxdata.formtools.client.util.Utils;
 import org.openxdata.formtools.client.view.impl.FormSelectionViewImpl;
+import org.openxdata.sharedlib.client.util.FormUtil;
 
 import com.google.gwt.user.client.Window;
 

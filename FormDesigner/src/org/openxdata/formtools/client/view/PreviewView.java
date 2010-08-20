@@ -4,18 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openxdata.formtools.client.Context;
-import org.openxdata.formtools.client.Toolbar;
 import org.openxdata.formtools.client.controller.ICenterPanel;
-import org.openxdata.formtools.client.controller.SubmitListener;
-import org.openxdata.formtools.client.locale.LocaleText;
 import org.openxdata.formtools.client.util.FormDesignerUtil;
-import org.openxdata.formtools.client.util.FormUtil;
-import org.openxdata.formtools.client.view.FormRunnerView;
-import org.openxdata.formtools.client.widget.RuntimeWidgetWrapper;
-import org.openxdata.formtools.client.xforms.XformBuilder;
-import org.openxdata.formtools.client.xforms.XformUtil;
+import org.openxdata.formtools.client.vew.widget.images.FormDesignerImages;
+import org.openxdata.sharedlib.client.controller.SubmitListener;
+import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.util.FormUtil;
+import org.openxdata.sharedlib.client.view.FormRunnerView;
+import org.openxdata.sharedlib.client.widget.RuntimeWidgetWrapper;
+import org.openxdata.sharedlib.client.xforms.XformBuilder;
+import org.openxdata.sharedlib.client.xforms.XformUtil;
 
-import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.DeferredCommand;
@@ -34,10 +33,6 @@ import com.google.gwt.user.client.ui.PopupPanel;
  */
 public class PreviewView extends FormRunnerView {
 
-	public interface Images extends FormRunnerView.Images,Toolbar.Images {
-		ImageResource error();
-	}
-
 	/** Popup for displaying the context menu for the preview. */
 	private PopupPanel popup;
 	
@@ -53,7 +48,7 @@ public class PreviewView extends FormRunnerView {
 	 * 
 	 * @param images the images for the preview context menu.
 	 */
-	public PreviewView(Images images){
+	public PreviewView(FormDesignerImages images){
 		//super(images);
 
 		popup = new PopupPanel(true,true);
@@ -121,7 +116,6 @@ public class PreviewView extends FormRunnerView {
 		}
 	}
 	
-
 	/**
 	 * Sets the listener for form submission events.
 	 * 

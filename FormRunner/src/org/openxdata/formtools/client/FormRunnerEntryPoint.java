@@ -1,9 +1,9 @@
 package org.openxdata.formtools.client;
 
-import org.openxdata.formtools.client.locale.LocaleText;
-import org.openxdata.formtools.client.util.FormUtil;
-import org.openxdata.formtools.client.view.FormRunnerView.Images;
 import org.openxdata.formtools.client.widget.FormRunnerWidget;
+import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.util.FormUtil;
+import org.openxdata.sharedlib.client.view.FormRunnerView.Images;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;

@@ -6,7 +6,7 @@ import org.openxdata.formtools.client.FormEntryConstants;
 import org.openxdata.formtools.client.FormEntryContext;
 import org.openxdata.formtools.client.listener.DataLoadListener;
 import org.openxdata.formtools.client.model.KeyValue;
-import org.openxdata.formtools.client.xforms.XmlUtil;
+import org.openxdata.sharedlib.client.xforms.XmlUtil;
 
 import com.google.gwt.user.client.Window;
 import com.google.gwt.xml.client.Document;

@@ -3,14 +3,14 @@ package org.openxdata.formtools.client.view;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openxdata.formtools.client.OpenXdataConstants;
 import org.openxdata.formtools.client.controller.QuestionSelectionListener;
-import org.openxdata.formtools.client.locale.LocaleText;
-import org.openxdata.formtools.client.model.FormDef;
-import org.openxdata.formtools.client.model.PageDef;
-import org.openxdata.formtools.client.model.QuestionDef;
-import org.openxdata.formtools.client.model.SkipRule;
-import org.openxdata.formtools.client.util.FormUtil;
+import org.openxdata.sharedlib.client.OpenXdataConstants;
+import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.model.FormDef;
+import org.openxdata.sharedlib.client.model.PageDef;
+import org.openxdata.sharedlib.client.model.QuestionDef;
+import org.openxdata.sharedlib.client.model.SkipRule;
+import org.openxdata.sharedlib.client.util.FormUtil;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;

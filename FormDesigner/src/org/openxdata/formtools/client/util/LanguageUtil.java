@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Vector;
 
 import org.openxdata.formtools.client.Context;
-import org.openxdata.formtools.client.xforms.XformConstants;
-import org.openxdata.formtools.client.xforms.XformParser;
-import org.openxdata.formtools.client.xforms.XmlUtil;
-import org.openxdata.formtools.client.xpath.XPathExpression;
+import org.openxdata.sharedlib.client.xforms.XformConstants;
+import org.openxdata.sharedlib.client.xforms.XformParser;
+import org.openxdata.sharedlib.client.xforms.XmlUtil;
+import org.openxdata.sharedlib.client.xpath.XPathExpression;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;

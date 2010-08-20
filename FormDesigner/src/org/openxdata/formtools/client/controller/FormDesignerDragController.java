@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.openxdata.formtools.client.Context;
-import org.openxdata.formtools.client.OpenXdataConstants;
 import org.openxdata.formtools.client.widget.DesignGroupWidget;
 import org.openxdata.formtools.client.widget.DesignWidgetWrapper;
 import org.openxdata.formtools.client.widget.PaletteWidget;
+import org.openxdata.sharedlib.client.OpenXdataConstants;
 
 import com.allen_sauer.gwt.dnd.client.AbstractDragController;
 import com.allen_sauer.gwt.dnd.client.DragContext;

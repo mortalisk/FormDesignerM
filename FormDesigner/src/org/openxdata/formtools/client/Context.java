@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Vector;
 
 import org.openxdata.formtools.client.controller.ILocaleListChangeListener;
-import org.openxdata.formtools.client.model.FormDef;
-import org.openxdata.formtools.client.model.Locale;
-import org.openxdata.formtools.client.util.FormUtil;
 import org.openxdata.formtools.client.widget.DesignWidgetWrapper;
+import org.openxdata.sharedlib.client.model.FormDef;
+import org.openxdata.sharedlib.client.model.Locale;
+import org.openxdata.sharedlib.client.util.FormUtil;
 
 
 /**

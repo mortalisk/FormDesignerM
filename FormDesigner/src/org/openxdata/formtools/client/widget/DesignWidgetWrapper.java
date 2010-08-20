@@ -3,21 +3,21 @@ package org.openxdata.formtools.client.widget;
 import java.util.List;
 
 import org.openxdata.formtools.client.Context;
-import org.openxdata.formtools.client.LeftPanel.Images;
 import org.openxdata.formtools.client.controller.FormDesignerDragController;
-import org.openxdata.formtools.client.controller.QuestionChangeListener;
 import org.openxdata.formtools.client.controller.WidgetSelectionListener;
-import org.openxdata.formtools.client.locale.LocaleText;
-import org.openxdata.formtools.client.model.OptionDef;
-import org.openxdata.formtools.client.model.QuestionDef;
 import org.openxdata.formtools.client.util.FormDesignerUtil;
-import org.openxdata.formtools.client.util.FormUtil;
-import org.openxdata.formtools.client.widget.DatePickerEx;
-import org.openxdata.formtools.client.widget.DatePickerWidget;
-import org.openxdata.formtools.client.widget.DateTimeWidget;
-import org.openxdata.formtools.client.widget.TimeWidget;
-import org.openxdata.formtools.client.widget.WidgetEx;
-import org.openxdata.formtools.client.xforms.XformConstants;
+import org.openxdata.formtools.client.vew.widget.images.FormDesignerImages;
+import org.openxdata.sharedlib.client.controller.QuestionChangeListener;
+import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.model.OptionDef;
+import org.openxdata.sharedlib.client.model.QuestionDef;
+import org.openxdata.sharedlib.client.util.FormUtil;
+import org.openxdata.sharedlib.client.widget.DatePickerEx;
+import org.openxdata.sharedlib.client.widget.DatePickerWidget;
+import org.openxdata.sharedlib.client.widget.DateTimeWidget;
+import org.openxdata.sharedlib.client.widget.TimeWidget;
+import org.openxdata.sharedlib.client.widget.WidgetEx;
+import org.openxdata.sharedlib.client.xforms.XformConstants;
 
 import com.google.gwt.event.dom.client.HasAllMouseHandlers;
 import com.google.gwt.event.dom.client.MouseDownEvent;
@@ -66,7 +66,7 @@ public class DesignWidgetWrapper extends WidgetEx implements QuestionChangeListe
 	private Element layoutNode;
 
 
-	public DesignWidgetWrapper(DesignWidgetWrapper designWidgetWrapper,Images images){
+	public DesignWidgetWrapper(DesignWidgetWrapper designWidgetWrapper, FormDesignerImages images){
 		super(designWidgetWrapper);
 
 		setText(designWidgetWrapper.getText());
@@ -83,7 +83,8 @@ public class DesignWidgetWrapper extends WidgetEx implements QuestionChangeListe
 
 	protected void copyWidget(WidgetEx widget){
 		if(widget.getWrappedWidget() instanceof DesignGroupWidget)
-			this.widget = new DesignGroupWidget((DesignGroupWidget)widget.getWrappedWidget(),((DesignGroupWidget)widget.getWrappedWidget()).getImages(),((DesignGroupWidget)widget.getWrappedWidget()).getWidgetPopupMenuListener());
+			this.widget = new DesignGroupWidget((DesignGroupWidget)widget.getWrappedWidget(),
+					((DesignGroupWidget)widget.getWrappedWidget()).getImages(),((DesignGroupWidget)widget.getWrappedWidget()).getWidgetPopupMenuListener());
 		super.copyWidget(widget);
 	}
 

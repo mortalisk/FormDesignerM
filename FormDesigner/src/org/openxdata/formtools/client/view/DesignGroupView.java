@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.openxdata.formtools.client.Context;
-import org.openxdata.formtools.client.OpenXdataConstants;
-import org.openxdata.formtools.client.LeftPanel.Images;
 import org.openxdata.formtools.client.controller.DragDropListener;
 import org.openxdata.formtools.client.controller.FormDesignerDragController;
 import org.openxdata.formtools.client.controller.FormDesignerDropController;
@@ -14,21 +12,23 @@ import org.openxdata.formtools.client.controller.IWidgetPopupMenuListener;
 import org.openxdata.formtools.client.controller.WidgetPropertyChangeListener;
 import org.openxdata.formtools.client.controller.WidgetPropertySetter;
 import org.openxdata.formtools.client.controller.WidgetSelectionListener;
-import org.openxdata.formtools.client.locale.LocaleText;
-import org.openxdata.formtools.client.model.OptionDef;
-import org.openxdata.formtools.client.model.QuestionDef;
 import org.openxdata.formtools.client.util.FormDesignerUtil;
-import org.openxdata.formtools.client.util.FormUtil;
 import org.openxdata.formtools.client.util.StyleUtil;
-import org.openxdata.formtools.client.widget.DatePickerEx;
-import org.openxdata.formtools.client.widget.DatePickerWidget;
-import org.openxdata.formtools.client.widget.DateTimeWidget;
+import org.openxdata.formtools.client.vew.widget.images.FormDesignerImages;
 import org.openxdata.formtools.client.widget.DesignGroupWidget;
 import org.openxdata.formtools.client.widget.DesignWidgetWrapper;
 import org.openxdata.formtools.client.widget.PaletteWidget;
-import org.openxdata.formtools.client.widget.RadioButtonWidget;
-import org.openxdata.formtools.client.widget.TextBoxWidget;
-import org.openxdata.formtools.client.widget.TimeWidget;
+import org.openxdata.sharedlib.client.OpenXdataConstants;
+import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.model.OptionDef;
+import org.openxdata.sharedlib.client.model.QuestionDef;
+import org.openxdata.sharedlib.client.util.FormUtil;
+import org.openxdata.sharedlib.client.widget.DatePickerEx;
+import org.openxdata.sharedlib.client.widget.DatePickerWidget;
+import org.openxdata.sharedlib.client.widget.DateTimeWidget;
+import org.openxdata.sharedlib.client.widget.RadioButtonWidget;
+import org.openxdata.sharedlib.client.widget.TextBoxWidget;
+import org.openxdata.sharedlib.client.widget.TimeWidget;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -105,7 +105,7 @@ public class DesignGroupView extends Composite implements WidgetSelectionListene
 	/** The rubber band widget for multiple widget selection. */
 	protected Label rubberBand = new Label(""); //HTML("<DIV ID='rubberBand'></DIV>");
 
-	protected final Images images;
+	protected final FormDesignerImages images;
 
 	//These three do not belong here (should be only for DesignSurfaceView)
 	/** Tabs for displaying pages. */
@@ -133,7 +133,7 @@ public class DesignGroupView extends Composite implements WidgetSelectionListene
 	 * 
 	 * @param images
 	 */
-	public DesignGroupView(Images images){
+	public DesignGroupView(FormDesignerImages images){
 		this.images = images;
 	}
 

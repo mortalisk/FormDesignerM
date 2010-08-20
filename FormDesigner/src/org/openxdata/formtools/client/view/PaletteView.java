@@ -1,10 +1,10 @@
 package org.openxdata.formtools.client.view;
 
 import org.openxdata.formtools.client.controller.FormDesignerDragController;
-import org.openxdata.formtools.client.locale.LocaleText;
-import org.openxdata.formtools.client.util.FormUtil;
-import org.openxdata.formtools.client.view.FormsTreeView.Images;
+import org.openxdata.formtools.client.vew.widget.images.FormDesignerImages;
 import org.openxdata.formtools.client.widget.PaletteWidget;
+import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.util.FormUtil;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.user.client.ui.Composite;
@@ -27,7 +27,7 @@ public class PaletteView extends Composite {
 	private VerticalPanel verticalPanel = new VerticalPanel();
 	
 	/** The palette images. */
-	private final Images images;
+	private final FormDesignerImages images;
 	
 	/** The DND drag controller. */
 	private static FormDesignerDragController dragController;
@@ -38,7 +38,7 @@ public class PaletteView extends Composite {
 	 * 
 	 * @param images the palette images.
 	 */
-	public PaletteView(Images images) {
+	public PaletteView(FormDesignerImages images) {
 
 		this.images = images;
 
@@ -84,7 +84,7 @@ public class PaletteView extends Composite {
 	 * @return the new palette widget.
 	 */
 	private PaletteWidget createPaletteWidget(HTML html){
-		PaletteWidget widget = new PaletteWidget(images,html);
+		PaletteWidget widget = new PaletteWidget(images, html);
 		dragController.makeDraggable(widget);
 		return widget;
 	}

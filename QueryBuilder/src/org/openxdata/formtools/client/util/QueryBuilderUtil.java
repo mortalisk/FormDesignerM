@@ -5,8 +5,8 @@ import java.util.Set;
 import java.util.Vector;
 import java.util.Map.Entry;
 
-import org.openxdata.formtools.client.model.QuestionDef;
-import org.openxdata.formtools.client.util.FormUtil;
+import org.openxdata.sharedlib.client.model.QuestionDef;
+import org.openxdata.sharedlib.client.util.FormUtil;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;

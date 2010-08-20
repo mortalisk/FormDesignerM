@@ -5,7 +5,7 @@ import org.openxdata.formtools.client.cmd.FormDataDeleteCmd;
 import org.openxdata.formtools.client.listener.DataLoadListener;
 import org.openxdata.formtools.client.listener.FormDataDeleteListener;
 import org.openxdata.formtools.client.listener.FormDataListener;
-import org.openxdata.formtools.client.util.FormUtil;
+import org.openxdata.sharedlib.client.util.FormUtil;
 
 
 /**

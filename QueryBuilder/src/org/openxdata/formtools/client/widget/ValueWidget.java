@@ -2,16 +2,16 @@ package org.openxdata.formtools.client.widget;
 
 import java.util.List;
 
-import org.openxdata.formtools.client.OpenXdataConstants;
 import org.openxdata.formtools.client.controller.ItemSelectionListener;
-import org.openxdata.formtools.client.locale.LocaleText;
-import org.openxdata.formtools.client.model.DynamicOptionDef;
-import org.openxdata.formtools.client.model.FormDef;
-import org.openxdata.formtools.client.model.ModelConstants;
-import org.openxdata.formtools.client.model.OptionDef;
-import org.openxdata.formtools.client.model.QuestionDef;
-import org.openxdata.formtools.client.util.FormUtil;
 import org.openxdata.formtools.client.util.QueryBuilderUtil;
+import org.openxdata.sharedlib.client.OpenXdataConstants;
+import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.model.DynamicOptionDef;
+import org.openxdata.sharedlib.client.model.FormDef;
+import org.openxdata.sharedlib.client.model.ModelConstants;
+import org.openxdata.sharedlib.client.model.OptionDef;
+import org.openxdata.sharedlib.client.model.QuestionDef;
+import org.openxdata.sharedlib.client.util.FormUtil;
 import org.zenika.widget.client.datePicker.DatePicker;
 
 import com.google.gwt.event.dom.client.BlurEvent;

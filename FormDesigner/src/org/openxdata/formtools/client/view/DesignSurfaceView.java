@@ -4,29 +4,28 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
-
-import org.openxdata.formtools.client.OpenXdataConstants;
-import org.openxdata.formtools.client.LeftPanel.Images;
 import org.openxdata.formtools.client.controller.DragDropListener;
 import org.openxdata.formtools.client.controller.FormDesignerDragController;
 import org.openxdata.formtools.client.controller.IWidgetPopupMenuListener;
 import org.openxdata.formtools.client.controller.LayoutChangeListener;
 import org.openxdata.formtools.client.controller.WidgetSelectionListener;
-import org.openxdata.formtools.client.locale.LocaleText;
-import org.openxdata.formtools.client.model.FormDef;
-import org.openxdata.formtools.client.model.OptionDef;
-import org.openxdata.formtools.client.model.PageDef;
-import org.openxdata.formtools.client.model.QuestionDef;
 import org.openxdata.formtools.client.util.FormDesignerUtil;
-import org.openxdata.formtools.client.util.FormUtil;
-import org.openxdata.formtools.client.widget.DatePickerWidget;
-import org.openxdata.formtools.client.widget.DateTimeWidget;
+import org.openxdata.formtools.client.vew.widget.images.FormDesignerImages;
 import org.openxdata.formtools.client.widget.DesignGroupWidget;
 import org.openxdata.formtools.client.widget.DesignWidgetWrapper;
-import org.openxdata.formtools.client.widget.RadioButtonWidget;
-import org.openxdata.formtools.client.widget.TimeWidget;
-import org.openxdata.formtools.client.widget.WidgetEx;
-import org.openxdata.formtools.client.xforms.XformConstants;
+import org.openxdata.sharedlib.client.OpenXdataConstants;
+import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.model.FormDef;
+import org.openxdata.sharedlib.client.model.OptionDef;
+import org.openxdata.sharedlib.client.model.PageDef;
+import org.openxdata.sharedlib.client.model.QuestionDef;
+import org.openxdata.sharedlib.client.util.FormUtil;
+import org.openxdata.sharedlib.client.widget.DatePickerWidget;
+import org.openxdata.sharedlib.client.widget.DateTimeWidget;
+import org.openxdata.sharedlib.client.widget.RadioButtonWidget;
+import org.openxdata.sharedlib.client.widget.TimeWidget;
+import org.openxdata.sharedlib.client.widget.WidgetEx;
+import org.openxdata.sharedlib.client.xforms.XformConstants;
 
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
@@ -90,7 +89,7 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 	 * 
 	 * @param images the images used by the design surface.
 	 */
-	public DesignSurfaceView(Images images){
+	public DesignSurfaceView(FormDesignerImages images){
 		super(images);
 
 		FormUtil.maximizeWidget(tabs);
@@ -566,7 +565,9 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 	 * @param formDef
 	 * @return
 	 */
-	public static DesignWidgetWrapper loadWidget(Element node,FormDesignerDragController dragController, AbsolutePanel panel, Images images, PopupPanel widgetPopup, IWidgetPopupMenuListener widgetPopupMenuListener,WidgetSelectionListener widgetSelectionListener,FormDef formDef){
+	public static DesignWidgetWrapper loadWidget(Element node,FormDesignerDragController dragController, 
+			AbsolutePanel panel, FormDesignerImages images, PopupPanel widgetPopup, IWidgetPopupMenuListener widgetPopupMenuListener,
+			WidgetSelectionListener widgetSelectionListener, FormDef formDef){
 		String left = node.getAttribute(WidgetEx.WIDGET_PROPERTY_LEFT);
 		String top = node.getAttribute(WidgetEx.WIDGET_PROPERTY_TOP);
 		String s = node.getAttribute(WidgetEx.WIDGET_PROPERTY_WIDGETTYPE);

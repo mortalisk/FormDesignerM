@@ -1,12 +1,12 @@
 package org.openxdata.formtools.client.xforms;
 
-import org.openxdata.formtools.client.model.FormDef;
-import org.openxdata.formtools.client.util.FormUtil;
 import org.openxdata.formtools.client.util.ItextBuilder;
-import org.openxdata.formtools.client.xforms.XformBuilder;
-import org.openxdata.formtools.client.xforms.XformConstants;
-import org.openxdata.formtools.client.xforms.XformUtil;
-import org.openxdata.formtools.client.xforms.XmlUtil;
+import org.openxdata.sharedlib.client.model.FormDef;
+import org.openxdata.sharedlib.client.util.FormUtil;
+import org.openxdata.sharedlib.client.xforms.XformBuilder;
+import org.openxdata.sharedlib.client.xforms.XformConstants;
+import org.openxdata.sharedlib.client.xforms.XformUtil;
+import org.openxdata.sharedlib.client.xforms.XmlUtil;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;

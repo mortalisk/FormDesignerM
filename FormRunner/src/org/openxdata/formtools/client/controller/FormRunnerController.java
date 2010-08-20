@@ -3,14 +3,14 @@ package org.openxdata.formtools.client.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openxdata.formtools.client.OpenXdataConstants;
-import org.openxdata.formtools.client.controller.SubmitListener;
-import org.openxdata.formtools.client.locale.LocaleText;
-import org.openxdata.formtools.client.model.FormDef;
-import org.openxdata.formtools.client.util.FormUtil;
 import org.openxdata.formtools.client.widget.FormRunnerWidget;
-import org.openxdata.formtools.client.widget.RuntimeWidgetWrapper;
-import org.openxdata.formtools.client.xforms.XformParser;
+import org.openxdata.sharedlib.client.OpenXdataConstants;
+import org.openxdata.sharedlib.client.controller.SubmitListener;
+import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.model.FormDef;
+import org.openxdata.sharedlib.client.util.FormUtil;
+import org.openxdata.sharedlib.client.widget.RuntimeWidgetWrapper;
+import org.openxdata.sharedlib.client.xforms.XformParser;
 
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;

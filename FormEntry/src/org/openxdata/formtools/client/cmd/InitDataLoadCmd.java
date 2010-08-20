@@ -2,8 +2,8 @@ package org.openxdata.formtools.client.cmd;
 
 import org.openxdata.formtools.client.FormEntryContext;
 import org.openxdata.formtools.client.listener.DataLoadListener;
-import org.openxdata.formtools.client.util.FormUtil;
 import org.openxdata.formtools.client.util.Utils;
+import org.openxdata.sharedlib.client.util.FormUtil;
 
 
 /**

@@ -1,7 +1,7 @@
 package org.openxdata.formtools.client.widget.skiprule;
 
-import org.openxdata.formtools.client.locale.LocaleText;
-import org.openxdata.formtools.client.model.ModelConstants;
+import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.model.ModelConstants;
 
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;

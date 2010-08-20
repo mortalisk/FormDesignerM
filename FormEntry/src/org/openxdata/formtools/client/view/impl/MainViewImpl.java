@@ -18,9 +18,9 @@ import org.openxdata.formtools.client.listener.FormDefLoadListener;
 import org.openxdata.formtools.client.listener.FormSubmitCancelListener;
 import org.openxdata.formtools.client.model.FormDataHeader;
 import org.openxdata.formtools.client.model.KeyValue;
-import org.openxdata.formtools.client.util.FormUtil;
-import org.openxdata.formtools.client.view.FormRunnerView.Images;
 import org.openxdata.formtools.client.widget.FormRunnerWidget;
+import org.openxdata.sharedlib.client.util.FormUtil;
+import org.openxdata.sharedlib.client.view.FormRunnerView.Images;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ResizeEvent;

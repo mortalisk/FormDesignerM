@@ -5,14 +5,14 @@ import java.util.Vector;
 
 import org.openxdata.formtools.client.controller.IConditionController;
 import org.openxdata.formtools.client.controller.QuestionSelectionListener;
-import org.openxdata.formtools.client.locale.LocaleText;
-import org.openxdata.formtools.client.model.Condition;
-import org.openxdata.formtools.client.model.FormDef;
-import org.openxdata.formtools.client.model.ModelConstants;
-import org.openxdata.formtools.client.model.QuestionDef;
-import org.openxdata.formtools.client.model.SkipRule;
 import org.openxdata.formtools.client.widget.skiprule.ConditionWidget;
 import org.openxdata.formtools.client.widget.skiprule.GroupHyperlink;
+import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.model.Condition;
+import org.openxdata.sharedlib.client.model.FormDef;
+import org.openxdata.sharedlib.client.model.ModelConstants;
+import org.openxdata.sharedlib.client.model.QuestionDef;
+import org.openxdata.sharedlib.client.model.SkipRule;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

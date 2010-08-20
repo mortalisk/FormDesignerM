@@ -3,8 +3,8 @@ package org.openxdata.formtools.client.xforms;
 import java.util.HashMap;
 import java.util.Set;
 
-import org.openxdata.formtools.client.model.FormDef;
-import org.openxdata.formtools.client.xforms.XmlUtil;
+import org.openxdata.sharedlib.client.model.FormDef;
+import org.openxdata.sharedlib.client.xforms.XmlUtil;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;

@@ -8,28 +8,28 @@ import org.openxdata.formtools.client.AboutDialog;
 import org.openxdata.formtools.client.CenterPanel;
 import org.openxdata.formtools.client.Context;
 import org.openxdata.formtools.client.LeftPanel;
-import org.openxdata.formtools.client.OpenXdataConstants;
-import org.openxdata.formtools.client.controller.OpenFileDialogEventListener;
-import org.openxdata.formtools.client.locale.LocaleText;
-import org.openxdata.formtools.client.model.FormDef;
-import org.openxdata.formtools.client.model.Locale;
-import org.openxdata.formtools.client.model.ModelConstants;
 import org.openxdata.formtools.client.util.FormDesignerUtil;
-import org.openxdata.formtools.client.util.FormUtil;
 import org.openxdata.formtools.client.util.ItextBuilder;
 import org.openxdata.formtools.client.util.ItextParser;
 import org.openxdata.formtools.client.util.LanguageUtil;
 import org.openxdata.formtools.client.view.FormsTreeView;
 import org.openxdata.formtools.client.view.LocalesDialog;
-import org.openxdata.formtools.client.view.LoginDialog;
-import org.openxdata.formtools.client.view.OpenFileDialog;
-import org.openxdata.formtools.client.view.SaveFileDialog;
 import org.openxdata.formtools.client.xforms.OpenXdataFormBuilder;
-import org.openxdata.formtools.client.xforms.XformBuilder;
-import org.openxdata.formtools.client.xforms.XformParser;
-import org.openxdata.formtools.client.xforms.XformUtil;
 import org.openxdata.formtools.client.xforms.XhtmlBuilder;
-import org.openxdata.formtools.client.xforms.XmlUtil;
+import org.openxdata.sharedlib.client.OpenXdataConstants;
+import org.openxdata.sharedlib.client.controller.OpenFileDialogEventListener;
+import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.model.FormDef;
+import org.openxdata.sharedlib.client.model.Locale;
+import org.openxdata.sharedlib.client.model.ModelConstants;
+import org.openxdata.sharedlib.client.util.FormUtil;
+import org.openxdata.sharedlib.client.view.LoginDialog;
+import org.openxdata.sharedlib.client.view.OpenFileDialog;
+import org.openxdata.sharedlib.client.view.SaveFileDialog;
+import org.openxdata.sharedlib.client.xforms.XformBuilder;
+import org.openxdata.sharedlib.client.xforms.XformParser;
+import org.openxdata.sharedlib.client.xforms.XformUtil;
+import org.openxdata.sharedlib.client.xforms.XmlUtil;
 
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
@@ -980,7 +980,7 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 	}
 
 	/**
-	 * @see org.openxdata.formtools.client.controller.OpenFileDialogEventListener#onSetFileContents()
+	 * @see org.openxdata.sharedlib.client.controller.OpenFileDialogEventListener#onSetFileContents()
 	 */
 	public void onSetFileContents(String contents) {
 		if(isOfflineMode())

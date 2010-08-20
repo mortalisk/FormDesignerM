@@ -1,10 +1,10 @@
 package org.openxdata.formtools.client.widget;
 
 import org.openxdata.formtools.client.controller.ItemSelectionListener;
-import org.openxdata.formtools.client.locale.LocaleText;
-import org.openxdata.formtools.client.model.FormDef;
-import org.openxdata.formtools.client.model.QuestionDef;
 import org.openxdata.formtools.client.util.FormDesignerUtil;
+import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.model.FormDef;
+import org.openxdata.sharedlib.client.model.QuestionDef;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

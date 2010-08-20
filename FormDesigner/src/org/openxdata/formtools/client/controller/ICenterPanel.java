@@ -1,6 +1,6 @@
 package org.openxdata.formtools.client.controller;
 
-import org.openxdata.formtools.client.model.FormDef;
+import org.openxdata.sharedlib.client.model.FormDef;
 
 
 /**

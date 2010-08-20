@@ -1,8 +1,8 @@
 
 package org.openxdata.formtools.client;
 
-import org.openxdata.formtools.client.locale.LocaleText;
 import org.openxdata.formtools.client.util.FormDesignerUtil;
+import org.openxdata.sharedlib.client.locale.LocaleText;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

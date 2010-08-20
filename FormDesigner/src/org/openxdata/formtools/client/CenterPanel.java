@@ -3,26 +3,26 @@ package org.openxdata.formtools.client;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openxdata.formtools.client.OpenXdataConstants;
-import org.openxdata.formtools.client.LeftPanel.Images;
 import org.openxdata.formtools.client.controller.ICenterPanel;
 import org.openxdata.formtools.client.controller.IFormActionListener;
 import org.openxdata.formtools.client.controller.IFormChangeListener;
 import org.openxdata.formtools.client.controller.IFormDesignerListener;
 import org.openxdata.formtools.client.controller.IFormSelectionListener;
 import org.openxdata.formtools.client.controller.LayoutChangeListener;
-import org.openxdata.formtools.client.controller.SubmitListener;
 import org.openxdata.formtools.client.controller.WidgetPropertyChangeListener;
 import org.openxdata.formtools.client.controller.WidgetSelectionListener;
-import org.openxdata.formtools.client.locale.LocaleText;
-import org.openxdata.formtools.client.model.FormDef;
 import org.openxdata.formtools.client.util.FormDesignerUtil;
-import org.openxdata.formtools.client.util.FormUtil;
 import org.openxdata.formtools.client.util.LanguageUtil;
+import org.openxdata.formtools.client.vew.widget.images.FormDesignerImages;
 import org.openxdata.formtools.client.view.DesignSurfaceView;
 import org.openxdata.formtools.client.view.PreviewView;
 import org.openxdata.formtools.client.view.PropertiesView;
-import org.openxdata.formtools.client.widget.RuntimeWidgetWrapper;
+import org.openxdata.sharedlib.client.OpenXdataConstants;
+import org.openxdata.sharedlib.client.controller.SubmitListener;
+import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.model.FormDef;
+import org.openxdata.sharedlib.client.util.FormUtil;
+import org.openxdata.sharedlib.client.widget.RuntimeWidgetWrapper;
 
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
@@ -137,9 +137,9 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 	 * 
 	 * @param images
 	 */
-	public CenterPanel(Images images) {		
+	public CenterPanel(FormDesignerImages images) {		
 		designSurfaceView = new DesignSurfaceView(images);
-		previewView = new PreviewView((PreviewView.Images)images);
+		previewView = new PreviewView(images);
 
 		initProperties();
 		initXformsSource();

@@ -1,6 +1,6 @@
 package org.openxdata.formtools.client;
 
-import org.openxdata.formtools.client.util.FormUtil;
+import org.openxdata.sharedlib.client.util.FormUtil;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootPanel;

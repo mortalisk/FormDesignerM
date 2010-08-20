@@ -2,20 +2,20 @@ package org.openxdata.formtools.client.view;
 
 import java.util.List;
 
-import org.openxdata.formtools.client.OpenXdataConstants;
 import org.openxdata.formtools.client.controller.IFormSelectionListener;
 import org.openxdata.formtools.client.controller.WidgetPropertyChangeListener;
 import org.openxdata.formtools.client.controller.WidgetPropertySetter;
 import org.openxdata.formtools.client.controller.WidgetSelectionListener;
-import org.openxdata.formtools.client.locale.LocaleText;
-import org.openxdata.formtools.client.model.FormDef;
-import org.openxdata.formtools.client.model.OptionDef;
-import org.openxdata.formtools.client.model.QuestionDef;
 import org.openxdata.formtools.client.util.FormDesignerUtil;
-import org.openxdata.formtools.client.util.FormUtil;
 import org.openxdata.formtools.client.util.StyleUtil;
 import org.openxdata.formtools.client.widget.DesignGroupWidget;
 import org.openxdata.formtools.client.widget.DesignWidgetWrapper;
+import org.openxdata.sharedlib.client.OpenXdataConstants;
+import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.model.FormDef;
+import org.openxdata.sharedlib.client.model.OptionDef;
+import org.openxdata.sharedlib.client.model.QuestionDef;
+import org.openxdata.sharedlib.client.util.FormUtil;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;

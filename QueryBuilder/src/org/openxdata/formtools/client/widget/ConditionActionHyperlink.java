@@ -2,7 +2,7 @@ package org.openxdata.formtools.client.widget;
 
 
 import org.openxdata.formtools.client.controller.FilterRowActionListener;
-import org.openxdata.formtools.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.locale.LocaleText;
 
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;

@@ -1,0 +1,29 @@
+<module rename-to='FormRunner'>
+
+      <!-- Inherit the core Web Toolkit stuff.                        -->
+      <inherits name='com.google.gwt.user.User'/>
+	
+      <!-- Inherit the default GWT style sheet.  You can change       -->
+      <!-- the theme of your GWT application by uncommenting          -->
+      <!-- any one of the following lines.                            -->
+      <inherits name='com.google.gwt.user.theme.standard.Standard'/>
+      <!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
+      <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
+                                    -->
+	  <!-- Other module inherits                                      -->
+      <inherits name='org.openxdata.formtools.SharedLib'/>
+      <inherits name='com.google.gwt.xml.XML'/>
+	  <inherits name='org.zenika.widget.DatePickerModule'/>  
+
+      <!-- Specify the app entry point class.                         -->
+      <entry-point class='org.openxdata.formtools.client.FormRunnerEntryPoint'/>
+    
+         <!-- Servlets -->
+      <servlet path='/multimedia' class='org.openxdata.formtools.server.MultimediaServlet'/>
+      <servlet path='/formsave' class='org.openxdata.formtools.server.FormSaveServlet'/>
+      <servlet path='/formopen' class='org.openxdata.formtools.server.FormOpenServlet'/>
+      
+      <!-- Specify the application specific style sheet.              -->
+      <stylesheet src='FormRunner.css' />
+	
+</module>

@@ -22,9 +22,6 @@ public class FormDataDeleteCmd implements DataLoadListener {
 	private String dataId;
 	private String defId;
 	private FormDataDeleteListener listener;
-	private String userName;
-	private String password;
-	
 	
 	public FormDataDeleteCmd(String dataId, String defId, FormDataDeleteListener listener){
 		this.dataId = dataId;

@@ -1,4 +1,5 @@
-#Wed Jul 07 00:46:43 EAT 2010
+#Fri Aug 20 16:39:34 CEST 2010
 eclipse.preferences.version=1
+jarsExcludedFromWebInfLib=D\:/root/dev/openxdata/forms-designer/SharedLib/lib/gwt-dev.jar
 warSrcDir=war
 warSrcDirIsOutput=true

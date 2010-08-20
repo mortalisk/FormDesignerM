@@ -6,6 +6,6 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-io-1.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-fileupload-1.2.1.jar"/>
 	<classpathentry kind="lib" path="/SharedLib/lib/gwt-dev.jar"/>
-	<classpathentry kind="lib" path="D:/EpiHandy/temp/openxdata_formtools_split_base/formtools/war/WEB-INF/lib/appengine-api-1.0-sdk-1.3.5.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-api-1.0-sdk-1.3.5.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

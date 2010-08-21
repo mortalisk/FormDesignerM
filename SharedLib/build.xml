@@ -5,7 +5,7 @@
 <!-- ** www.openxdata.org - Licensed as written in license.txt and original sources of this file and its authors are found in sources.txt.                                  ** -->
 <!-- ** @version 1.0                                        ** -->
 <!-- ********************************************************* -->
-<project name="formtools" default="package-jar">
+<project name="Formtools" default="package-jar">
 		
 	<property file="build.properties" /> 
 	

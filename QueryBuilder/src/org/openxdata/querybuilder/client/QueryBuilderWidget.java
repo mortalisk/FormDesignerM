@@ -5,7 +5,6 @@ import org.openxdata.querybuilder.client.view.QueryBuilderView;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockPanel;
 
-
 /**
  * 
  *  www.openxdata.org - Licensed as written in license.txt and original sources of this file and its authors are found in sources.txt.
@@ -14,7 +13,7 @@ import com.google.gwt.user.client.ui.DockPanel;
 public class QueryBuilderWidget extends Composite{
 
 	private DockPanel dockPanel = new DockPanel();
-	//private QueryBuilderController controller;
+	
 	private QueryBuilderView view = new QueryBuilderView();
 	
 	public QueryBuilderWidget(){

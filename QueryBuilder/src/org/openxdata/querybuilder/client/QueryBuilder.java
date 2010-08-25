@@ -16,9 +16,13 @@ public class QueryBuilder implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
+		if(RootPanel.get("querybuilder") == null)
+			return;
+		
 		FormUtil.setupUncaughtExceptionHandler();	
 		
 		queryBuilder = new QueryBuilderWidget();
+
 
 		RootPanel.get("querybuilder").add(queryBuilder);
 

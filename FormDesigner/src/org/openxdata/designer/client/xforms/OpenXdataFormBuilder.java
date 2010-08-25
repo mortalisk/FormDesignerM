@@ -53,8 +53,7 @@ public class OpenXdataFormBuilder {
 
 		return XmlUtil.fromDoc2String(doc);
 	}
-	
-	
+
 	private static Element getLanguageNode(Document doc, HashMap<String,String> localeText){
 		Element languageNode = doc.createElement("Language");
 		
@@ -67,7 +66,6 @@ public class OpenXdataFormBuilder {
 		
 		return languageNode;
 	}
-	
 	
 	public static String getCombinedLanguageText(HashMap<String,String> localeText){
 		Document doc = XMLParser.createDocument();

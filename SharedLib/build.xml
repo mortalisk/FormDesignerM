@@ -2,7 +2,9 @@
 <!-- ********************************************************* -->
 <!-- ** OpenXdata                                     ** -->
 <!-- **	                                                    ** -->
-<!-- ** www.openxdata.org - Licensed as written in license.txt and original sources of this file and its authors are found in sources.txt.                                  ** -->
+<!-- ** www.openxdata.org - Licensed as written in license.txt 
+        and original sources of this file and its authors are 
+        found in sources.txt. 								** -->
 <!-- ** @version 1.0                                        ** -->
 <!-- ********************************************************* -->
 <project name="Formtools" default="package-jar">

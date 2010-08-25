@@ -41,18 +41,7 @@ public class XPathExpression implements Serializable
 			//trace the root element
 			expression = new String(expression.toCharArray(), 1, expression.length()-1);
 		} 
-		//System.out.println("Expression "+expression+" start node is "+start);
-		
-		//because there is no support for StringTokenizer
-		//on j2me we remove this
-		/*
-		StringTokenizer st = new StringTokenizer(expression, "/");
-		locationStepStringsArray = new String[st.countTokens()];
-		for(int i = 0; i < locationStepStringsArray.length; i++) {
-			locationStepStringsArray[i] = st.nextToken();
-			System.out.println("location step: "+locationStepStringsArray[i]);
-		}
-		*/
+
 		for(int start = 0, end = 0; end < expression.length()-1 && end!=-1; start = end+1) {
 			end = expression.indexOf("/", start);
 			
@@ -109,17 +98,7 @@ public class XPathExpression implements Serializable
 	private void addAttributeSteps(String step, Vector<String> list){
 		int posBeg = 0;
 		int posEnd = step.indexOf(" and ");
-		/*if(posEnd > 0){ //TODO Need to support more than two and expressions
-			list.addElement(step.substring(posBeg, posEnd+1).trim() + "]");
-			
-			posBeg = posEnd + 5;
-			posEnd = step.indexOf(']',posBeg);
-			list.addElement(step.substring(0, step.indexOf('@'))+step.substring(posBeg, posEnd+1));
-			
-			posBeg = posEnd + 1;
-			posEnd = step.indexOf(']',posBeg);
-		}
-		else*/
+
 			posEnd = step.indexOf(']',posBeg);
 		
 		while(posEnd > 0){

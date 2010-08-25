@@ -152,7 +152,6 @@ public class FormDesignerEntryPoint implements EntryPoint ,ResizeHandler{
    		$wnd.submitForm = @org.openxdata.sharedlib.client.view.FormRunnerView::submitForm();
 	}-*/;
 	
-	
 	/**
 	 * Loads a list of locales supported by the form designer.
 	 */

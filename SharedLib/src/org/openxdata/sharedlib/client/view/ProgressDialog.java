@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.Label;
 public class ProgressDialog extends DialogBox{
 
 	/** The label to show the progress or processing message. */
-	private Label label = new Label(LocaleText.get("processingMsg"));
+	private Label label = new Label("Loading...");//new Label(LocaleText.get("processingMsg"));
 
 	/**
 	 * Creates a new instance of the progress dialog.

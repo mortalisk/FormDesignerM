@@ -26,7 +26,6 @@ public class Menu extends Composite {
 	/** Listener to menu item click events. */
 	private IFormDesignerListener controller;
 
-
 	/**
 	 * Creates a new instance of the menu bar.
 	 * 

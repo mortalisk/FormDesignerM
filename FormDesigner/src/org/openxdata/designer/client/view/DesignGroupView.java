@@ -177,9 +177,6 @@ public class DesignGroupView extends Composite implements WidgetSelectionListene
 					((DesignSurfaceView)widgetSelectionListener).clearSelection();
 					if(selectedDragController.getSelectedWidgetCount() == 1)
 						((DesignSurfaceView)widgetSelectionListener).clearGroupBoxSelection();
-
-					//if(!multipleSel && selectedDragController.getSelectedWidgetCount() == 1)
-					//	selectedDragController.clearSelection();
 				}
 
 				if(!multipleSel && !selectedDragController.isWidgetSelected(widget)/*selectedDragController.getSelectedWidgetCount() == 1*/)

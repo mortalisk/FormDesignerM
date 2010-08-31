@@ -988,7 +988,7 @@ public class WidgetPropertiesView extends Composite implements WidgetSelectionLi
 				if(formDef != null){
 					questionDef = formDef.getQuestion(value);
 					if(questionDef != null)
-						txtBinding.setText(questionDef.getText());
+						txtBinding.setText(questionDef.getBinding());
 					else{
 						if("submit".equalsIgnoreCase(value)||"addnew".equalsIgnoreCase(value)||"remove".equalsIgnoreCase(value)
 								|| "browse".equalsIgnoreCase(value) || "clear".equalsIgnoreCase(value) || "cancel".equalsIgnoreCase(value) ||

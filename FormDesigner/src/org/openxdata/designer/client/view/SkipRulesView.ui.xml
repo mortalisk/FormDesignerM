@@ -1,0 +1,33 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:my="urn:import:org.openxdata.designer.client.widget.skiprule">
+	<ui:style>
+		.cell-padding {
+			padding:7px 0 7px 0;
+		}
+	</ui:style>
+	<g:VerticalPanel spacing="5">
+		<g:HTMLPanel styleName="{style.cell-padding}">
+			<span ui:field="lblAction" />
+			<span ui:field="lblAnd" />
+			<g:Anchor ui:field="otherQts" href="#" />
+		</g:HTMLPanel>
+		
+		<g:HorizontalPanel spacing="5">
+			<g:RadioButton name="action" ui:field="rdEnable">Enable</g:RadioButton>
+			<g:RadioButton name="action" ui:field="rdDisable">Disable</g:RadioButton>
+			<g:RadioButton name="action" ui:field="rdShow">Show</g:RadioButton>
+			<g:RadioButton name="action" ui:field="rdHide">Hide</g:RadioButton>
+			<g:CheckBox ui:field="chkMakeRequired">Make Required</g:CheckBox>
+		</g:HorizontalPanel>
+		
+		<g:HTMLPanel ui:field="conditionPanel">
+			<span id="whenSpan" />
+			<my:GroupHyperlink ui:field="groupHyperlink" />
+			<span id="followingSpan" />
+		</g:HTMLPanel>
+		
+		<g:Anchor ui:field="addConditionLink" href="#" />
+	</g:VerticalPanel>
+</ui:UiBinder> 

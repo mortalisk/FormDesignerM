@@ -14,13 +14,17 @@ import org.openxdata.sharedlib.client.model.ModelConstants;
 import org.openxdata.sharedlib.client.model.QuestionDef;
 import org.openxdata.sharedlib.client.model.SkipRule;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiFactory;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -34,20 +38,19 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class SkipRulesView extends Composite implements IConditionController, QuestionSelectionListener{
 
-	/** The widget horizontal spacing in horizontal panels. */
-	private static final int HORIZONTAL_SPACING = 5;
+	private static SkipRulesViewUiBinder uiBinder = GWT.create(SkipRulesViewUiBinder.class);
 
-	/** The widget vertical spacing in vertical panels. */
-	private static final int VERTICAL_SPACING = 0;
-
+	interface SkipRulesViewUiBinder extends UiBinder<VerticalPanel, SkipRulesView> {
+	}	
+	
 	/** The main or root widget. */
-	private VerticalPanel verticalPanel = new VerticalPanel();
+	private VerticalPanel verticalPanel;
 
 	/** Widget for adding new conditions. */
-	private Anchor addConditionLink = new Anchor(LocaleText.get("clickToAddNewCondition"), "#");
+	@UiField Anchor addConditionLink;
 
 	/** Widget for grouping conditions. Has all,any, none, and not all. */
-	private GroupHyperlink groupHyperlink = new GroupHyperlink(GroupHyperlink.CONDITIONS_OPERATOR_TEXT_ALL, "#");
+	@UiField GroupHyperlink groupHyperlink;
 
 	/** The form definition object that this skip rule belongs to. */
 	private FormDef formDef;
@@ -65,103 +68,73 @@ public class SkipRulesView extends Composite implements IConditionController, Qu
 	private boolean enabled;
 
 	/** Widget for the skip rule action to enable a question. */
-	private RadioButton rdEnable = new RadioButton("action","Enable");
+	@UiField RadioButton rdEnable;
 
 	/** Widget for the skip rule action to disable a question. */
-	private RadioButton rdDisable = new RadioButton("action","Disable");
+	@UiField RadioButton rdDisable;
 
 	/** Widget for the skip rule action to show a question. */
-	private RadioButton rdShow = new RadioButton("action","Show");
+	@UiField RadioButton rdShow;
 
 	/** Widget for the skip rule action to hide a question. */
-	private RadioButton rdHide = new RadioButton("action","Hide");
+	@UiField RadioButton rdHide;
 
 	/** Widget for the skip rule action to make a question required. */
-	private CheckBox chkMakeRequired = new CheckBox("Make Required");
+	@UiField CheckBox chkMakeRequired;
 
 	/** Widget for Label "for question". */
-	private Label lblAction = new Label(LocaleText.get("forQuestion"));
+	@UiField SpanElement lblAction;
 
 	/** Widget for Label "and". */
-	private Label lblAnd = new Label(LocaleText.get("and"));
+	@UiField SpanElement lblAnd;
+	
+	/** Link to show other questions */
+	@UiField Anchor otherQts;
 
+	/** Panel containing text and link for when to apply condition */
+	@UiField HTMLPanel conditionPanel;
 
 	/**
 	 * Creates a new instance of the skip logic widget.
 	 */
 	public SkipRulesView(){
-		setupWidgets();
-	}
-
-	/**
-	 * Sets up the widgets.
-	 */
-	private void setupWidgets(){
-		HorizontalPanel horizontalPanel = new HorizontalPanel();
-		horizontalPanel.setSpacing(HORIZONTAL_SPACING);
-
-		HorizontalPanel actionPanel = new HorizontalPanel();
-		actionPanel.add(rdEnable);
-		actionPanel.add(rdDisable);
-		actionPanel.add(rdShow);
-		actionPanel.add(rdHide);
-		actionPanel.add(chkMakeRequired);
-		actionPanel.setSpacing(5);
-
-		Anchor click4OtherQuestionsAnchor = new Anchor(LocaleText.get("clickForOtherQuestions"), "#");
-		click4OtherQuestionsAnchor.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event){
-				showOtherQuestions();
-			}
-		});
-
-		HorizontalPanel horzPanel = new HorizontalPanel();
-		horzPanel.setSpacing(10);
-		horzPanel.add(lblAction);
-		horzPanel.add(lblAnd);
-		horzPanel.add(click4OtherQuestionsAnchor);
-
-		verticalPanel.add(horzPanel);
-		verticalPanel.add(actionPanel);
-
-		horizontalPanel.add(new Label(LocaleText.get("when")));
-		horizontalPanel.add(groupHyperlink);
-		horizontalPanel.add(new Label(LocaleText.get("ofTheFollowingApply")));
-		verticalPanel.add(horizontalPanel);
-
-		verticalPanel.add(addConditionLink);
-
-		addConditionLink.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event){
-				addCondition();
-			}
-		});
-
-		rdEnable.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event){
-				updateMakeRequired();
-			}
-		});
-		rdDisable.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event){
-				updateMakeRequired();
-			}
-		});
-		rdShow.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event){
-				updateMakeRequired();
-			}
-		});
-		rdHide.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event){
-				updateMakeRequired();
-			}
-		});
-
-		verticalPanel.setSpacing(VERTICAL_SPACING);
+		verticalPanel = uiBinder.createAndBindUi(this);
+		
 		initWidget(verticalPanel);
+		
+		// set localized text on some of the widgets
+		// TODO(droberge): Determine if there is a way to set localized text in XML
+		lblAction.setInnerText(LocaleText.get("forQuestion"));
+		lblAnd.setInnerText(LocaleText.get("and"));
+		otherQts.setText(LocaleText.get("clickForOtherQuestions"));
+		addConditionLink.setText(LocaleText.get("clickToAddNewCondition"));
+		
+		SpanElement conditionSpan = SpanElement.as(conditionPanel.getElementById("whenSpan"));
+		conditionSpan.setInnerText(LocaleText.get("when"));
+		
+		conditionSpan = SpanElement.as(conditionPanel.getElementById("followingSpan"));
+		conditionSpan.setInnerText(LocaleText.get("ofTheFollowingApply"));
+	}
+	
+	@UiFactory GroupHyperlink makeGroupHyperlink() {
+		return new GroupHyperlink(GroupHyperlink.CONDITIONS_OPERATOR_TEXT_ALL, "#");
+	}
+	
+	@UiHandler("addConditionLink")
+	protected void handleConditionLinkClick(ClickEvent event) {
+		addCondition();
+	}
+	
+	@UiHandler("otherQts")
+	protected void handleOtherQtsClick(ClickEvent event) {
+		showOtherQuestions();
 	}
 
+	@UiHandler({"rdEnable", "rdDisable", "rdShow", "rdHide"})
+	protected void handleRadioClick(ClickEvent event) {
+		updateMakeRequired();
+	}
+	
 	/**
 	 * Enables the make required widget if the enable or show widget is ticked, 
 	 * else disables and unticks it.
@@ -304,10 +277,10 @@ public class SkipRulesView extends Composite implements IConditionController, Qu
 
 		if(questionDef != null){
 			formDef = questionDef.getParentFormDef();
-			lblAction.setText(LocaleText.get("forQuestion") + questionDef.getDisplayText());
+			lblAction.setInnerText(LocaleText.get("forQuestion") + questionDef.getDisplayText());
 		}
 		else
-			lblAction.setText(LocaleText.get("forQuestion"));
+			lblAction.setInnerText(LocaleText.get("forQuestion"));
 
 		this.questionDef = questionDef;
 
@@ -356,7 +329,7 @@ public class SkipRulesView extends Composite implements IConditionController, Qu
 			updateSkipRule();
 
 		questionDef = null;
-		lblAction.setText(LocaleText.get("forQuestion"));
+		lblAction.setInnerText(LocaleText.get("forQuestion"));
 
 		while(verticalPanel.getWidgetCount() > 4)
 			verticalPanel.remove(verticalPanel.getWidget(3));

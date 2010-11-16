@@ -26,11 +26,14 @@ import org.openxdata.sharedlib.client.widget.RuntimeWidgetWrapper;
 
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventPreview;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DecoratedTabPanel;
@@ -153,10 +156,16 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 		FormUtil.maximizeWidget(tabs);
 
 		tabs.selectTab(0);
+		
+		// register initial state with history
+		History.newItem("0");
+		
 		initWidget(tabs);
 		tabs.addSelectionHandler(this);
 
 		Context.setCurrentMode(Context.MODE_QUESTION_PROPERTIES);
+		
+		History.addValueChangeHandler(new HistoryHandler());
 
 		previewEvents();
 	}
@@ -200,6 +209,10 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 	 * @see com.google.gwt.event.logical.shared.SelectionHandler#onSelection(SelectionEvent)
 	 */
 	public void onSelection(SelectionEvent<Integer> event){
+		// register selection in history
+		History.newItem(event.getSelectedItem().toString(), false);
+
+		
 		selectedTabIndex = event.getSelectedItem();
 
 		if(selectedTabIndex == SELECTED_INDEX_DESIGN_SURFACE)
@@ -984,5 +997,24 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 	
 	public WidgetPropertyChangeListener getWidgetPropertyChangeListener(){
 		return designSurfaceView;
+	}
+	
+	/**
+	 * Simple implementation of a History listener
+	 * History tokens are registered when a tab is selected by the user
+	 * The tokens themselves are just the tab index
+	 */
+	private class HistoryHandler implements ValueChangeHandler<String> {
+
+		@Override
+		public void onValueChange(ValueChangeEvent<String> event) {
+			try {
+				int tab = Integer.parseInt( event.getValue() );
+				tabs.selectTab(tab);
+			} catch(NumberFormatException e) {
+				// do nothing
+			}
+		}
+		
 	}
 }

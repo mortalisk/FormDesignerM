@@ -1006,7 +1006,7 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 	 */
 	private class HistoryHandler implements ValueChangeHandler<String> {
 
-		@Override
+		//@Override
 		public void onValueChange(ValueChangeEvent<String> event) {
 			try {
 				int tab = Integer.parseInt( event.getValue() );

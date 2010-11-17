@@ -51,10 +51,10 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  */
 public class ValueWidget extends Composite implements ItemSelectionListener, CloseHandler<PopupPanel>{
 
-	private static final String EMPTY_VALUE = "_____";
-	private static final String BETWEEN_WIDGET_SEPARATOR = "   "+ LocaleText.get("and") + "   ";
-	private static final String BETWEEN_VALUE_SEPARATOR = " " + LocaleText.get("and") + " ";
-	private static final String LIST_SEPARATOR = " , ";
+	public static final String EMPTY_VALUE = "_____";
+	public static final String BETWEEN_WIDGET_SEPARATOR = "   "+ LocaleText.get("and") + "   ";
+	public static final String BETWEEN_VALUE_SEPARATOR = " " + LocaleText.get("and") + " ";
+	public static final String LIST_SEPARATOR = " , ";
 
 	private QuestionDef questionDef;
 	private int operator = ModelConstants.OPERATOR_NULL;
@@ -701,5 +701,14 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 	
 	public void setParentQuestionDef(QuestionDef questionDef){
 		this.parentQuestionDef = questionDef;
+	}
+	
+	/**
+	 * Indicates whether the value is actually a pair of values, e.g. "0 and 10".
+	 * 
+	 * @return true if the value is a pair, false otherwise.
+	 */
+	public boolean isValuePair(){
+		return getValue().contains(BETWEEN_VALUE_SEPARATOR);
 	}
 }

@@ -195,7 +195,15 @@ public class ConditionWidget extends Composite implements ItemSelectionListener{
 
 		condition.setQuestionId(questionDef.getId());
 		condition.setOperator(operator);
-		condition.setValue(valueWidget.getValue());
+		
+		if (ModelConstants.operatorTakesSecondValue(operator)){
+			String[] valuePair = valueWidget.getValue().split(ValueWidget.BETWEEN_VALUE_SEPARATOR);
+			condition.setValue(valuePair[0].trim());
+			condition.setSecondValue(valuePair[1].trim());
+		}
+		else
+			condition.setValue(valueWidget.getValue());
+		
 		condition.setValueQtnDef(valueWidget.getValueQtnDef());
 		condition.setFunction(function);
 

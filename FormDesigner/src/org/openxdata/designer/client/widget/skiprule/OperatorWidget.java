@@ -1,18 +1,14 @@
 package org.openxdata.designer.client.widget.skiprule;
 
 import org.openxdata.designer.client.controller.ItemSelectionListener;
-import org.openxdata.designer.client.widget.SelectItemCommand;
-import org.openxdata.sharedlib.client.OpenXdataConstants;
 import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.model.ModelConstants;
 import org.openxdata.sharedlib.client.model.QuestionDef;
 
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.ui.Hyperlink;
-import com.google.gwt.user.client.ui.MenuBar;
-import com.google.gwt.user.client.ui.PopupPanel;
-import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.ListBox;
 
 
 /**
@@ -22,7 +18,7 @@ import com.google.gwt.user.client.ui.ScrollPanel;
  *  www.openxdata.org - Licensed as written in license.txt and original sources of this file and its authors are found in sources.txt.
  *
  */
-public class OperatorHyperlink extends Hyperlink implements ItemSelectionListener {
+public class OperatorWidget extends Composite implements ChangeHandler {
 	
 	/** The operator text: is equal to */
 	public static final String OP_TEXT_EQUAL = LocaleText.get("isEqualTo");
@@ -54,45 +50,35 @@ public class OperatorHyperlink extends Hyperlink implements ItemSelectionListene
 	/** The operator text: is not in list */
 	public static final String OP_TEXT_NOT_IN_LIST = LocaleText.get("isNotInList");
 	
-	/** The operator text: starts with */
-	public static final String OP_TEXT_STARTS_WITH = LocaleText.get("startsWith");
-	
-	/** The operator text: does not start with */
-	public static final String OP_TEXT_NOT_START_WITH = LocaleText.get("doesNotStartWith");
-	
-	/** The operator text: contains */
-	public static final String OP_TEXT_CONTAINS = LocaleText.get("contains");
-	
-	/** The operator text: does not contain */
-	public static final String OP_TEXT_NOT_CONTAIN = LocaleText.get("doesNotContain");
-	
 	/** The operator text: is between */
 	public static final String OP_TEXT_BETWEEN = LocaleText.get("isBetween");
 	
 	/** The operator text: is not between */
 	public static final String OP_TEXT_NOT_BETWEEN = LocaleText.get("isNotBetween");
 
-	/** The popup to display the allowed operators for the current question data type. */
-	private PopupPanel popup;
-	
 	/** The current question data type. */
 	private int dataType =  QuestionDef.QTN_TYPE_TEXT;
 	
 	/** The selection change listener. */
 	private ItemSelectionListener itemSelectionListener;
-	
+
+	/** List box that contains the operators the user can select from */
+	private final ListBox listbox;
 	
 	/**
-	 * Creates a new instance of the operator hyperlink.
+	 * Creates a new instance of the operator widget
 	 * 
 	 * @param text the default display text.
-	 * @param targetHistoryToken the history token to which it will link.
 	 * @param itemSelectionListener the listener to selection change events.
 	 */
-	public OperatorHyperlink(String text, String targetHistoryToken,ItemSelectionListener itemSelectionListener){
-		super(text,targetHistoryToken);
+	public OperatorWidget(String displayText, ItemSelectionListener itemSelectionListener){
+		listbox = new ListBox();
+		listbox.addChangeHandler(this);
+		initWidget(listbox);
 		this.itemSelectionListener = itemSelectionListener;
-		DOM.sinkEvents(getElement(), DOM.getEventsSunk(getElement()) | Event.ONMOUSEDOWN );
+		
+		buildOptionList();
+		setSelectedOperator(displayText);
 	}
 	
 	/**
@@ -102,96 +88,48 @@ public class OperatorHyperlink extends Hyperlink implements ItemSelectionListene
 	 */
 	public void setDataType(int dataType){
 		this.dataType = dataType;
-		
-		//We set the universal operator which is valid for all questions,
-		//as the one to start with or display by default.
-		setText(OP_TEXT_EQUAL);
+		buildOptionList();
 	}
 	  
-	@Override
-	public void onBrowserEvent(Event event) {
-		  if (DOM.eventGetType(event) == Event.ONMOUSEDOWN) {
-			  itemSelectionListener.onStartItemSelection(this);
-			  int height = setupPopup();
-		      popup.setPopupPosition(event.getClientX(), event.getClientY()-height);
-		      popup.show();
-		  }
-	}
-	
 	/**
-	 * Creates the operator popup for the currently selected question.
-	 * 
-	 * @return the height of the popup.
+	 * Builds the options to put in the list box. The options are based
+	 * on the data type of the question
 	 */
-	private int setupPopup(){
-		popup = new PopupPanel(true,true);
-		
-		int count = 0;
-		
-		MenuBar menuBar = new MenuBar(true);
+	private void buildOptionList(){
+		listbox.clear();
 		
 		if(!(dataType == QuestionDef.QTN_TYPE_GPS || dataType == QuestionDef.QTN_TYPE_VIDEO ||
 				dataType == QuestionDef.QTN_TYPE_AUDIO || dataType == QuestionDef.QTN_TYPE_IMAGE ||
 				dataType == QuestionDef.QTN_TYPE_BARCODE)){
-			menuBar.addItem(OP_TEXT_EQUAL,true, new SelectItemCommand(OP_TEXT_EQUAL,this));
-			menuBar.addItem(OP_TEXT_NOT_EQUAL,true, new SelectItemCommand(OP_TEXT_NOT_EQUAL,this));
-			count += 2;
+			listbox.addItem(OP_TEXT_EQUAL);
+			listbox.addItem(OP_TEXT_NOT_EQUAL);
 		}
 		  
 		if(dataType == QuestionDef.QTN_TYPE_DATE || dataType == QuestionDef.QTN_TYPE_DATE_TIME ||
 			dataType == QuestionDef.QTN_TYPE_DECIMAL || dataType == QuestionDef.QTN_TYPE_NUMERIC ||
 			dataType == QuestionDef.QTN_TYPE_TIME || dataType == QuestionDef.QTN_TYPE_REPEAT){
 			
-			menuBar.addItem(OP_TEXT_GREATER_THAN,true,new SelectItemCommand(OP_TEXT_GREATER_THAN,this));	  
-			menuBar.addItem(OP_TEXT_GREATER_THAN_EQUAL,true, new SelectItemCommand(OP_TEXT_GREATER_THAN_EQUAL,this));	  
-			menuBar.addItem(OP_TEXT_LESS_THAN,true,new SelectItemCommand(OP_TEXT_LESS_THAN,this));			  	  
-			menuBar.addItem(OP_TEXT_LESS_THAN_EQUAL,true, new SelectItemCommand(OP_TEXT_LESS_THAN_EQUAL,this));		  
-			menuBar.addItem(OP_TEXT_BETWEEN,true,new SelectItemCommand(OP_TEXT_BETWEEN,this));	  
-			menuBar.addItem(OP_TEXT_NOT_BETWEEN,true, new SelectItemCommand(OP_TEXT_NOT_BETWEEN,this));
-			count += 6;
+			listbox.addItem(OP_TEXT_GREATER_THAN);	  
+			listbox.addItem(OP_TEXT_GREATER_THAN_EQUAL);	  
+			listbox.addItem(OP_TEXT_LESS_THAN);			  	  
+			listbox.addItem(OP_TEXT_LESS_THAN_EQUAL);		  
+			listbox.addItem(OP_TEXT_BETWEEN);	  
+			listbox.addItem(OP_TEXT_NOT_BETWEEN);
 		}
 		
 		if(dataType == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || dataType == QuestionDef.QTN_TYPE_LIST_MULTIPLE){		  
-			menuBar.addItem(OP_TEXT_IN_LIST,true,new SelectItemCommand(OP_TEXT_IN_LIST,this));	  
-			menuBar.addItem(OP_TEXT_NOT_IN_LIST,true, new SelectItemCommand(OP_TEXT_NOT_IN_LIST,this));
-			count += 2;
+			listbox.addItem(OP_TEXT_IN_LIST);	  
+			listbox.addItem(OP_TEXT_NOT_IN_LIST);
 		}
 			  
-		menuBar.addItem(OP_TEXT_NULL,true, new SelectItemCommand(OP_TEXT_NULL,this));
-		menuBar.addItem(OP_TEXT_NOT_NULL,true, new SelectItemCommand(OP_TEXT_NOT_NULL,this));
- 		
-		if(dataType == QuestionDef.QTN_TYPE_TEXT ){	  
-			menuBar.addItem(OP_TEXT_STARTS_WITH,true,new SelectItemCommand(OP_TEXT_STARTS_WITH,this));	  
-			menuBar.addItem(OP_TEXT_NOT_START_WITH,true, new SelectItemCommand(OP_TEXT_NOT_START_WITH,this));	  
-			menuBar.addItem(OP_TEXT_CONTAINS,true,new SelectItemCommand(OP_TEXT_CONTAINS,this));	  
-			menuBar.addItem(OP_TEXT_NOT_CONTAIN,true, new SelectItemCommand(OP_TEXT_NOT_CONTAIN,this));
-			count += 4;
-		}
-		 
-		int height = count*42;
-		if(height > 200)
-			height = 200;
-		
-		ScrollPanel scrollPanel = new ScrollPanel();
-		scrollPanel.setWidget(menuBar);
-		scrollPanel.setWidth("300"+OpenXdataConstants.UNITS);
-		scrollPanel.setHeight(height+OpenXdataConstants.UNITS);
-		//scrollPanel.setHeight((Window.getClientHeight() - getAbsoluteTop() - 25)+OpenXdataConstants.UNITS);
-		
-		popup.setWidget(scrollPanel);
-		
-		return height;
+		listbox.addItem(OP_TEXT_NULL);
+		listbox.addItem(OP_TEXT_NOT_NULL);
 	}
 	
-	/**
-	 * @see org.openxdata.designer.client.controller.ItemSelectionListener#onItemSelected(Object, Object)
-	 */
-	public void onItemSelected(Object sender, Object item) {
-		if(sender instanceof SelectItemCommand){
-			popup.hide();
-			setText((String)item);
-			itemSelectionListener.onItemSelected(this, fromOperatorText2Value((String)item));
-		}
+	@Override
+	public void onChange(ChangeEvent event) {
+		String itemSelected = listbox.getItemText(listbox.getSelectedIndex());
+		itemSelectionListener.onItemSelected(this, fromOperatorText2Value(itemSelected));
 	}
 	
 	/**
@@ -221,26 +159,11 @@ public class OperatorHyperlink extends Hyperlink implements ItemSelectionListene
 			return ModelConstants.OPERATOR_IN_LIST;
 		else if(text.equals(OP_TEXT_NOT_IN_LIST))
 			return ModelConstants.OPERATOR_NOT_IN_LIST;
-		else if(text.equals(OP_TEXT_STARTS_WITH))
-			return ModelConstants.OPERATOR_STARTS_WITH;
-		else if(text.equals(OP_TEXT_NOT_START_WITH))
-			return ModelConstants.OPERATOR_NOT_START_WITH;
-		else if(text.equals(OP_TEXT_CONTAINS))
-			return ModelConstants.OPERATOR_CONTAINS;
-		else if(text.equals(OP_TEXT_NOT_CONTAIN))
-			return ModelConstants.OPERATOR_NOT_CONTAIN;
 		else if(text.equals(OP_TEXT_BETWEEN))
 			return ModelConstants.OPERATOR_BETWEEN;
 		else if(text.equals(OP_TEXT_NOT_BETWEEN))
 			return ModelConstants.OPERATOR_NOT_BETWEEN;
 		return ModelConstants.OPERATOR_NULL;
-	}
-	
-	/**
-	 * @see org.openxdata.designer.client.controller.ItemSelectionListener#onStartItemSelection(Object)
-	 */
-	public void onStartItemSelection(Object sender){
-		
 	}
 	
 	/**
@@ -271,19 +194,28 @@ public class OperatorHyperlink extends Hyperlink implements ItemSelectionListene
 			operatorText = OP_TEXT_IN_LIST;
 		else if(operator == ModelConstants.OPERATOR_NOT_IN_LIST)
 			operatorText = OP_TEXT_NOT_IN_LIST;
-		else if(operator == ModelConstants.OPERATOR_STARTS_WITH)
-			operatorText = OP_TEXT_STARTS_WITH;
-		else if(operator == ModelConstants.OPERATOR_NOT_START_WITH)
-			operatorText = OP_TEXT_NOT_START_WITH;
-		else if(operator == ModelConstants.OPERATOR_CONTAINS)
-			operatorText = OP_TEXT_CONTAINS;
-		else if(operator == ModelConstants.OPERATOR_NOT_CONTAIN)
-			operatorText = OP_TEXT_NOT_CONTAIN;
 		else if(operator == ModelConstants.OPERATOR_BETWEEN)
 			operatorText = OP_TEXT_BETWEEN;
 		else if(operator == ModelConstants.OPERATOR_NOT_BETWEEN)
 			operatorText = OP_TEXT_NOT_BETWEEN;
 		
-		setText(operatorText);
+		// now set the operator as the selected option in the listbox
+		setSelectedOperator(operatorText);
+	}
+
+	/**
+	 * Given an operator string, this method will attempt to set the corresponding
+	 * option in the list box as the currently selected item
+	 * 
+	 * @param operatorText
+	 */
+	private void setSelectedOperator(String operatorText) {
+		int optionCnt = listbox.getItemCount();
+		for(int i = 0; i < optionCnt; i++) {
+			if (listbox.getItemText(i).equals(operatorText)) {
+				listbox.setSelectedIndex(i);
+				break;
+			}
+		}
 	}
 }

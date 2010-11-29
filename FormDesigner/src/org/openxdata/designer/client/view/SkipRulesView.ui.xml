@@ -26,8 +26,8 @@
 			<span id="whenSpan" />
 			<my:GroupHyperlink ui:field="groupHyperlink" />
 			<span id="followingSpan" />
+			<br />
+			<g:Button ui:field="addConditionButton" />
 		</g:HTMLPanel>
-		
-		<g:Anchor ui:field="addConditionLink" href="#" />
 	</g:VerticalPanel>
 </ui:UiBinder> 

@@ -1,5 +1,6 @@
 package org.openxdata.designer.client.view;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -22,12 +23,12 @@ import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 
 /**
@@ -47,7 +48,7 @@ public class SkipRulesView extends Composite implements IConditionController, Qu
 	private VerticalPanel verticalPanel;
 
 	/** Widget for adding new conditions. */
-	@UiField Anchor addConditionLink;
+	@UiField Button addConditionButton;
 
 	/** Widget for grouping conditions. Has all,any, none, and not all. */
 	@UiField GroupHyperlink groupHyperlink;
@@ -93,6 +94,9 @@ public class SkipRulesView extends Composite implements IConditionController, Qu
 
 	/** Panel containing text and link for when to apply condition */
 	@UiField HTMLPanel conditionPanel;
+	
+	/** A list of condition widgets applied to the current selected question */
+	private final List<ConditionWidget> conditions = new ArrayList<ConditionWidget>();
 
 	/**
 	 * Creates a new instance of the skip logic widget.
@@ -107,7 +111,7 @@ public class SkipRulesView extends Composite implements IConditionController, Qu
 		lblAction.setInnerText(LocaleText.get("forQuestion"));
 		lblAnd.setInnerText(LocaleText.get("and"));
 		otherQts.setText(LocaleText.get("clickForOtherQuestions"));
-		addConditionLink.setText(LocaleText.get("clickToAddNewCondition"));
+		addConditionButton.setText(LocaleText.get("newCondition"));
 		
 		SpanElement conditionSpan = SpanElement.as(conditionPanel.getElementById("whenSpan"));
 		conditionSpan.setInnerText(LocaleText.get("when"));
@@ -120,7 +124,7 @@ public class SkipRulesView extends Composite implements IConditionController, Qu
 		return new GroupHyperlink(GroupHyperlink.CONDITIONS_OPERATOR_TEXT_ALL, "#");
 	}
 	
-	@UiHandler("addConditionLink")
+	@UiHandler("addConditionButton")
 	protected void handleConditionLinkClick(ClickEvent event) {
 		addCondition();
 	}
@@ -150,10 +154,9 @@ public class SkipRulesView extends Composite implements IConditionController, Qu
 	 */
 	public void addCondition(){
 		if(formDef != null && enabled){
-			verticalPanel.remove(addConditionLink);
 			ConditionWidget conditionWidget = new ConditionWidget(formDef,this,true,questionDef);
+			conditions.add(conditionWidget);
 			verticalPanel.add(conditionWidget);
-			verticalPanel.add(addConditionLink);
 
 			if(!(rdEnable.getValue() == true||rdDisable.getValue() == true||rdShow.getValue() == true||rdHide.getValue() == true)){
 				rdEnable.setValue(true);
@@ -185,6 +188,7 @@ public class SkipRulesView extends Composite implements IConditionController, Qu
 					skipRule.removeCondition(condition);
 			}
 		}
+		conditions.remove(conditionWidget);
 		verticalPanel.remove(conditionWidget);
 	}
 
@@ -200,21 +204,17 @@ public class SkipRulesView extends Composite implements IConditionController, Qu
 		if(skipRule == null)
 			skipRule = new SkipRule();
 
-		int conditionCount = 0;
-		int count = verticalPanel.getWidgetCount();
-		for(int i=0; i<count; i++){
-			Widget widget = verticalPanel.getWidget(i);
-			if(widget instanceof ConditionWidget){
-				Condition condition = ((ConditionWidget)widget).getCondition();
-				if(condition != null && !skipRule.containsCondition(condition))
-					skipRule.addCondition(condition);
-				else if(condition != null && skipRule.containsCondition(condition))
-					skipRule.updateCondition(condition);
-				conditionCount++;
+		for(int i=0; i < conditions.size(); i++){
+			Condition condition = conditions.get(i).getCondition();
+
+			if(condition != null && !skipRule.containsCondition(condition)) {
+				skipRule.addCondition(condition);
+			} else if(condition != null && skipRule.containsCondition(condition)) {
+				skipRule.updateCondition(condition);
 			}
 		}
 
-		if(skipRule.getConditions() == null || conditionCount == 0)
+		if(skipRule.getConditions() == null || conditions.size() == 0)
 			skipRule = null;
 		else{
 			skipRule.setConditionsOperator(groupHyperlink.getConditionsOperator());
@@ -288,11 +288,11 @@ public class SkipRulesView extends Composite implements IConditionController, Qu
 		if(skipRule != null){
 			groupHyperlink.setCondionsOperator(skipRule.getConditionsOperator());
 			setAction(skipRule.getAction());
-			verticalPanel.remove(addConditionLink);
 			Vector<Condition> conditions = skipRule.getConditions();
 			Vector<Condition> lostConditions = new Vector<Condition>();
 			for(int i=0; i<conditions.size(); i++){
 				ConditionWidget conditionWidget = new ConditionWidget(formDef,this,true,questionDef);
+				this.conditions.add(conditionWidget);
 				if(conditionWidget.setCondition((Condition)conditions.elementAt(i)))
 					verticalPanel.add(conditionWidget);
 				else
@@ -305,7 +305,6 @@ public class SkipRulesView extends Composite implements IConditionController, Qu
 				skipRule = null;
 			}
 
-			verticalPanel.add(addConditionLink);
 		}
 	}
 
@@ -331,8 +330,12 @@ public class SkipRulesView extends Composite implements IConditionController, Qu
 		questionDef = null;
 		lblAction.setInnerText(LocaleText.get("forQuestion"));
 
-		while(verticalPanel.getWidgetCount() > 4)
-			verticalPanel.remove(verticalPanel.getWidget(3));
+		// clear condition widgets from ui
+		for(int i = 0; i < conditions.size(); i++) {
+			verticalPanel.remove(conditions.get(i));
+		}
+		
+		conditions.clear();
 
 		rdEnable.setValue(false);
 		rdDisable.setValue(false);

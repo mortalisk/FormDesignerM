@@ -105,7 +105,8 @@ public class ConstraintBuilder {
 				constraint = "length(.) ";
 			
 			if(condition.getOperator() == ModelConstants.OPERATOR_BETWEEN)
-				 constraint += XformBuilderUtil.getXpathOperator(ModelConstants.OPERATOR_GREATER,action)+value + " and "+ "." + XformBuilderUtil.getXpathOperator( ModelConstants.OPERATOR_LESS,action)+ condition.getSecondValue();
+				 constraint += XformBuilderUtil.getXpathOperator(ModelConstants.OPERATOR_GREATER, action) + value + " and " + ". " +
+				 				XformBuilderUtil.getXpathOperator(ModelConstants.OPERATOR_LESS, action) + condition.getSecondValue();
 			else if(condition.getOperator() == ModelConstants.OPERATOR_NOT_BETWEEN)
 				 constraint +=XformBuilderUtil.getXpathOperator(ModelConstants.OPERATOR_GREATER,action)+condition.getSecondValue() + " or "+ "." + XformBuilderUtil.getXpathOperator( ModelConstants.OPERATOR_LESS,action)+value ;
 			else if (condition.getOperator() == ModelConstants.OPERATOR_STARTS_WITH)

@@ -13,11 +13,14 @@ import org.openxdata.sharedlib.client.model.QuestionDef;
 import org.openxdata.sharedlib.client.model.ValidationRule;
 import org.openxdata.sharedlib.client.util.FormUtil;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiFactory;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -30,22 +33,34 @@ import com.google.gwt.user.client.ui.Widget;
  *  www.openxdata.org - Licensed as written in license.txt and original sources of this file and its authors are found in sources.txt.
  *
  */
-public class ValidationRulesView extends Composite implements IConditionController{
-
-	/** The widget horizontal spacing in horizontal panels. */
-	private static final int HORIZONTAL_SPACING = 5;
+public class ValidationRulesView extends Composite implements IConditionController {
 	
-	/** The widget vertical spacing in vertical panels. */
-	private static final int VERTICAL_SPACING = 0;
+	interface MyUiBinder extends UiBinder<VerticalPanel, ValidationRulesView> {}
+	private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 	
 	/** The main or root widget. */
-	private VerticalPanel verticalPanel = new VerticalPanel();
+	private VerticalPanel verticalPanel;
 	
 	/** Widget for adding new conditions. */
-	private Anchor addConditionLink = new Anchor(LocaleText.get("clickToAddNewCondition"), "#");
+	@UiField Anchor addConditionLink;
 	
 	/** Widget for grouping conditions. Has all,any, none, and not all. */
-	private GroupHyperlink groupHyperlink = new GroupHyperlink(GroupHyperlink.CONDITIONS_OPERATOR_TEXT_ALL, "#");
+	@UiField GroupHyperlink groupHyperlink;
+	
+	/** Widget for the validation rule error message. */
+	@UiField TextBox txtErrorMessage;
+
+	/** Widget for Label "Question: ". */
+	@UiField Label lblAction;
+	
+	/** Widget for error message label. */
+	@UiField Label lblErrorMsg;
+	
+	/** Widget for error "when" label. */
+	@UiField Label lblWhen;
+
+	/** Widget for "of the following apply" label. */
+	@UiField Label lblOfTheFollowingApply;
 	
 	/** The form definition object that this validation rule belongs to. */
 	private FormDef formDef;
@@ -58,58 +73,41 @@ public class ValidationRulesView extends Composite implements IConditionControll
 	
 	/** Flag determining whether to enable this widget or not. */
 	private boolean enabled;
-	
-	/** Widget for the validation rule error message. */
-	private TextBox txtErrorMessage = new TextBox();
-
-	/** Widget for Label "Question: ". */
-	private Label lblAction = new Label(LocaleText.get("question")+": " /*"Question: "*/);
-	
-	
+		
 	/**
-	 * Creates a new instance of the validation rule widget.
+	 * Creates an instance of the validation rules view and sets up its widgets.
 	 */
 	public ValidationRulesView(){
-		setupWidgets();
+		verticalPanel = uiBinder.createAndBindUi(this);
+		initWidget(verticalPanel);
+		
+		FormUtil.maximizeWidget(txtErrorMessage);
+		lblErrorMsg.setText(LocaleText.get("errorMessage"));		
+		
+		lblAction.setText(LocaleText.get("question")+": " /*"Question: "*/);
+		
+		lblWhen.setText(LocaleText.get("when"));
+		lblOfTheFollowingApply.setText(LocaleText.get("ofTheFollowingApply"));
+		
+		addConditionLink.setText(LocaleText.get("clickToAddNewCondition"));
 	}
 	
+	@UiFactory GroupHyperlink makeGroupHyperlink() {
+		return new GroupHyperlink(GroupHyperlink.CONDITIONS_OPERATOR_TEXT_ALL, "#");
+	}
+	
+	@UiHandler("addConditionLink")
+	void onClick(ClickEvent event){
+		addCondition();
+	}
 	
 	/**
-	 * Sets up the widgets.
+	 * @see com.google.gwt.user.client.WindowResizeListener#onWindowResized(int, int)
 	 */
-	private void setupWidgets(){
-		HorizontalPanel horizontalPanel = new HorizontalPanel();
-		horizontalPanel.setSpacing(HORIZONTAL_SPACING);
-		
-		HorizontalPanel actionPanel = new HorizontalPanel();
-		actionPanel.setWidth("100%");
-		FormUtil.maximizeWidget(txtErrorMessage);
-		actionPanel.add(new Label(LocaleText.get("errorMessage")));
-		actionPanel.add(txtErrorMessage);
-		actionPanel.setSpacing(10);
-		
-		verticalPanel.add(lblAction);
-		verticalPanel.add(actionPanel);
-		
-		horizontalPanel.add(new Label(LocaleText.get("when")));
-		horizontalPanel.add(groupHyperlink);
-		horizontalPanel.add(new Label(LocaleText.get("ofTheFollowingApply")));
-		verticalPanel.add(horizontalPanel);
-		
-		//verticalPanel.add(new ConditionWidget(FormDefTest.getPatientFormDef(),this));
-		verticalPanel.add(addConditionLink);
-		
-		addConditionLink.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event){
-				addCondition();
-			}
-		});
-		
-		
-		verticalPanel.setSpacing(VERTICAL_SPACING);
-		initWidget(verticalPanel);
+	public void onWindowResized(int width, int height){
+		if(width - 700 > 0)
+			txtErrorMessage.setWidth(width - 700 + OpenXdataConstants.UNITS);
 	}
-	
 	
 	/**
 	 * Adds a new condition.
@@ -132,8 +130,7 @@ public class ValidationRulesView extends Composite implements IConditionControll
 			}*/
 		}
 	}
-	
-	
+		
 	/**
 	 * Supposed to add a bracket or nested set of related conditions which are 
 	 * currently not supported.
@@ -141,8 +138,7 @@ public class ValidationRulesView extends Composite implements IConditionControll
 	public void addBracket(){
 		
 	}
-	
-	
+		
 	/**
 	 * Deletes a condition.
 	 * 
@@ -153,8 +149,7 @@ public class ValidationRulesView extends Composite implements IConditionControll
 			validationRule.removeCondition(conditionWidget.getCondition());
 		verticalPanel.remove(conditionWidget);
 	}
-	
-	
+		
 	/**
 	 * Sets or updates the values of the validation rule object from the user's widget selections.
 	 */
@@ -196,8 +191,7 @@ public class ValidationRulesView extends Composite implements IConditionControll
 		if(validationRule != null && !formDef.containsValidationRule(validationRule))
 			formDef.addValidationRule(validationRule);
 	}
-	
-	
+		
 	/**
 	 * Sets the question definition object which is the target of the validation rule.
 	 * 
@@ -244,8 +238,7 @@ public class ValidationRulesView extends Composite implements IConditionControll
 			verticalPanel.add(addConditionLink);
 		}
 	}
-	
-	
+		
 	/**
 	 * Sets the form definition object to which this validation rule belongs.
 	 * 
@@ -257,8 +250,7 @@ public class ValidationRulesView extends Composite implements IConditionControll
 		this.questionDef = null;
 		clearConditions();
 	}
-	
-	
+		
 	/**
 	 * Removes all validation rule conditions.
 	 */
@@ -275,7 +267,6 @@ public class ValidationRulesView extends Composite implements IConditionControll
 		txtErrorMessage.setText(null);
 	}
 	
-	
 	/**
 	 * Sets whether to enable this widget or not.
 	 * 
@@ -289,14 +280,5 @@ public class ValidationRulesView extends Composite implements IConditionControll
 		
 		if(!enabled)
 			clearConditions();
-	}
-	
-	
-	/**
-	 * @see com.google.gwt.user.client.WindowResizeListener#onWindowResized(int, int)
-	 */
-	public void onWindowResized(int width, int height){
-		if(width - 700 > 0)
-			txtErrorMessage.setWidth(width - 700 + OpenXdataConstants.UNITS);
 	}
 }

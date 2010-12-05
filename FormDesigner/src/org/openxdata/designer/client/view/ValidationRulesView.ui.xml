@@ -1,0 +1,25 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:my="urn:import:org.openxdata.designer.client.widget.skiprule">
+
+	<g:VerticalPanel spacing="0">
+		
+		<g:Label ui:field="lblAction" />
+		
+		<g:HorizontalPanel ui:field="actionPanel" spacing="10" width="100%">
+			<g:Label ui:field="lblErrorMsg" />
+			<g:TextBox ui:field="txtErrorMessage" />
+		</g:HorizontalPanel>
+		
+		<g:HorizontalPanel ui:field="horizontalPanel" spacing="5">
+			<g:Label ui:field="lblWhen" />
+			<my:GroupHyperlink ui:field="groupHyperlink" />
+			<g:Label ui:field="lblOfTheFollowingApply" />
+		</g:HorizontalPanel>
+		
+		<g:Anchor ui:field="addConditionLink" href="#" />
+	
+	</g:VerticalPanel>
+	
+</ui:UiBinder> 

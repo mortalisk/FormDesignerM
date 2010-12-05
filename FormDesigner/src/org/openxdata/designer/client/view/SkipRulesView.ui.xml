@@ -11,7 +11,7 @@
 		<g:HTMLPanel styleName="{style.cell-padding}">
 			<span ui:field="lblAction" />
 			<span ui:field="lblAnd" />
-			<g:Anchor ui:field="otherQts" href="#" />
+			<g:Button ui:field="otherQts" />
 		</g:HTMLPanel>
 		
 		<g:HorizontalPanel spacing="5">

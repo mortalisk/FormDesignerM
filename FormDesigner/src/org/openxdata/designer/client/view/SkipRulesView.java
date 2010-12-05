@@ -22,7 +22,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
@@ -89,8 +88,8 @@ public class SkipRulesView extends Composite implements IConditionController, Qu
 	/** Widget for Label "and". */
 	@UiField SpanElement lblAnd;
 	
-	/** Link to show other questions */
-	@UiField Anchor otherQts;
+	/** Button to show other questions */
+	@UiField Button otherQts;
 
 	/** Panel containing text and link for when to apply condition */
 	@UiField HTMLPanel conditionPanel;

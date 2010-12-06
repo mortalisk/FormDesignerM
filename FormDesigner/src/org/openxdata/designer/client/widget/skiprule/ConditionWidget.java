@@ -7,6 +7,9 @@ import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.ModelConstants;
 import org.openxdata.sharedlib.client.model.QuestionDef;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 
@@ -36,8 +39,8 @@ public class ConditionWidget extends Composite implements ItemSelectionListener{
 	
 	private HorizontalPanel horizontalPanel;
 	
-	/** The condition action widget. */
-	private ActionHyperlink actionHyperlink;
+	/** The remove button */
+	private Button btnRemove;
 
 	/** The question that this widget condition references. */
 	private QuestionDef questionDef;
@@ -88,7 +91,14 @@ public class ConditionWidget extends Composite implements ItemSelectionListener{
 	 * Creates the condition widgets.
 	 */
 	private void setupWidgets(){
-		actionHyperlink = new ActionHyperlink("<>","",this,allowFieldSelection);
+		btnRemove = new Button("x");
+		
+		btnRemove.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				remove();
+			}
+		});
 
 		if(allowFieldSelection){
 			fieldWidget = new FieldWidget(this);
@@ -100,7 +110,7 @@ public class ConditionWidget extends Composite implements ItemSelectionListener{
 		
 		horizontalPanel = new HorizontalPanel();
 		horizontalPanel.setSpacing(HORIZONTAL_SPACING);
-		horizontalPanel.add(actionHyperlink);
+		horizontalPanel.add(btnRemove);
 
 		if(allowFieldSelection)
 			horizontalPanel.add(fieldWidget);
@@ -164,23 +174,9 @@ public class ConditionWidget extends Composite implements ItemSelectionListener{
 	}
 
 	/**
-	 * Adds a new condition.
-	 */
-	public void addCondition(){
-		view.addCondition();
-	}
-
-	/**
-	 * Adds a new bracket or condition grouping.
-	 */
-	public void addBracket(){
-		view.addBracket();
-	}
-
-	/**
 	 * Deletes this condition.
 	 */
-	public void deleteCurrentRow(){
+	public void remove(){
 		view.deleteCondition(this);
 	}
 

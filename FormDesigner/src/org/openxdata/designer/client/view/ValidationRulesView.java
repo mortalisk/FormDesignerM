@@ -19,7 +19,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
@@ -41,8 +41,10 @@ public class ValidationRulesView extends Composite implements IConditionControll
 	/** The main or root widget. */
 	private VerticalPanel verticalPanel;
 	
+	@UiField VerticalPanel conditionsPanel;
+	
 	/** Widget for adding new conditions. */
-	@UiField Anchor addConditionLink;
+	@UiField Button btnAddCondition;
 	
 	/** Widget for grouping conditions. Has all,any, none, and not all. */
 	@UiField GroupHyperlink groupHyperlink;
@@ -50,17 +52,20 @@ public class ValidationRulesView extends Composite implements IConditionControll
 	/** Widget for the validation rule error message. */
 	@UiField TextBox txtErrorMessage;
 
-	/** Widget for Label "Question: ". */
-	@UiField Label lblAction;
+	/** Label: "Question: " */
+	@UiField Label lblQuestionLabel;
 	
-	/** Widget for error message label. */
+	/** Populated with the text of the question whose validation rule is being edited. */
+	@UiField Label lblQuestionText;
+	
+	/** Label: "Error message for invalid response:" */
 	@UiField Label lblErrorMsg;
 	
 	/** Widget for error "when" label. */
-	@UiField Label lblWhen;
+	@UiField Label lblMustMeet;
 
 	/** Widget for "of the following apply" label. */
-	@UiField Label lblOfTheFollowingApply;
+	@UiField Label lblOfTheFollowing;
 	
 	/** The form definition object that this validation rule belongs to. */
 	private FormDef formDef;
@@ -82,21 +87,21 @@ public class ValidationRulesView extends Composite implements IConditionControll
 		initWidget(verticalPanel);
 		
 		FormUtil.maximizeWidget(txtErrorMessage);
-		lblErrorMsg.setText(LocaleText.get("errorMessage"));		
+		lblErrorMsg.setText(LocaleText.get("errorMessageForInvalidResponse") + ": ");		
 		
-		lblAction.setText(LocaleText.get("question")+": " /*"Question: "*/);
+		lblQuestionLabel.setText(LocaleText.get("question") + ": " /*"Question: "*/);
 		
-		lblWhen.setText(LocaleText.get("when"));
-		lblOfTheFollowingApply.setText(LocaleText.get("ofTheFollowingApply"));
+		lblMustMeet.setText(LocaleText.get("validResponseMustMeet"));
+		lblOfTheFollowing.setText(LocaleText.get("ofTheFollowingConditions") + ": ");
 		
-		addConditionLink.setText(LocaleText.get("clickToAddNewCondition"));
+		btnAddCondition.setText(LocaleText.get("addCondition"));
 	}
 	
 	@UiFactory GroupHyperlink makeGroupHyperlink() {
 		return new GroupHyperlink(GroupHyperlink.CONDITIONS_OPERATOR_TEXT_ALL, "#");
 	}
 	
-	@UiHandler("addConditionLink")
+	@UiHandler("btnAddCondition")
 	void onClick(ClickEvent event){
 		addCondition();
 	}
@@ -114,11 +119,9 @@ public class ValidationRulesView extends Composite implements IConditionControll
 	 */
 	public void addCondition(){
 		if(formDef != null && enabled){
-			verticalPanel.remove(addConditionLink);
 			ConditionWidget conditionWidget = new ConditionWidget(formDef,this,false,questionDef);
 			conditionWidget.setQuestionDef(questionDef);
-			verticalPanel.add(conditionWidget);
-			verticalPanel.add(addConditionLink);
+			conditionsPanel.add(conditionWidget);
 			
 			txtErrorMessage.setFocus(true);
 			
@@ -147,7 +150,7 @@ public class ValidationRulesView extends Composite implements IConditionControll
 	public void deleteCondition(ConditionWidget conditionWidget){
 		if(validationRule != null)
 			validationRule.removeCondition(conditionWidget.getCondition());
-		verticalPanel.remove(conditionWidget);
+		conditionsPanel.remove(conditionWidget);
 	}
 		
 	/**
@@ -164,11 +167,8 @@ public class ValidationRulesView extends Composite implements IConditionControll
 		
 		validationRule.setErrorMessage(txtErrorMessage.getText());
 		
-		int count = verticalPanel.getWidgetCount();
-		for(int i=0; i<count; i++){
-			Widget widget = verticalPanel.getWidget(i);
-			if(widget instanceof ConditionWidget){
-				Condition condition = ((ConditionWidget)widget).getCondition();
+		for(Widget w : conditionsPanel){
+				Condition condition = ((ConditionWidget)w).getCondition();
 				
 				if(condition != null && !validationRule.containsCondition(condition) && condition.getValue() != null)
 					validationRule.addCondition(condition);
@@ -178,7 +178,6 @@ public class ValidationRulesView extends Composite implements IConditionControll
 					else
 						validationRule.removeCondition(condition);
 				}
-			}
 		}
 		
 		if(validationRule.getConditions() == null || validationRule.getConditionCount() == 0){
@@ -202,10 +201,10 @@ public class ValidationRulesView extends Composite implements IConditionControll
 		clearConditions();		
 		if(questionDef != null){
 			formDef = questionDef.getParentFormDef();
-			lblAction.setText(LocaleText.get("question")+":  " + questionDef.getDisplayText() + "  "+LocaleText.get("isValidWhen"));
+			lblQuestionText.setText(questionDef.getDisplayText());
 		}
 		else
-			lblAction.setText(LocaleText.get("question")+": ");
+			lblQuestionText.setText("");
 		
 		/*if(questionDef.getParent() instanceof PageDef)
 			formDef = ((PageDef)questionDef.getParent()).getParent();
@@ -218,13 +217,12 @@ public class ValidationRulesView extends Composite implements IConditionControll
 		if(validationRule != null){
 			groupHyperlink.setCondionsOperator(validationRule.getConditionsOperator());
 			txtErrorMessage.setText(validationRule.getErrorMessage());
-			verticalPanel.remove(addConditionLink);
 			Vector<Condition> conditions = validationRule.getConditions();
 			Vector<Condition> lostConditions = new Vector<Condition>();
 			for(int i=0; i<conditions.size(); i++){
 				ConditionWidget conditionWidget = new ConditionWidget(formDef,this,false,questionDef);
 				if(conditionWidget.setCondition((Condition)conditions.elementAt(i)))
-					verticalPanel.add(conditionWidget);
+					conditionsPanel.add(conditionWidget);
 				else
 					lostConditions.add((Condition)conditions.elementAt(i));
 			}
@@ -234,8 +232,6 @@ public class ValidationRulesView extends Composite implements IConditionControll
 				formDef.removeValidationRule(validationRule);
 				validationRule = null;
 			}
-			
-			verticalPanel.add(addConditionLink);
 		}
 	}
 		
@@ -259,10 +255,10 @@ public class ValidationRulesView extends Composite implements IConditionControll
 			updateValidationRule();
 		
 		questionDef = null;
-		lblAction.setText(LocaleText.get("question")+": ");
+		lblQuestionText.setText("");
 		
-		while(verticalPanel.getWidgetCount() > 4)
-			verticalPanel.remove(verticalPanel.getWidget(3));
+		for (Widget w : conditionsPanel)
+			conditionsPanel.remove(w);
 		
 		txtErrorMessage.setText(null);
 	}

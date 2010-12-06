@@ -3,22 +3,37 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"
 	xmlns:my="urn:import:org.openxdata.designer.client.widget.skiprule">
 
-	<g:VerticalPanel spacing="0">
+	<ui:style>
+		.rightPaddedLabel {
+			padding-right: 3;	
+		}
 		
-		<g:Label ui:field="lblAction" />
+		.leftPaddedLabel {
+			padding-left: 3;
+		}
+	</ui:style>
+
+	<g:VerticalPanel spacing="5">
 		
-		<g:HorizontalPanel ui:field="actionPanel" spacing="10" width="100%">
-			<g:Label ui:field="lblErrorMsg" />
-			<g:TextBox ui:field="txtErrorMessage" />
+		<g:HorizontalPanel ui:field="questionTextPanel">
+			<g:Label ui:field="lblQuestionLabel" addStyleNames="{style.rightPaddedLabel}" />
+			<g:Label ui:field="lblQuestionText" />
 		</g:HorizontalPanel>
 		
-		<g:HorizontalPanel ui:field="horizontalPanel" spacing="5">
-			<g:Label ui:field="lblWhen" />
+		<g:HorizontalPanel ui:field="horizontalPanel">
+			<g:Label ui:field="lblMustMeet" addStyleNames="{style.rightPaddedLabel}" />
 			<my:GroupHyperlink ui:field="groupHyperlink" />
-			<g:Label ui:field="lblOfTheFollowingApply" />
+			<g:Label ui:field="lblOfTheFollowing" addStyleNames="{style.leftPaddedLabel}" />
 		</g:HorizontalPanel>
 		
-		<g:Anchor ui:field="addConditionLink" href="#" />
+		<g:VerticalPanel ui:field="conditionsPanel" spacing="2" />
+		
+		<g:Button ui:field="btnAddCondition" />
+		
+		<g:HorizontalPanel ui:field="actionPanel">
+			<g:Label ui:field="lblErrorMsg" addStyleNames="{style.rightPaddedLabel}" />
+			<g:TextBox ui:field="txtErrorMessage" width="100%" />
+		</g:HorizontalPanel>
 	
 	</g:VerticalPanel>
 	

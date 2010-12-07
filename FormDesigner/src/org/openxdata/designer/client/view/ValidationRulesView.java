@@ -4,7 +4,7 @@ import java.util.Vector;
 
 import org.openxdata.designer.client.controller.IConditionController;
 import org.openxdata.designer.client.widget.skiprule.ConditionWidget;
-import org.openxdata.designer.client.widget.skiprule.GroupHyperlink;
+import org.openxdata.designer.client.widget.skiprule.GroupOperationWidget;
 import org.openxdata.sharedlib.client.OpenXdataConstants;
 import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.model.Condition;
@@ -47,7 +47,7 @@ public class ValidationRulesView extends Composite implements IConditionControll
 	@UiField Button btnAddCondition;
 	
 	/** Widget for grouping conditions. Has all,any, none, and not all. */
-	@UiField GroupHyperlink groupHyperlink;
+	@UiField GroupOperationWidget groupHyperlink;
 	
 	/** Widget for the validation rule error message. */
 	@UiField TextBox txtErrorMessage;
@@ -97,8 +97,8 @@ public class ValidationRulesView extends Composite implements IConditionControll
 		btnAddCondition.setText(LocaleText.get("addCondition"));
 	}
 	
-	@UiFactory GroupHyperlink makeGroupHyperlink() {
-		return new GroupHyperlink(GroupHyperlink.CONDITIONS_OPERATOR_TEXT_ALL, "#");
+	@UiFactory GroupOperationWidget makeGroupHyperlink() {
+		return new GroupOperationWidget();
 	}
 	
 	@UiHandler("btnAddCondition")

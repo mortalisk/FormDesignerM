@@ -24,10 +24,10 @@
 		
 		<g:HTMLPanel ui:field="conditionPanel">
 			<span id="whenSpan" />
-			<my:GroupHyperlink ui:field="groupHyperlink" />
+			<my:GroupOperationWidget ui:field="groupOperatorWidget" />
 			<span id="followingSpan" />
 			<br />
-			<g:Button ui:field="addConditionButton" />
+			<g:Button ui:field="addConditionButton" enabled="false"/>
 		</g:HTMLPanel>
 	</g:VerticalPanel>
 </ui:UiBinder> 

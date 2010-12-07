@@ -7,7 +7,7 @@ import java.util.Vector;
 import org.openxdata.designer.client.controller.IConditionController;
 import org.openxdata.designer.client.controller.QuestionSelectionListener;
 import org.openxdata.designer.client.widget.skiprule.ConditionWidget;
-import org.openxdata.designer.client.widget.skiprule.GroupHyperlink;
+import org.openxdata.designer.client.widget.skiprule.GroupOperationWidget;
 import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.model.Condition;
 import org.openxdata.sharedlib.client.model.FormDef;
@@ -50,7 +50,7 @@ public class SkipRulesView extends Composite implements IConditionController, Qu
 	@UiField Button addConditionButton;
 
 	/** Widget for grouping conditions. Has all,any, none, and not all. */
-	@UiField GroupHyperlink groupHyperlink;
+	@UiField GroupOperationWidget groupOperatorWidget;
 
 	/** The form definition object that this skip rule belongs to. */
 	private FormDef formDef;
@@ -119,8 +119,8 @@ public class SkipRulesView extends Composite implements IConditionController, Qu
 		conditionSpan.setInnerText(LocaleText.get("ofTheFollowingApply"));
 	}
 	
-	@UiFactory GroupHyperlink makeGroupHyperlink() {
-		return new GroupHyperlink(GroupHyperlink.CONDITIONS_OPERATOR_TEXT_ALL, "#");
+	@UiFactory GroupOperationWidget makeGroupHyperlink() {
+		return new GroupOperationWidget();
 	}
 	
 	@UiHandler("addConditionButton")
@@ -216,7 +216,7 @@ public class SkipRulesView extends Composite implements IConditionController, Qu
 		if(skipRule.getConditions() == null || conditions.size() == 0)
 			skipRule = null;
 		else{
-			skipRule.setConditionsOperator(groupHyperlink.getConditionsOperator());
+			skipRule.setConditionsOperator(groupOperatorWidget.getConditionsOperator());
 			skipRule.setAction(getAction());
 			
 			if(!skipRule.containsActionTarget(questionDef.getId()))
@@ -277,15 +277,30 @@ public class SkipRulesView extends Composite implements IConditionController, Qu
 		if(questionDef != null){
 			formDef = questionDef.getParentFormDef();
 			lblAction.setInnerText(LocaleText.get("forQuestion") + questionDef.getDisplayText());
+			
+			// only enable grouping operator and add condition widgets
+			// if the form definition contains more than 1 question
+			// it doesn't really make sense to allow these to be enabled
+			// when the form definition has only 1 question
+			if (questionDef.getParentFormDef().getQuestionCount() > 1) {
+				addConditionButton.setEnabled(true);
+				groupOperatorWidget.setEnabled(true);
+			} else {
+				addConditionButton.setEnabled(false);
+				groupOperatorWidget.setEnabled(false);
+			}
 		}
-		else
+		else {
 			lblAction.setInnerText(LocaleText.get("forQuestion"));
+			addConditionButton.setEnabled(false);
+			groupOperatorWidget.setEnabled(false);
+		}
 
 		this.questionDef = questionDef;
 
 		skipRule = formDef.getSkipRule(questionDef);
 		if(skipRule != null){
-			groupHyperlink.setCondionsOperator(skipRule.getConditionsOperator());
+			groupOperatorWidget.setCondionsOperator(skipRule.getConditionsOperator());
 			setAction(skipRule.getAction());
 			Vector<Condition> conditions = skipRule.getConditions();
 			Vector<Condition> lostConditions = new Vector<Condition>();
@@ -336,6 +351,8 @@ public class SkipRulesView extends Composite implements IConditionController, Qu
 		}
 		
 		conditions.clear();
+		
+		groupOperatorWidget.reset();
 
 		rdEnable.setValue(false);
 		rdDisable.setValue(false);
@@ -352,8 +369,6 @@ public class SkipRulesView extends Composite implements IConditionController, Qu
 	 */
 	public void setEnabled(boolean enabled){
 		this.enabled = enabled;
-
-		groupHyperlink.setEnabled(enabled);
 
 		rdEnable.setEnabled(enabled);
 		rdDisable.setEnabled(enabled);

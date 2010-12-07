@@ -22,7 +22,7 @@
 		
 		<g:HorizontalPanel ui:field="horizontalPanel">
 			<g:Label ui:field="lblMustMeet" addStyleNames="{style.rightPaddedLabel}" />
-			<my:GroupHyperlink ui:field="groupHyperlink" />
+			<my:GroupOperationWidget ui:field="groupHyperlink" />
 			<g:Label ui:field="lblOfTheFollowing" addStyleNames="{style.leftPaddedLabel}" />
 		</g:HorizontalPanel>
 		

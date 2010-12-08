@@ -110,7 +110,7 @@ public class SkipRulesView extends Composite implements IConditionController, Qu
 		lblAction.setInnerText(LocaleText.get("forQuestion"));
 		lblAnd.setInnerText(LocaleText.get("and"));
 		otherQts.setText(LocaleText.get("clickForOtherQuestions"));
-		addConditionButton.setText(LocaleText.get("newCondition"));
+		addConditionButton.setText(LocaleText.get("addCondition"));
 		
 		SpanElement conditionSpan = SpanElement.as(conditionPanel.getElementById("whenSpan"));
 		conditionSpan.setInnerText(LocaleText.get("when"));

@@ -6,6 +6,7 @@ import org.openxdata.sharedlib.client.model.ModelConstants;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.ListBox;
 
+import org.openxdata.designer.client.view.AbstractFormDesignerView;
 
 /**
  * Widget used to display the conditions grouping operators (all,any,none)
@@ -14,7 +15,7 @@ import com.google.gwt.user.client.ui.ListBox;
  *  www.openxdata.org - Licensed as written in license.txt and original sources of this file and its authors are found in sources.txt.
  *
  */
-public class GroupOperationWidget extends Composite {
+public class GroupOperationWidget extends Composite implements AbstractFormDesignerView.HasEnabled {
 
 	/** The conditions grouping operator text: all */
 	public static final String CONDITIONS_OPERATOR_TEXT_ALL = LocaleText.get("all");

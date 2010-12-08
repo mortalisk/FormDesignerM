@@ -20,7 +20,6 @@ import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -33,7 +32,7 @@ import com.google.gwt.user.client.ui.Widget;
  *  www.openxdata.org - Licensed as written in license.txt and original sources of this file and its authors are found in sources.txt.
  *
  */
-public class ValidationRulesView extends Composite implements IConditionController {
+public class ValidationRulesView extends AbstractFormDesignerView implements IConditionController {
 	
 	interface MyUiBinder extends UiBinder<VerticalPanel, ValidationRulesView> {}
 	private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
@@ -202,9 +201,12 @@ public class ValidationRulesView extends Composite implements IConditionControll
 		if(questionDef != null){
 			formDef = questionDef.getParentFormDef();
 			lblQuestionText.setText(questionDef.getDisplayText());
+			setEnabled(true);
 		}
-		else
+		else {
 			lblQuestionText.setText("");
+			setEnabled(false);
+		}
 		
 		/*if(questionDef.getParent() instanceof PageDef)
 			formDef = ((PageDef)questionDef.getParent()).getParent();
@@ -270,9 +272,8 @@ public class ValidationRulesView extends Composite implements IConditionControll
 	 */
 	public void setEnabled(boolean enabled){
 		this.enabled = enabled;
-		this.groupHyperlink.setEnabled(enabled);
 		
-		txtErrorMessage.setEnabled(enabled);
+		setAllEnabled(verticalPanel, enabled);
 		
 		if(!enabled)
 			clearConditions();

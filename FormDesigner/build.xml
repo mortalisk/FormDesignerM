@@ -18,8 +18,8 @@
   </condition>
 
   <path id="project.class.path">
-    <pathelement location="${gwt.sdk}/gwt-user-2.0.4.jar" />
-    <pathelement location="${gwt.sdk}/gwt-dev-2.0.4.jar" />
+    <pathelement location="${gwt.sdk}/gwt-user-2.1.0.jar" />
+    <pathelement location="${gwt.sdk}/gwt-dev-2.1.0.jar" />
   	<pathelement location="${gwt.sdk}/gwt-datepicker-r29.jar" />
  	<pathelement location="lib/gwt-dnd-3.0.1.jar" />
   </path>

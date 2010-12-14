@@ -6,7 +6,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/SharedLib"/>
 	<classpathentry kind="lib" path="lib/commons-io-1.1.jar"/>
-	<classpathentry kind="lib" path="/SharedLib/lib/gwt-user-2.0.4.jar"/>
-	<classpathentry kind="lib" path="/SharedLib/lib/gwt-dev-2.0.4.jar"/>
+	<classpathentry kind="lib" path="/SharedLib/lib/gwt-user-2.1.0.jar"/>
+	<classpathentry kind="lib" path="/SharedLib/lib/gwt-dev-2.1.0.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

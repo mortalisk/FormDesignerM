@@ -2,6 +2,8 @@ package org.openxdata.designer.client;
 
 import org.openxdata.designer.client.controller.IFormDesignerListener;
 import org.openxdata.designer.client.controller.ILocaleListChangeListener;
+import org.openxdata.designer.client.event.CenterPanelTabSelectedEvent;
+import org.openxdata.designer.client.event.CenterPanelTabSelectedHandler;
 import org.openxdata.designer.client.event.XformItemSelectEvent;
 import org.openxdata.designer.client.event.XformItemSelectHandler;
 import org.openxdata.designer.client.event.FormDesignerEventBus;
@@ -26,7 +28,8 @@ import com.google.gwt.user.client.ui.Widget;
  *  www.openxdata.org - Licensed as written in license.txt and original sources of this file and its authors are found in sources.txt.
  *
  */
-public class Toolbar extends Composite implements ILocaleListChangeListener, XformItemSelectHandler, XformListEmptyHandler{
+public class Toolbar extends Composite implements ILocaleListChangeListener, XformItemSelectHandler, XformListEmptyHandler, 
+													CenterPanelTabSelectedHandler {
 
 	private static ToolbarUiBinder uiBinder = GWT.create(ToolbarUiBinder.class);
 	
@@ -70,11 +73,13 @@ public class Toolbar extends Composite implements ILocaleListChangeListener, Xfo
 		initWidget(uiBinder.createAndBindUi(this));
 		addHandlersToEventBus();
 		setButtonLocaleText();
+		setDesignSurfaceButtonsEnabled(false);
 	}
 	
 	private void addHandlersToEventBus() {
 		eventBus.addHandler(XformItemSelectEvent.TYPE, this);
 		eventBus.addHandler(XformListEmptyEvent.TYPE, this);
+		eventBus.addHandler(CenterPanelTabSelectedEvent.getType(), this);
 	}
 	
 	public void onXformItemSelected(XformItemSelectEvent event) {
@@ -201,8 +206,24 @@ public class Toolbar extends Composite implements ILocaleListChangeListener, Xfo
 		controller.makeSameSize();
 	}
 	
-	
 	public void onLocaleListChanged(){
 		// TODO: remove or fix this
+	}
+
+	@Override
+	public void doCenterPanelTabSelected(CenterPanelTabSelectedEvent event) {
+		
+		if (event.getSelectedIndex() == CenterPanel.SELECTED_INDEX_DESIGN_SURFACE)
+			setDesignSurfaceButtonsEnabled(true);
+		else
+			setDesignSurfaceButtonsEnabled(false);
+	}
+	
+	private void setDesignSurfaceButtonsEnabled(boolean enabled){
+		
+		PushButton[] buttons = {btnJustifyLeft, btnJustifyRight, btnAlignTop, btnAlignBottom, btnSameWidth, btnSameHeight, btnSameSize};
+			
+		for (PushButton b : buttons)
+			b.setEnabled(enabled);
 	}
 }

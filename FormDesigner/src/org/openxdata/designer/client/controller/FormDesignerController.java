@@ -141,8 +141,11 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 	public void addNewQuestion(int dataType){
 		leftPanel.addNewQuestion(dataType);
 	}
-
-
+	
+	public void addNewPage() {
+		leftPanel.addNewPage();
+	}
+	
 	/**
 	 * @see org.openxdata.formtools.client.controller.IFormDesignerController#printForm()
 	 */

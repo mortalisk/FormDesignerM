@@ -2,10 +2,17 @@ package org.openxdata.designer.client;
 
 import org.openxdata.designer.client.controller.IFormDesignerListener;
 import org.openxdata.designer.client.controller.ILocaleListChangeListener;
+import org.openxdata.designer.client.event.XformItemSelectEvent;
+import org.openxdata.designer.client.event.XformItemSelectHandler;
+import org.openxdata.designer.client.event.FormDesignerEventBus;
+import org.openxdata.designer.client.event.XformListEmptyEvent;
+import org.openxdata.designer.client.event.XformListEmptyHandler;
 import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.model.QuestionDef;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -19,9 +26,11 @@ import com.google.gwt.user.client.ui.Widget;
  *  www.openxdata.org - Licensed as written in license.txt and original sources of this file and its authors are found in sources.txt.
  *
  */
-public class Toolbar extends Composite implements ILocaleListChangeListener{
+public class Toolbar extends Composite implements ILocaleListChangeListener, XformItemSelectHandler, XformListEmptyHandler{
 
 	private static ToolbarUiBinder uiBinder = GWT.create(ToolbarUiBinder.class);
+	
+	private final EventBus eventBus = FormDesignerEventBus.getBus();
 
 	interface ToolbarUiBinder extends UiBinder<Widget, Toolbar> {
 	}
@@ -59,9 +68,34 @@ public class Toolbar extends Composite implements ILocaleListChangeListener{
 	public Toolbar(IFormDesignerListener controller){
 		this.controller = controller;
 		initWidget(uiBinder.createAndBindUi(this));
+		addHandlersToEventBus();
 		setButtonLocaleText();
 	}
 	
+	private void addHandlersToEventBus() {
+		eventBus.addHandler(XformItemSelectEvent.TYPE, this);
+		eventBus.addHandler(XformListEmptyEvent.TYPE, this);
+	}
+	
+	public void onXformItemSelected(XformItemSelectEvent event) {
+		switch(event.getXformItemType()) {
+			case FORM:
+				btnAddPage.setEnabled(true);
+				btnAddQuestion.setEnabled(false);
+				btnDelete.setEnabled(true);
+				break;
+			case PAGE:
+			case QUESTION:
+				btnAddQuestion.setEnabled(true);
+		}
+	}
+	
+	public void onListEmpty(XformListEmptyEvent event) {
+		btnAddPage.setEnabled(false);
+		btnAddQuestion.setEnabled(false);
+		btnDelete.setEnabled(false);
+	}
+
 	/**
 	 * Sets up the tool bar.
 	 */
@@ -104,12 +138,12 @@ public class Toolbar extends Composite implements ILocaleListChangeListener{
 	
 	@UiHandler("btnAddPage")
 	public void handleAddPage(ClickEvent event) {
-		// TODO
+		controller.addNewPage();
 	}
 	
 	@UiHandler("btnAddQuestion")
 	public void handleAddQuestion(ClickEvent event) {
-		// TODO
+		controller.addNewQuestion(QuestionDef.QTN_TYPE_TEXT);
 	}
 	
 	@UiHandler("btnDelete")

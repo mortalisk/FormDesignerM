@@ -1,0 +1,100 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.left-space {
+			margin-left: .5em;
+		}
+	</ui:style>
+	
+	<!-- These images are actually being used by a client bundle, FormDesignerImages -->
+	<!-- TODO: Reuse the client bundle instead of hard coding these in place -->
+	<!-- The docs weren't entirely clear how to do this, but it should be possible -->
+	<ui:image field="open" src="vew/widget/images/open.gif" />
+	<ui:image field="save" src="vew/widget/images/save.gif" />
+	
+	<ui:image field="newform" src="vew/widget/images/newFormActive.png" />
+	<ui:image field="newpage" src="vew/widget/images/newPageActive.png" />
+	<ui:image field="newpageDisable" src="vew/widget/images/newPageDisabled.png" />
+	<ui:image field="newquestion" src="vew/widget/images/newQuestionActive.png" />
+	<ui:image field="newquestionDisable" src="vew/widget/images/newQuestionDisabled.png" />
+	<ui:image field="delete" src="vew/widget/images/deleteActive.png" />
+	<ui:image field="deleteDisable" src="vew/widget/images/deleteDisabled.png" />
+
+	<ui:image field="cut" src="vew/widget/images/cut.gif" />
+	<ui:image field="copy" src="vew/widget/images/copy.gif" />
+	<ui:image field="paste" src="vew/widget/images/paste.gif" />
+
+	<ui:image field="justifyleft" src="vew/widget/images/justifyleft.gif" />
+	<ui:image field="justifyright" src="vew/widget/images/justifyright.gif" />
+	<ui:image field="alignTop" src="vew/widget/images/alignTop.gif" />
+	<ui:image field="alignBottom" src="vew/widget/images/alignBottom.gif" />
+	<ui:image field="samewidth" src="vew/widget/images/samewidth.gif" />
+	<ui:image field="sameheight" src="vew/widget/images/sameheight.gif" />
+	<ui:image field="samesize" src="vew/widget/images/samesize.gif" />
+	
+	<g:HorizontalPanel>
+		<g:HorizontalPanel spacing="2">
+			<g:PushButton ui:field="btnOpenForm">
+				<g:upFace image="{open}" />
+			</g:PushButton>
+			<g:PushButton ui:field="btnSaveForm">
+				<g:upFace image="{save}" />
+			</g:PushButton>
+		</g:HorizontalPanel>
+
+		<g:HorizontalPanel spacing="2" styleName="{style.left-space}">
+			<g:PushButton ui:field="btnAddForm">
+				<g:upFace image="{newform}" />
+			</g:PushButton>
+			<g:PushButton ui:field="btnAddPage" enabled="false">
+				<g:upFace image="{newpage}" />
+				<g:upDisabledFace image="{newpageDisable}" />
+			</g:PushButton>
+			<g:PushButton ui:field="btnAddQuestion" enabled="false">
+				<g:upFace image="{newquestion}" />
+				<g:upDisabledFace image="{newquestionDisable}" />
+			</g:PushButton>
+			<g:PushButton ui:field="btnDelete" enabled="false">
+				<g:upFace image="{delete}" />
+				<g:upDisabledFace image="{deleteDisable}" />
+			</g:PushButton>			
+		</g:HorizontalPanel>
+
+		<g:HorizontalPanel spacing="2" styleName="{style.left-space}">
+			<g:PushButton ui:field="btnCut">
+				<g:upFace image="{cut}" />
+			</g:PushButton>
+			<g:PushButton ui:field="btnCopy">
+				<g:upFace image="{copy}" />
+			</g:PushButton>
+			<g:PushButton ui:field="btnPaste">
+				<g:upFace image="{paste}" />
+			</g:PushButton>
+		</g:HorizontalPanel>
+
+		<g:HorizontalPanel spacing="2" styleName="{style.left-space}">
+			<g:PushButton ui:field="btnJustifyLeft">
+				<g:upFace image="{justifyleft}" />
+			</g:PushButton>
+			<g:PushButton ui:field="btnJustifyRight">
+				<g:upFace image="{justifyright}" />
+			</g:PushButton>
+			<g:PushButton ui:field="btnAlignTop">
+				<g:upFace image="{alignTop}" />
+			</g:PushButton>
+			<g:PushButton ui:field="btnAlignBottom">
+				<g:upFace image="{alignBottom}" />
+			</g:PushButton>
+			<g:PushButton ui:field="btnSameWidth">
+				<g:upFace image="{samewidth}" />
+			</g:PushButton>
+			<g:PushButton ui:field="btnSameHeight">
+				<g:upFace image="{sameheight}" />
+			</g:PushButton>
+			<g:PushButton ui:field="btnSameSize">
+				<g:upFace image="{samesize}" />
+			</g:PushButton>
+		</g:HorizontalPanel>
+	</g:HorizontalPanel>
+</ui:UiBinder> 

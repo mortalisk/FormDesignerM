@@ -133,6 +133,7 @@ public class Toolbar extends Composite implements ILocaleListChangeListener, Xfo
 	
 	@UiHandler("btnSaveForm")
 	public void handleSaveForm(ClickEvent event) {
+		System.out.println("========================================saving");
 		controller.saveForm();
 	}
 	
@@ -188,7 +189,7 @@ public class Toolbar extends Composite implements ILocaleListChangeListener, Xfo
 	
 	@UiHandler("btnAlignBottom")
 	public void handleAlignBottom(ClickEvent event) {
-		controller.alignBottom();
+		 controller.alignBottom();
 	}
 	
 	@UiHandler("btnSameWidth")

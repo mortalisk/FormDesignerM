@@ -11,6 +11,8 @@ import org.openxdata.designer.client.controller.IFormSelectionListener;
 import org.openxdata.designer.client.controller.LayoutChangeListener;
 import org.openxdata.designer.client.controller.WidgetPropertyChangeListener;
 import org.openxdata.designer.client.controller.WidgetSelectionListener;
+import org.openxdata.designer.client.event.CenterPanelTabSelectedEvent;
+import org.openxdata.designer.client.event.FormDesignerEventBus;
 import org.openxdata.designer.client.util.FormDesignerUtil;
 import org.openxdata.designer.client.util.LanguageUtil;
 import org.openxdata.designer.client.vew.widget.images.FormDesignerImages;
@@ -26,11 +28,15 @@ import org.openxdata.sharedlib.client.widget.RuntimeWidgetWrapper;
 
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventPreview;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DecoratedTabPanel;
@@ -49,28 +55,28 @@ import com.google.gwt.xml.client.Element;
 public class CenterPanel extends Composite implements SelectionHandler<Integer>, IFormSelectionListener, SubmitListener, LayoutChangeListener, ICenterPanel{
 
 	/** Index for the properties tab. */
-	private int SELECTED_INDEX_PROPERTIES = 0;
+	public static int SELECTED_INDEX_PROPERTIES = 0;
 
 	/** Index for xforms source xml tab. */
-	private int SELECTED_INDEX_XFORMS_SOURCE = 1;
+	public static int SELECTED_INDEX_XFORMS_SOURCE = 1;
 
 	/** Index for the design surface tab. */
-	private int SELECTED_INDEX_DESIGN_SURFACE = 2;
+	public static int SELECTED_INDEX_DESIGN_SURFACE = 2;
 	
 	/** Index for the javascript source tab. */
-	private int SELECTED_INDEX_JAVASCRIPT_SOURCE = 3;
+	public static int SELECTED_INDEX_JAVASCRIPT_SOURCE = 3;
 
 	/** Index for the layout xml tab. */
-	private int SELECTED_INDEX_LAYOUT_XML = 4;
+	public static int SELECTED_INDEX_LAYOUT_XML = 4;
 
 	/** Index for the locale or language xml tab. */
-	private int SELECTED_INDEX_LANGUAGE_XML = 5;
+	public static int SELECTED_INDEX_LANGUAGE_XML = 5;
 
 	/** Index for the preview tab. */
-	private int SELECTED_INDEX_PREVIEW = 6;
+	public static int SELECTED_INDEX_PREVIEW = 6;
 
 	/** Index for the model xml tab. */
-	private int SELECTED_INDEX_MODEL_XML = 7;
+	public static int SELECTED_INDEX_MODEL_XML = 7;
 
 	private boolean showXformsSource = true;
 	private boolean showJavaScriptSource = true;
@@ -131,6 +137,7 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 	/** Listener to form designer global events. */
 	private IFormDesignerListener formDesignerListener;
 
+	private EventBus eventBus = FormDesignerEventBus.getBus();
 
 	/**
 	 * Constructs a new center panel widget.
@@ -153,10 +160,16 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 		FormUtil.maximizeWidget(tabs);
 
 		tabs.selectTab(0);
+		
+		// register initial state with history
+		History.newItem("0");
+		
 		initWidget(tabs);
 		tabs.addSelectionHandler(this);
 
 		Context.setCurrentMode(Context.MODE_QUESTION_PROPERTIES);
+		
+		History.addValueChangeHandler(new HistoryHandler());
 
 		previewEvents();
 	}
@@ -200,6 +213,10 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 	 * @see com.google.gwt.event.logical.shared.SelectionHandler#onSelection(SelectionEvent)
 	 */
 	public void onSelection(SelectionEvent<Integer> event){
+		// register selection in history
+		History.newItem(event.getSelectedItem().toString(), false);
+
+		
 		selectedTabIndex = event.getSelectedItem();
 
 		if(selectedTabIndex == SELECTED_INDEX_DESIGN_SURFACE)
@@ -241,7 +258,10 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 
 		//else if(selectedTabIndex == SELECTED_INDEX_LAYOUT_XML)
 		//	txtLayoutXml.setText(designSurfaceView.getLayoutXml());
+		
+		eventBus.fireEvent(new CenterPanelTabSelectedEvent(selectedTabIndex));
 	}
+	
 
 	private void loadPreview(){
 		FormUtil.dlg.setText(LocaleText.get("loadingPreview"));
@@ -984,5 +1004,24 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 	
 	public WidgetPropertyChangeListener getWidgetPropertyChangeListener(){
 		return designSurfaceView;
+	}
+	
+	/**
+	 * Simple implementation of a History listener
+	 * History tokens are registered when a tab is selected by the user
+	 * The tokens themselves are just the tab index
+	 */
+	private class HistoryHandler implements ValueChangeHandler<String> {
+
+		//@Override
+		public void onValueChange(ValueChangeEvent<String> event) {
+			try {
+				int tab = Integer.parseInt( event.getValue() );
+				tabs.selectTab(tab);
+			} catch(NumberFormatException e) {
+				// do nothing
+			}
+		}
+		
 	}
 }

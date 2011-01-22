@@ -94,4 +94,6 @@ public interface IFormActionListener {
 	public void moveToChild();
 	
 	public void addNewQuestion(int dataType);
+	
+	public void addNewPage();
 }

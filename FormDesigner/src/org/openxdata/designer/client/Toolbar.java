@@ -1,25 +1,26 @@
 package org.openxdata.designer.client;
 
-import java.util.List;
-
 import org.openxdata.designer.client.controller.IFormDesignerListener;
 import org.openxdata.designer.client.controller.ILocaleListChangeListener;
-import org.openxdata.designer.client.util.FormDesignerUtil;
-import org.openxdata.designer.client.vew.widget.images.FormDesignerImages;
+import org.openxdata.designer.client.event.CenterPanelTabSelectedEvent;
+import org.openxdata.designer.client.event.CenterPanelTabSelectedHandler;
+import org.openxdata.designer.client.event.XformItemSelectEvent;
+import org.openxdata.designer.client.event.XformItemSelectHandler;
+import org.openxdata.designer.client.event.FormDesignerEventBus;
+import org.openxdata.designer.client.event.XformListEmptyEvent;
+import org.openxdata.designer.client.event.XformListEmptyHandler;
 import org.openxdata.sharedlib.client.locale.LocaleText;
-import org.openxdata.sharedlib.client.model.Locale;
-import org.openxdata.sharedlib.client.util.FormUtil;
+import org.openxdata.sharedlib.client.model.QuestionDef;
 
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PushButton;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * This widget is the main tool bar for the form designer.
@@ -27,46 +28,39 @@ import com.google.gwt.user.client.ui.PushButton;
  *  www.openxdata.org - Licensed as written in license.txt and original sources of this file and its authors are found in sources.txt.
  *
  */
-public class Toolbar extends Composite implements ILocaleListChangeListener{
-	 
-	/** Main widget for this tool bar. */
-	private HorizontalPanel panel = new HorizontalPanel();
+public class Toolbar extends Composite implements ILocaleListChangeListener, XformItemSelectHandler, XformListEmptyHandler, 
+													CenterPanelTabSelectedHandler {
+
+	private static ToolbarUiBinder uiBinder = GWT.create(ToolbarUiBinder.class);
 	
+	private final EventBus eventBus = FormDesignerEventBus.getBus();
+
+	interface ToolbarUiBinder extends UiBinder<Widget, Toolbar> {
+	}
+
 	/** The tool bar buttons. */
-	private PushButton btnAddNewItem;
-	private PushButton btnAddNewChildItem;
-	private PushButton btnDeleteItem;
-	private PushButton btnMoveItemUp;
-	private PushButton btnMoveItemDown;
-	private PushButton btnNewForm;
-	private PushButton btnOpenForm;
-	private PushButton btnSaveForm;
-	private PushButton btnAlignLeft;
-	private PushButton btnAlignRight;
-	private PushButton btnAlignTop;
-	private PushButton btnAlignBottom;
-	private PushButton btnSameWidth;
-	private PushButton btnSameHeight;
-	private PushButton btnSameSize;
-	private PushButton btnCut;
-	private PushButton btnCopy;
-	private PushButton btnPaste;
-	private PushButton btnRefresh;
-	private PushButton btnUndo;
-	private PushButton btnRedo;
+	@UiField PushButton btnOpenForm;
+	@UiField PushButton btnSaveForm;
+
+	@UiField PushButton btnAddForm;
+	@UiField PushButton btnAddPage;
+	@UiField PushButton btnAddQuestion;
+	@UiField PushButton btnDelete;
+
+	@UiField PushButton btnCut;
+	@UiField PushButton btnCopy;
+	@UiField PushButton btnPaste;	
 	
-	/** Widget for separating tool bar buttons from each other. */
-	private Label separatorWidget = new Label("  ");
-	
-	/** Widget to display the list of languages or locales. */
-	private ListBox cbLanguages = new ListBox(false);
-	
-	/** The images for the tool bar icons. */
-	private final FormDesignerImages images;
+	@UiField PushButton btnJustifyLeft;
+	@UiField PushButton btnJustifyRight;
+	@UiField PushButton btnAlignTop;
+	@UiField PushButton btnAlignBottom;
+	@UiField PushButton btnSameWidth;
+	@UiField PushButton btnSameHeight;
+	@UiField PushButton btnSameSize;
 	
 	/** Listener to the tool bar button click events. */
-	private IFormDesignerListener controller;
-	
+	private final IFormDesignerListener controller;
 	
 	/**
 	 * Creates a new instance of the tool bar.
@@ -74,232 +68,163 @@ public class Toolbar extends Composite implements ILocaleListChangeListener{
 	 * @param images the images for tool bar icons.
 	 * @param controller listener to the tool bar button click events.
 	 */
-	public Toolbar(FormDesignerImages images,IFormDesignerListener controller){
-		this.images = images;
+	public Toolbar(IFormDesignerListener controller){
 		this.controller = controller;
-		setupToolbar();
-		setupClickListeners();
-		initWidget(panel);
-		
-		Context.addLocaleListChangeListener(this);
+		initWidget(uiBinder.createAndBindUi(this));
+		addHandlersToEventBus();
+		setButtonLocaleText();
+		setDesignSurfaceButtonsEnabled(false);
 	}
 	
+	private void addHandlersToEventBus() {
+		eventBus.addHandler(XformItemSelectEvent.TYPE, this);
+		eventBus.addHandler(XformListEmptyEvent.TYPE, this);
+		eventBus.addHandler(CenterPanelTabSelectedEvent.getType(), this);
+	}
+	
+	public void onXformItemSelected(XformItemSelectEvent event) {
+		switch(event.getXformItemType()) {
+			case FORM:
+				btnAddPage.setEnabled(true);
+				btnAddQuestion.setEnabled(false);
+				btnDelete.setEnabled(true);
+				break;
+			case PAGE:
+			case QUESTION:
+				btnAddQuestion.setEnabled(true);
+		}
+	}
+	
+	public void onListEmpty(XformListEmptyEvent event) {
+		btnAddPage.setEnabled(false);
+		btnAddQuestion.setEnabled(false);
+		btnDelete.setEnabled(false);
+	}
+
 	/**
 	 * Sets up the tool bar.
 	 */
-	private void setupToolbar(){
-		btnNewForm = new PushButton(FormUtil.createImage(images.newform()));
-		btnOpenForm = new PushButton(FormUtil.createImage(images.open()));
-		btnSaveForm = new PushButton(FormUtil.createImage(images.save()));
-		
-		btnAddNewItem = new PushButton(FormUtil.createImage(images.add()));
-		btnAddNewChildItem = new PushButton(FormUtil.createImage(images.addchild()));
-		btnDeleteItem = new PushButton(FormUtil.createImage(images.delete()));
-		btnMoveItemUp = new PushButton(FormUtil.createImage(images.moveup()));
-		btnMoveItemDown = new PushButton(FormUtil.createImage(images.movedown()));
-		
-		btnAlignLeft = new PushButton(FormUtil.createImage(images.justifyleft()));
-		btnAlignRight = new PushButton(FormUtil.createImage(images.justifyright()));
-		btnAlignTop = new PushButton(FormUtil.createImage(images.alignTop()));
-		btnAlignBottom = new PushButton(FormUtil.createImage(images.alignBottom()));
-		btnSameWidth = new PushButton(FormUtil.createImage(images.samewidth()));
-		btnSameHeight = new PushButton(FormUtil.createImage(images.sameheight()));
-		btnSameSize = new PushButton(FormUtil.createImage(images.samesize()));
-		
-		btnCut = new PushButton(FormUtil.createImage(images.cut()));
-		btnCopy = new PushButton(FormUtil.createImage(images.copy()));
-		btnPaste = new PushButton(FormUtil.createImage(images.paste()));
-		btnRefresh = new PushButton(FormUtil.createImage(images.refresh()));
-		
-		btnUndo = new PushButton(FormUtil.createImage(images.undo()));
-		btnRedo = new PushButton(FormUtil.createImage(images.redo()));
-		
-		btnNewForm.setTitle(LocaleText.get("newForm"));
+	private void setButtonLocaleText(){
+		btnOpenForm.setTitle(LocaleText.get("open"));
 		btnSaveForm.setTitle(LocaleText.get("save"));
 		
-		btnAddNewItem.setTitle(LocaleText.get("addNew"));
-		btnAddNewChildItem.setTitle(LocaleText.get("addNewChild"));
-		btnDeleteItem.setTitle(LocaleText.get("deleteSelected"));
-		btnMoveItemUp.setTitle(LocaleText.get("moveUp"));
-		btnMoveItemDown.setTitle(LocaleText.get("moveDown"));
+		btnAddForm.setTitle(LocaleText.get("newForm"));
+		btnAddPage.setTitle(LocaleText.get("addNewPage"));
+		btnAddQuestion.setTitle(LocaleText.get("addNewQuestion"));
+		btnDelete.setTitle(LocaleText.get("deleteSelected"));
 		
 		btnCut.setTitle(LocaleText.get("cut"));
 		btnCopy.setTitle(LocaleText.get("copy"));
 		btnPaste.setTitle(LocaleText.get("paste"));
-		btnRefresh.setTitle(LocaleText.get("refresh"));
 		
-		btnAlignLeft.setTitle(LocaleText.get("alignLeft"));
-		btnAlignRight.setTitle(LocaleText.get("alignRight"));
+		btnJustifyLeft.setTitle(LocaleText.get("alignLeft"));
+		btnJustifyRight.setTitle(LocaleText.get("alignRight"));
 		btnAlignTop.setTitle(LocaleText.get("alignTop"));
 		btnAlignBottom.setTitle(LocaleText.get("alignBottom"));
 		btnSameWidth.setTitle(LocaleText.get("makeSameWidth"));
 		btnSameHeight.setTitle(LocaleText.get("makeSameHeight"));
 		btnSameSize.setTitle(LocaleText.get("makeSameSize"));
-		
-		btnUndo.setTitle(LocaleText.get("undo"));
-		btnRedo.setTitle(LocaleText.get("redo"));
-		
-		if(Context.isOfflineMode())
-			panel.add(btnNewForm);
-		
-		panel.add(btnOpenForm);
-		
-		panel.add(btnSaveForm);
-		
-		panel.add(separatorWidget);
-		
-		panel.add(btnAddNewItem);
-		panel.add(btnAddNewChildItem);
-		panel.add(btnDeleteItem);
-		panel.add(separatorWidget);
-		panel.add(btnMoveItemUp);
-		panel.add(btnMoveItemDown);
-		
-		panel.add(separatorWidget);
-		panel.add(btnCut);
-		panel.add(btnCopy);
-		panel.add(btnPaste);
-		
-		panel.add(separatorWidget);
-		panel.add(btnRefresh);
-		
-		panel.add(separatorWidget);
-		panel.add(btnAlignLeft);
-		panel.add(btnAlignRight);
-		panel.add(btnAlignTop);
-		panel.add(btnAlignBottom);
-		
-		panel.add(separatorWidget);
-		panel.add(btnSameWidth);
-		panel.add(btnSameHeight);
-		panel.add(btnSameSize);
-		
-		panel.add(separatorWidget);
-		panel.add(btnUndo);
-		panel.add(btnRedo);
-		
-		Label label = new Label(FormDesignerUtil.getTitle());
-		panel.add(label);
-		panel.setCellWidth(label,"100%");
-		panel.setCellHorizontalAlignment(label,HasHorizontalAlignment.ALIGN_CENTER);
-		
-		label = new Label(LocaleText.get("language"));
-		panel.add(label);
-		panel.setCellHorizontalAlignment(label,HasHorizontalAlignment.ALIGN_RIGHT);
-		
-		populateLocales();
-		
-		cbLanguages.addChangeHandler(new ChangeHandler(){
-			public void onChange(ChangeEvent event){
-				int index = getLocaleIndex(Context.getLocale().getKey());
-				ListBox listBox = (ListBox)event.getSource();
-				if(!controller.changeLocale(new Locale(listBox.getValue(listBox.getSelectedIndex()),listBox.getItemText(listBox.getSelectedIndex()))))
-					cbLanguages.setSelectedIndex(index);
-			}
-		});
-		
-		panel.add(cbLanguages);
-		panel.setCellHorizontalAlignment(cbLanguages,HasHorizontalAlignment.ALIGN_RIGHT);
-		
-		//Set a 3 pixels spacing between tool bar buttons.
-		panel.setSpacing(3);
 	}
 	
-	/**
-	 * Setup button click event handlers.
-	 */
-	private void setupClickListeners(){
-		btnNewForm.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event){controller.newForm();}});
-		
-		btnOpenForm.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event){controller.openForm();}});
-		
-		btnSaveForm.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event){controller.saveForm();}});
-		
-		btnAddNewItem.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event){controller.addNewItem();}});
-		
-		btnAddNewChildItem.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event){controller.addNewChildItem();}});
-		
-		btnDeleteItem.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event){controller.deleteSelectedItem();}});
-		
-		btnMoveItemUp.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event){controller.moveItemUp();}});
-		
-		btnMoveItemDown.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event){controller.moveItemDown();}});
-		
-		btnAlignLeft.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event){controller.alignLeft();}});
-		
-		btnAlignRight.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event){controller.alignRight();}});
-		
-		btnAlignTop.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event){controller.alignTop();}});
-		
-		btnAlignBottom.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event){controller.alignBottom();}});
-		
-		btnCut.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event){controller.cutItem();}});
-		
-		btnCopy.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event){controller.copyItem();}});
-		
-		btnPaste.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event){controller.pasteItem();}});
-		
-		btnSameWidth.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event){controller.makeSameWidth();}});
-		
-		btnSameHeight.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event){controller.makeSameHeight();}});
-		
-		btnSameSize.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event){controller.makeSameSize();}});
-		
-		btnRefresh.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event){controller.refresh(this);}});
+	@UiHandler("btnOpenForm")
+	public void handleOpenForm(ClickEvent event) {
+		controller.openForm();
 	}
 	
-	/**
-	 * Populates the locale drop down with a list of locales supported by the form designer.
-	 */
-	public void populateLocales(){
-		cbLanguages.clear();
-		
-		List<Locale> locales = Context.getLocales();
-		if(locales == null)
-			return;
-		
-		for(Locale locale : locales)
-			cbLanguages.addItem(locale.getName(), locale.getKey());
-		
-		Locale locale = Context.getLocale();
-		if(locale != null)
-			cbLanguages.setSelectedIndex(getLocaleIndex(locale.getKey()));
+	@UiHandler("btnSaveForm")
+	public void handleSaveForm(ClickEvent event) {
+		System.out.println("========================================saving");
+		controller.saveForm();
 	}
 	
+	@UiHandler("btnAddForm")
+	public void handleAddForm(ClickEvent event) {
+		controller.newForm();
+	}
 	
-	private int getLocaleIndex(String localeKey){		
-		List<Locale> locales = Context.getLocales();
-		assert(locales != null);
-		
-		for(int index = 0; index < locales.size(); index++){
-			Locale locale = locales.get(index);
-			if(locale.getKey().equals(localeKey))
-				return index;
-		}
-		
-		return 0;
+	@UiHandler("btnAddPage")
+	public void handleAddPage(ClickEvent event) {
+		controller.addNewPage();
+	}
+	
+	@UiHandler("btnAddQuestion")
+	public void handleAddQuestion(ClickEvent event) {
+		controller.addNewQuestion(QuestionDef.QTN_TYPE_TEXT);
+	}
+	
+	@UiHandler("btnDelete")
+	public void handleDelete(ClickEvent event) {
+		controller.deleteSelectedItem();
+	}
+	
+	@UiHandler("btnCut")
+	public void handleCut(ClickEvent event) {
+		controller.cutItem();
+	}
+	
+	@UiHandler("btnCopy")
+	public void handleCopy(ClickEvent event) {
+		controller.copyItem();
+	}
+	
+	@UiHandler("btnPaste")
+	public void handlePaste(ClickEvent event) {
+		controller.pasteItem();
+	}
+	
+	@UiHandler("btnJustifyLeft")
+	public void handleJustifyLeft(ClickEvent event) {
+		controller.alignLeft();
+	}
+	
+	@UiHandler("btnJustifyRight")
+	public void handleJustifyRight(ClickEvent event) {
+		controller.alignRight();
+	}
+	
+	@UiHandler("btnAlignTop")
+	public void handleAlignTop(ClickEvent event) {
+		controller.alignTop();
+	}
+	
+	@UiHandler("btnAlignBottom")
+	public void handleAlignBottom(ClickEvent event) {
+		 controller.alignBottom();
+	}
+	
+	@UiHandler("btnSameWidth")
+	public void handleSameWidth(ClickEvent event) {
+		controller.makeSameWidth();
+	}
+	
+	@UiHandler("btnSameHeight")
+	public void handleSameHeight(ClickEvent event) {
+		controller.makeSameHeight();
+	}
+	
+	@UiHandler("btnSameSize")
+	public void handleSameSize(ClickEvent event) {
+		controller.makeSameSize();
 	}
 	
 	public void onLocaleListChanged(){
-		populateLocales();
+		// TODO: remove or fix this
+	}
+
+	@Override
+	public void doCenterPanelTabSelected(CenterPanelTabSelectedEvent event) {
+		
+		if (event.getSelectedIndex() == CenterPanel.SELECTED_INDEX_DESIGN_SURFACE)
+			setDesignSurfaceButtonsEnabled(true);
+		else
+			setDesignSurfaceButtonsEnabled(false);
+	}
+	
+	private void setDesignSurfaceButtonsEnabled(boolean enabled){
+		
+		PushButton[] buttons = {btnJustifyLeft, btnJustifyRight, btnAlignTop, btnAlignBottom, btnSameWidth, btnSameHeight, btnSameSize};
+			
+		for (PushButton b : buttons)
+			b.setEnabled(enabled);
 	}
 }

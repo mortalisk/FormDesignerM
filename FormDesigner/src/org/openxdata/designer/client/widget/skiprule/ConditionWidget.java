@@ -7,6 +7,9 @@ import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.ModelConstants;
 import org.openxdata.sharedlib.client.model.QuestionDef;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 
@@ -29,15 +32,15 @@ public class ConditionWidget extends Composite implements ItemSelectionListener{
 	private FieldWidget fieldWidget;
 	
 	/** The operator selection widget. */
-	private OperatorHyperlink operatorHyperlink;
+	private OperatorWidget operatorWidget;
 	
 	/** The value selection or entry widget. */
 	private ValueWidget valueWidget = new ValueWidget();
 	
 	private HorizontalPanel horizontalPanel;
 	
-	/** The condition action widget. */
-	private ActionHyperlink actionHyperlink;
+	/** The remove button */
+	private Button btnRemove;
 
 	/** The question that this widget condition references. */
 	private QuestionDef questionDef;
@@ -88,26 +91,33 @@ public class ConditionWidget extends Composite implements ItemSelectionListener{
 	 * Creates the condition widgets.
 	 */
 	private void setupWidgets(){
-		actionHyperlink = new ActionHyperlink("<>","",this,allowFieldSelection);
+		btnRemove = new Button("x");
+		
+		btnRemove.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				remove();
+			}
+		});
 
 		if(allowFieldSelection){
 			fieldWidget = new FieldWidget(this);
 			fieldWidget.setQuestion(questionDef);
 		}
 
-		operatorHyperlink = new OperatorHyperlink(OperatorHyperlink.OP_TEXT_EQUAL,"",this);
+		operatorWidget = new OperatorWidget(OperatorWidget.OP_TEXT_EQUAL, this);
 		funcHyperlink = new FunctionHyperlink(FunctionHyperlink.FUNCTION_TEXT_VALUE,"",this);
 		
 		horizontalPanel = new HorizontalPanel();
 		horizontalPanel.setSpacing(HORIZONTAL_SPACING);
-		horizontalPanel.add(actionHyperlink);
+		horizontalPanel.add(btnRemove);
 
 		if(allowFieldSelection)
 			horizontalPanel.add(fieldWidget);
 		else
 			horizontalPanel.add(funcHyperlink);
 
-		horizontalPanel.add(operatorHyperlink);
+		horizontalPanel.add(operatorWidget);
 		horizontalPanel.add(valueWidget);
 
 		initWidget(horizontalPanel);
@@ -134,7 +144,7 @@ public class ConditionWidget extends Composite implements ItemSelectionListener{
 			setOperatorDataType(questionDef);
 			valueWidget.setQuestionDef(questionDef);
 		}
-		else if(sender == operatorHyperlink){
+		else if(sender == operatorWidget){
 			operator = ((Integer)item).intValue();
 			valueWidget.setOperator(operator);
 
@@ -164,23 +174,9 @@ public class ConditionWidget extends Composite implements ItemSelectionListener{
 	}
 
 	/**
-	 * Adds a new condition.
-	 */
-	public void addCondition(){
-		view.addCondition();
-	}
-
-	/**
-	 * Adds a new bracket or condition grouping.
-	 */
-	public void addBracket(){
-		view.addBracket();
-	}
-
-	/**
 	 * Deletes this condition.
 	 */
-	public void deleteCurrentRow(){
+	public void remove(){
 		view.deleteCondition(this);
 	}
 
@@ -195,7 +191,15 @@ public class ConditionWidget extends Composite implements ItemSelectionListener{
 
 		condition.setQuestionId(questionDef.getId());
 		condition.setOperator(operator);
-		condition.setValue(valueWidget.getValue());
+		
+		if (ModelConstants.operatorTakesSecondValue(operator)){
+			String[] valuePair = valueWidget.getValue().split(ValueWidget.BETWEEN_VALUE_SEPARATOR);
+			condition.setValue(valuePair[0].trim());
+			condition.setSecondValue(valuePair[1].trim());
+		}
+		else
+			condition.setValue(valueWidget.getValue());
+		
 		condition.setValueQtnDef(valueWidget.getValueQtnDef());
 		condition.setFunction(function);
 
@@ -250,7 +254,7 @@ public class ConditionWidget extends Composite implements ItemSelectionListener{
 				fieldWidget.setQuestion(questionDef);
 
 			funcHyperlink.setFunction(function);
-			operatorHyperlink.setOperator(operator);
+			operatorWidget.setOperator(operator);
 			valueWidget.setOperator(operator);
 			valueWidget.setValueQtnDef(condition.getValueQtnDef()); //Should be set before value such that value processing finds it.
 			valueWidget.setValue(condition.getValue());
@@ -259,6 +263,6 @@ public class ConditionWidget extends Composite implements ItemSelectionListener{
 	
 	
 	private void setOperatorDataType(QuestionDef questionDef){
-		operatorHyperlink.setDataType(function == ModelConstants.FUNCTION_LENGTH ? QuestionDef.QTN_TYPE_NUMERIC : questionDef.getDataType());
+		operatorWidget.setDataType(function == ModelConstants.FUNCTION_LENGTH ? QuestionDef.QTN_TYPE_NUMERIC : questionDef.getDataType());
 	}
 }

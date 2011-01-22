@@ -115,4 +115,19 @@ public class ModelConstants implements Serializable{
 	
 	/** Rule action to make a question optional */
 	public static final int ACTION_MAKE_OPTIONAL = 1 << 6;
+	
+	/**
+	 * Indicates whether the given operator takes a pair of values, rather than a single 
+	 * value, as its second operand. For example, in the expression "x isBetween 0 and 10", 
+	 * the right-hand operand is a pair. Thus, 
+	 * 
+	 * <code>operatorTakesSecondValue(OPERATOR_IS_BETWEEN) == true</code>
+	 * 
+	 * @param op	the operator to test
+	 * @return		true if <code>op</code> takes a pair of values as its second operand, false otherwise.
+	 */
+	public static boolean operatorTakesSecondValue(int op){
+		return op == OPERATOR_BETWEEN ||
+				op == OPERATOR_NOT_BETWEEN;
+	}
 }

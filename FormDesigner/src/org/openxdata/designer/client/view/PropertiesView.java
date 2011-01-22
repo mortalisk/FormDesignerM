@@ -165,7 +165,8 @@ public class PropertiesView extends Composite implements IFormSelectionListener,
 
 	/** Widget for defining dynamic selection lists. */
 	private DynamicListsView dynamicListsView = new DynamicListsView();
-
+	/** Widget for defining edvanced validation Rules*/
+	private AdvancedValidationRulesView advancedValidationRulesView = new AdvancedValidationRulesView();
 	/** Listener to form action events. */
 	private IFormActionListener formActionListener;
 
@@ -265,6 +266,8 @@ public class PropertiesView extends Composite implements IFormSelectionListener,
 		tabs.add(skipRulesView, LocaleText.get("skipLogic"));
 		tabs.add(validationRulesView, LocaleText.get("validationLogic"));
 		tabs.add(dynamicListsView, LocaleText.get("dynamicLists"));
+		//edited by victor
+		tabs.add(advancedValidationRulesView,LocaleText.get("advancedValidationLogic"));
 
 		tabs.selectTab(0);
 		verticalPanel.add(tabs);
@@ -1105,9 +1108,10 @@ public class PropertiesView extends Composite implements IFormSelectionListener,
 
 		if(formItem instanceof FormDef)
 			setFormProperties((FormDef)formItem);
-		else if(formItem instanceof PageDef)
+		else if(formItem instanceof PageDef){
 			setPageProperties((PageDef)formItem);
-		else if(formItem instanceof QuestionDef)
+			advancedValidationRulesView.addQuestions((PageDef)formItem);
+		}else if(formItem instanceof QuestionDef)
 			setQuestionProperties((QuestionDef)formItem);
 		else if(formItem instanceof OptionDef){
 			setQuestionOptionProperties((OptionDef)formItem);
@@ -1142,6 +1146,7 @@ public class PropertiesView extends Composite implements IFormSelectionListener,
 		skipRulesView.updateSkipRule();
 		validationRulesView.updateValidationRule();
 		dynamicListsView.updateDynamicLists();
+		advancedValidationRulesView.updateValidationRule();
 	}
 
 	/**

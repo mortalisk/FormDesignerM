@@ -11,6 +11,10 @@ import org.openxdata.designer.client.controller.IFormActionListener;
 import org.openxdata.designer.client.controller.IFormChangeListener;
 import org.openxdata.designer.client.controller.IFormDesignerListener;
 import org.openxdata.designer.client.controller.IFormSelectionListener;
+import org.openxdata.designer.client.event.XformItemSelectEvent;
+import org.openxdata.designer.client.event.FormDesignerEventBus;
+import org.openxdata.designer.client.event.XformListEmptyEvent;
+import org.openxdata.designer.client.event.XformItemSelectEvent.XformItemType;
 import org.openxdata.designer.client.util.FormDesignerUtil;
 import org.openxdata.designer.client.vew.widget.images.FormDesignerImages;
 import org.openxdata.designer.client.widget.CompositeTreeItem;
@@ -29,6 +33,7 @@ import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
@@ -92,7 +97,10 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 	/** The listener to form designer global events. */
 	private IFormDesignerListener formDesignerListener;
 
-
+	// TODO: This static call will go away once the Event Bus can be properly injected
+	// thru the constructor
+	private final EventBus eventBus = FormDesignerEventBus.getBus();
+	
 	/**
 	 * Creates a new instance of the forms tree view widget.
 	 * 
@@ -263,6 +271,22 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 	private void fireFormItemSelected(Object formItem){
 		for(int i=0; i<formSelectionListeners.size(); i++)
 			formSelectionListeners.get(i).onFormItemSelected(formItem);
+		
+		// some ugly hacks here...
+		XformItemSelectEvent event = null;
+		if (formItem instanceof FormDef) {
+			event = new XformItemSelectEvent(XformItemType.FORM);
+		} else if (formItem instanceof PageDef) {
+			event = new XformItemSelectEvent(XformItemType.QUESTION);
+		} else if (formItem instanceof QuestionDef) {
+			event = new XformItemSelectEvent(XformItemType.QUESTION);
+		}
+		
+		if (event != null) {
+			eventBus.fireEvent(event);
+		} else if (formItem == null) {
+			eventBus.fireEvent(new XformListEmptyEvent());
+		}
 	}
 
 	public void loadForm(FormDef formDef,boolean select, boolean langRefresh){
@@ -564,6 +588,57 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 		}
 		else
 			addNewForm();
+	}
+	
+	/**
+	 * This is a hack. This method will add a new page to the current form definition
+	 * in context. Ideally, this entire class needs to be refactored. There are traces
+	 * of controller, view and model responsibilities in this class.
+	 * Also, instead of trying to pick out elements from the tree widget itself, a selection model 
+	 * of some sort should be used. That would make this entire process less hideous
+	 */
+	public void addNewPage() {
+		if (inReadOnlyMode()) {
+			return;
+		}
+		
+		TreeItem item = tree.getSelectedItem();
+		
+		TreeItem parentItem = null;
+		FormDef formDef = null;
+
+		Object userObj = item.getUserObject();
+		
+		// figure out which item is selected in the form definition list tree
+		if (userObj instanceof PageDef) {
+			parentItem = item.getParentItem();
+			formDef = ((PageDef)userObj).getParent();
+		} else if (userObj instanceof OptionDef) {
+			parentItem = item.getParentItem().getParentItem().getParentItem(); // yikes!
+			formDef = ((OptionDef)userObj).getParent().getParentFormDef();
+		} else if (userObj instanceof QuestionDef) {
+			parentItem = item.getParentItem().getParentItem();
+			formDef = ((QuestionDef)userObj).getParentFormDef();
+		} else if (userObj instanceof FormDef) {
+			parentItem = item;
+			formDef = (FormDef)userObj;
+		}
+				
+		// first add the page
+		int pageId = ++nextPageId;
+		PageDef pageDef = new PageDef(LocaleText.get("page") + pageId, pageId, null, formDef);
+		TreeItem pageDefItem = addImageItem(parentItem, pageDef.getName(), images.drafts(), pageDef, null);
+		addFormDefItem(pageDef, parentItem);
+		
+		// now the question
+		int quesId = ++nextQuestionId;
+		QuestionDef questionDef = new QuestionDef(quesId, LocaleText.get("question") + quesId, QuestionDef.QTN_TYPE_TEXT, "question" + quesId, pageDef);
+		TreeItem quesDefItem = addImageItem(pageDefItem, questionDef.getText(), images.lookup(), questionDef, questionDef.getHelpText());
+		addFormDefItem(questionDef, pageDefItem);
+		tree.setSelectedItem(quesDefItem);
+
+		// make sure to open up the PageDef tree item
+		pageDefItem.setState(true, true);
 	}
 	
 	public void addNewQuestion(int dataType){

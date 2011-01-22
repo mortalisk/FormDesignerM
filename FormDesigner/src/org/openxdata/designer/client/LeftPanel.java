@@ -169,6 +169,10 @@ public class LeftPanel extends Composite {
 	public void addNewQuestion(int dataType){
 		formsTreeView.addNewQuestion(dataType);
 	}
+	
+	public void addNewPage() {
+		formsTreeView.addNewPage();
+	}
 
 	/**
 	 * @see org.openxdata.designer.client.controller.IFormActionListener#moveItemUp()

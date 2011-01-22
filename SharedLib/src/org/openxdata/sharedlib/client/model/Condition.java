@@ -215,29 +215,36 @@ public class Condition implements Serializable{
 			else if(operator == ModelConstants.OPERATOR_IS_NOT_NULL)
 				return true;
 
-			long answer = Long.parseLong(qtn.getAnswer());
-			long longValue = Long.parseLong(value);
+			String answerString = qtn.getAnswer();
+			long answerLong;
 
-			long secondLongValue = longValue;
+			if (answerString.equals("-"))
+				return false;
+			else
+				answerLong = Long.parseLong(qtn.getAnswer());
+			
+			long valueLong = Long.parseLong(value);
+
+			long secondValueLong = valueLong;
 			if(secondValue != null && secondValue.trim().length() > 0)
-				secondLongValue = Long.parseLong(secondValue);
+				secondValueLong = Long.parseLong(secondValue);
 
 			if(operator == ModelConstants.OPERATOR_EQUAL)
-				return longValue == answer;
+				return valueLong == answerLong;
 			else if(operator == ModelConstants.OPERATOR_NOT_EQUAL)
-				return longValue != answer;
+				return valueLong != answerLong;
 			else if(operator == ModelConstants.OPERATOR_LESS)
-				return answer < longValue;
+				return answerLong < valueLong;
 			else if(operator == ModelConstants.OPERATOR_LESS_EQUAL)
-				return answer < longValue || longValue == answer;
+				return answerLong < valueLong || valueLong == answerLong;
 			else if(operator == ModelConstants.OPERATOR_GREATER)
-				return answer > longValue;
+				return answerLong > valueLong;
 			else if(operator == ModelConstants.OPERATOR_GREATER_EQUAL)
-				return answer > longValue || longValue == answer;
+				return answerLong > valueLong || valueLong == answerLong;
 			else if(operator == ModelConstants.OPERATOR_BETWEEN)
-				return answer > longValue && longValue < secondLongValue;
+				return answerLong > valueLong && valueLong < secondValueLong;
 			else if(operator == ModelConstants.OPERATOR_NOT_BETWEEN)
-				return !(answer > longValue && longValue < secondLongValue);
+				return !(answerLong > valueLong && valueLong < secondValueLong);
 		}
 		catch(Exception ex){
 			ex.printStackTrace();

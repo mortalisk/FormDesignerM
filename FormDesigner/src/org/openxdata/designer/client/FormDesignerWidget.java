@@ -61,7 +61,7 @@ public class FormDesignerWidget extends Composite{
 	private Menu menu = new Menu(images,controller);
 
 	/** The tool bar widget. */
-	private Toolbar toolbar = new Toolbar(images,controller);
+	private Toolbar toolbar = new Toolbar(controller);
 
 	/** The splitter between the left and center panel. */
 	private HorizontalSplitPanel hsplitClient;
@@ -413,7 +413,7 @@ public class FormDesignerWidget extends Composite{
 	}
 
 	public void populateLocales(){
-		toolbar.populateLocales();
+		//toolbar.populateLocales();
 	}
 
 	public void removeXformSourceTab(){

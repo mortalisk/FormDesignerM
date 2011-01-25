@@ -76,10 +76,7 @@ public class UiElementBuilder {
 		}	
 
 		Element uiNode =  getXformUIElement(doc,qtn,bindAttributeName,false);
-		if(groupNode != null) //Some forms may not be in groups
-			groupNode.appendChild(uiNode);
-		else
-			xformsNode.appendChild(uiNode);
+		groupNode.appendChild(uiNode);
 
 		qtn.setControlNode(uiNode);
 

@@ -1311,7 +1311,7 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 					formDef.setDoc(((FormDef)obj).getDoc()); //We want to copy the model xml
 					String xml = XhtmlBuilder.fromFormDef2Xhtml(formDef);
 					xml = FormDesignerUtil.formatXml(xml);
-					centerPanel.setXformsSource(xml,formSaveListener == null && isOfflineMode());
+					centerPanel.setXformsSource(xml,formSaveListener == null);
 					FormUtil.dlg.hide();
 				}
 				catch(Exception ex){

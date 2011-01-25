@@ -87,11 +87,8 @@ public class LanguageUtil {
 				//TODO We need to uniquely identify nodes and so each xpath should
 				//point to no more than one node.
 				if(result.size() > 1){
-					;//Window.alert(result.size()+"..........."+xpath+"............"+value);
 					continue;
 				}
-				else if(result.size() == 0)
-					;//Window.alert(result.size()+"..........."+xpath+"............"+value);
 				
 				for(int item = 0; item < result.size(); item++){
 					Element targetNode = (Element)result.get(item);
@@ -107,49 +104,6 @@ public class LanguageUtil {
 		}
 		return doc.toString();
 	}
-
-	/*public static String translate(String srcXml, String langXml){
-		if(srcXml == null || srcXml.trim().length() == 0 || langXml == null || langXml.trim().length() == 0)
-			return srcXml;
-
-		Document doc = XMLParser.parse(srcXml);
-		Element parentLangNode = XMLParser.parse(langXml).getDocumentElement();
-
-		NodeList nodes = parentLangNode.getChildNodes();
-		for(int index = 0; index < nodes.getLength(); index++){
-			Node node = nodes.item(index);
-			if(node.getNodeType() != Node.ELEMENT_NODE)
-				continue;
-
-			String xpath = ((Element)node).getAttribute(XformConstants.ATTRIBUTE_NAME_XPATH);
-			String value = ((Element)node).getAttribute(XformConstants.ATTRIBUTE_NAME_VALUE);
-			if(xpath == null || value == null)
-				continue;
-
-			Vector result = new XPathExpression(doc, xpath).getResult();
-			if(result != null && result.size() > 0){
-				
-				//TODO We need to uniquely identify nodes and so each xpath should
-				//point to no more than one node.
-				if(result.size() > 1){
-					Window.alert(result.size()+"..........."+xpath+"............"+value);
-					continue;
-				}
-				else if(result.size() == 0)
-					Window.alert(result.size()+"..........."+xpath+"............"+value);
-				
-				Element targetNode = (Element)result.get(0);
-				int pos = xpath.lastIndexOf('@');
-				if(pos > 0 && xpath.indexOf('=',pos) < 0){
-					String attributeName = xpath.substring(pos + 1, xpath.indexOf(']',pos));
-					targetNode.setAttribute(attributeName, value);
-				}
-				else
-					XmlUtil.setTextNodeValue(targetNode, value);
-			}
-		}
-		return doc.toString();
-	}*/
 
 	/**
 	 * Extracts xforms locale text from a combined locale document.

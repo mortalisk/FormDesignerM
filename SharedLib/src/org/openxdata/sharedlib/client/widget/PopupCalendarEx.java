@@ -1,6 +1,8 @@
 package org.openxdata.sharedlib.client.widget;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import org.openxdata.sharedlib.client.util.FormUtil;
 import org.zenika.widget.client.util.DateUtil;
@@ -341,9 +343,10 @@ public class PopupCalendarEx extends PopupPanel {
 	 * @return The first day to display in the grid
 	 */
 	private Date getDaysGridOrigin(Date displayedMonth) {
-		int currentYear = displayedMonth.getYear();
-		int currentMonth = displayedMonth.getMonth();
-		Date monthFirstDay = new Date(currentYear, currentMonth, 1);
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(displayedMonth);
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
+		Date monthFirstDay = calendar.getTime();
 		int indice = DateUtil.getWeekDayIndex(monthFirstDay);
 		Date origineTableau;
 		if (indice > 4) {

@@ -15,11 +15,14 @@ import com.google.gwt.i18n.client.DateTimeFormat;
  * www.openxdata.org - Licensed as written in license.txt and original sources of this file and its authors are found in sources.txt.
  */
 public class Condition implements Serializable{
-
-	/**
-	 * Generated serialization ID
-	 */
-	private static final long serialVersionUID = 1L;
+	
+	private static final long serialVersionUID = 26938503530506663L;
+	
+	/** expression functions **/
+	private static final int FUNC_SUM = 1;
+	private static final int FUNC_MAX = 2;
+	private static final int FUNC_MIN = 3;
+	private static final int FUNC_AVG = 4;
 
 	/** The unique identifier of the question referenced by this condition. */
 	private int questionId = ModelConstants.NULL_ID;
@@ -134,25 +137,15 @@ public class Condition implements Serializable{
 			QuestionDef qn = formDef.getQuestion(this.questionId);
 			if(qn == null)
 				return false; //possibly question deleted
-
-			if(value.startsWith(formDef.getBinding()+"/")){
-				QuestionDef qn2 = formDef.getQuestion(value.substring(value.indexOf('/')+1));
-				if(qn2 != null){
-					value = qn2.getAnswer();
-					if(value == null || value.trim().length() == 0){
-						value = tempValue;
-						if(qn.getAnswer() == null || qn.getAnswer().trim().length() == 0)
-							return true; //Both questions not answered yet
-						return false;
-					}
-					else if(qn.getAnswer() == null || qn.getAnswer().trim().length() == 0){
-						value = tempValue;
-						return false;
-						//return validation; //TODO Do we really need validations to return true when qtn is not answered?
-					}
-				}
+			
+			String realValue = getRealValue(formDef);
+			if(realValue == null || realValue.trim().length() == 0){
+				return (qn.getAnswer() == null || qn.getAnswer().trim().length() == 0);
+			} else if(qn.getAnswer() == null || qn.getAnswer().trim().length() == 0){
+				return false;
 			}
 
+			value = realValue;
 			switch(qn.getDataType()){
 			case QuestionDef.QTN_TYPE_TEXT:
 				ret = isTextTrue(qn,validation);
@@ -193,6 +186,92 @@ public class Condition implements Serializable{
 
 		return ret;
 	}
+	
+	/**
+	 * Attempt to convert the condition expression into a real value. Supported features:
+	 * <ul>
+	 * <li>Fetch the value of a referenced node e.g. root/question1
+	 * <li>Sum the values of various nodes e.g. sum(root/q1 | root/q2 | root/q3)
+	 * <li>Avg the values of various nodes e.g. avg(root/q1 | root/q2 | root/q3)
+	 * <li>Min the values of various nodes e.g. min(root/q1 | root/q2 | root/q3)
+	 * <li>Max the values of various nodes e.g. max(root/q1 | root/q2 | root/q3)
+	 * 
+	 * @param data the form data containing the current forms data
+	 * @return String representing the real value of the expression
+	 */
+	private String getRealValue(FormDef formDef) {
+		String rootNode = formDef.getBinding();
+		int expressionFunction = getExpressionFunction();
+		if(value.startsWith(rootNode+"/")){
+			QuestionDef qn2 = formDef.getQuestion(value.substring(value.indexOf('/')+1));
+			if(qn2 != null){
+				return qn2.getAnswer();
+			} else {
+				return null;
+			}
+		} else if (expressionFunction > 0){
+			int lastIndexOf = value.lastIndexOf(')');
+			if (lastIndexOf < 0) {
+				lastIndexOf = value.length();
+			}
+			String expression = value.substring(4, lastIndexOf);
+			int indexOf = 0;
+			double answer = expressionFunction == FUNC_MIN ? Double.MAX_VALUE : 0d;
+			int count = 0;
+			while (indexOf >= 0){
+				int indexOf2 = expression.indexOf('|', indexOf + 1);
+				String expressionArgRef = expression.substring(indexOf, indexOf2 > 0 ? indexOf2 : expression.length()).trim();
+				String expressionArg = expressionArgRef;
+				if(expressionArgRef.startsWith(rootNode+"/")){
+					QuestionDef qn2 = formDef.getQuestion(expressionArgRef.substring(expressionArgRef.indexOf('/')+1));
+					if(qn2 != null){
+						expressionArg = qn2.getAnswer();
+					}
+				}
+				if(expressionArg != null && expressionArg.trim().length() > 0){
+					try {
+							double argVal = Double.parseDouble(expressionArg);
+							answer = processAggregate(answer, argVal, expressionFunction);
+					} catch (NumberFormatException e) {
+						return null; //unable to sum values
+					}
+				}
+				indexOf = indexOf2 >= 0 ? indexOf2 + 1 : indexOf2;
+				count++;
+			}
+			if (expressionFunction == FUNC_AVG){
+				answer = answer / count;
+			}
+			return String.valueOf(answer);
+		}
+		return value;
+	}
+
+	private int getExpressionFunction() {
+		if (value.startsWith("sum(")){
+			return FUNC_SUM;
+		} else if (value.startsWith("avg(")){
+			return FUNC_AVG;
+		} else if (value.startsWith("min(")){
+			return FUNC_MIN;
+		} else if (value.startsWith("max(")){
+			return FUNC_MAX;
+		}
+		return -1;
+	}
+			
+	private double processAggregate(double answer, double nextArg, int function) {
+		switch (function) {
+		case (FUNC_SUM):
+		case (FUNC_AVG):
+			return answer + nextArg;
+		case (FUNC_MAX):
+			return answer > nextArg ? answer : nextArg;
+		case (FUNC_MIN):
+			return answer < nextArg ? answer : nextArg;
+		}
+		return 0;
+	}
 
 	/**
 	 * Check to see if a condition, attached to a numeric question, is true.
@@ -202,58 +281,9 @@ public class Condition implements Serializable{
 	 * @return true if the condition is true, else false.
 	 */
 	private boolean isNumericTrue(QuestionDef qtn, boolean validation){
-		//return value.equals(qtn.getAnswer());
-		try{
-			if(qtn.getAnswer() == null || qtn.getAnswer().trim().length() == 0){
-				if(validation && operator == ModelConstants.OPERATOR_IS_NOT_NULL)
-					return false;
-				else if(validation || operator == ModelConstants.OPERATOR_NOT_EQUAL ||
-						operator == ModelConstants.OPERATOR_NOT_BETWEEN)
-					return true;
-				return operator == ModelConstants.OPERATOR_IS_NULL;
-			}
-			else if(operator == ModelConstants.OPERATOR_IS_NOT_NULL)
-				return true;
-
-			String answerString = qtn.getAnswer();
-			long answerLong;
-
-			if (answerString.equals("-"))
-				return false;
-			else
-				answerLong = Long.parseLong(qtn.getAnswer());
-			
-			long valueLong = Long.parseLong(value);
-
-			long secondValueLong = valueLong;
-			if(secondValue != null && secondValue.trim().length() > 0)
-				secondValueLong = Long.parseLong(secondValue);
-
-			if(operator == ModelConstants.OPERATOR_EQUAL)
-				return valueLong == answerLong;
-			else if(operator == ModelConstants.OPERATOR_NOT_EQUAL)
-				return valueLong != answerLong;
-			else if(operator == ModelConstants.OPERATOR_LESS)
-				return answerLong < valueLong;
-			else if(operator == ModelConstants.OPERATOR_LESS_EQUAL)
-				return answerLong < valueLong || valueLong == answerLong;
-			else if(operator == ModelConstants.OPERATOR_GREATER)
-				return answerLong > valueLong;
-			else if(operator == ModelConstants.OPERATOR_GREATER_EQUAL)
-				return answerLong > valueLong || valueLong == answerLong;
-			else if(operator == ModelConstants.OPERATOR_BETWEEN)
-				return answerLong > valueLong && valueLong < secondValueLong;
-			else if(operator == ModelConstants.OPERATOR_NOT_BETWEEN)
-				return !(answerLong > valueLong && valueLong < secondValueLong);
-		}
-		catch(Exception ex){
-			ex.printStackTrace();
-		}
-
-		return false;
+		return isDecimalTrue(qtn, validation);
 	}
 
-	//TODO Should this test be case sensitive?
 	/**
 	 * Check to see if a condition, attached to a text question, is true.
 	 * 
@@ -262,6 +292,7 @@ public class Condition implements Serializable{
 	 * @return true if the condition is true, else false.
 	 */
 	private boolean isTextTrue(QuestionDef qtn, boolean validation){
+		//TODO Should this test be case sensitive?
 		String answer = qtn.getAnswer();
 
 		if(function == ModelConstants.FUNCTION_VALUE){
@@ -511,8 +542,6 @@ public class Condition implements Serializable{
 	 * @return true if the condition is true, else false.
 	 */
 	private boolean isDecimalTrue(QuestionDef qtn, boolean validation){
-		//return value.equals(qtn.getAnswer());
-
 		try{
 			if(qtn.getAnswer() == null || qtn.getAnswer().trim().length() == 0){
 				if(validation && operator == ModelConstants.OPERATOR_IS_NOT_NULL)
@@ -525,7 +554,15 @@ public class Condition implements Serializable{
 			else if(operator == ModelConstants.OPERATOR_IS_NOT_NULL)
 				return true;
 
-			double answer = Double.parseDouble(qtn.getAnswer());
+			
+			String answerString = qtn.getAnswer();
+			double answer;
+			
+			if (answerString.equals("-"))
+				return false;
+			else
+				answer = Double.parseDouble(qtn.getAnswer());
+			
 			double doubleValue = Double.parseDouble(value);
 
 			double secondDoubleValue = doubleValue;

@@ -281,7 +281,54 @@ public class Condition implements Serializable{
 	 * @return true if the condition is true, else false.
 	 */
 	private boolean isNumericTrue(QuestionDef qtn, boolean validation){
-		return isDecimalTrue(qtn, validation);
+		try{
+			if(qtn.getAnswer() == null || qtn.getAnswer().trim().length() == 0){
+				if(validation && operator == ModelConstants.OPERATOR_IS_NOT_NULL)
+					return false;
+				else if(validation || operator == ModelConstants.OPERATOR_NOT_EQUAL ||
+						operator == ModelConstants.OPERATOR_NOT_BETWEEN)
+					return true;
+				return operator == ModelConstants.OPERATOR_IS_NULL;
+			}
+			else if(operator == ModelConstants.OPERATOR_IS_NOT_NULL)
+				return true;
+
+			String answerString = qtn.getAnswer();
+			long answerLong;
+
+			if (answerString.equals("-"))
+				return false;
+			else
+				answerLong = Long.parseLong(qtn.getAnswer());
+			
+			long valueLong = Long.parseLong(value);
+
+			long secondValueLong = valueLong;
+			if(secondValue != null && secondValue.trim().length() > 0)
+				secondValueLong = Long.parseLong(secondValue);
+
+			if(operator == ModelConstants.OPERATOR_EQUAL)
+				return valueLong == answerLong;
+			else if(operator == ModelConstants.OPERATOR_NOT_EQUAL)
+				return valueLong != answerLong;
+			else if(operator == ModelConstants.OPERATOR_LESS)
+				return answerLong < valueLong;
+			else if(operator == ModelConstants.OPERATOR_LESS_EQUAL)
+				return answerLong < valueLong || valueLong == answerLong;
+			else if(operator == ModelConstants.OPERATOR_GREATER)
+				return answerLong > valueLong;
+			else if(operator == ModelConstants.OPERATOR_GREATER_EQUAL)
+				return answerLong > valueLong || valueLong == answerLong;
+			else if(operator == ModelConstants.OPERATOR_BETWEEN)
+				return answerLong > valueLong && valueLong < secondValueLong;
+			else if(operator == ModelConstants.OPERATOR_NOT_BETWEEN)
+				return !(answerLong > valueLong && valueLong < secondValueLong);
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+		}
+
+		return false;
 	}
 
 	/**

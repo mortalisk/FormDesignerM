@@ -34,7 +34,7 @@ import com.google.gwt.user.client.ui.ChangeListenerCollection;
  * Modified later by James to include change listening
  * @author Nicolas Wetzel (nicolas.wetzel@zenika.com)
  * @author Jean-Philippe Dournel
- * @author Loïc Bertholet
+ * @author Loc Bertholet
  * @author James Heggs (jheggs@axonbirch.com)
  * 
  */

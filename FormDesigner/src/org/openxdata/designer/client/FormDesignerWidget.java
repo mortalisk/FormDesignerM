@@ -6,14 +6,13 @@ import org.openxdata.designer.client.vew.widget.images.FormDesignerImages;
 import org.openxdata.sharedlib.client.OpenXdataConstants;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.Locale;
-import org.openxdata.sharedlib.client.util.FormUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.DockPanel;
-import com.google.gwt.user.client.ui.HorizontalSplitPanel;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
+import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 
@@ -31,9 +30,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  *
  */
 public class FormDesignerWidget extends Composite{
-
-	/** The main widget for the form designer. */
-	private DockPanel dockPanel;
 
 	/**
 	 * Instantiate an application-level image bundle. This object will provide
@@ -64,11 +60,7 @@ public class FormDesignerWidget extends Composite{
 	private Toolbar toolbar = new Toolbar(controller);
 
 	/** The splitter between the left and center panel. */
-	private HorizontalSplitPanel hsplitClient;
-
-	/** Flag to tell whether we in in the resize mode of the splitter. */
-	private boolean isResizing = false;
-
+	private SplitLayoutPanel hsplitClient;
 
 	/**
 	 * Creates a new instance of the form designer.
@@ -99,14 +91,13 @@ public class FormDesignerWidget extends Composite{
 	 * @param showToolbar set to true to show the tool bar.
 	 */
 	private void initDesigner(boolean showMenubar, boolean showToolbar){
-		dockPanel = new DockPanel();
-
-		hsplitClient = new HorizontalSplitPanel();
-		hsplitClient.setLeftWidget(leftPanel);
-		hsplitClient.setRightWidget(centerPanel);
-		hsplitClient.setSplitPosition("25%");
+		
+		hsplitClient = new SplitLayoutPanel();
+		hsplitClient.addWest(leftPanel, 250);
+		hsplitClient.add(centerPanel);
 
 		VerticalPanel panel = new VerticalPanel();
+		panel.setVerticalAlignment(HasVerticalAlignment.ALIGN_TOP);
 
 		if(showMenubar)
 			panel.add(menu);
@@ -117,12 +108,7 @@ public class FormDesignerWidget extends Composite{
 		panel.add(hsplitClient);
 		panel.setWidth("100%");
 
-		dockPanel.add(panel, DockPanel.CENTER);
-
-		FormUtil.maximizeWidget(dockPanel);
-		//FormUtil.maximizeWidget(hsplitClient);
-
-		initWidget(dockPanel);
+		initWidget(panel);
 
 		DOM.sinkEvents(getElement(),DOM.getEventsSunk(getElement()) | Event.MOUSEEVENTS);
 	}
@@ -142,19 +128,6 @@ public class FormDesignerWidget extends Composite{
 			centerPanel.adjustHeight(shortcutHeight-50 + OpenXdataConstants.UNITS);
 			centerPanel.onWindowResized(width, height);
 			hsplitClient.setHeight(shortcutHeight+OpenXdataConstants.UNITS);
-		}
-	}
-
-	@Override
-	public void onBrowserEvent(Event event) {
-		//TODO Firefox doesn't seem to give us mouse events when resizing.
-		if(isResizing)
-			centerPanel.onVerticalResize();
-
-		isResizing = false;
-		if(hsplitClient.isResizing()){
-			isResizing = true;
-			centerPanel.onVerticalResize();
 		}
 	}
 
@@ -232,9 +205,11 @@ public class FormDesignerWidget extends Composite{
 	 * left and center panel.
 	 * 
 	 * @param pos the position in pixels.
+	 * @deprecated not in use
 	 */
+	@Deprecated
 	public void setSplitPos(String pos){
-		hsplitClient.setSplitPosition(pos);
+		
 	}
 
 	/**

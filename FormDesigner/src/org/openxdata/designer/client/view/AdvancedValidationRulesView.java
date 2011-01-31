@@ -42,9 +42,6 @@ public class AdvancedValidationRulesView extends Composite implements SelectionH
 	/** The widget horizontal spacing in horizontal panels. */
 	private static final int HORIZONTAL_SPACING = 5;
 	
-	/** The widget vertical spacing in vertical panelss. */
-	private static final int VERTICAL_SPACING = 0;
-	
 	/*text box for add an expression*/
 	private TextArea expressionEditor = new TextArea();
 	
@@ -60,9 +57,6 @@ public class AdvancedValidationRulesView extends Composite implements SelectionH
 	private Label descriptionLabel = new Label("Description");
 	/** The form definition object that this validation rule belongs to. */
 	private FormDef formDef;
-	
-	/** The question definition object which is the target of the validation rule. */
-	private QuestionDef questionDef;
 	
 	/** The validation rule definition object. */
 	private ValidationRule validationRule;

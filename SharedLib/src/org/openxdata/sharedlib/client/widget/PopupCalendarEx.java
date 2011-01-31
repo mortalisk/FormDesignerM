@@ -343,10 +343,11 @@ public class PopupCalendarEx extends PopupPanel {
 	 * @return The first day to display in the grid
 	 */
 	private Date getDaysGridOrigin(Date displayedMonth) {
-		Calendar calendar = new GregorianCalendar();
-		calendar.setTime(displayedMonth);
-		calendar.set(Calendar.DAY_OF_MONTH, 1);
-		Date monthFirstDay = calendar.getTime();
+
+		int currentYear = displayedMonth.getYear();
+		int currentMonth = displayedMonth.getMonth();
+		Date monthFirstDay = new Date(currentYear, currentMonth, 1);
+
 		int indice = DateUtil.getWeekDayIndex(monthFirstDay);
 		Date origineTableau;
 		if (indice > 4) {

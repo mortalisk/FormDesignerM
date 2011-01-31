@@ -110,7 +110,6 @@ public class FormDesignerWidget extends Composite{
 
 		initWidget(panel);
 
-		DOM.sinkEvents(getElement(),DOM.getEventsSunk(getElement()) | Event.MOUSEEVENTS);
 	}
 
 	/**

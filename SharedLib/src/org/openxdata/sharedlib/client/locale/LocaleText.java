@@ -23,7 +23,7 @@ public class LocaleText {
 	/**
 	 * The dictionary having all localized text.
 	 */
-	private static Dictionary formtoolsText = Dictionary.getDictionary("OpenXdataText");
+	private static Dictionary formtoolsText = Dictionary.getDictionary("PurcformsText");
 	
 	/**
 	 * Gets the localized text for a given key.

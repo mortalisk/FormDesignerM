@@ -52,6 +52,7 @@
 			</fileset>
 			<fileset dir="src">
 				<include name="**/*.gwt.xml"/>
+				<include name="**/*.ui.xml"/>
 				<include name="**/*.css"/>
 				<include name="**/*.java"/>
 				<include name="**/*.gif"/>
@@ -60,6 +61,7 @@
 			</fileset>
 			<fileset dir="../SharedLib/src/">
 				<include name="**/*.gwt.xml"/>
+				<include name="**/*.ui.xml"/>
 				<include name="**/*.css"/>
 				<include name="**/*.java"/>
 				<include name="**/*.gif"/>
@@ -68,6 +70,7 @@
 			</fileset>
 			<fileset dir="../FormDesigner/src/">
 				<include name="**/*.gwt.xml"/>
+				<include name="**/*.ui.xml"/>
 				<include name="**/*.css"/>
 				<include name="**/*.java"/>
 				<include name="**/*.gif"/>
@@ -76,6 +79,7 @@
 			</fileset>
 			<fileset dir="../FormRunner/src/">
 				<include name="**/*.gwt.xml"/>
+				<include name="**/*.ui.xml"/>
 				<include name="**/*.css"/>
 				<include name="**/*.java"/>
 				<include name="**/*.gif"/>

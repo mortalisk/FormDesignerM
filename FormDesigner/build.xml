@@ -18,7 +18,6 @@
   <target name="clean" description="Clean the Form Designer project">
   	<delete dir="war/WEB-INF/classes" />
   	<delete dir="war/FormDesigner" />
-  	<delete dir="../SharedLib/war/WEB-INF/classes" />
   	<delete file="FormDesigner.war" />
   </target>
 

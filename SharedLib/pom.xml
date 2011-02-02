@@ -39,25 +39,5 @@
                 <filtering>false</filtering>
             </resource>
         </resources>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>gwt-maven-plugin</artifactId>
-                <version>${gwt-maven.version}</version>
-                <configuration>
-                    <modules>
-                        <module>org.openxdata.sharedlib.SharedLib</module>
-                    </modules>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>gwt-compile</id>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
     </build>
 </project>

@@ -50,6 +50,7 @@
 
     <modules>
         <module>SharedLib</module>
+        <module>FormRunner</module>
     </modules>
 
     <properties>

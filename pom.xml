@@ -1,0 +1,93 @@
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.openxdata.gwt</groupId>
+    <artifactId>openxdata-gwt-parent</artifactId>
+    <packaging>pom</packaging>
+    <version>1.3-SNAPSHOT</version>
+    <name>OpenXdata GWT Modules</name>
+    <url>http://openxdata.org</url>
+
+    <description>
+	Parent project for the GWT modules made by OpenXdata
+    </description>
+    <organization>
+        <name>OpenXdata Foundation</name>
+        <url>http://www.openxdata.org</url>
+    </organization>
+    <issueManagement>
+        <system>trac</system>
+        <url>http://trac.openxdata.org/openxdata/</url>
+    </issueManagement>
+    <ciManagement>
+        <system>Hudson</system>
+        <url>http://hudson.openxdata.org/job/OpenXdata/</url>
+    </ciManagement>
+    <scm>
+        <connection>scm:svn:https://www.zegeba.org/svn/Forms/trunk/</connection>
+        <developerConnection>scm:svn:https://www.zegeba.org/svn/Forms/trunk/</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+    <mailingLists>
+        <mailingList>
+            <name>OpenXdata Users List</name>
+            <archive>http://groups.google.com/group/openxdata-users</archive>
+            <post>openxdata-users@googlegroups.com</post>
+        </mailingList>
+        <mailingList>
+            <name>OpenXdata Dev List</name>
+            <archive>http://groups.google.com/group/openxdata-dev</archive>
+            <post>openxdata-dev@googlegroups.com</post>
+        </mailingList>
+    </mailingLists>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+        </license>
+    </licenses>
+
+    <modules>
+        <module>SharedLib</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <java.version>1.6</java.version>
+        <gwt.version>2.1.0</gwt.version>
+        <gwt-maven.version>2.1.0-1</gwt-maven.version>
+        <log4j.version>1.2.16</log4j.version>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+		<version>2.3.2</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <showDeprecation>true</showDeprecation>
+                    <showWarnings>true</showWarnings>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+		<version>2.1.2</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

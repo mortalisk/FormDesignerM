@@ -25,8 +25,8 @@
         <url>http://hudson.openxdata.org/job/OpenXdata/</url>
     </ciManagement>
     <scm>
-        <connection>scm:svn:https://www.zegeba.org/svn/Forms/trunk/</connection>
-        <developerConnection>scm:svn:https://www.zegeba.org/svn/Forms/trunk/</developerConnection>
+        <connection>scm:svn:https://www.zegeba.org/svn/EpiHandy/Forms/trunk</connection>
+        <developerConnection>scm:svn:https://www.zegeba.org/svn/EpiHandy/Forms/trunk</developerConnection>
         <tag>HEAD</tag>
     </scm>
     <mailingLists>

@@ -5,12 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 import org.openxdata.sharedlib.client.util.FormUtil;
 import org.openxdata.sharedlib.client.xforms.XformBuilder;
 import org.openxdata.sharedlib.client.xforms.XformConstants;
 import org.openxdata.sharedlib.client.xforms.XmlUtil;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
@@ -637,7 +638,8 @@ public class PageDef implements Serializable{
 
 			//We do not update data nodes which deal with attributes.
 			if(questionDef.getDataNode() == null && !questionDef.getBinding().contains("@")){
-				Window.alert(LocaleText.get("missingDataNode") + questionDef.getText());
+				FormsConstants constants = GWT.create(FormsConstants.class);
+				Window.alert(constants.missingDataNode() + questionDef.getText());
 				continue; //TODO This is a bug which should be resolved
 			}
 

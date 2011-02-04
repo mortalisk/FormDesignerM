@@ -1,8 +1,9 @@
 package org.openxdata.sharedlib.client.view;
 
-import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 import org.openxdata.sharedlib.client.util.FormUtil;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -14,9 +15,11 @@ import com.google.gwt.user.client.ui.Label;
  *
  */
 public class ProgressDialog extends DialogBox{
+	
+	private FormsConstants constants = GWT.create(FormsConstants.class);
 
 	/** The label to show the progress or processing message. */
-	private Label label = new Label(LocaleText.get("processingMsg"));
+	private Label label = new Label(constants.processingMsg());
 
 	/**
 	 * Creates a new instance of the progress dialog.
@@ -39,7 +42,7 @@ public class ProgressDialog extends DialogBox{
 
 		//Reset the progress message to the default because it may have been
 		//been changed with a custom one.
-		label.setText(LocaleText.get("processingMsg"));
+		label.setText(constants.processingMsg());
 		
 		super.center();
 	}

@@ -1,9 +1,10 @@
 package org.openxdata.sharedlib.client.view;
 
 import org.openxdata.sharedlib.client.OpenXdataConstants;
-import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 import org.openxdata.sharedlib.client.util.FormUtil;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Command;
@@ -12,13 +13,13 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FormPanel;
+import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
 
 
 /**
@@ -27,6 +28,8 @@ import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
  *
  */
 public class SaveFileDialog extends DialogBox{
+	
+	private FormsConstants constants = GWT.create(FormsConstants.class);
 
 	private FormPanel form = new FormPanel();
 	private String actionUrl;
@@ -67,7 +70,7 @@ public class SaveFileDialog extends DialogBox{
 		horizontalPanel.setHeight("100%");
 		horizontalPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_BOTTOM);
 		
-		Button button = new Button(LocaleText.get("save"), new ClickHandler(){
+		Button button = new Button(constants.save(), new ClickHandler(){
 			public void onClick(ClickEvent event){
 				String fileName = txtName.getText();
 				if(fileName != null && fileName.trim().length() > 0){
@@ -83,7 +86,7 @@ public class SaveFileDialog extends DialogBox{
 					form.submit();
 					//hide();
 					
-					FormUtil.dlg.setText(LocaleText.get("processingMsg"));
+					FormUtil.dlg.setText(constants.processingMsg());
 					FormUtil.dlg.center();
 				}
 			}
@@ -92,7 +95,7 @@ public class SaveFileDialog extends DialogBox{
 		horizontalPanel.add(button);
 		horizontalPanel.setCellHorizontalAlignment(button, HasHorizontalAlignment.ALIGN_LEFT);
 
-		button = new Button(LocaleText.get("cancel"), new ClickHandler(){
+		button = new Button(constants.cancel(), new ClickHandler(){
 			public void onClick(ClickEvent event){
 				hide();
 				FormUtil.dlg.hide();
@@ -114,7 +117,7 @@ public class SaveFileDialog extends DialogBox{
 			}
 		});
 
-		setText(LocaleText.get("saveFileAs"));
+		setText(constants.saveFileAs());
 	}
 	
 	

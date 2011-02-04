@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 import java.util.Map.Entry;
+import java.util.Vector;
 
 import org.openxdata.sharedlib.client.OpenXdataConstants;
 import org.openxdata.sharedlib.client.controller.QuestionChangeListener;
 import org.openxdata.sharedlib.client.controller.SubmitListener;
-import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 import org.openxdata.sharedlib.client.model.Calculation;
 import org.openxdata.sharedlib.client.model.DynamicOptionDef;
 import org.openxdata.sharedlib.client.model.FormDef;
@@ -86,6 +86,8 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 
 	private final char FIELD_SEPARATOR = '|'; //TODO These may need to be changed.
 	private final char RECORD_SEPARATOR = '$';
+	
+	private FormsConstants constants = GWT.create(FormsConstants.class);
 
 	public interface Images extends ClientBundle {
 		ImageResource error();
@@ -239,7 +241,7 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 
 		tabs.clear();
 		if(formDef == null || layoutXml == null || layoutXml.trim().length() == 0){
-			addNewTab(LocaleText.get("page") + "1");
+			addNewTab(constants.page() + "1");
 			return;
 		}
 
@@ -394,7 +396,7 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 	protected void addNewTab(String name){
 		initPanel();
 		if(name == null)
-			name = LocaleText.get("page")+tabs.getWidgetCount();
+			name = constants.page()+tabs.getWidgetCount();
 		if(name.indexOf("</") > 0)
 			name = name.substring(name.indexOf(">")+1,name.indexOf("</"));
 		tabs.add(selectedPanel, name);
@@ -816,7 +818,7 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 	 * changed their mind about submitting the form.
 	 */
 	public void onCancel(){
-		if(Window.confirm(LocaleText.get("cancelFormPrompt")))
+		if(Window.confirm(constants.cancelFormPrompt()))
 			submitListener.onCancel();
 	}
 
@@ -1110,7 +1112,7 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 	public void setFormDef(FormDef formDef){
 		if(this.formDef != formDef){
 			tabs.clear();
-			addNewTab(LocaleText.get("page") + "1");
+			addNewTab(constants.page() + "1");
 		}
 	}
 

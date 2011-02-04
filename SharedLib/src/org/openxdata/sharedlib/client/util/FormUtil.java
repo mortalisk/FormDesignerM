@@ -2,11 +2,11 @@ package org.openxdata.sharedlib.client.util;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.openxdata.sharedlib.client.OpenXdataConstants;
-import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 import org.openxdata.sharedlib.client.model.OptionDef;
 import org.openxdata.sharedlib.client.view.ErrorDialog;
 import org.openxdata.sharedlib.client.view.ProgressDialog;
@@ -42,6 +42,8 @@ import com.google.gwt.xml.client.Element;
  *
  */
 public class FormUtil {
+	
+	private static FormsConstants constants = GWT.create(FormsConstants.class);
 
 	/** The date time format used in the xforms model xml. */
 	private static DateTimeFormat dateTimeSubmitFormat;
@@ -641,7 +643,7 @@ public class FormUtil {
 
 		ex.printStackTrace();
 
-		String text = LocaleText.get("uncaughtException");
+		String text = constants.uncaughtException();
 		String s = text;
 		while (ex != null) {
 			s = ex.getMessage();
@@ -652,7 +654,7 @@ public class FormUtil {
 			}
 			ex = (Exception)ex.getCause();
 			if (ex != null) {
-				text += LocaleText.get("causedBy");
+				text += constants.causedBy();
 			}
 		}
 
@@ -661,7 +663,7 @@ public class FormUtil {
 		//yet got the exact cause for.
 		if(!(s != null && (s.contains("(NS_ERROR_DOM_NOT_SUPPORTED_ERR):") || s.contains("(Error): Permission denied for")))){
 			ErrorDialog dialogBox = new ErrorDialog();
-			dialogBox.setText(LocaleText.get("unexpectedFailure"));
+			dialogBox.setText(constants.unexpectedFailure());
 			dialogBox.setErrorMessage(s);
 			dialogBox.setCallStack(text);
 			dialogBox.center();
@@ -674,7 +676,7 @@ public class FormUtil {
 		dlg.hide();
 
 		ErrorDialog dialogBox = new ErrorDialog();
-		dialogBox.setText(LocaleText.get("unexpectedFailure"));
+		dialogBox.setText(constants.unexpectedFailure());
 
 		String errorMessage = response.getHeader("OPENXDATA-ERROR-MESSAGE");
 		if(errorMessage == null || errorMessage.trim().length() == 0)

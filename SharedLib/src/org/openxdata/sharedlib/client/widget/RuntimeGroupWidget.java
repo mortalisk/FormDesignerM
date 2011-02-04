@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.openxdata.sharedlib.client.controller.OpenFileDialogEventListener;
 import org.openxdata.sharedlib.client.controller.QuestionChangeListener;
-import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.OptionDef;
 import org.openxdata.sharedlib.client.model.QuestionDef;
@@ -14,11 +14,12 @@ import org.openxdata.sharedlib.client.model.RepeatQtnsDef;
 import org.openxdata.sharedlib.client.model.ValidationRule;
 import org.openxdata.sharedlib.client.util.FormUtil;
 import org.openxdata.sharedlib.client.view.FormRunnerView;
-import org.openxdata.sharedlib.client.view.OpenFileDialog;
 import org.openxdata.sharedlib.client.view.FormRunnerView.Images;
+import org.openxdata.sharedlib.client.view.OpenFileDialog;
 import org.openxdata.sharedlib.client.xforms.XformConstants;
 import org.openxdata.sharedlib.client.xforms.XmlUtil;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.http.client.URL;
@@ -51,6 +52,8 @@ import com.google.gwt.xml.client.NodeList;
  *
  */
 public class RuntimeGroupWidget extends Composite implements OpenFileDialogEventListener,QuestionChangeListener{
+	
+	private FormsConstants constants = GWT.create(FormsConstants.class);
 
 	private final Images images;
 	private RepeatQtnsDef repeatQtnsDef;
@@ -214,7 +217,7 @@ public class RuntimeGroupWidget extends Composite implements OpenFileDialogEvent
 	}
 
 	private void addDeleteButton(int row){
-		PushButton btn = new PushButton(LocaleText.get("deleteItem"));
+		PushButton btn = new PushButton(constants.deleteItem());
 		btn.addClickHandler(new ClickHandler(){
 			public void onClick(ClickEvent event){
 				removeRow((Widget)event.getSource());
@@ -663,7 +666,7 @@ public class RuntimeGroupWidget extends Composite implements OpenFileDialogEvent
 				if(wrapper.getWrappedWidget() instanceof HTML && !wrapper.getWrappedWidget().isVisible())
 					return;
 
-				if(!Window.confirm(LocaleText.get("deleteItemPrompt")))
+				if(!Window.confirm(constants.deleteItemPrompt()))
 					return;
 
 				QuestionDef questionDef = wrapper.getQuestionDef();
@@ -676,10 +679,10 @@ public class RuntimeGroupWidget extends Composite implements OpenFileDialogEvent
 					html = null;
 				}
 				else if(wrapper.getWrappedWidget() instanceof Label)
-					((Label)wrapper.getWrappedWidget()).setText(LocaleText.get("noSelection"));
+					((Label)wrapper.getWrappedWidget()).setText(constants.noSelection());
 				else{
 					html = (HTML)wrapper.getWrappedWidget();
-					html.setHTML(LocaleText.get("clickToPlay"));
+					html.setHTML(constants.clickToPlay());
 					html.setVisible(false);
 					image = null;
 				}
@@ -747,7 +750,7 @@ public class RuntimeGroupWidget extends Composite implements OpenFileDialogEvent
 			if(index == 0){
 				Element dataNode = mainWidget.getQuestionDef().getDataNode();
 				if(dataNode == null){
-					Window.alert("Please first save the form"); //LocaleText.get("?????");
+					Window.alert("Please first save the form"); //constants.?????");
 					return; //possibly form not yet saved
 				}
 

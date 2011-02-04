@@ -1,20 +1,21 @@
 package org.openxdata.sharedlib.client.view;
 
 import org.openxdata.sharedlib.client.controller.OpenFileDialogEventListener;
-import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 import org.openxdata.sharedlib.client.util.FormUtil;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FormPanel;
+import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
 
 /**
  * Used for letting the user browse for a file to open on the local file system.
@@ -23,6 +24,8 @@ import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
  *
  */
 public class OpenFileDialog extends DialogBox{
+	
+	private FormsConstants constants = GWT.create(FormsConstants.class);
 
 	/** The form used for posting the selected file to. */
 	private FormPanel form = new FormPanel();
@@ -72,7 +75,7 @@ public class OpenFileDialog extends DialogBox{
 		horizontalPanel.setHeight("100%");
 		horizontalPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_BOTTOM);
 		
-		Button button = new Button(LocaleText.get("open"), new ClickHandler(){
+		Button button = new Button(constants.open(), new ClickHandler(){
 			public void onClick(ClickEvent event){
 				String action = actionUrl;
 				if(action.contains("?"))
@@ -86,7 +89,7 @@ public class OpenFileDialog extends DialogBox{
 				form.submit();
 				//hide();
 				
-				FormUtil.dlg.setText(LocaleText.get("processingMsg"));
+				FormUtil.dlg.setText(constants.processingMsg());
 				FormUtil.dlg.center();
 			}
 		});
@@ -94,7 +97,7 @@ public class OpenFileDialog extends DialogBox{
 		horizontalPanel.add(button);
 		horizontalPanel.setCellHorizontalAlignment(button, HasHorizontalAlignment.ALIGN_LEFT);
 		
-		button = new Button(LocaleText.get("cancel"), new ClickHandler(){
+		button = new Button(constants.cancel(), new ClickHandler(){
 			public void onClick(ClickEvent event){
 				hide();
 				FormUtil.dlg.hide();
@@ -116,6 +119,6 @@ public class OpenFileDialog extends DialogBox{
 			}
 		});
 		
-		setText(LocaleText.get("openFile"));
+		setText(constants.openFile());
 	}
 }

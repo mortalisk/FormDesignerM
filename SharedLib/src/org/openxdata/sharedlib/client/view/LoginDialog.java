@@ -1,8 +1,9 @@
 package org.openxdata.sharedlib.client.view;
 
-import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 import org.openxdata.sharedlib.client.util.FormUtil;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -14,13 +15,13 @@ import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
 
 
 /**
@@ -33,6 +34,8 @@ import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
  *
  */
 public class LoginDialog extends DialogBox {
+	
+	private FormsConstants constants = GWT.create(FormsConstants.class);
 
 	/** For capturing the user name. */
 	private TextBox txtUserName;
@@ -56,9 +59,9 @@ public class LoginDialog extends DialogBox {
 	 */
 	private void setup(){
 		
-		setText(LocaleText.get("authenticationPrompt"));
+		setText(constants.authenticationPrompt());
 				
-		Label label = new Label(LocaleText.get("userName"));
+		Label label = new Label(constants.userName());
 		table.setWidget(1, 0, label);
 		
 		txtUserName = new TextBox();
@@ -73,7 +76,7 @@ public class LoginDialog extends DialogBox {
 		});
 		
 		
-		label = new Label(LocaleText.get("password"));
+		label = new Label(constants.password());
 		table.setWidget(2, 0, label);
 		
 		txtPassword = new PasswordTextBox();
@@ -87,13 +90,13 @@ public class LoginDialog extends DialogBox {
 			}
 		});
 		
-		Button btnLogin = new Button(LocaleText.get("login"), new ClickHandler(){
+		Button btnLogin = new Button(constants.login(), new ClickHandler(){
 			public void onClick(ClickEvent event){
 				login();
 			}
 		});
 		
-		Button btnCancel = new Button(LocaleText.get("cancel"), new ClickHandler(){
+		Button btnCancel = new Button(constants.cancel(), new ClickHandler(){
 			public void onClick(ClickEvent event){
 				cancel();
 			}
@@ -138,7 +141,7 @@ public class LoginDialog extends DialogBox {
 		if(!FormUtil.authenticate(txtUserName.getText(), txtPassword.getText())){
 			clearUserInfo();
 			
-			Label label = new Label(LocaleText.get("invalidUser"));
+			Label label = new Label(constants.invalidUser());
 			table.setWidget(4, 0, label);
 			DOM.setStyleAttribute(label.getElement(), "color", "red");
 			

@@ -8,11 +8,12 @@ import java.util.List;
 import java.util.Vector;
 import java.util.Map.Entry;
 
-import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 import org.openxdata.sharedlib.client.util.FormUtil;
 import org.openxdata.sharedlib.client.xforms.XformConstants;
 import org.openxdata.sharedlib.client.xforms.XformUtil;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.XMLParser;
@@ -1005,8 +1006,9 @@ public class FormDef implements Serializable {
 	 * @param pageNo the new page number where to take the question.
 	 */
 	public boolean moveQuestion2Page(QuestionDef qtn, int pageNo, FormDef formDef){
+		FormsConstants constants = GWT.create(FormsConstants.class);
 		if(pages.size() < pageNo)
-			pages.add(new PageDef(LocaleText.get("page") + pageNo, pageNo, formDef));
+			pages.add(new PageDef(constants.page() + pageNo, pageNo, formDef));
 		
 		for(int i=0; i<pages.size(); i++){
 			PageDef page = (PageDef)pages.elementAt(i);

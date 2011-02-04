@@ -1,9 +1,10 @@
 package org.openxdata.sharedlib.client.view;
 
 import org.openxdata.sharedlib.client.OpenXdataConstants;
-import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 import org.openxdata.sharedlib.client.util.FormUtil;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
@@ -27,13 +28,15 @@ public class ErrorDialog extends DialogBox implements ClickHandler {
 	/** This displays the call stack at the time of the exception. */
 	private TextArea callStack = new TextArea();
 	
+	private FormsConstants constants = GWT.create(FormsConstants.class);
+	
 	
 	/**
 	 * Creates a new instance of the error dialog box.
 	 */
 	public ErrorDialog() {
 		
-		Button closeButton = new Button(LocaleText.get("close"), this);
+		Button closeButton = new Button(constants.close(), this);
 		VerticalPanel panel = new VerticalPanel();
 		panel.setSpacing(4);
 		panel.add(txtErrorMsg);
@@ -41,7 +44,7 @@ public class ErrorDialog extends DialogBox implements ClickHandler {
 		panel.setCellHorizontalAlignment(closeButton, VerticalPanel.ALIGN_CENTER);
 
 		//Setup the disclosure panel to display the call stack.
-		DisclosurePanel advanced = new DisclosurePanel(LocaleText.get("more"));
+		DisclosurePanel advanced = new DisclosurePanel(constants.more());
 		advanced.setAnimationEnabled(true);
 		advanced.setContent(callStack);
 		panel.add(advanced);

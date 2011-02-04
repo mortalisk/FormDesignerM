@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Vector;
 
 import org.openxdata.sharedlib.client.controller.QuestionChangeListener;
-import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 import org.openxdata.sharedlib.client.util.FormUtil;
 import org.openxdata.sharedlib.client.xforms.UiElementBuilder;
 import org.openxdata.sharedlib.client.xforms.XformBuilderUtil;
@@ -17,6 +17,7 @@ import org.openxdata.sharedlib.client.xforms.XformUtil;
 import org.openxdata.sharedlib.client.xforms.XmlUtil;
 import org.openxdata.sharedlib.client.xpath.XPathExpression;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
@@ -31,6 +32,8 @@ import com.google.gwt.xml.client.NodeList;
  *
  */
 public class QuestionDef implements Serializable{
+	
+	private static FormsConstants constants = GWT.create(FormsConstants.class);
 
 	/**
 	 * Generated serialization ID
@@ -44,10 +47,10 @@ public class QuestionDef implements Serializable{
 	public static final String FALSE_VALUE = "false";
 
 	/** The text to display for boolean questions for the yes option. */
-	public static final String TRUE_DISPLAY_VALUE = LocaleText.get("yes");
+	public static final String TRUE_DISPLAY_VALUE = constants.yes();
 
 	/** The text to display for boolean questions for the no option. */
-	public static final String FALSE_DISPLAY_VALUE = LocaleText.get("no");
+	public static final String FALSE_DISPLAY_VALUE = constants.no();
 
 	/** The prompt text. The text the user sees. */
 	private String text = ModelConstants.EMPTY_STRING;

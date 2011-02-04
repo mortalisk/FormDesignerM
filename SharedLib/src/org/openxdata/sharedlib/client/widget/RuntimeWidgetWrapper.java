@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openxdata.sharedlib.client.controller.QuestionChangeListener;
-import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.OptionDef;
 import org.openxdata.sharedlib.client.model.QuestionDef;
 import org.openxdata.sharedlib.client.model.ValidationRule;
 import org.openxdata.sharedlib.client.util.FormUtil;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -53,6 +54,8 @@ import com.google.gwt.user.client.ui.Widget;
  *
  */
 public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeListener{
+	
+	private FormsConstants constants = GWT.create(FormsConstants.class);
 
 	/** Widget to display error message icon when the widget's validation fails. */
 	protected Image errorImage;
@@ -82,7 +85,7 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 		editListener = widget.getEditListener();
 		errorImage = FormUtil.createImage(widget.getErrorImage());
 		errorImageProto = widget.getErrorImage();
-		errorImage.setTitle(LocaleText.get("requiredErrorMsg"));
+		errorImage.setTitle(constants.requiredErrorMsg());
 
 		if(widget.getValidationRule() != null)
 			validationRule = new ValidationRule(widget.getValidationRule());
@@ -112,7 +115,7 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 			panel.add(widget);
 			initWidget(panel);
 			setupEventListeners();
-			errorImage.setTitle(LocaleText.get("requiredErrorMsg"));
+			errorImage.setTitle(constants.requiredErrorMsg());
 
 			DOM.sinkEvents(getElement(),DOM.getEventsSunk(getElement()) | Event.MOUSEEVENTS /*| Event.ONCONTEXTMENU | Event.KEYEVENTS*/);
 		}
@@ -718,7 +721,7 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 			else if(questionDef.getDataType() == QuestionDef.QTN_TYPE_DATE_TIME)
 				format = FormUtil.getDateTimeDisplayFormat().getPattern();
 
-			errorImage.setTitle(LocaleText.get("wrongFormat") + " " + format);
+			errorImage.setTitle(constants.wrongFormat() + " " + format);
 		}
 
 		return value;
@@ -949,7 +952,7 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 			if(panel.getWidgetCount() < 2)
 				panel.add(errorImage);
 
-			errorImage.setTitle(LocaleText.get("requiredErrorMsg"));
+			errorImage.setTitle(constants.requiredErrorMsg());
 			return false;
 		}
 

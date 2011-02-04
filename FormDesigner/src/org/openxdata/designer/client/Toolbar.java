@@ -9,7 +9,6 @@ import org.openxdata.designer.client.event.XformItemSelectHandler;
 import org.openxdata.designer.client.event.FormDesignerEventBus;
 import org.openxdata.designer.client.event.XformListEmptyEvent;
 import org.openxdata.designer.client.event.XformListEmptyHandler;
-import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.model.QuestionDef;
 
 import com.google.gwt.core.client.GWT;
@@ -21,6 +20,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.Widget;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 /**
  * This widget is the main tool bar for the form designer.
@@ -30,6 +30,8 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class Toolbar extends Composite implements ILocaleListChangeListener, XformItemSelectHandler, XformListEmptyHandler, 
 													CenterPanelTabSelectedHandler {
+    final FormsConstants formsConstants = GWT.create(FormsConstants.class);
+    final DesignerMessages designerMessages = GWT.create(DesignerMessages.class);
 
 	private static ToolbarUiBinder uiBinder = GWT.create(ToolbarUiBinder.class);
 	
@@ -105,25 +107,25 @@ public class Toolbar extends Composite implements ILocaleListChangeListener, Xfo
 	 * Sets up the tool bar.
 	 */
 	private void setButtonLocaleText(){
-		btnOpenForm.setTitle(LocaleText.get("open"));
-		btnSaveForm.setTitle(LocaleText.get("save"));
+		btnOpenForm.setTitle(formsConstants.open());
+		btnSaveForm.setTitle(formsConstants.save());
 		
-		btnAddForm.setTitle(LocaleText.get("newForm"));
-		btnAddPage.setTitle(LocaleText.get("addNewPage"));
-		btnAddQuestion.setTitle(LocaleText.get("addNewQuestion"));
-		btnDelete.setTitle(LocaleText.get("deleteSelected"));
+		btnAddForm.setTitle(formsConstants.newForm());
+		btnAddPage.setTitle(designerMessages.addNewPage());
+		btnAddQuestion.setTitle(designerMessages.addNewQuestion());
+		btnDelete.setTitle(designerMessages.deleteSelected());
 		
-		btnCut.setTitle(LocaleText.get("cut"));
-		btnCopy.setTitle(LocaleText.get("copy"));
-		btnPaste.setTitle(LocaleText.get("paste"));
+		btnCut.setTitle(designerMessages.cut());
+		btnCopy.setTitle(designerMessages.copy());
+		btnPaste.setTitle(designerMessages.paste());
 		
-		btnJustifyLeft.setTitle(LocaleText.get("alignLeft"));
-		btnJustifyRight.setTitle(LocaleText.get("alignRight"));
-		btnAlignTop.setTitle(LocaleText.get("alignTop"));
-		btnAlignBottom.setTitle(LocaleText.get("alignBottom"));
-		btnSameWidth.setTitle(LocaleText.get("makeSameWidth"));
-		btnSameHeight.setTitle(LocaleText.get("makeSameHeight"));
-		btnSameSize.setTitle(LocaleText.get("makeSameSize"));
+		btnJustifyLeft.setTitle(designerMessages.alignLeft());
+		btnJustifyRight.setTitle(designerMessages.alignRight());
+		btnAlignTop.setTitle(designerMessages.alignTop());
+		btnAlignBottom.setTitle(designerMessages.alignBottom());
+		btnSameWidth.setTitle(designerMessages.makeSameWidth());
+		btnSameHeight.setTitle(designerMessages.makeSameHeight());
+		btnSameSize.setTitle(designerMessages.makeSameSize());
 	}
 	
 	@UiHandler("btnOpenForm")

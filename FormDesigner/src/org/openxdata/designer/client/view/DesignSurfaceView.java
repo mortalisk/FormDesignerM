@@ -115,16 +115,13 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.delete(),LocaleText.get("deleteItem")),true, new Command(){
 			public void execute() {widgetPopup.hide(); deleteWidgets();}});
 
-		menuBar.addSeparator(); //LocaleText.get("??????")?????????
+		menuBar.addSeparator();
 		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.add(),LocaleText.get("changeWidgetH")),true, new Command(){
 			public void execute() {widgetPopup.hide(); changeWidget(false);}});
 
 		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.add(),LocaleText.get("changeWidgetV")),true, new Command(){
 			public void execute() {widgetPopup.hide(); changeWidget(true);}});
 
-		//menuBar.addSeparator();
-		//menuBar.addItem(lockWidgetsMenu);
-		
 		widgetPopup.setWidget(menuBar);
 
 		rubberBand.addStyleName("rubberBand");
@@ -240,29 +237,9 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),LocaleText.get("videoAudio")),true,new Command(){
 			public void execute() {popup.hide(); addNewVideoAudioSection(null,null,true);}});
 
-		/*addControlMenu.addSeparator();
-
-		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),"Group Box"),true,new Command(){
-			public void execute() {popup.hide(); addNewButton();}});
-
-		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),"Auto Complete TextBox"),true,new Command(){
-			public void execute() {popup.hide(); addNewTextBox();}});
-
-		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),"Time Picker"),true,new Command(){
-			public void execute() {popup.hide(); ;}});
-
-		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),"Date & Time Picker"),true,new Command(){
-			public void execute() {popup.hide(); ;}});
-
-		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),"Image"),true,new Command(){
-			public void execute() {popup.hide(); ;}});
-
-		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),"Attachment"),true,new Command(){
-			public void execute() {popup.hide(); ;}});*/
 
 		menuBar.addItem("     "+LocaleText.get("addWidget"),addControlMenu);
 
-		//if(selectedDragController.isAnyWidgetSelected()){
 		deleteWidgetsSeparator = menuBar.addSeparator();
 		deleteWidgetsMenu = menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.delete(),LocaleText.get("deleteSelected")),true,new Command(){
 			public void execute() {popup.hide(); deleteWidgets();}});
@@ -270,7 +247,6 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 		groupWidgetsSeparator = menuBar.addSeparator();
 		groupWidgetsMenu = menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),LocaleText.get("groupWidgets")),true,new Command(){
 			public void execute() {popup.hide(); groupWidgets();}});
-		//}
 
 		menuBar.addSeparator();	
 		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.add(),LocaleText.get("newTab")),true, new Command(){
@@ -279,19 +255,16 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.delete(),LocaleText.get("deleteTab")),true, new Command(){
 			public void execute() {popup.hide(); deleteTab();}});
 
-		//if(selectedDragController.isAnyWidgetSelected()){
 		cutCopySeparator = menuBar.addSeparator();
 		cutMenu = menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.cut(),LocaleText.get("cut")),true,new Command(){
 			public void execute() {popup.hide(); cutWidgets();}});
 
 		copyMenu = menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.copy(),LocaleText.get("copy")),true,new Command(){
 			public void execute() {popup.hide(); copyWidgets(false);}});
-		//}
-		//else if(clipBoardWidgets.size() > 0){
+
 		pasteSeparator = menuBar.addSeparator();
 		pasteMenu = menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.paste(),LocaleText.get("paste")),true,new Command(){
 			public void execute() {popup.hide(); pasteWidgets(true);}});
-		//}
 
 		menuBar.addSeparator();	
 		lockWidgetsMenu = menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.add(),LocaleText.get("lockWidgets")),true, new Command(){
@@ -331,8 +304,6 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 		widget.setFontSize(FormUtil.getDefaultFontSize());
 		widget.setFontWeight("normal");
 		pageWidgets.put(tabs.getTabBar().getTabCount()-1, widget);
-
-		//widgetSelectionListener.onWidgetSelected(widget);
 
 		DeferredCommand.addCommand(new Command() {
 			public void execute() {
@@ -390,7 +361,6 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 		for(int i=0; i<tabs.getWidgetCount(); i++){
 			Element node = doc.createElement("Page");
 			node.setAttribute(WidgetEx.WIDGET_PROPERTY_TEXT, DesignWidgetWrapper.getTabDisplayText(tabs.getTabBar().getTabHTML(i)));
-			//node.setAttribute("BackgroundColor", tabs.getTabBar().getTabHTML(i));
 			
 			pageWidgets.get(i).buildLabelProperties(node);
 
@@ -414,11 +384,6 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 
 		if(hasWidgets)
 			return FormDesignerUtil.formatXml(doc.toString());
-		else if(formDef != null)
-			//TODO This accidentally overwrites form layout after refresh when user has not refreshed the design surface.
-			//When user clears widgets, the setting of formdef layout to null will be done immediately
-			//after the delete.
-			;//formDef.setLayoutXml(null);
 
 		return null;
 	}
@@ -440,8 +405,6 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 			rootNode.setAttribute(XformConstants.ATTRIBUTE_NAME_ID, formDef.getId()+"");
 		doc.appendChild(rootNode);
 
-		//String xpath = "Form/Page/Item[@Binding='";
-		//String xpath = "Form/Page/Item[@";
 		for(int i=0; i<tabs.getWidgetCount(); i++){
 			if(pageWidgets.get(i) == null)
 				continue; //TODO Need to deal with this case where all widgets are deleted but layout and locale text remains
@@ -547,7 +510,6 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 				}
 			}
 			catch(Exception ex){
-				//FormUtil.displayException(ex);
 				ex.printStackTrace();
 			}
 		}
@@ -658,7 +620,6 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 		if(value != null && value.trim().length() > 0)
 			wrapper.setTabIndex(Integer.parseInt(value));
 
-		//if(wrapper.getWrappedWidget() instanceof Label)
 		WidgetEx.loadLabelProperties(node,wrapper);
 
 		if(formDef != null && binding != null && parentBinding == null){
@@ -666,13 +627,6 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 			if(questionDef != null)
 				wrapper.setQuestionDef(questionDef);
 		}
-
-		/*if(formDef != null && (binding != null || parentBinding != null)){
-			QuestionDef questionDef = formDef.getQuestion(parentBinding != null ? parentBinding : binding);
-			if(questionDef != null){
-				wrapper.setQuestionDef(questionDef);
-			}
-		}*/
 
 		if(!"true".equals(node.getAttribute(WidgetEx.WIDGET_PROPERTY_HEADER_LABEL))){
 			dragController.makeDraggable(wrapper);
@@ -800,7 +754,7 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 	 * @param select set to true to select all the created widgets.
 	 */
 	private void loadQuestions(List<QuestionDef> questions, int startY, int tabIndex, boolean submitCancelBtns, boolean select){
-		int maxX = 0, max = 999999; //FormUtil.convertDimensionToInt(sHeight) - 0 + 150; //40; No longer adding submit button on every page
+		int maxX = 0, max = 999999;
 		x = 20;
 		y = startY;
 
@@ -905,7 +859,6 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 			//TODO Looks like this is not longer necessary as we can have a page as long as the user wants
 			if((y+40+rptIncr) > max){
 				y += 10;
-				//addNewButton(false);
 				addNewTab(LocaleText.get("page"));
 				y = 20 + selectedPanel.getAbsoluteTop();
 			}
@@ -944,17 +897,6 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 	protected DesignWidgetWrapper addNewCheckBoxSet(QuestionDef questionDef, boolean vertically, int tabIndex){
 		List<OptionDef> options = questionDef.getOptions();
 		for(int i=0; i < options.size(); i++){
-			/*if(i != 0){
-				y += 40;
-
-				if((y+40) > max){
-					y += 10;
-					//addNewButton(false);
-					addNewTab(pageName);
-					y = 20;
-				}
-			}*/
-
 			OptionDef optionDef = (OptionDef)options.get(i);
 			DesignWidgetWrapper wrapper = addNewWidget(new CheckBox(optionDef.getText()),false);
 			wrapper.setFontFamily(FormUtil.getDefaultFontFamily());
@@ -1017,22 +959,8 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 		selectedPanel = widget.getPanel();
 		widgetPopup = widget.getWidgetPopup();
 
-		/*y = 30;
-		Vector questions = questionDef.getRepeatQtnsDef().getQuestions();
-		if(questions == null)
-			return addNewTextBox(select); //TODO Bug here
-		for(int index = 0; index < questions.size(); index++){
-			QuestionDef qtn = (QuestionDef)questions.get(index);
-			if(index > 0)
-				x += 210;
-			DesignWidgetWrapper label = addNewLabel(qtn.getText(),select);
-			label.setBinding(qtn.getVariableName());
-			label.setTextDecoration("underline");
-		}*/
-
-		//y = x = 10;
 		x += selectedPanel.getAbsoluteLeft();
-		y += selectedPanel.getAbsoluteTop() + 0; //50;
+		y += selectedPanel.getAbsoluteTop();
 
 		DesignWidgetWrapper widgetWrapper = null;
 		for(int index = 0; index < questions.size(); index++){
@@ -1079,7 +1007,7 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 		currentWidgetSelectionListener = wgSelectionListener;
 
 		y = oldY;
-		y += 90; //130; //25;
+		y += 90;
 
 		if(questions.size() == 1)
 			widget.setWidthInt(265);
@@ -1157,7 +1085,6 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 		if(formDef == null)
 			return;
 
-		//AbsolutePanel panel (AbsolutePanel)tabs.getWidget(i);
 		if((selectedPanel != null && selectedPanel.getWidgetCount() > 0) || tabs.getTabBar().getTabCount() > 1){
 			Window.alert(LocaleText.get("deleteAllWidgetsFirst"));
 			return;
@@ -1310,18 +1237,13 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 
 		if(widget == null){
 			selectedDragController.clearSelection(); //New and may cause bugs
-			//widgetSelectionListener.onWidgetSelected(widget); //New and may cause bugs	
 			return;
 		}
-		//if(selectedPanel.getWidgetIndex(widget) > -1)
-		//	selectedDragController.toggleSelection(widget);
 
 		if(!(widget.getWrappedWidget() instanceof TabBar)){
-			//Event event = DOM.eventGetCurrentEvent(); //TODO verify that this does not introduce a bug
-			//if(event != null && DOM.eventGetType(event) == Event.ONCONTEXTMENU){
 			if(selectedPanel.getWidgetIndex(widget) > -1){
 				if(!ctrlKey){
-					if(!selectedDragController.isWidgetSelected(widget)/*selectedDragController.getSelectedWidgetCount() == 1*/)
+					if(!selectedDragController.isWidgetSelected(widget))
 						selectedDragController.clearSelection();
 					selectedDragController.selectWidget(widget);
 				}
@@ -1364,7 +1286,6 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 				if(widget.getWrappedWidget() instanceof DesignGroupWidget){
 					selectedDragController.clearSelection();
 					((DesignGroupWidget)widget.getWrappedWidget()).selectAll();
-					//return;
 				}
 			}
 		}

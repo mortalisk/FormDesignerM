@@ -6,7 +6,6 @@ import org.openxdata.designer.client.controller.IConditionController;
 import org.openxdata.designer.client.widget.skiprule.ConditionWidget;
 import org.openxdata.designer.client.widget.skiprule.GroupOperationWidget;
 import org.openxdata.sharedlib.client.OpenXdataConstants;
-import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.model.Condition;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.QuestionDef;
@@ -24,6 +23,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import org.openxdata.designer.client.DesignerMessages;
 import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 
@@ -34,10 +34,11 @@ import org.openxdata.sharedlib.client.locale.FormsConstants;
  *
  */
 public class ValidationRulesView extends AbstractFormDesignerView implements IConditionController {
+	final FormsConstants formsConstants = GWT.create(FormsConstants.class);
+    final DesignerMessages designerMessages = GWT.create(DesignerMessages.class);
 	
 	interface MyUiBinder extends UiBinder<VerticalPanel, ValidationRulesView> {}
 	private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
-	private FormsConstants formsConstants = GWT.create(FormsConstants.class);
 	/** The main or root widget. */
 	private VerticalPanel verticalPanel;
 	
@@ -89,12 +90,12 @@ public class ValidationRulesView extends AbstractFormDesignerView implements ICo
 		FormUtil.maximizeWidget(txtErrorMessage);
 		lblErrorMsg.setText(formsConstants.errorMessageForInvalidResponse() + ": ");		
 		
-		lblQuestionLabel.setText(LocaleText.get("question") + ": " /*"Question: "*/);
+		lblQuestionLabel.setText(formsConstants.question());
 		
-		lblMustMeet.setText(LocaleText.get("validResponseMustMeet"));
-		lblOfTheFollowing.setText(LocaleText.get("ofTheFollowingConditions") + ": ");
+		lblMustMeet.setText(designerMessages.validResponseMustMeet());
+		lblOfTheFollowing.setText(designerMessages.ofTheFollowingConditions());
 		
-		btnAddCondition.setText(LocaleText.get("addCondition"));
+		btnAddCondition.setText(designerMessages.addCondition());
 	}
 	
 	@UiFactory GroupOperationWidget makeGroupHyperlink() {

@@ -1,5 +1,6 @@
 package org.openxdata.designer.client.view;
 
+import com.google.gwt.core.client.GWT;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +16,6 @@ import org.openxdata.designer.client.vew.widget.images.FormDesignerImages;
 import org.openxdata.designer.client.widget.DesignGroupWidget;
 import org.openxdata.designer.client.widget.DesignWidgetWrapper;
 import org.openxdata.sharedlib.client.OpenXdataConstants;
-import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.OptionDef;
 import org.openxdata.sharedlib.client.model.PageDef;
@@ -53,6 +53,8 @@ import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.Node;
 import com.google.gwt.xml.client.NodeList;
 import com.google.gwt.xml.client.XMLParser;
+import org.openxdata.designer.client.DesignerMessages;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 
 /**
@@ -62,6 +64,8 @@ import com.google.gwt.xml.client.XMLParser;
  *
  */
 public class DesignSurfaceView extends DesignGroupView implements SelectionHandler<Integer>,DragDropListener,IWidgetPopupMenuListener{
+    final FormsConstants formsConstants = GWT.create(FormsConstants.class);
+    final DesignerMessages designerMessages = GWT.create(DesignerMessages.class);
 
 	/** Height in pixels of the selected page. */
 	private String sHeight = "100%"; //"100%";
@@ -106,20 +110,20 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 		
 		widgetPopup = new PopupPanel(true,true);
 		MenuBar menuBar = new MenuBar(true);
-		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.cut(),LocaleText.get("cut")),true,new Command(){
+		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.cut(),formsConstants.cut()),true,new Command(){
 			public void execute() {widgetPopup.hide(); cutWidgets();}});
 
-		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.copy(),LocaleText.get("copy")),true,new Command(){
+		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.copy(),formsConstants.copy()),true,new Command(){
 			public void execute() {widgetPopup.hide(); copyWidgets(false);}});
 
-		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.delete(),LocaleText.get("deleteItem")),true, new Command(){
+		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.delete(),formsConstants.deleteItem()),true, new Command(){
 			public void execute() {widgetPopup.hide(); deleteWidgets();}});
 
 		menuBar.addSeparator();
-		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.add(),LocaleText.get("changeWidgetH")),true, new Command(){
+		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.add(),designerMessages.changeWidgetH()),true, new Command(){
 			public void execute() {widgetPopup.hide(); changeWidget(false);}});
 
-		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.add(),LocaleText.get("changeWidgetV")),true, new Command(){
+		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.add(),designerMessages.changeWidgetV()),true, new Command(){
 			public void execute() {widgetPopup.hide(); changeWidget(true);}});
 
 		widgetPopup.setWidget(menuBar);
@@ -169,7 +173,7 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 	protected void initPanel(){
 		AbsolutePanel panel = new AbsolutePanel();
 		FormUtil.maximizeWidget(panel);
-		tabs.add(panel,LocaleText.get("page") + "1");
+		tabs.add(panel,formsConstants.page() + "1");
 
 		selectedPanel = panel;
 
@@ -195,90 +199,90 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 
 		MenuBar addControlMenu = new MenuBar(true);
 
-		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),LocaleText.get("label")),true,new Command(){
-			public void execute() {popup.hide(); addNewLabel(LocaleText.get("label"),true);}});
+		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),formsConstants.label()),true,new Command(){
+			public void execute() {popup.hide(); addNewLabel(formsConstants.label(),true);}});
 
-		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),LocaleText.get("textBox")),true,new Command(){
+		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),formsConstants.textBox()),true,new Command(){
 			public void execute() {popup.hide(); addNewTextBox(true);}});
 
-		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),LocaleText.get("checkBox")),true,new Command(){
+		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),formsConstants.checkBox()),true,new Command(){
 			public void execute() {popup.hide(); addNewCheckBox(true);}});
 
-		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),LocaleText.get("radioButton")),true,new Command(){
+		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),formsConstants.radioButton()),true,new Command(){
 			public void execute() {popup.hide(); addNewRadioButton(true);}});
 
-		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),LocaleText.get("listBox")),true,new Command(){
+		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),formsConstants.listBox()),true,new Command(){
 			public void execute() {popup.hide(); addNewDropdownList(true);}});
 
-		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),LocaleText.get("textArea")),true,new Command(){
+		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),formsConstants.textArea()),true,new Command(){
 			public void execute() {popup.hide(); addNewTextArea(true);}});
 
-		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),LocaleText.get("button")),true,new Command(){
-			public void execute() {popup.hide(); addNewButton(LocaleText.get("button"),null,true);}});
+		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),formsConstants.button()),true,new Command(){
+			public void execute() {popup.hide(); addNewButton(formsConstants.button(),null,true);}});
 
-		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),LocaleText.get("datePicker")),true,new Command(){
+		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),formsConstants.datePicker()),true,new Command(){
 			public void execute() {popup.hide(); addNewDatePicker(true);}});
 		
-		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),LocaleText.get("dateTimeWidget")),true,new Command(){
+		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),designerMessages.dateTimeWidget()),true,new Command(){
 			public void execute() {popup.hide(); addNewDateTimeWidget(true);}});
 		
-		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),LocaleText.get("timeWidget")),true,new Command(){
+		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),designerMessages.timeWidget()),true,new Command(){
 			public void execute() {popup.hide(); addNewTimeWidget(true);}});
 
-		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),LocaleText.get("groupBox")),true,new Command(){
+		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),designerMessages.groupBox()),true,new Command(){
 			public void execute() {popup.hide(); addNewGroupBox(true);}});
 
-		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),LocaleText.get("repeatSection")),true,new Command(){
+		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),designerMessages.repeat()),true,new Command(){
 			public void execute() {popup.hide(); addNewRepeatSection(true);}});
 
-		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),LocaleText.get("picture")),true,new Command(){
+		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),designerMessages.picture()),true,new Command(){
 			public void execute() {popup.hide(); addNewPictureSection(null,null,true);}});
 
-		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),LocaleText.get("videoAudio")),true,new Command(){
+		addControlMenu.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),designerMessages.videoAudio()),true,new Command(){
 			public void execute() {popup.hide(); addNewVideoAudioSection(null,null,true);}});
 
 
-		menuBar.addItem("     "+LocaleText.get("addWidget"),addControlMenu);
+		menuBar.addItem("     "+designerMessages.addWidget(),addControlMenu);
 
 		deleteWidgetsSeparator = menuBar.addSeparator();
-		deleteWidgetsMenu = menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.delete(),LocaleText.get("deleteSelected")),true,new Command(){
+		deleteWidgetsMenu = menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.delete(),designerMessages.deleteSelected()),true,new Command(){
 			public void execute() {popup.hide(); deleteWidgets();}});
 
 		groupWidgetsSeparator = menuBar.addSeparator();
-		groupWidgetsMenu = menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),LocaleText.get("groupWidgets")),true,new Command(){
+		groupWidgetsMenu = menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),designerMessages.groupWidgets()),true,new Command(){
 			public void execute() {popup.hide(); groupWidgets();}});
 
 		menuBar.addSeparator();	
-		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.add(),LocaleText.get("newTab")),true, new Command(){
+		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.add(),designerMessages.newTab()),true, new Command(){
 			public void execute() {popup.hide(); addNewTab(null);}});
 
-		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.delete(),LocaleText.get("deleteTab")),true, new Command(){
+		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.delete(),designerMessages.deleteTab()),true, new Command(){
 			public void execute() {popup.hide(); deleteTab();}});
 
 		cutCopySeparator = menuBar.addSeparator();
-		cutMenu = menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.cut(),LocaleText.get("cut")),true,new Command(){
+		cutMenu = menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.cut(),designerMessages.cut()),true,new Command(){
 			public void execute() {popup.hide(); cutWidgets();}});
 
-		copyMenu = menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.copy(),LocaleText.get("copy")),true,new Command(){
+		copyMenu = menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.copy(),formsConstants.copy()),true,new Command(){
 			public void execute() {popup.hide(); copyWidgets(false);}});
 
 		pasteSeparator = menuBar.addSeparator();
-		pasteMenu = menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.paste(),LocaleText.get("paste")),true,new Command(){
+		pasteMenu = menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.paste(),formsConstants.paste()),true,new Command(){
 			public void execute() {popup.hide(); pasteWidgets(true);}});
 
 		menuBar.addSeparator();	
-		lockWidgetsMenu = menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.add(),LocaleText.get("lockWidgets")),true, new Command(){
+		lockWidgetsMenu = menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.add(),designerMessages.lockWidgets()),true, new Command(){
 			public void execute() {popup.hide(); lockWidgets();}});
 		
-		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.add(),LocaleText.get("selectAll")),true, new Command(){
+		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.add(),formsConstants.selectAll()),true, new Command(){
 			public void execute() {popup.hide(); selectAll();}});
 
 		menuBar.addSeparator();
-		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.refresh(),LocaleText.get("refresh")),true,new Command(){
+		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.refresh(),formsConstants.refresh()),true,new Command(){
 			public void execute() {popup.hide(); refresh();}});
 
 		menuBar.addSeparator();
-		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.open(),LocaleText.get("load")),true,new Command(){
+		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.open(),formsConstants.load()),true,new Command(){
 			public void execute() {popup.hide(); load();}});
 
 		popup.setWidget(menuBar);
@@ -292,7 +296,7 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 	private DesignWidgetWrapper addNewTab(String name){
 		initPanel();
 		if(name == null)
-			name = LocaleText.get("page")+(tabs.getWidgetCount());
+			name = formsConstants.page()+(tabs.getWidgetCount());
 
 		tabs.add(selectedPanel, name);
 		selectedTabIndex = tabs.getWidgetCount() - 1;
@@ -668,16 +672,16 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 		if(tabs.getWidgetCount() == 1){
 			if(formDef != null)
 				formDef.setLayoutXml(null); //TODO Check if this does not bring bugs
-			Window.alert(LocaleText.get("cantDeleteAllTabs"));
+			Window.alert(formsConstants.cantDeleteAllTabs());
 			return;
 		}
 
 		if(selectedPanel.getWidgetCount() > 0){
-			Window.alert(LocaleText.get("deleteAllTabWidgetsFirst"));
+			Window.alert(formsConstants.deleteAllTabWidgetsFirst());
 			return;
 		}
 
-		if(!Window.confirm(LocaleText.get("deleteTabPrompt")))
+		if(!Window.confirm(formsConstants.deleteTabPrompt()))
 			return;
 
 		FormDesignerDragController dragController = dragControllers.remove(selectedTabIndex);
@@ -859,7 +863,7 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 			//TODO Looks like this is not longer necessary as we can have a page as long as the user wants
 			if((y+40+rptIncr) > max){
 				y += 10;
-				addNewTab(LocaleText.get("page"));
+				addNewTab(formsConstants.page());
 				y = 20 + selectedPanel.getAbsoluteTop();
 			}
 		}
@@ -1039,7 +1043,7 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 		if(formDef == null)
 			return;
 
-		FormUtil.dlg.setText(LocaleText.get("refreshingDesignSurface"));
+		FormUtil.dlg.setText(formsConstants.refreshingDesignSurface());
 		FormUtil.dlg.center();
 
 		DeferredCommand.addCommand(new Command(){
@@ -1086,11 +1090,11 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 			return;
 
 		if((selectedPanel != null && selectedPanel.getWidgetCount() > 0) || tabs.getTabBar().getTabCount() > 1){
-			Window.alert(LocaleText.get("deleteAllWidgetsFirst"));
+			Window.alert(formsConstants.deleteAllWidgetsFirst());
 			return;
 		}
 
-		FormUtil.dlg.setText(LocaleText.get("loadingDesignSurface"));
+		FormUtil.dlg.setText(formsConstants.loadingDesignSurface());
 		FormUtil.dlg.center();
 
 		DeferredCommand.addCommand(new Command(){
@@ -1153,7 +1157,7 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 
 			//Check if this is a new page whose tab has not yet been added, and then add it
 			if(tabs.getTabBar().getTabCount() < index+1)
-				addNewTab(LocaleText.get("page") + (index+1));
+				addNewTab(formsConstants.page() + (index+1));
 			else
 				tabs.getTabBar().selectTab(index);
 

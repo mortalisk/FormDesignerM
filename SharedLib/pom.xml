@@ -24,16 +24,6 @@
 
     <build>
         <sourceDirectory>src</sourceDirectory>
-        <resources>
-            <resource>
-                <directory>${basedir}/src</directory>
-                <includes>
-                    <include>**/*</include>
-                </includes>
-                <filtering>false</filtering>
-            </resource>
-        </resources>
-        
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>

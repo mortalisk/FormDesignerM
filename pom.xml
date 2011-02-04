@@ -101,4 +101,15 @@
             </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>openxdata</id>
+            <url>http://nexus.openxdata.org/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>openxdata</id>
+            <url>http://nexus.openxdata.org/content/repositories/releases/</url>
+        </repository>
+    </distributionManagement>    
 </project>

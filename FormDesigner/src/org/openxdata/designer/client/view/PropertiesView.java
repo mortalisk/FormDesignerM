@@ -1,5 +1,6 @@
 package org.openxdata.designer.client.view;
 
+import com.google.gwt.core.client.GWT;
 import org.openxdata.designer.client.Context;
 import org.openxdata.designer.client.controller.IFormActionListener;
 import org.openxdata.designer.client.controller.IFormChangeListener;
@@ -8,7 +9,6 @@ import org.openxdata.designer.client.controller.ItemSelectionListener;
 import org.openxdata.designer.client.util.FormDesignerUtil;
 import org.openxdata.designer.client.view.helper.PropertiesViewHelper;
 import org.openxdata.designer.client.widget.DescTemplateWidget;
-import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.model.Calculation;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.OptionDef;
@@ -44,6 +44,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import org.openxdata.designer.client.DesignerMessages;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 
 /**
@@ -54,7 +56,9 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  *
  */
 public class PropertiesView extends Composite implements IFormSelectionListener,ItemSelectionListener{
-
+    final DesignerMessages designerMessages = GWT.create(DesignerMessages.class);
+    final FormsConstants formsConstants = GWT.create(FormsConstants.class);
+    
 	/** List box index for no selected data type. */
 	private static final byte DT_INDEX_NONE = -1;
 
@@ -179,20 +183,20 @@ public class PropertiesView extends Composite implements IFormSelectionListener,
 		btnDescTemplate = new DescTemplateWidget(this);
 		btnCalculation = new DescTemplateWidget(this);
 
-		table.setWidget(0, 0, new Label(LocaleText.get("text")));
-		table.setWidget(1, 0, new Label(LocaleText.get("helpText")));
-		table.setWidget(2, 0, new Label(LocaleText.get("type")));
-		table.setWidget(3, 0, new Label(LocaleText.get("binding")));
-		table.setWidget(4, 0, new Label(LocaleText.get("visible")));
-		table.setWidget(5, 0, new Label(LocaleText.get("enabled")));
-		table.setWidget(6, 0, new Label(LocaleText.get("locked")));
-		table.setWidget(7, 0, new Label(LocaleText.get("required")));
-		table.setWidget(8, 0, new Label(LocaleText.get("defaultValue")));
-		table.setWidget(9, 0, new Label(LocaleText.get("calculation")));
+		table.setWidget(0, 0, new Label(designerMessages.text()));
+		table.setWidget(1, 0, new Label(formsConstants.helpText()));
+		table.setWidget(2, 0, new Label(formsConstants.type()));
+		table.setWidget(3, 0, new Label(formsConstants.binding()));
+		table.setWidget(4, 0, new Label(formsConstants.visible()));
+		table.setWidget(5, 0, new Label(formsConstants.enable()));
+		table.setWidget(6, 0, new Label(formsConstants.locked()));
+		table.setWidget(7, 0, new Label(formsConstants.required()));
+		table.setWidget(8, 0, new Label(formsConstants.defaultValue()));
+		table.setWidget(9, 0, new Label(designerMessages.calculation()));
 		
-		lblDescTemplate = new Label(LocaleText.get("descriptionTemplate"));
+		lblDescTemplate = new Label(formsConstants.descriptionTemplate());
 		table.setWidget(10, 0, lblDescTemplate);
-		table.setWidget(11, 0, new Label(LocaleText.get("formKey")));
+		table.setWidget(11, 0, new Label(designerMessages.formKey()));
 
 		table.setWidget(0, 1, txtText);
 		table.setWidget(1, 1, txtHelpText);
@@ -224,22 +228,22 @@ public class PropertiesView extends Composite implements IFormSelectionListener,
 
 		table.setStyleName("cw-FlexTable");
 
-		cbDataType.addItem(LocaleText.get("qtnTypeText"));
-		cbDataType.addItem(LocaleText.get("qtnTypeNumber"));
-		cbDataType.addItem(LocaleText.get("qtnTypeDecimal"));
-		cbDataType.addItem(LocaleText.get("qtnTypeDate"));
-		cbDataType.addItem(LocaleText.get("qtnTypeTime"));
-		cbDataType.addItem(LocaleText.get("qtnTypeDateTime"));
-		cbDataType.addItem(LocaleText.get("qtnTypeBoolean"));
-		cbDataType.addItem(LocaleText.get("qtnTypeSingleSelect"));
-		cbDataType.addItem(LocaleText.get("qtnTypeMultSelect"));
-		cbDataType.addItem(LocaleText.get("qtnTypeRepeat"));
-		cbDataType.addItem(LocaleText.get("qtnTypePicture"));
-		cbDataType.addItem(LocaleText.get("qtnTypeVideo"));
-		cbDataType.addItem(LocaleText.get("qtnTypeAudio"));
-		cbDataType.addItem(LocaleText.get("qtnTypeSingleSelectDynamic"));
-		cbDataType.addItem(LocaleText.get("qtnTypeGPS"));
-		cbDataType.addItem(LocaleText.get("qtnTypeBarcode"));
+		cbDataType.addItem(designerMessages.qtnTypeText());
+		cbDataType.addItem(designerMessages.qtnTypeNumber());
+		cbDataType.addItem(designerMessages.qtnTypeDecimal());
+		cbDataType.addItem(designerMessages.qtnTypeDate());
+		cbDataType.addItem(designerMessages.qtnTypeTime());
+		cbDataType.addItem(designerMessages.qtnTypeDateTime());
+		cbDataType.addItem(designerMessages.qtnTypeBoolean());
+		cbDataType.addItem(designerMessages.qtnTypeSingleSelect());
+		cbDataType.addItem(designerMessages.qtnTypeMultSelect());
+		cbDataType.addItem(designerMessages.qtnTypeRepeat());
+		cbDataType.addItem(designerMessages.qtnTypePicture());
+		cbDataType.addItem(designerMessages.qtnTypeVideo());
+		cbDataType.addItem(designerMessages.qtnTypeAudio());
+		cbDataType.addItem(designerMessages.qtnTypeSingleSelectDynamic());
+		cbDataType.addItem(designerMessages.qtnTypeGPS());
+		cbDataType.addItem(designerMessages.qtnTypeBarcode());
 
 		FlexCellFormatter cellFormatter = table.getFlexCellFormatter();
 		cellFormatter.setHorizontalAlignment(15, 1, HasHorizontalAlignment.ALIGN_CENTER);
@@ -263,11 +267,11 @@ public class PropertiesView extends Composite implements IFormSelectionListener,
 		verticalPanel.add(table);
 
 		DecoratedTabPanel tabs = new DecoratedTabPanel();
-		tabs.add(skipRulesView, LocaleText.get("skipLogic"));
-		tabs.add(validationRulesView, LocaleText.get("validationLogic"));
-		tabs.add(dynamicListsView, LocaleText.get("dynamicLists"));
+		tabs.add(skipRulesView, designerMessages.skipLogic());
+		tabs.add(validationRulesView, designerMessages.validationLogic());
+		tabs.add(dynamicListsView, designerMessages.dynamicLists());
 		//edited by victor
-		tabs.add(advancedValidationRulesView,LocaleText.get("advancedValidationLogic"));
+		tabs.add(advancedValidationRulesView, designerMessages.advancedValidationLogic());
 
 		tabs.selectTab(0);
 		verticalPanel.add(tabs);
@@ -289,11 +293,11 @@ public class PropertiesView extends Composite implements IFormSelectionListener,
 		btnCalculation.setEnabled(false);
 		txtBinding.setEnabled(false);
 
-		txtText.setTitle(LocaleText.get("questionTextDesc"));
-		txtHelpText.setTitle(LocaleText.get("questionDescDesc"));
-		txtBinding.setTitle(LocaleText.get("questionIdDesc"));
-		txtDefaultValue.setTitle(LocaleText.get("defaultValDesc"));
-		cbDataType.setTitle(LocaleText.get("questionTypeDesc"));
+		txtText.setTitle(designerMessages.questionTextDesc());
+		txtHelpText.setTitle(designerMessages.questionDescDesc());
+		txtBinding.setTitle(designerMessages.questionIdDesc());
+		txtDefaultValue.setTitle(designerMessages.defaultValDesc());
+		cbDataType.setTitle(designerMessages.questionTypeDesc());
 
 		DOM.sinkEvents(getElement(), Event.ONKEYDOWN | DOM.getEventsSunk(getElement()));
 	}
@@ -345,7 +349,7 @@ public class PropertiesView extends Composite implements IFormSelectionListener,
 					updateDefaultValue();
 				}
 				else{
-					Window.alert(LocaleText.get("invalidDefaultValueForQuestionType"));
+					Window.alert(designerMessages.invalidDefaultValueForQuestionType());
 				}
 			}
 		});
@@ -751,7 +755,7 @@ public class PropertiesView extends Composite implements IFormSelectionListener,
 		if((questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE ||
 				questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_MULTIPLE) &&
 				!(index == DT_INDEX_SINGLE_SELECT || index == DT_INDEX_MULTIPLE_SELECT)){
-			if(questionDef.getOptionCount() > 0 && !Window.confirm(LocaleText.get("changeWidgetTypePrompt"))){
+			if(questionDef.getOptionCount() > 0 && !Window.confirm(designerMessages.changeWidgetTypePrompt())){
 				index = (questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE) ? DT_INDEX_SINGLE_SELECT : DT_INDEX_MULTIPLE_SELECT;
 				cbDataType.setSelectedIndex(index);
 				return;
@@ -760,7 +764,7 @@ public class PropertiesView extends Composite implements IFormSelectionListener,
 		}
 		else if((questionDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT) &&
 				!(index == DT_INDEX_REPEAT)){
-			if(!Window.confirm(LocaleText.get("changeWidgetTypePrompt"))){
+			if(!Window.confirm(designerMessages.changeWidgetTypePrompt())){
 				index = DT_INDEX_REPEAT;
 				cbDataType.setSelectedIndex(index);
 				return;

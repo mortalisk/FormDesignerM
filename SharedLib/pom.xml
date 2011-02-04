@@ -33,5 +33,23 @@
                 <filtering>false</filtering>
             </resource>
         </resources>
+        
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>gwt-maven-plugin</artifactId>
+                <version>2.1.0-1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>i18n</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <i18nConstantsBundle>org.openxdata.sharedlib.client.locale.FormsConstants</i18nConstantsBundle>
+                </configuration>
+            </plugin>    
+        </plugins>
     </build>
 </project>

@@ -52,6 +52,7 @@
         <module>SharedLib</module>
         <module>FormRunner</module>
         <module>FormDesigner</module>
+        <module>QueryBuilder</module>
     </modules>
 
     <properties>

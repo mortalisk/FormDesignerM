@@ -24,6 +24,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 
 /**
@@ -36,7 +37,7 @@ public class ValidationRulesView extends AbstractFormDesignerView implements ICo
 	
 	interface MyUiBinder extends UiBinder<VerticalPanel, ValidationRulesView> {}
 	private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
-	
+	private FormsConstants formsConstants = GWT.create(FormsConstants.class);
 	/** The main or root widget. */
 	private VerticalPanel verticalPanel;
 	
@@ -86,7 +87,7 @@ public class ValidationRulesView extends AbstractFormDesignerView implements ICo
 		initWidget(verticalPanel);
 		
 		FormUtil.maximizeWidget(txtErrorMessage);
-		lblErrorMsg.setText(LocaleText.get("errorMessageForInvalidResponse") + ": ");		
+		lblErrorMsg.setText(formsConstants.errorMessageForInvalidResponse() + ": ");		
 		
 		lblQuestionLabel.setText(LocaleText.get("question") + ": " /*"Question: "*/);
 		

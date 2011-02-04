@@ -2,10 +2,12 @@ package org.openxdata.designer.client.widget;
 
 import org.openxdata.designer.client.controller.ItemSelectionListener;
 import org.openxdata.designer.client.util.FormDesignerUtil;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.QuestionDef;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
@@ -28,11 +30,13 @@ import com.google.gwt.user.client.ui.TextBox;
  */
 public class DescTemplateWidget extends Composite{
 
+	private FormsConstants constants = GWT.create(FormsConstants.class);
+
 	private HorizontalPanel horizontalPanel = new HorizontalPanel();
 	private FormDef formDef;
 
 	private SuggestBox sgstField = new SuggestBox();
-	private Anchor fieldAnchor = new Anchor(LocaleText.get("addField"), "#");
+	private Anchor fieldAnchor = new Anchor(constants.addField(), "#");
 	private TextBox txtField = new TextBox();
 
 	private MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
@@ -81,7 +85,7 @@ public class DescTemplateWidget extends Composite{
 		
 		txtField = new TextBox();
 		sgstField = new SuggestBox(oracle,txtField);
-		fieldAnchor.setText(LocaleText.get("addField"));
+		fieldAnchor.setText(constants.addField());
 
 		sgstField.addSelectionHandler(new SelectionHandler<SuggestOracle.Suggestion>(){
 			public void onSelection(SelectionEvent<SuggestOracle.Suggestion> event){
@@ -96,13 +100,13 @@ public class DescTemplateWidget extends Composite{
 
 		String val = sgstField.getText();
 		if(val.trim().length() == 0)
-			val = LocaleText.get("addField");
+			val = constants.addField();
 		fieldAnchor.setText(val);
 		horizontalPanel.remove(sgstField);
 		horizontalPanel.add(fieldAnchor);
 		QuestionDef qtn = formDef.getQuestionWithText(sgstField.getText());
 		if(qtn != null){
-			fieldAnchor.setText(LocaleText.get("addField"));
+			fieldAnchor.setText(constants.addField());
 			itemSelectionListener.onItemSelected(this,"/"+formDef.getBinding()+"/"+qtn.getBinding());
 		}
 	}

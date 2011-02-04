@@ -5,13 +5,14 @@ import java.util.List;
 import org.openxdata.designer.client.controller.IConditionController;
 import org.openxdata.designer.client.controller.ItemSelectionListener;
 import org.openxdata.designer.client.widget.skiprule.ConditionWidget;
-import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.PageDef;
 import org.openxdata.sharedlib.client.model.QuestionDef;
 import org.openxdata.sharedlib.client.model.ValidationRule;
 import org.openxdata.sharedlib.client.util.FormUtil;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -22,6 +23,7 @@ import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -31,10 +33,10 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
 
 public class AdvancedValidationRulesView extends Composite implements SelectionHandler<TreeItem>,IConditionController,ItemSelectionListener, ClickHandler{
 
+	private FormsConstants constants = GWT.create(FormsConstants.class);
 	
 	/** The main or root widget. */
 	private VerticalPanel verticalPanel = new VerticalPanel();
@@ -46,11 +48,11 @@ public class AdvancedValidationRulesView extends Composite implements SelectionH
 	private TextArea expressionEditor = new TextArea();
 	
 	/* ok button*/
-	private Button okBtn = new Button(LocaleText.get("ok"));
+	private Button okBtn = new Button(constants.ok());
 	/* cancel button*/
-	private Button cancelBtn = new Button(LocaleText.get("cancel"));
+	private Button cancelBtn = new Button(constants.cancel());
 	/* help button*/
-	private Button helpBtn = new Button(LocaleText.get("help"));
+	private Button helpBtn = new Button(constants.help());
 	/* List box to hold expression elements*/
 	protected ListBox expressionElements = new ListBox(true);
 	/* label to post description*/

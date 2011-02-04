@@ -21,11 +21,13 @@ import org.openxdata.designer.client.view.PreviewView;
 import org.openxdata.designer.client.view.PropertiesView;
 import org.openxdata.sharedlib.client.OpenXdataConstants;
 import org.openxdata.sharedlib.client.controller.SubmitListener;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.util.FormUtil;
 import org.openxdata.sharedlib.client.widget.RuntimeWidgetWrapper;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -53,6 +55,8 @@ import com.google.gwt.xml.client.Element;
  *
  */
 public class CenterPanel extends Composite implements SelectionHandler<Integer>, IFormSelectionListener, SubmitListener, LayoutChangeListener, ICenterPanel{
+	
+	private FormsConstants constants = GWT.create(FormsConstants.class);
 
 	/** Index for the properties tab. */
 	public static int SELECTED_INDEX_PROPERTIES = 0;
@@ -264,7 +268,7 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 	
 
 	private void loadPreview(){
-		FormUtil.dlg.setText(LocaleText.get("loadingPreview"));
+		FormUtil.dlg.setText(constants.loadingPreview());
 		FormUtil.dlg.center();
 
 		DeferredCommand.addCommand(new Command(){
@@ -290,7 +294,7 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 	 * Sets up the design surface.
 	 */
 	private void initDesignSurface(){
-		tabs.add(scrollPanelDesign, LocaleText.get("designSurface"));
+		tabs.add(scrollPanelDesign, constants.designSurface());
 
 		int height = Window.getClientHeight();
 		int width = Window.getClientWidth();
@@ -309,7 +313,7 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 	 * Sets up the xforms source tab.
 	 */
 	private void initXformsSource(){
-		tabs.add(txtXformsSource, LocaleText.get("xformsSource"));
+		tabs.add(txtXformsSource, constants.xformsSource());
 		FormUtil.maximizeWidget(txtXformsSource);
 	}
 	
@@ -317,7 +321,7 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 	 * Sets up the layout xml tab.
 	 */
 	private void initJavaScriptSource(){
-		tabs.add(txtJavaScriptSource, LocaleText.get("javaScriptSource"));
+		tabs.add(txtJavaScriptSource, constants.javaScriptSource());
 		FormUtil.maximizeWidget(txtJavaScriptSource);
 	}
 
@@ -325,7 +329,7 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 	 * Sets up the layout xml tab.
 	 */
 	private void initLayoutXml(){
-		tabs.add(txtLayoutXml, LocaleText.get("layoutXml"));
+		tabs.add(txtLayoutXml, constants.layoutXml());
 		FormUtil.maximizeWidget(txtLayoutXml);
 	}
 
@@ -333,7 +337,7 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 	 * Sets up the language xml tab.
 	 */
 	private void initLanguageXml(){
-		tabs.add(txtLanguageXml, LocaleText.get("languageXml"));
+		tabs.add(txtLanguageXml, constants.languageXml());
 		FormUtil.maximizeWidget(txtLanguageXml);
 	}
 
@@ -341,7 +345,7 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 	 * Sets up the preview surface tab.
 	 */
 	private void initPreview(){
-		tabs.add(scrollPanelPreview, LocaleText.get("preview"));
+		tabs.add(scrollPanelPreview, constants.preview());
 		previewView.setWidth("100%"); //1015"+OpenXdataConstants.UNITS
 		previewView.setHeight("700"+OpenXdataConstants.UNITS); //707"+OpenXdataConstants.UNITS
 		previewView.setSubmitListener(this);
@@ -355,7 +359,7 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 	 * Sets up the model xml tab.
 	 */
 	private void initModelXml(){
-		tabs.add(txtModelXml, LocaleText.get("modelXml"));
+		tabs.add(txtModelXml, constants.modelXml());
 		FormUtil.maximizeWidget(txtModelXml);
 	}
 
@@ -363,7 +367,7 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 	 * Sets up the properties tab.
 	 */
 	private void initProperties(){
-		tabs.add(propertiesView, LocaleText.get("properties"));
+		tabs.add(propertiesView, constants.properties());
 	}
 
 	/**
@@ -761,7 +765,7 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 		if(showModelXml)
 			tabs.selectTab(SELECTED_INDEX_MODEL_XML);
 		else
-			Window.alert(LocaleText.get("formSubmitSuccess"));
+			Window.alert(constants.formSubmitSuccess());
 	}
 
 	/**

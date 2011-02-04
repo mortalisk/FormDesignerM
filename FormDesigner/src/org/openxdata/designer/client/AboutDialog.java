@@ -2,8 +2,9 @@
 package org.openxdata.designer.client;
 
 import org.openxdata.designer.client.util.FormDesignerUtil;
-import org.openxdata.sharedlib.client.locale.LocaleText;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -20,23 +21,25 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * 
  */
 public class AboutDialog extends DialogBox {
+	
+	private FormsConstants constants = GWT.create(FormsConstants.class);
 
 	public AboutDialog() {
 		// Use this opportunity to set the dialog's caption.
-		setText(LocaleText.get("about")+" " + FormDesignerUtil.getTitle());
+		setText(constants.about()+" " + FormDesignerUtil.getTitle());
 
 		// Create a VerticalPanel to contain the 'about' label and the 'OK' button.
 		VerticalPanel outer = new VerticalPanel();
 
 		// Create the 'about' text and set a style name so we can style it with CSS.
 
-		HTML text = new HTML(LocaleText.get("aboutMessage"));
+		HTML text = new HTML(constants.aboutMessage());
 		text.setStyleName("formDesigner-AboutText");
 		outer.add(text);
 
 		// Create the 'OK' button, along with a listener that hides the dialog
 		// when the button is clicked.
-		Button btn = new Button(LocaleText.get("close"), new ClickHandler() {
+		Button btn = new Button(constants.close(), new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				hide();
 			}

@@ -29,10 +29,9 @@
     </dependencies>
 
     <build>
-        <sourceDirectory>src</sourceDirectory>
         <resources>
             <resource>
-                <directory>${basedir}/src</directory>
+                <directory>${basedir}/src/main/java</directory>
                 <includes>
                     <include>**/*</include>
                 </includes>

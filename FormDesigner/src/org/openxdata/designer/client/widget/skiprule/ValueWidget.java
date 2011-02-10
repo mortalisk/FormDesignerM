@@ -172,7 +172,6 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 				}
 			});
 
-			//if(txtValue1 instanceof DatePicker){
 			txtValue1.addChangeHandler(new ChangeHandler(){
 				public void onChange(ChangeEvent event){
 					stopEdit(true); //TODO One has to explicitly press ENTER because of the bug we currently have on ticking the question value checkbox
@@ -183,7 +182,6 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 					stopEdit(true); //TODO One has to explicitly press ENTER because of the bug we currently have on ticking the question value checkbox
 				}
 			});
-			//}
 		}
 	}
 

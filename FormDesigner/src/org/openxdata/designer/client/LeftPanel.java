@@ -56,9 +56,9 @@ public class LeftPanel extends Composite {
 		widgetPropertiesView = new WidgetPropertiesView();
 		paletteView =  new PaletteView(images);
 
-		add(images, formsTreeView , images.tasksgroup(), LocaleText.get("forms"));
-		add(images, paletteView , images.tasksgroup(),LocaleText.get("palette"));
-		add(images, widgetPropertiesView , images.filtersgroup(), LocaleText.get("widgetProperties"));
+		add(formsTreeView , images.tasksgroup(), LocaleText.get("forms"));
+		add(paletteView , images.tasksgroup(),LocaleText.get("palette"));
+		add(widgetPropertiesView , images.filtersgroup(), LocaleText.get("widgetProperties"));
 
 		formsTreeView.addFormSelectionListener(widgetPropertiesView);
 		FormUtil.maximizeWidget(stackPanel);
@@ -88,7 +88,7 @@ public class LeftPanel extends Composite {
 		return formsTreeView;
 	}
 
-	private void add(FormDesignerImages images, Widget widget, ImageResource imageProto,String caption) {
+	private void add(Widget widget, ImageResource imageProto,String caption) {
 		stackPanel.add(widget, FormDesignerUtil.createHeaderHTML(imageProto, caption), true);
 	}
 

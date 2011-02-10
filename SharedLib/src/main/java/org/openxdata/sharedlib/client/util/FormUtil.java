@@ -415,10 +415,6 @@ public class FormUtil {
 		if("1".equals(s) || "true".equals(s))
 			showSubmitSuccessMsg = true;
 
-		/*s = getDivValue("showLanguageTab");
-		if("1".equals(s) || "true".equals(s))
-			showLanguageTab = true;*/
-		
 		gpsTypeName = getDivValue("gpsTypeName");
 		if(gpsTypeName == null || gpsTypeName.trim().length() == 0)
 			gpsTypeName = XformConstants.DATA_TYPE_TEXT;
@@ -442,8 +438,6 @@ public class FormUtil {
 	}
 
 	public static String getDivValue(String id){
-		//RootPanel p = RootPanel.get(id);
-
 		com.google.gwt.dom.client.Element p = com.google.gwt.dom.client.Document.get().getElementById(id);
 		if(p != null){
 			NodeList<Node> nodes = p.getChildNodes();
@@ -566,10 +560,6 @@ public class FormUtil {
 		return entityId;
 	}
 
-	/*public static boolean getShowLanguageTab(){
-		return showLanguageTab;
-	}*/
-	
 	public static String getGpsTypeName(){
 		return gpsTypeName;
 	}
@@ -587,20 +577,6 @@ public class FormUtil {
 		//or http://dev.cell-life.org/openmrs/
 
 		String s = GWT.getHostPageBaseURL();
-
-		/*int pos = s.lastIndexOf(':');
-		if(pos == -1)
-			return s;
-
-		pos = s.indexOf('/', pos+1);
-		if(pos == -1)
-			return s;
-
-		pos = s.indexOf('/', pos+1);
-		if(pos == -1)
-			return s;
-
-		return s.substring(0,pos+1);*/
 
 		int pos = s.indexOf("//");
 		if(pos == -1)
@@ -667,9 +643,7 @@ public class FormUtil {
 			dialogBox.setErrorMessage(s);
 			dialogBox.setCallStack(text);
 			dialogBox.center();
-		}//Window.prompt("Please enter the language", "Language");
-		//else
-		//	Window.alert("Trapped");
+		}
 	}
 
 	public static void displayReponseError(Response response){

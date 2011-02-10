@@ -33,8 +33,6 @@ import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 
 
-//TODO May need to separate form designer specific utilities from those used by the form runner.
-
 /**
  * Utilities used by the form designer and runtime engine.
  *

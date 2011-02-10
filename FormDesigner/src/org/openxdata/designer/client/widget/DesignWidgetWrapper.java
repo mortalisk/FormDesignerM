@@ -76,8 +76,6 @@ public class DesignWidgetWrapper extends WidgetEx implements QuestionChangeListe
 		this.widgetSelectionListener = designWidgetWrapper.widgetSelectionListener;
 		this.popup = designWidgetWrapper.popup;
 
-		//TODO Make sure this does not introduce bugs. It seems logical to copy questiondef too
-		//we also need it when changing widgets from ListBox to RadioButtons
 		this.questionDef = designWidgetWrapper.questionDef;
 
 		initWidget();

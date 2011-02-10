@@ -23,7 +23,6 @@ import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.Locale;
 import org.openxdata.sharedlib.client.model.ModelConstants;
 import org.openxdata.sharedlib.client.util.FormUtil;
-import org.openxdata.sharedlib.client.view.LoginDialog;
 import org.openxdata.sharedlib.client.view.OpenFileDialog;
 import org.openxdata.sharedlib.client.view.SaveFileDialog;
 import org.openxdata.sharedlib.client.xforms.XformBuilder;
@@ -70,36 +69,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 	 */
 	private Integer formId;	
 
-	//These are constants to remember the current action during the login call back
-	//such that we know which action to execute.
-	/** No current action. */
-	private static final byte CA_NONE = 0;
-
-	/** Action for loading a form definition. */
-	private static final byte CA_LOAD_FORM = 1;
-
-	/** Action for saving form. */
-	private static final byte CA_SAVE_FORM = 2;
-
-	/** Action for refreshing a form. */
-	private static final byte CA_REFRESH_FORM = 3;
-
-	/** Action for setting file contents. */
-	private static final byte CA_SET_FILE_CONTENTS = 4;
-
-	/** The current action by the time to try to authenticate the user at the server. */
-	private static byte currentAction = CA_NONE;
-
-	/**
-	 * The dialog box used to log on the server when the user's session expires on the server.
-	 */
-	private static LoginDialog loginDlg = new LoginDialog();
-
-	/** Static self reference such that the static login call back can have
-	 *  a reference to proceed with the current action.
-	 */
-	private static FormDesignerController controller;
-
 	/** The object that is being refreshed. */
 	private Object refreshObject;
 	
@@ -117,8 +86,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 		this.centerPanel = centerPanel;
 
 		this.centerPanel.setFormDesignerListener(this);
-
-		controller = this;
 	}
 
 	/**
@@ -213,7 +180,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 	 * @see org.openxdata.designer.client.controller.IFormActionListener#showAboutInfo()
 	 */
 	public void openForm() {
-		//if(isOfflineMode()){
 		String xml = centerPanel.getXformsSource();
 
 		//Only load layout if in layout mode and no xforms source is supplied.
@@ -238,7 +204,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 				dlg.center();
 			}
 		}
-		//}
 	}
 
 	/**
@@ -259,7 +224,7 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 				try{
 					String xml = centerPanel.getXformsSource().trim();
 					if(xml.length() > 0){
-						Document doc = ItextParser.parse(xml); /*XmlUtil.getDocument(xml);*/
+						Document doc = ItextParser.parse(xml);
 						FormDef formDef = XformParser.fromXform2FormDef(doc, xml,Context.getLanguageText());
 						formDef.setReadOnly(tempReadonly);
 
@@ -347,7 +312,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 		if(isOfflineMode())
 			saveTheForm();
 		else{
-			currentAction = CA_SAVE_FORM;
 			FormUtil.isAuthenticated();
 		}
 	}
@@ -409,7 +373,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 					formDef.setXformXml(xml);
 					centerPanel.setXformsSource(xml,formSaveListener == null && isOfflineMode());
 					centerPanel.buildLayoutXml();
-					//formDef.setLayout(centerPanel.getLayoutXml());
 
 					centerPanel.saveLanguageText(false);
 					setLocaleText(formDef.getId(),Context.getLocale().getKey(), centerPanel.getLanguageXml());
@@ -429,7 +392,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 					//Save text for the current language
 					if(saveLocaleText)
 						saveTheLanguageText(false,false);
-					//saveLanguageText(false); Commented out because we may be called during change locale where caller needs to have us complete everything before he can do his stuff, and hence no more differed or delayed executions.
 				
 					if(localSaveAsMode)
 						saveAs();
@@ -446,35 +408,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 	 * @see org.openxdata.formtools.client.controller.IFormDesignerController#saveFormAs()
 	 */
 	public void saveFormAs() {
-		//TODO I do not think we need this offline save as any more.
-		/*if(isOfflineMode()){
-			final Object obj = leftPanel.getSelectedForm();
-			if(obj == null){
-				Window.alert(LocaleText.get("selectSaveItem"));
-				return;
-			}
-
-			FormUtil.dlg.setText(LocaleText.get("savingForm"));
-			FormUtil.dlg.center();
-
-			DeferredCommand.addCommand(new Command(){
-				public void execute() {
-					try{
-						String xml = null;
-						xml = XformBuilder.fromFormDef2Xform((FormDef)obj);
-						xml = FormDesignerUtil.formatXml(xml);
-						centerPanel.setXformsSource(xml,formSaveListener == null && isOfflineMode());
-						FormUtil.dlg.hide();
-					}
-					catch(Exception ex){
-						FormUtil.displayException(ex);
-					}	
-				}
-			});
-		}
-		else*/
-			//saveAs();
-		
 		saveAsMode = true;
 		saveForm();
 	}
@@ -513,7 +446,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 	 */
 	public void showHelpContents() {
 		// TODO Auto-generated method stub
-
 	}
 
 	/**
@@ -529,7 +461,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 	 */
 	public void showOptions() {
 		// TODO Auto-generated method stub
-
 	}
 
 	/**
@@ -537,7 +468,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 	 */
 	public void viewToolbar() {
 		// TODO Auto-generated method stub
-
 	}
 
 	/**
@@ -673,7 +603,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 		if(isOfflineMode())
 			refreshObject();
 		else{
-			currentAction = CA_REFRESH_FORM;
 			FormUtil.isAuthenticated();
 		}
 	}
@@ -712,14 +641,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 
 							String xformXml, layoutXml = null, localeXml = null, javaScriptSrc = null;
 
-							/*int pos = xml.indexOf(OpenXdataConstants.OPENXDATA_FORMDEF_LAYOUT_XML_SEPARATOR);
-							if(pos > 0){
-								xformXml = xml.substring(0,pos);
-								layoutXml = FormUtil.formatXml(xml.substring(pos+OpenXdataConstants.OPENXDATA_FORMDEF_LAYOUT_XML_SEPARATOR.length(), xml.length()));
-							}
-							else
-								xformXml = xml;*/
-
 							int pos = xml.indexOf(OpenXdataConstants.OPENXDATA_FORMDEF_LAYOUT_XML_SEPARATOR);
 							int pos2 = xml.indexOf(OpenXdataConstants.OPENXDATA_FORMDEF_LOCALE_XML_SEPARATOR);
 							int pos3 = xml.indexOf(OpenXdataConstants.OPENXDATA_FORMDEF_JAVASCRIPT_SRC_SEPARATOR);
@@ -754,8 +675,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 							centerPanel.setJavaScriptSource(javaScriptSrc);
 
 							openFormDeffered(formId,false);
-
-							//FormUtil.dlg.hide(); //openFormDeffered above will close it
 						}
 
 						public void onError(Request request, Throwable exception){
@@ -781,7 +700,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 		if(isOfflineMode())
 			loadForm();
 		else{
-			currentAction = CA_LOAD_FORM;
 			FormUtil.isAuthenticated();
 		}
 	}
@@ -871,8 +789,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 		url += FormUtil.getFormDefRefreshUrlSuffix();
 		url += FormUtil.getFormIdName()+"="+this.formId;
 
-		//url += "&uname=Guyzb&pw=daniel123";
-
 		RequestBuilder builder = new RequestBuilder(RequestBuilder.GET,URL.encode(url));
 
 		try{
@@ -920,9 +836,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 
 						FormDef oldFormDef = centerPanel.getFormDef();
 
-						//If we are in offline mode, we completely overwrite the form 
-						//with the contents of the xforms source tab.
-						//if(!isOfflineMode())
 						formDef.refresh(oldFormDef);
 
 						formDef.updateDoc(false);
@@ -989,7 +902,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 		if(isOfflineMode())
 			setFileContents();
 		else{
-			currentAction = CA_SET_FILE_CONTENTS;
 			FormUtil.isAuthenticated();
 		}
 	}
@@ -1107,7 +1019,7 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 						}
 					}
 					else if(Context.getCurrentMode() == Context.MODE_DESIGN){
-						//refreshObject(); //automatically load widgets on design surface after language switch.
+						//automatically load widgets on design surface after language switch.
 						DeferredCommand.addCommand(new Command(){
 							public void execute() {
 								refreshObject();
@@ -1322,9 +1234,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 	}
 
 	public void saveAsOpenXdataForm(){
-		//if(!isOfflineMode())
-		//	return;
-
 		if(isOfflineMode())
 			saveTheForm();
 
@@ -1339,9 +1248,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 						try{
 							FormDef formDef = leftPanel.getSelectedForm();
 							String xml = OpenXdataFormBuilder.build(formDef, Context.getLanguageText().get(formDef.getId()));
-
-							//This below messes up JS
-							//xml = FormDesignerUtil.formatXml(xml);
 
 							FormUtil.dlg.hide();
 
@@ -1360,35 +1266,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 
 			}
 		});
-	}
-
-	/**
-	 * This is called from the server after an attempt to authenticate the current
-	 * user before they can submit form data.
-	 * 
-	 * @param authenticated has a value of true if the server has successfully authenticated the user, else false.
-	 */
-	private static void authenticationCallback(boolean authenticated) {	
-
-		//If user has passed authentication, just go on with whatever they wanted to do
-		//else just redisplay the login dialog and let them enter correct
-		//user name and password.
-		if(authenticated){	
-			loginDlg.hide();
-
-			if(currentAction == CA_REFRESH_FORM)
-				controller.refreshObject();
-			else if(currentAction == CA_LOAD_FORM)
-				controller.loadForm();
-			else if(currentAction == CA_SAVE_FORM)
-				controller.saveTheForm();
-			else if(currentAction == CA_SET_FILE_CONTENTS)
-				controller.setFileContents();
-
-			currentAction = CA_NONE;
-		}
-		else
-			loginDlg.center();
 	}
 
 	/**

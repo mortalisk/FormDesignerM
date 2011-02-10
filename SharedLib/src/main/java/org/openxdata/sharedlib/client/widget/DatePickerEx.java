@@ -48,8 +48,6 @@ public class DatePickerEx extends TextBoxWidget implements ClickHandler, ChangeH
 	private DateTimeFormat dateFormatter;
 	
 	private ChangeListenerCollection changeListeners;
-	
-	// TODO: Needs an explanation
 	{
 		
 		dateFormatter = DateUtil.getDateTimeFormat();

@@ -96,9 +96,9 @@ public class ItextParser {
 			localeXformNodeMap.put(locale.getName(), localeXformNode);
 		}
 		
-		tranlateNodes("label", doc, defaultText); //getKey()??????
-		tranlateNodes("hint", doc, defaultText); //getKey()??????
-		tranlateNodes("title", doc, defaultText); //getKey()??????
+		tranlateNodes("label", doc, defaultText);
+		tranlateNodes("hint", doc, defaultText);
+		tranlateNodes("title", doc, defaultText);
 		
 		Context.getLanguageText().clear();
 		

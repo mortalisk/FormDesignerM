@@ -11,10 +11,10 @@ import org.openxdata.designer.client.controller.IFormActionListener;
 import org.openxdata.designer.client.controller.IFormChangeListener;
 import org.openxdata.designer.client.controller.IFormDesignerListener;
 import org.openxdata.designer.client.controller.IFormSelectionListener;
-import org.openxdata.designer.client.event.XformItemSelectEvent;
 import org.openxdata.designer.client.event.FormDesignerEventBus;
-import org.openxdata.designer.client.event.XformListEmptyEvent;
+import org.openxdata.designer.client.event.XformItemSelectEvent;
 import org.openxdata.designer.client.event.XformItemSelectEvent.XformItemType;
+import org.openxdata.designer.client.event.XformListEmptyEvent;
 import org.openxdata.designer.client.util.FormDesignerUtil;
 import org.openxdata.designer.client.vew.widget.images.FormDesignerImages;
 import org.openxdata.designer.client.widget.CompositeTreeItem;
@@ -96,9 +96,7 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 
 	/** The listener to form designer global events. */
 	private IFormDesignerListener formDesignerListener;
-
-	// TODO: This static call will go away once the Event Bus can be properly injected
-	// thru the constructor
+	
 	private final EventBus eventBus = FormDesignerEventBus.getBus();
 	
 	/**

@@ -210,7 +210,6 @@ public class Toolbar extends Composite implements ILocaleListChangeListener, Xfo
 	}
 	
 	public void onLocaleListChanged(){
-		// TODO: remove or fix this
 	}
 
 	@Override

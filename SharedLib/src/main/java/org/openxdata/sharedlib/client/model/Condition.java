@@ -339,7 +339,6 @@ public class Condition implements Serializable{
 	 * @return true if the condition is true, else false.
 	 */
 	private boolean isTextTrue(QuestionDef qtn, boolean validation){
-		//TODO Should this test be case sensitive?
 		String answer = qtn.getAnswer();
 
 		if(function == ModelConstants.FUNCTION_VALUE){

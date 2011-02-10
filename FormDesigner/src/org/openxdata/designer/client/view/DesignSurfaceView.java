@@ -718,7 +718,6 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 				clearSelection();
 			}
 
-			//TODO May need to support multiple listeners.
 			layoutChangeListener.onLayoutChanged(getLayoutXml());
 		}
 

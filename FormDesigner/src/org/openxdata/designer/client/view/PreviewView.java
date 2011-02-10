@@ -1,5 +1,6 @@
 package org.openxdata.designer.client.view;
 
+import com.google.gwt.core.client.GWT;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,6 @@ import org.openxdata.designer.client.controller.ICenterPanel;
 import org.openxdata.designer.client.util.FormDesignerUtil;
 import org.openxdata.designer.client.vew.widget.images.FormDesignerImages;
 import org.openxdata.sharedlib.client.controller.SubmitListener;
-import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.util.FormUtil;
 import org.openxdata.sharedlib.client.view.FormRunnerView;
 import org.openxdata.sharedlib.client.widget.RuntimeWidgetWrapper;
@@ -23,6 +23,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.PopupPanel;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 
 /**
@@ -32,6 +33,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
  *
  */
 public class PreviewView extends FormRunnerView {
+    final FormsConstants formsConstants = GWT.create(FormsConstants.class);
 
 	/** Popup for displaying the context menu for the preview. */
 	private PopupPanel popup;
@@ -53,16 +55,16 @@ public class PreviewView extends FormRunnerView {
 
 		popup = new PopupPanel(true,true);
 		MenuBar menuBar = new MenuBar(true);
-		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.refresh(),LocaleText.get("refresh")),true,new Command(){
+		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.refresh(),formsConstants.refresh()),true,new Command(){
 			public void execute() {popup.hide(); refresh();}});
 
 		menuBar.addSeparator();
-		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.save(),LocaleText.get("submit")),true,new Command(){
+		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.save(),formsConstants.submit()),true,new Command(){
 			public void execute() {popup.hide(); submit();}});
 
 		popup.setWidget(menuBar);
 
-		addNewTab(LocaleText.get("page")+"1");
+		addNewTab(formsConstants.page()+"1");
 
 		DOM.sinkEvents(getElement(),DOM.getEventsSunk(getElement()) | Event.ONMOUSEDOWN);
 
@@ -168,7 +170,7 @@ public class PreviewView extends FormRunnerView {
 	 * Reloads widgets on the preview surface.
 	 */
 	public void refresh(){
-		FormUtil.dlg.setText(LocaleText.get("refreshingPreview"));
+		FormUtil.dlg.setText(formsConstants.refreshingPreview());
 		FormUtil.dlg.center();
 
 		DeferredCommand.addCommand(new Command(){

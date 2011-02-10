@@ -8,7 +8,6 @@ import org.openxdata.designer.client.controller.IConditionController;
 import org.openxdata.designer.client.controller.QuestionSelectionListener;
 import org.openxdata.designer.client.widget.skiprule.ConditionWidget;
 import org.openxdata.designer.client.widget.skiprule.GroupOperationWidget;
-import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.model.Condition;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.ModelConstants;
@@ -28,6 +27,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 
 /**
@@ -37,6 +37,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  *
  */
 public class SkipRulesView extends Composite implements IConditionController, QuestionSelectionListener{
+    final FormsConstants formsConstants = GWT.create(FormsConstants.class);
 
 	private static SkipRulesViewUiBinder uiBinder = GWT.create(SkipRulesViewUiBinder.class);
 
@@ -107,16 +108,16 @@ public class SkipRulesView extends Composite implements IConditionController, Qu
 		
 		// set localized text on some of the widgets
 		// TODO(droberge): Determine if there is a way to set localized text in XML
-		lblAction.setInnerText(LocaleText.get("forQuestion"));
-		lblAnd.setInnerText(LocaleText.get("and"));
-		otherQts.setText(LocaleText.get("clickForOtherQuestions"));
-		addConditionButton.setText(LocaleText.get("addCondition"));
+		lblAction.setInnerText(formsConstants.forQuestion());
+		lblAnd.setInnerText(formsConstants.and());
+		otherQts.setText(formsConstants.clickForOtherQuestions());
+		addConditionButton.setText(formsConstants.addCondition());
 		
 		SpanElement conditionSpan = SpanElement.as(conditionPanel.getElementById("whenSpan"));
-		conditionSpan.setInnerText(LocaleText.get("when"));
+		conditionSpan.setInnerText(formsConstants.when());
 		
 		conditionSpan = SpanElement.as(conditionPanel.getElementById("followingSpan"));
-		conditionSpan.setInnerText(LocaleText.get("ofTheFollowingApply"));
+		conditionSpan.setInnerText(formsConstants.ofTheFollowingApply());
 	}
 	
 	@UiFactory GroupOperationWidget makeGroupHyperlink() {
@@ -276,7 +277,7 @@ public class SkipRulesView extends Composite implements IConditionController, Qu
 
 		if(questionDef != null){
 			formDef = questionDef.getParentFormDef();
-			lblAction.setInnerText(LocaleText.get("forQuestion") + questionDef.getDisplayText());
+			lblAction.setInnerText(formsConstants.forQuestion() + questionDef.getDisplayText());
 			
 			// only enable grouping operator and add condition widgets
 			// if the form definition contains more than 1 question
@@ -291,7 +292,7 @@ public class SkipRulesView extends Composite implements IConditionController, Qu
 			}
 		}
 		else {
-			lblAction.setInnerText(LocaleText.get("forQuestion"));
+			lblAction.setInnerText(formsConstants.forQuestion());
 			addConditionButton.setEnabled(false);
 			groupOperatorWidget.setEnabled(false);
 		}
@@ -343,7 +344,7 @@ public class SkipRulesView extends Composite implements IConditionController, Qu
 			updateSkipRule();
 
 		questionDef = null;
-		lblAction.setInnerText(LocaleText.get("forQuestion"));
+		lblAction.setInnerText(formsConstants.forQuestion());
 
 		// clear condition widgets from ui
 		for(int i = 0; i < conditions.size(); i++) {

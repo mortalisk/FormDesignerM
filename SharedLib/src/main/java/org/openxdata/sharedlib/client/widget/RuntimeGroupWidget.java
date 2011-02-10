@@ -125,7 +125,6 @@ public class RuntimeGroupWidget extends Composite implements OpenFileDialogEvent
 				parentWrapper = new RuntimeWidgetWrapper(widget,images.error(),editListener);
 				parentWrapper.setQuestionDef(qtn,true);
 				widgetMap.put(parentBinding, parentWrapper);
-				//addWidget(parentWrapper); //Misplaces first widget (with tabindex > 0) of a group (CheckBox and RadioButtons)
 
 				qtn.addChangeListener(this);
 				List<CheckBox> list = new ArrayList<CheckBox>();

@@ -152,12 +152,6 @@ public class FieldWidget extends Composite{
 				stopSelection();
 			}
 		});
-
-		/*sgstField.addFocusListener(new FocusListenerAdapter(){
-			public void onLostFocus(Widget sender){
-				stopSelection();
-			}
-		});*/
 	}
 
 	public void selectQuestion(QuestionDef questionDef){

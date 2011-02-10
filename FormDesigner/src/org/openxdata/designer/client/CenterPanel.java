@@ -607,7 +607,6 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 			layoutXml = txtLayoutXml.getText();
 
 		if(layoutXml != null && layoutXml.trim().length() > 0){
-			//designSurfaceView.setLayoutXml(layoutXml,Context.inLocalizationMode() ? formDef : null); //TODO This passed null formdef in localization mode
 
 			FormDef frmDef = null;
 			if(Context.inLocalizationMode())

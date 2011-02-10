@@ -623,7 +623,7 @@ public class PageDef implements Serializable{
 			if(questionDef.getDataNode() == null && !questionDef.getBinding().contains("@")){
 				FormsConstants constants = GWT.create(FormsConstants.class);
 				Window.alert(constants.missingDataNode() + questionDef.getText());
-				continue; //TODO This is a bug which should be resolved
+				continue;
 			}
 
 			int proposedIndex = questions.size() - (newQuestions.size() - k);

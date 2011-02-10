@@ -838,7 +838,7 @@ public class RuntimeGroupWidget extends Composite implements OpenFileDialogEvent
 		Element parentNode = (Element)node.getParentNode();
 		if(node.getNodeName().equalsIgnoreCase(name))
 			return parentNode;
-		else if(name.contains("/")) //TODO This needs to be well tested such that we do not introduce bugs.
+		else if(name.contains("/"))
 			return parentNode;
 		return getParentNodeWithName(parentNode,name);
 	}

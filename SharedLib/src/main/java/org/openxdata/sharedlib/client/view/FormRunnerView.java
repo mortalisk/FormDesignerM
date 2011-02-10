@@ -993,7 +993,7 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 
 
 		List<CheckBox> list = checkBoxGroupMap.get(questionDef);
-		if(list != null /*&& questionDef.isRequired()*/){
+		if(list != null){
 			for(CheckBox checkBox : list)
 				((RuntimeWidgetWrapper)checkBox.getParent().getParent()).isValid();
 		}

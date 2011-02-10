@@ -31,7 +31,6 @@ public class OptionDef implements Serializable {
 	/** The display text of the answer option. */
 	private String text = ModelConstants.EMPTY_STRING;
 	
-	//TODO May not need to serialize this property for smaller pay load. Then we would just rely on the id.
 	/** The unique text identifier of an answer option. */
 	private String variableName = ModelConstants.EMPTY_STRING;
 	

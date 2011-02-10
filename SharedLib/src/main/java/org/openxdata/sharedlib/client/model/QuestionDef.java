@@ -83,9 +83,6 @@ public class QuestionDef implements Serializable{
 	 */
 	private boolean locked = false;
 
-	//TODO We have a bug here when more than one question, on a form, have the 
-	//same variable names.
-	//TODO May not need to serialize this property for smaller pay load. Then we would just rely on the id.
 	/** The text indentifier of the question. This is used by the users of the questionaire 
 	 * but in code we use the dynamically generated numeric id for speed. 
 	 */

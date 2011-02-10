@@ -40,8 +40,6 @@ public class FormDef implements Serializable {
 	/** A collection of page definitions (PageDef objects). */
 	private Vector<PageDef> pages;
 
-	//TODO May not need to serialize this property for smaller pay load. Then we may just rely on the id.
-	//afterall it is not even guaranteed to be unique.
 	/** The string unique identifier of the form definition. */
 	private String binding = ModelConstants.EMPTY_STRING;
 

@@ -220,23 +220,6 @@ public class PageDef implements Serializable{
 				if(def != null)
 					return def;
 			}
-			/*else{
-				String binding = def.getVariableName();
-				if(varName.endsWith(binding) && parent != null){
-					if(!binding.startsWith("/")) 
-						binding = "/"+binding;
-					binding  = parent.getVariableName() + binding;
-					if(!binding.startsWith("/")) 
-						binding = "/"+binding;
-					if(binding.equals(varName))
-						return def;
-				}
-				if(def.getDataType() == QuestionDef.QTN_TYPE_REPEAT){ //TODO Need to make sure this new addition does not introduce bugs
-					def = def.getRepeatQtnsDef().getQuestion(varName);
-					if(def != null)
-						return def;
-				}
-			}*/
 		}
 
 		return null;

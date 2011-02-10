@@ -109,7 +109,7 @@ public class FieldWidget extends Composite{
 		for(int i=0; i<formDef.getPageCount(); i++)
 			QueryBuilderUtil.loadQuestions(formDef.getPageAt(i).getQuestions(),dynamicQuestionDef,oracle,forDynamicOptions);
 		
-		txtField = new TextBox(); //TODO New and hence could be buggy
+		txtField = new TextBox();
 		sgstField = new SuggestBox(oracle,txtField);
 		selectFirstQuestion();
 		

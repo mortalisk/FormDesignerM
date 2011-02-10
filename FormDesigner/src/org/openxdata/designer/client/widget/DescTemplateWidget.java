@@ -3,7 +3,6 @@ package org.openxdata.designer.client.widget;
 import org.openxdata.designer.client.controller.ItemSelectionListener;
 import org.openxdata.designer.client.util.FormDesignerUtil;
 import org.openxdata.sharedlib.client.locale.FormsConstants;
-import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.QuestionDef;
 

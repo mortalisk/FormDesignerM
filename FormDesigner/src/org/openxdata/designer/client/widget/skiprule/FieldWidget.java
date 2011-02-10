@@ -182,7 +182,6 @@ public class FieldWidget extends Composite{
 						continue;
 				}
 
-				//TODO Test this properly to ensure that it does not introduce a bug.
 				if(this.questionDef == questionDef)
 					continue;
 

@@ -159,12 +159,6 @@ public class AdvancedValidationRulesView extends Composite implements SelectionH
 		}
 		System.out.println(expressionEditor.getText());
 	}
-			
-	@Override
-	public void addBracket() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void addCondition() {
@@ -292,6 +286,12 @@ public class AdvancedValidationRulesView extends Composite implements SelectionH
 	public void onSelection(SelectionEvent<TreeItem> event) {
 		TreeItem itm = event.getSelectedItem();
 		exprElements(itm.getText().trim());
+		
+	}
+
+	@Override
+	public void addBracket() {
+		// TODO Auto-generated method stub
 		
 	}
 

@@ -505,10 +505,10 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 
 			try{
 				Element node = (Element)nodes.item(i);
-				DesignWidgetWrapper widget = loadWidget(node,selectedDragController,selectedPanel,images,widgetPopup,this,currentWidgetSelectionListener,formDef); //TODO CHECK ???????????????
+				DesignWidgetWrapper widget = loadWidget(node,selectedDragController,selectedPanel,images,widgetPopup,this,currentWidgetSelectionListener,formDef);
 				if(widget != null && (widget.getWrappedWidget() instanceof DesignGroupWidget)){
 					((DesignGroupWidget)widget.getWrappedWidget()).loadWidgets(node,formDef);
-					((DesignGroupWidget)widget.getWrappedWidget()).setWidgetSelectionListener(currentWidgetSelectionListener); //TODO CHECK
+					((DesignGroupWidget)widget.getWrappedWidget()).setWidgetSelectionListener(currentWidgetSelectionListener);
 					if(!widget.isRepeated())
 						selectedDragController.makeDraggable(widget, ((DesignGroupWidget)widget.getWrappedWidget()).getHeaderLabel());
 				}

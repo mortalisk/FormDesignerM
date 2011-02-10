@@ -1779,7 +1779,7 @@ public class DesignGroupView extends Composite implements WidgetSelectionListene
 		group.addStyleName("getting-started-label2");
 		DOM.setStyleAttribute(group.getElement(), "height","200"+OpenXdataConstants.UNITS);
 		DOM.setStyleAttribute(group.getElement(), "width","500"+OpenXdataConstants.UNITS);
-		group.setWidgetSelectionListener(currentWidgetSelectionListener); //TODO CHECK ??????????????
+		group.setWidgetSelectionListener(currentWidgetSelectionListener);
 
 		DesignWidgetWrapper widget = addNewWidget(group,select);
 
@@ -1826,7 +1826,7 @@ public class DesignGroupView extends Composite implements WidgetSelectionListene
 		repeat.addStyleName("getting-started-label2");
 		DOM.setStyleAttribute(repeat.getElement(), "height","100"+OpenXdataConstants.UNITS);
 		DOM.setStyleAttribute(repeat.getElement(), "width","500"+OpenXdataConstants.UNITS);
-		repeat.setWidgetSelectionListener(currentWidgetSelectionListener); //TODO CHECK ????????????????
+		repeat.setWidgetSelectionListener(currentWidgetSelectionListener);
 
 		DesignWidgetWrapper widget = addNewWidget(repeat,select);
 		widget.setRepeated(true);
@@ -1877,7 +1877,7 @@ public class DesignGroupView extends Composite implements WidgetSelectionListene
 		repeat.addStyleName("getting-started-label2");
 		DOM.setStyleAttribute(repeat.getElement(), "height","245"+OpenXdataConstants.UNITS);
 		DOM.setStyleAttribute(repeat.getElement(), "width","200"+OpenXdataConstants.UNITS);
-		repeat.setWidgetSelectionListener(currentWidgetSelectionListener); //TODO CHECK ????????????????
+		repeat.setWidgetSelectionListener(currentWidgetSelectionListener);
 
 		DesignWidgetWrapper widget = addNewWidget(repeat,select);
 		widget.setRepeated(false);
@@ -1973,7 +1973,7 @@ public class DesignGroupView extends Composite implements WidgetSelectionListene
 		repeat.addStyleName("getting-started-label2");
 		DOM.setStyleAttribute(repeat.getElement(), "height","125"+OpenXdataConstants.UNITS);
 		DOM.setStyleAttribute(repeat.getElement(), "width","200"+OpenXdataConstants.UNITS);
-		repeat.setWidgetSelectionListener(currentWidgetSelectionListener); //TODO CHECK ????????????????
+		repeat.setWidgetSelectionListener(currentWidgetSelectionListener);
 
 		DesignWidgetWrapper widget = addNewWidget(repeat,select);
 		widget.setRepeated(false);

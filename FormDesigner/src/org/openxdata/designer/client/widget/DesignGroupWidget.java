@@ -374,7 +374,7 @@ public class DesignGroupWidget extends DesignGroupView implements DragDropListen
 			//Load all kids if this is a DesignGroupWidget
 			if(widget != null && (widget.getWrappedWidget() instanceof DesignGroupWidget)){
 				((DesignGroupWidget)widget.getWrappedWidget()).loadWidgets(element,formDef);
-				((DesignGroupWidget)widget.getWrappedWidget()).setWidgetSelectionListener(currentWidgetSelectionListener); //TODO CHECK
+				((DesignGroupWidget)widget.getWrappedWidget()).setWidgetSelectionListener(currentWidgetSelectionListener);
 				if(!widget.isRepeated())
 					selectedDragController.makeDraggable(widget, ((DesignGroupWidget)widget.getWrappedWidget()).getHeaderLabel());
 			}

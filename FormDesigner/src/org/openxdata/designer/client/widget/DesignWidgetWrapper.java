@@ -1,5 +1,6 @@
 package org.openxdata.designer.client.widget;
 
+import com.google.gwt.core.client.GWT;
 import java.util.List;
 
 import org.openxdata.designer.client.Context;
@@ -8,7 +9,6 @@ import org.openxdata.designer.client.controller.WidgetSelectionListener;
 import org.openxdata.designer.client.util.FormDesignerUtil;
 import org.openxdata.designer.client.vew.widget.images.FormDesignerImages;
 import org.openxdata.sharedlib.client.controller.QuestionChangeListener;
-import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.model.OptionDef;
 import org.openxdata.sharedlib.client.model.QuestionDef;
 import org.openxdata.sharedlib.client.util.FormUtil;
@@ -50,6 +50,7 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.xml.client.Element;
+import org.openxdata.designer.client.DesignerMessages;
 
 
 /**
@@ -60,6 +61,7 @@ import com.google.gwt.xml.client.Element;
  *
  */
 public class DesignWidgetWrapper extends WidgetEx implements QuestionChangeListener, HasAllMouseHandlers{
+    final DesignerMessages designerMessages = GWT.create(DesignerMessages.class);
 
 	private WidgetSelectionListener widgetSelectionListener;
 	private PopupPanel popup;
@@ -792,7 +794,7 @@ public class DesignWidgetWrapper extends WidgetEx implements QuestionChangeListe
 				storePosition();
 				panel.remove(widget);
 				widget = new Hyperlink();
-				((Hyperlink)widget).setText(LocaleText.get("clickToPlay"));
+				((Hyperlink)widget).setText(designerMessages.clickToPlay());
 				panel.add(widget);
 				refreshSize();
 			}

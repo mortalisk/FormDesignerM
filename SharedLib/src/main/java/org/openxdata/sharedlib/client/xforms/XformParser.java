@@ -310,10 +310,8 @@ public class XformParser {
 				continue;
 
 			Element child = (Element) nodes.item(i);
-			String tagname = child.getNodeName(); // getNodeName(child);
-
-			// if(tagname.equals(NODE_NAME_SUBMIT) ||
-			// tagname.equals(NODE_NAME_SUBMIT_MINUS_PREFIX))
+			String tagname = child.getNodeName(); 
+			
 			if (XmlUtil.nodeNameEquals(tagname,
 					XformConstants.NODE_NAME_SUBMIT_MINUS_PREFIX))
 				continue;
@@ -326,11 +324,9 @@ public class XformParser {
 						relevants, repeatQtns, rptKidMap, currentPageNo,
 						parentQtn, constraints, orphanDynOptionQns);
 			else if (XmlUtil.nodeNameEquals(tagname, "title")) {
-				if (true /* child.getChildNodes().getLength() != 0 */)
+				if (true)
 					formDef.setName(getText(child));
 			}
-			// else if (tagname.equals(NODE_NAME_MODEL) ||
-			// tagname.equals(NODE_NAME_MODEL_MINUS_PREFIX)){
 			else if (XmlUtil.nodeNameEquals(tagname,
 					XformConstants.NODE_NAME_MODEL_MINUS_PREFIX)) {
 				formDef.setModelNode((Element) child);
@@ -339,24 +335,16 @@ public class XformParser {
 						relevants, repeatQtns, rptKidMap, currentPageNo,
 						parentQtn, constraints, orphanDynOptionQns);
 			}
-			// else if (tagname.equals(NODE_NAME_GROUP) ||
-			// tagname.equals(NODE_NAME_GROUP_MINUS_PREFIX)){
 			else if (XmlUtil.nodeNameEquals(tagname,
 					XformConstants.NODE_NAME_GROUP_MINUS_PREFIX)) {
 				parseGroupElement(formDef, child, id2VarNameMap, questionDef,
 						relevants, repeatQtns, rptKidMap, currentPageNo,
 						parentQtn, constraints, orphanDynOptionQns);
 			}
-			// else
-			// if(tagname.equals(NODE_NAME_INSTANCE)||tagname.equals(NODE_NAME_INSTANCE_MINUS_PREFIX))
-			// {
 			else if (XmlUtil.nodeNameEquals(tagname,
 					XformConstants.NODE_NAME_INSTANCE_MINUS_PREFIX)) {
 				parseInstanceElement(formDef, child);
 			}
-			// else if
-			// (tagname.equals(NODE_NAME_BIND)||tagname.equals(NODE_NAME_BIND_MINUS_PREFIX)
-			// /*|| tagname.equals(ATTRIBUTE_NAME_REF)*/) {
 			else if (XmlUtil.nodeNameEquals(tagname,
 					XformConstants.NODE_NAME_BIND_MINUS_PREFIX)) {
 				QuestionDef qtn = parseBindElement(formDef, child,
@@ -367,14 +355,6 @@ public class XformParser {
 				if (qtn.getDataType() == QuestionDef.QTN_TYPE_REPEAT)
 					questionDef = qtn;
 			}
-			// else if (tagname.equals(NODE_NAME_INPUT) ||
-			// tagname.equals(NODE_NAME_SELECT1) ||
-			// tagname.equals(NODE_NAME_SELECT) ||
-			// tagname.equals(NODE_NAME_REPEAT)
-			// || tagname.equals(NODE_NAME_INPUT_MINUS_PREFIX) ||
-			// tagname.equals(NODE_NAME_SELECT1_MINUS_PREFIX) ||
-			// tagname.equals(NODE_NAME_SELECT_MINUS_PREFIX) ||
-			// tagname.equals(NODE_NAME_REPEAT_MINUS_PREFIX)) {
 			else if (XmlUtil.nodeNameEquals(tagname,
 					XformConstants.NODE_NAME_INPUT_MINUS_PREFIX)
 					|| XmlUtil.nodeNameEquals(tagname,
@@ -400,8 +380,6 @@ public class XformParser {
 				hintNode = nodeContext.getHintNode();
 				valueNode = nodeContext.getValueNode();
 			}
-			// else
-			// if(tagname.equals(NODE_NAME_ITEMSET)||tagname.equals(NODE_NAME_ITEMSET_MINUS_PREFIX)){
 			else if (XmlUtil.nodeNameEquals(tagname,
 					XformConstants.NODE_NAME_ITEMSET_MINUS_PREFIX)) {
 				questionDef
@@ -411,8 +389,6 @@ public class XformParser {
 						.getAttribute(XformConstants.ATTRIBUTE_NAME_NODESET),
 						formDef, orphanDynOptionQns);
 			}
-			// else
-			// if(tagname.equals(NODE_NAME_LABEL)||tagname.equals(NODE_NAME_LABEL_MINUS_PREFIX)){
 			else if (XmlUtil.nodeNameEquals(tagname,
 					XformConstants.NODE_NAME_LABEL_MINUS_PREFIX)) {
 
@@ -428,8 +404,6 @@ public class XformParser {
 				hintNode = nodeContext.getHintNode();
 				valueNode = nodeContext.getValueNode();
 			}
-			// else if
-			// (tagname.equals(NODE_NAME_HINT)||tagname.equals(NODE_NAME_HINT_MINUS_PREFIX)){
 			else if (XmlUtil.nodeNameEquals(tagname,
 					XformConstants.NODE_NAME_HINT_MINUS_PREFIX)) {
 
@@ -445,18 +419,14 @@ public class XformParser {
 				hintNode = nodeContext.getHintNode();
 				valueNode = nodeContext.getValueNode();
 			}
-			// else if
-			// (tagname.equals(NODE_NAME_ITEM)||tagname.equals(NODE_NAME_ITEM_MINUS_PREFIX))
 			else if (XmlUtil.nodeNameEquals(tagname,
 					XformConstants.NODE_NAME_ITEM_MINUS_PREFIX))
 				parseElement(formDef, child, id2VarNameMap, questionDef,
 						relevants, repeatQtns, rptKidMap, currentPageNo,
 						parentQtn, constraints, orphanDynOptionQns);
-			// else if
-			// (tagname.equals(NODE_NAME_VALUE)||tagname.equals(NODE_NAME_VALUE_MINUS_PREFIX)){
 			else if (XmlUtil.nodeNameEquals(tagname,
 					XformConstants.NODE_NAME_VALUE_MINUS_PREFIX)) {
-				if (true /* child.getChildNodes().getLength() != 0 */) {
+				if (true) {
 					value = getText(child);
 					valueNode = child;
 				}
@@ -464,7 +434,6 @@ public class XformParser {
 				parseElement(formDef, child, id2VarNameMap, questionDef,
 						relevants, repeatQtns, rptKidMap, currentPageNo,
 						parentQtn, constraints, orphanDynOptionQns);
-			// TODO - how are other elements like html:p or br handled?
 		}
 
 		NodeContext nodeContext = new NodeContext(label, hint, value,

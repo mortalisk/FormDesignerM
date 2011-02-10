@@ -429,16 +429,6 @@ public class FormDef implements Serializable {
 	public void updateDoc(boolean withData){
 		dataNode.setAttribute(XformConstants.ATTRIBUTE_NAME_NAME, name);
 
-		//TODO Check that this comment out does not introduce bugs
-		//We do not want a refreshed xform to overwrite existing formDef id
-		//If ones want to change the id, he should load the xform as a new form with that id
-		/*String val = dataNode.getAttribute(XformConstants.ATTRIBUTE_NAME_ID);
-		if(val == null || val.trim().length() == 0)
-			dataNode.setAttribute(XformConstants.ATTRIBUTE_NAME_ID, String.valueOf(id));
-		else
-			setId(Integer.parseInt(val));*/
-
-		//TODO Check this with the above
 		//Some use non numeric ids like in ODK. And so in such cases, we do not want to overwrite
 		//the existing ids.
 		String sid = dataNode.getAttribute(XformConstants.ATTRIBUTE_NAME_ID);

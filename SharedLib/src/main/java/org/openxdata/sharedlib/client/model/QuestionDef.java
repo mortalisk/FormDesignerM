@@ -67,8 +67,6 @@ public class QuestionDef implements Serializable{
 	/** The question answer of value. */
 	private String answer;
 
-	//TODO For a smaller payload, may need to combine (mandatory,visible,enabled,locked) 
-	//into bit fields forming one byte. This would be a saving of 3 bytes per question.
 	/** A flag to tell whether the question is to be answered or is optional. */
 	private boolean required = false;
 

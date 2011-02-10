@@ -1,5 +1,6 @@
 package org.openxdata.designer.client;
 
+import com.google.gwt.core.client.GWT;
 import java.util.List;
 
 import org.openxdata.designer.client.controller.IFormActionListener;
@@ -13,7 +14,6 @@ import org.openxdata.designer.client.vew.widget.images.FormDesignerImages;
 import org.openxdata.designer.client.view.FormsTreeView;
 import org.openxdata.designer.client.view.PaletteView;
 import org.openxdata.designer.client.view.WidgetPropertiesView;
-import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.Locale;
 import org.openxdata.sharedlib.client.util.FormUtil;
@@ -22,6 +22,7 @@ import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DecoratedStackPanel;
 import com.google.gwt.user.client.ui.Widget;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 
 /**
@@ -32,6 +33,7 @@ import com.google.gwt.user.client.ui.Widget;
  *
  */
 public class LeftPanel extends Composite {
+    final FormsConstants formsConstants = GWT.create(FormsConstants.class);
 
 	/** The GWT stack panel which serves as the main or root widget. */
 	private DecoratedStackPanel stackPanel = new DecoratedStackPanel();
@@ -56,9 +58,9 @@ public class LeftPanel extends Composite {
 		widgetPropertiesView = new WidgetPropertiesView();
 		paletteView =  new PaletteView(images);
 
-		add(formsTreeView , images.tasksgroup(), LocaleText.get("forms"));
-		add(paletteView , images.tasksgroup(),LocaleText.get("palette"));
-		add(widgetPropertiesView , images.filtersgroup(), LocaleText.get("widgetProperties"));
+		add(formsTreeView , images.tasksgroup(), formsConstants.forms());
+		add(paletteView , images.tasksgroup(), formsConstants.palette());
+		add(widgetPropertiesView , images.filtersgroup(), formsConstants.widgetProperties());
 
 		formsTreeView.addFormSelectionListener(widgetPropertiesView);
 		FormUtil.maximizeWidget(stackPanel);

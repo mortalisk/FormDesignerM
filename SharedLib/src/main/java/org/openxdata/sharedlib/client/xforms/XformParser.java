@@ -686,12 +686,8 @@ public class XformParser {
 		for (int i = 0; i < repeats.size(); i++) {
 			QuestionDef rptQtn = (QuestionDef) repeats.get(i);
 			if (qtn.getBinding().contains(rptQtn.getBinding())) {
-				// rptQtnsDef.addQuestion(qtn); //TODO This is temporarily
-				// removed to solve the wiered problem list bug
 				String varname = qtn.getBinding().substring(
 						rptQtn.getBinding().length() + 1);
-				// varname = varname.substring(0, varname.indexOf('/'));
-				// map.put(child.getAttribute(ATTRIBUTE_NAME_ID), varname);
 				map.put(varname, varname);
 				rptKidmap.put(varname, qtn);
 				return true;

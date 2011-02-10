@@ -127,7 +127,6 @@ public class FormDesignerUtil {
 			if(questionDef == parentQuestionDef)
 				continue;
 			
-			//oracle.add(includeBinding ? questionDef.getDisplayText() + " - "+ questionDef.getBinding() : questionDef.getDisplayText());	
 			oracle.add(questionDef.getDisplayText());
 					
 			//TODO Allowed for now since repeat questions will have ids which cant be equal to

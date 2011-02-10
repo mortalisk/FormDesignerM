@@ -1567,7 +1567,9 @@ public class DesignGroupView extends Composite implements WidgetSelectionListene
 				ret = moveWidgets(MOVE_DOWN);  
 
 			if(event.getCtrlKey() && (keyCode == 'A' || keyCode == 'a')){
-				if(!isTextAreaFocus(event)){ //TODO This works only when the textarea is clicked to get focus. Need to make it work even before clicking the text area (as long as it is visible)
+				if(!isTextAreaFocus(event)){ 
+					
+					//This works only when the textarea is clicked to get focus. Need to make it work even before clicking the text area (as long as it is visible)
 					//As for now, Ctrl+A selects all widgets on the design surface's current tab
 					//If one wants to select all widgets within a DesignGroupWidget, they should
 					//right click and select all

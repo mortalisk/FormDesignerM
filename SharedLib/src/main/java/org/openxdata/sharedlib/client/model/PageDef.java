@@ -631,7 +631,7 @@ public class PageDef implements Serializable{
 			if(currentIndex == proposedIndex)
 				continue;
 
-			moveQuestionNodesUp(questionDef,getRefQuestion(questions,newQuestions,currentIndex /*currentIndex+1*/));
+			moveQuestionNodesUp(questionDef,getRefQuestion(questions,newQuestions,currentIndex));
 		}
 	}
 

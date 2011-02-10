@@ -446,35 +446,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 	 * @see org.openxdata.formtools.client.controller.IFormDesignerController#saveFormAs()
 	 */
 	public void saveFormAs() {
-		//TODO I do not think we need this offline save as any more.
-		/*if(isOfflineMode()){
-			final Object obj = leftPanel.getSelectedForm();
-			if(obj == null){
-				Window.alert(LocaleText.get("selectSaveItem"));
-				return;
-			}
-
-			FormUtil.dlg.setText(LocaleText.get("savingForm"));
-			FormUtil.dlg.center();
-
-			DeferredCommand.addCommand(new Command(){
-				public void execute() {
-					try{
-						String xml = null;
-						xml = XformBuilder.fromFormDef2Xform((FormDef)obj);
-						xml = FormDesignerUtil.formatXml(xml);
-						centerPanel.setXformsSource(xml,formSaveListener == null && isOfflineMode());
-						FormUtil.dlg.hide();
-					}
-					catch(Exception ex){
-						FormUtil.displayException(ex);
-					}	
-				}
-			});
-		}
-		else*/
-			//saveAs();
-		
 		saveAsMode = true;
 		saveForm();
 	}

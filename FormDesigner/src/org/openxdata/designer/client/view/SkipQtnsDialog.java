@@ -1,11 +1,11 @@
 package org.openxdata.designer.client.view;
 
+import com.google.gwt.core.client.GWT;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.openxdata.designer.client.controller.QuestionSelectionListener;
 import org.openxdata.sharedlib.client.OpenXdataConstants;
-import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.PageDef;
 import org.openxdata.sharedlib.client.model.QuestionDef;
@@ -23,6 +23,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 
 /**
@@ -32,6 +33,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  *
  */
 public class SkipQtnsDialog  extends DialogBox {
+    final FormsConstants formsConstants = GWT.create(FormsConstants.class);
 
 	/** Widget displaying list of all questions on the form. */
 	private ListBox lbAllQtns = new ListBox(true);
@@ -46,10 +48,10 @@ public class SkipQtnsDialog  extends DialogBox {
 	private Button btnDeselect = new Button("<<");
 	
 	/** Button to commit changes and close this dialog box. */
-	private Button btnOk = new Button(LocaleText.get("ok"));
+	private Button btnOk = new Button(formsConstants.ok());
 	
 	/** Button to cancel changes, if any, and close this dialog box. */
-	private Button btnCancel = new Button(LocaleText.get("cancel"));
+	private Button btnCancel = new Button(formsConstants.cancel());
 	
 	/** Main or root widget for this dialog box. */
 	private VerticalPanel mainPanel = new VerticalPanel();
@@ -100,7 +102,7 @@ public class SkipQtnsDialog  extends DialogBox {
 		
 		mainPanel.setSpacing(5);
 		
-		setText(LocaleText.get("otherQuestions"));
+		setText(formsConstants.otherQuestions());
 	}
 	
 	
@@ -172,8 +174,8 @@ public class SkipQtnsDialog  extends DialogBox {
 	 */
 	private void setupHeaderLabels(){
 		HorizontalPanel horzPanel = new HorizontalPanel();
-		Label lblAllQtns = new Label(LocaleText.get("allQuestions"));
-		Label lblSelQtns = new Label(LocaleText.get("selectedQuestions"));
+		Label lblAllQtns = new Label(formsConstants.allQuestions());
+		Label lblSelQtns = new Label(formsConstants.selectedQuestions());
 		
 		horzPanel.add(lblAllQtns);
 		horzPanel.add(lblSelQtns);

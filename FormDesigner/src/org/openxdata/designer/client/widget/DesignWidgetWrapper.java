@@ -139,7 +139,7 @@ public class DesignWidgetWrapper extends WidgetEx implements QuestionChangeListe
 			break;
 		case Event.ONMOUSEDOWN:
 			if(!(widget instanceof DesignGroupWidget) && !event.getCtrlKey())
-				widgetSelectionListener.onWidgetSelected(this,event.getCtrlKey()); //TODO verify that this does not introduce a bug
+				widgetSelectionListener.onWidgetSelected(this,event.getCtrlKey());
 			//The above is turned on for now because of selectedDragController.setBehaviorDragStartSensitivity(1);
 
 			//When the header label of a groupbox is selected, all widgets within should be deselected.

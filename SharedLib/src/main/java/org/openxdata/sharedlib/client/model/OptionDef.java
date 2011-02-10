@@ -62,7 +62,6 @@ public class OptionDef implements Serializable {
 		 setId(optionDef.getId());
 		 setText(optionDef.getText());
 		 setVariableName(optionDef.getVariableName());
-		 //setParent(parent /*optionDef.getParent()*/);
 	}
 	
 	/** Constructs a new option answer definition object from the following parameters.
@@ -191,10 +190,6 @@ public class OptionDef implements Serializable {
     		
     		if(id != null && id.trim().length() > 0)
     			xpath += "[@" + XformConstants.ATTRIBUTE_NAME_ID + "='" + id + "']";
-    		
-    		/*String parent = controlNode.getAttribute(XformConstants.ATTRIBUTE_NAME_PARENT);
-    		if(parent != null && parent.trim().length() > 0)
-    			xpath += "[@" + XformConstants.ATTRIBUTE_NAME_PARENT + "='" + parent + "']";*/
     		
     		xpath += "/"+ FormUtil.getNodeName(labelNode);
 			

@@ -56,7 +56,7 @@ public class ItemsetBuilder {
 			nodes = modelNode.getElementsByTagName(XformConstants.NODE_NAME_INSTANCE_MINUS_PREFIX); //TODO What happens when we pass a name with a prefix?
 		modelNode.insertBefore(instanceNode, XmlUtil.getNextElementSibling((Element)nodes.item(nodes.getLength() - 1)));
 
-		Element dataNode =  doc.createElement("dynamiclist"/*questionDef.getVariableName()*/);
+		Element dataNode =  doc.createElement("dynamiclist");
 		instanceNode.appendChild(dataNode);
 		dynamicOptionDef.setDataNode(dataNode);
 
@@ -75,7 +75,7 @@ public class ItemsetBuilder {
 				Entry<Integer,List<OptionDef>> entry = iterator.next();
 				List<OptionDef> list = entry.getValue();
 
-				OptionDef parentOptionDef = null; //parentQuestionDef.getOption(entry.getKey());
+				OptionDef parentOptionDef = null;
 				
 				if(parentQuestionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE)
 					parentOptionDef = parentQuestionDef.getOption(entry.getKey());

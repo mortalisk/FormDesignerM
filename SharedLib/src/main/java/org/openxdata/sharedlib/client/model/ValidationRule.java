@@ -304,7 +304,6 @@ public class ValidationRule implements Serializable{
 		return false;
 	}
 	
-	//TODO Why does the validation rule have a value of formDef different from the one passed in as parameter?
 	/**
 	 * Gets the list of questions referenced by any value of any condition in this rule.
 	 * 

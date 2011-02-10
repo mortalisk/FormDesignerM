@@ -691,7 +691,7 @@ public class PageDef implements Serializable{
 			QuestionDef questionDef = (QuestionDef)questions.elementAt(i);
 			if(questionDef.getDisplayText().equals(text))
 				return questionDef;
-			else if(questionDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT){ //TODO Need to make sure this new addition does not introduce bugs
+			else if(questionDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT){
 				questionDef = questionDef.getRepeatQtnsDef().getQuestionWithText(text);
 				if(questionDef != null)
 					return questionDef;

@@ -941,8 +941,6 @@ public class QuestionDef implements Serializable{
 				}
 			}
 		}
-		else //TODO Need to work on repeats
-			;//updateRepeatModel(elem,qtnData);
 	}
 
 	private void updateDataNode(Document doc, FormDef formDef, String orgFormVarName){

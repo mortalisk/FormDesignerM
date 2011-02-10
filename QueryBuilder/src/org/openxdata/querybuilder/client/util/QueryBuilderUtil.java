@@ -111,10 +111,10 @@ public class QueryBuilderUtil {
 			
 			oracle.add(questionDef.getText());	
 			
-			//TODO Allowed for now since repeat questions will have ids which cant be equal to
-			//those of parents. But test this to ensure it does not bring in bugs.
+			//Allowed for now since repeat questions will have ids which cant be equal to
+			//those of parents.
 			if(questionDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT)
-				loadQuestions(questionDef.getRepeatQtnsDef().getQuestions(),refQuestion,oracle,dynamicOptions,sameTypesOnly); //TODO These have different id sets and hence we are leaving them out for now
+				loadQuestions(questionDef.getRepeatQtnsDef().getQuestions(),refQuestion,oracle,dynamicOptions,sameTypesOnly);
 		}
 	}
 

@@ -22,7 +22,6 @@ import org.openxdata.designer.client.view.PropertiesView;
 import org.openxdata.sharedlib.client.OpenXdataConstants;
 import org.openxdata.sharedlib.client.controller.SubmitListener;
 import org.openxdata.sharedlib.client.locale.FormsConstants;
-import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.util.FormUtil;
 import org.openxdata.sharedlib.client.widget.RuntimeWidgetWrapper;

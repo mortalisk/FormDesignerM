@@ -185,7 +185,7 @@ public class DesignGroupView extends Composite implements WidgetSelectionListene
 					clearGroupBoxSelection();
 
 				//Deselect any previously selected widgets in groupbox
-				selectedDragController.selectWidget(widget); //TODO Test this and make sure it does not introduce bugs
+				selectedDragController.selectWidget(widget);
 			}
 
 			stopLabelEdit(false);
@@ -1604,7 +1604,7 @@ public class DesignGroupView extends Composite implements WidgetSelectionListene
 				if(Context.clipBoardWidgets.size() > 0 && x >= 0){
 					if(event.getTarget() == selectedPanel.getElement()){
 						pasteItem(false);
-						x = -1; //TODO preven;t pasting twice as this is fired twice. Needs smarter solution
+						x = -1; //TODO prevent pasting twice as this is fired twice. Needs smarter solution
 					}
 					ret = true;
 				}

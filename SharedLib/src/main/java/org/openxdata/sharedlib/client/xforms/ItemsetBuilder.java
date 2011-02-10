@@ -91,10 +91,6 @@ public class ItemsetBuilder {
 				for(int index = 0; index < list.size(); index++){
 					OptionDef optionDef = list.get(index);
 					addNewDynamicOption(doc, optionDef, parentOptionDef, dataNode);
-					
-					//TODO The line below makes the application hang when one clicks
-					//the submit button on a not yet saved form.
-					//questionDef.addOption(optionDef,false); //Bug increasing list we are iterating.
 				}
 			}
 		}

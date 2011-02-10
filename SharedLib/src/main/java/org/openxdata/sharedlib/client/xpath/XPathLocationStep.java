@@ -135,7 +135,7 @@ public class XPathLocationStep implements Serializable {
 							prefix = element.getNamespaceURI();
 						}
 
-						if (nodeTest.equals("*") || nodeTest.equalsIgnoreCase(childName) //TODO This was just changed from equals to make xpath expressions case insensitive
+						if (nodeTest.equals("*") || nodeTest.equalsIgnoreCase(childName)
 								|| nodeTest.equals("node()")) {
 							if (((nodePrefix != null) && (nodePrefix
 									.equals(prefix)))
@@ -239,7 +239,7 @@ public class XPathLocationStep implements Serializable {
 			if (node.getChildNodes().item(j).getNodeType() == Node.ELEMENT_NODE) {
 				Node childNode = (Node) node.getChildNodes().item(j);
 				String name = ((Element) childNode).getNodeName();
-				if (nodeTest.equals("*") || nodeTest.equalsIgnoreCase(name)) //TODO This was just changed from equals to make xpath expression case insensitive
+				if (nodeTest.equals("*") || nodeTest.equalsIgnoreCase(name))
 					matchingDescendants.addElement(node);
 
 				Node[] moreDescendants = null;

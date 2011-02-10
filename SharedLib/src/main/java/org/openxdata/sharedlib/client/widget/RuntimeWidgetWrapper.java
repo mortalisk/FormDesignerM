@@ -758,7 +758,7 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 		}
 		else if(widget instanceof TextBox){
 			String answer = getTextBoxAnswer();
-			if(externalSource != null && externalSource.trim().length() > 0 /*&&
+			if(externalSource != null && externalSource.trim().length() > 0){
 
 				if(panel.getWidgetCount() == 2){
 					Widget wid = panel.getWidget(1);

@@ -4,7 +4,6 @@ import com.google.gwt.core.client.GWT;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openxdata.designer.client.Context;
 import org.openxdata.designer.client.controller.ICenterPanel;
 import org.openxdata.designer.client.util.FormDesignerUtil;
 import org.openxdata.designer.client.vew.widget.images.FormDesignerImages;
@@ -51,8 +50,6 @@ public class PreviewView extends FormRunnerView {
 	 * @param images the images for the preview context menu.
 	 */
 	public PreviewView(FormDesignerImages images){
-		//super(images);
-
 		popup = new PopupPanel(true,true);
 		MenuBar menuBar = new MenuBar(true);
 		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.refresh(),formsConstants.refresh()),true,new Command(){
@@ -90,7 +87,6 @@ public class PreviewView extends FormRunnerView {
 	 */
 	protected void initPanel(){
 		AbsolutePanel panel = new AbsolutePanel();
-		//FormDesignerUtil.maximizeWidget(panel);
 		selectedPanel = panel;
 
 		//This is needed for IE
@@ -113,7 +109,7 @@ public class PreviewView extends FormRunnerView {
 				return;
 
 			String xml = XformUtil.getInstanceDataDoc(formDef.getDoc()).toString();
-			xml = FormDesignerUtil.formatXml(xml); //"<?xml version='1.0' encoding='UTF-8' ?> " +
+			xml = FormDesignerUtil.formatXml(xml);
 			submitListener.onSubmit(xml);
 		}
 	}
@@ -178,8 +174,6 @@ public class PreviewView extends FormRunnerView {
 				try{
 					centerPanel.commitChanges();
 					List<RuntimeWidgetWrapper> externalSourceWidgets = new ArrayList<RuntimeWidgetWrapper>();
-					if(Context.isOfflineMode())
-						;//externalSourceWidgets = null;
 					loadForm(centerPanel.getFormDef(), designSurfaceView.getLayoutXml(),centerPanel.getJavaScriptSource(),externalSourceWidgets,true);
 					FormUtil.dlg.hide();
 				}

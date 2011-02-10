@@ -224,7 +224,7 @@ public class XformParserUtil {
 				else
 					def.setDataType(QuestionDef.QTN_TYPE_IMAGE);
 			}
-			//TODO These two are used by ODK
+			
 			else if(type.equalsIgnoreCase("binary")){
 				def.setDataType(QuestionDef.QTN_TYPE_IMAGE);
 			}

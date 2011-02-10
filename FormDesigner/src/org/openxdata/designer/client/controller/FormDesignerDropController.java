@@ -165,14 +165,11 @@ public class FormDesignerDropController extends AbstractPositioningDropControlle
 		// Use two widgets so that setPixelSize() consistently affects dimensions
 		// excluding positioner border in quirks and strict modes
 		SimplePanel outer = new SimplePanel();
-		//outer.addStyleName(CSS_DRAGDROP_POSITIONER); //TODO ????????????????????????????
 		outer.getElement().getStyle().setProperty("margin", "0"+OpenXdataConstants.UNITS);
 
 		// place off screen for border calculation
 		RootPanel.get().add(outer, -500, -500);
-
-		// Ensure IE quirks mode returns valid outer.offsetHeight, and thus valid
-		// DOMUtil.getVerticalBorders(outer)
+		
 		outer.setWidget(DUMMY_LABEL_IE_QUIRKS_MODE_OFFSET_HEIGHT);
 
 		SimplePanel inner = new SimplePanel();

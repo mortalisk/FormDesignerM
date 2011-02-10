@@ -374,8 +374,8 @@ public class FormDesignerDragController extends AbstractDragController{
 		boundaryOffsetY = widgetLocation.getTop()
 		+ DOMUtil.getBorderTop(context.boundaryPanel.getElement());
 
-		dropTargetClientWidth = DOMUtil.getClientWidth(context.boundaryPanel.getElement()); //TODO ?????????????????????????
-		dropTargetClientHeight = DOMUtil.getClientHeight(context.boundaryPanel.getElement()); //TODO ?????????????????????????
+		dropTargetClientWidth = DOMUtil.getClientWidth(context.boundaryPanel.getElement());
+		dropTargetClientHeight = DOMUtil.getClientHeight(context.boundaryPanel.getElement());
 	}
 
 	/**
@@ -491,7 +491,7 @@ public class FormDesignerDragController extends AbstractDragController{
 	@Override
 	public void resetCache() {
 		super.resetCache();
-		dropControllerCollection.resetCache(context.boundaryPanel, context); //TODO ???????????????????????????????????
+		dropControllerCollection.resetCache(context.boundaryPanel, context);
 	}
 
 	/**

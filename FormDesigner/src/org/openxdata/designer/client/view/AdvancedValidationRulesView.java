@@ -9,7 +9,6 @@ import org.openxdata.sharedlib.client.locale.FormsConstants;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.PageDef;
 import org.openxdata.sharedlib.client.model.QuestionDef;
-import org.openxdata.sharedlib.client.model.ValidationRule;
 import org.openxdata.sharedlib.client.util.FormUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -59,9 +58,6 @@ public class AdvancedValidationRulesView extends Composite implements SelectionH
 	private Label descriptionLabel = new Label("Description");
 	/** The form definition object that this validation rule belongs to. */
 	private FormDef formDef;
-	
-	/** The validation rule definition object. */
-	private ValidationRule validationRule;
 	
 	/* Tree to keep left expression group elements*/
 	private Tree tree;
@@ -159,7 +155,6 @@ public class AdvancedValidationRulesView extends Composite implements SelectionH
 	
 	public void updateValidationRule(){
 		if(formDef == null){
-			validationRule = null;
 			return;
 		}
 		System.out.println(expressionEditor.getText());

@@ -8,8 +8,6 @@ import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.Locale;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;

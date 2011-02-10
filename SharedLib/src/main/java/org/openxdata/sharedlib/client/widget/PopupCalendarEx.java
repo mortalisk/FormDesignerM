@@ -1,8 +1,6 @@
 package org.openxdata.sharedlib.client.widget;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import org.openxdata.sharedlib.client.util.FormUtil;
 import org.zenika.widget.client.util.DateUtil;

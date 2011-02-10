@@ -83,9 +83,7 @@ public class ItemsetBuilder {
 					parentOptionDef = formDef.getDynamicOptionDef(parentQuestionDef.getId(), entry.getKey());
 				
 				if(parentOptionDef == null){
-					//Parent question options are not yet loaded.
-					//modelNode.removeChild(instanceNode);
-					return false;//continue;
+					return false;
 				}
 
 				for(int index = 0; index < list.size(); index++){
@@ -94,13 +92,6 @@ public class ItemsetBuilder {
 				}
 			}
 		}
-
-		//Some times the FirstOptionNode can be null. eg when a form is opened with a type
-		//other than single select dynamic and then changed to it.
-		/*if(questionDef.getFirstOptionNode() == null)
-			questionDef.setFirstOptionNode(createDynamicOptionDefNode(doc,questionDef.getControlNode()));
-		Element itemSetNode = questionDef.getFirstOptionNode();
-		itemSetNode.setAttribute(XformConstants.ATTRIBUTE_NAME_NODESET, "instance('"+ questionDef.getVariableName()+"')/item[@parent=instance('"+formDef.getVariableName()+"')/"+parentQuestionDef.getVariableName()+"]");*/
 
 		return true;
 	}

@@ -5,17 +5,18 @@ import java.util.List;
 
 import org.openxdata.designer.client.util.FormDesignerUtil;
 import org.openxdata.sharedlib.client.OpenXdataConstants;
-import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.model.Locale;
 import org.openxdata.sharedlib.client.util.FormUtil;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -23,6 +24,7 @@ import com.google.gwt.user.client.ui.RootPanel;
  * www.openxdata.org - Licensed as written in license.txt and original sources of this file and its authors are found in sources.txt.
  */
 public class FormDesignerEntryPoint implements EntryPoint ,ResizeHandler{
+    final FormsConstants formsConstants = GWT.create(FormsConstants.class);
 
 	/**
 	 * Reference to the form designer widget.
@@ -34,7 +36,7 @@ public class FormDesignerEntryPoint implements EntryPoint ,ResizeHandler{
 	 */
 	public void onModuleLoad() {
 		
-		FormUtil.dlg.setText(LocaleText.get("loading"));
+		FormUtil.dlg.setText(formsConstants.loading());
 		FormUtil.dlg.center();
 		
 		publishJS();

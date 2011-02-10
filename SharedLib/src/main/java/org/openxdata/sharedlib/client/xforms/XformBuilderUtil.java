@@ -124,9 +124,6 @@ public class XformBuilderUtil {
 		if(name.startsWith(formDef.getBinding()))
 			name = name.substring(formDef.getBinding().length()+1);
 
-		//TODO Should do this for all invalid characters in node names.
-		/*name = name.replace("/", "");
-		name = name.replace("\\", "");*/
 		name = name.replace(" ", "");
 
 		Vector<Element> nodes = new Vector<Element>();

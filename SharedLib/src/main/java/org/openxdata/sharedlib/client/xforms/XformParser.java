@@ -773,9 +773,6 @@ public class XformParser {
 
 		String tagname = child.getNodeName();
 
-		//if(tagname.equals(NODE_NAME_REPEAT) || tagname.equals(NODE_NAME_REPEAT_MINUS_PREFIX))
-		//	map.put(bind, bind); //TODO Not very sure about this
-
 		//new addition may cause bugs
 		if(varName == null){
 			varName = addNonBindControl(formDef,child,relevants,ref,bind,constraints);
@@ -788,14 +785,10 @@ public class XformParser {
 			if(qtn == null)
 				qtn = (QuestionDef)rptKidMap.get(varName);
 
-			//if(tagname.equals(NODE_NAME_SELECT1) || tagname.equals(NODE_NAME_SELECT)
-			//		||tagname.equals(NODE_NAME_SELECT1_MINUS_PREFIX) || tagname.equals(NODE_NAME_SELECT_MINUS_PREFIX)){
 			if(XmlUtil.nodeNameEquals(tagname,XformConstants.NODE_NAME_SELECT1_MINUS_PREFIX) || XmlUtil.nodeNameEquals(tagname,XformConstants.NODE_NAME_SELECT_MINUS_PREFIX)){
-				//qtn.setDataType((tagname.equals(NODE_NAME_SELECT1)||tagname.equals(NODE_NAME_SELECT1_MINUS_PREFIX)) ? QuestionDef.QTN_TYPE_LIST_EXCLUSIVE : QuestionDef.QTN_TYPE_LIST_MULTIPLE);
 				qtn.setDataType((XmlUtil.nodeNameEquals(tagname,XformConstants.NODE_NAME_SELECT1_MINUS_PREFIX)) ? QuestionDef.QTN_TYPE_LIST_EXCLUSIVE : QuestionDef.QTN_TYPE_LIST_MULTIPLE);
 				qtn.setOptions(new Vector<OptionDef>());
 			}//TODO first addition for repeats
-			//else if((tagname.equals(NODE_NAME_REPEAT)||tagname.equals(NODE_NAME_REPEAT_MINUS_PREFIX)) && !label.equals("")){
 			else if(XmlUtil.nodeNameEquals(tagname,XformConstants.NODE_NAME_REPEAT_MINUS_PREFIX) && !nodeContext.getLabel().equals("")){
 				qtn.setDataType(QuestionDef.QTN_TYPE_REPEAT);
 				qtn.setText(nodeContext.getLabel());
@@ -826,7 +819,6 @@ public class XformParser {
 
 			//TODO second addition for repeats
 			Element parent = (Element)child.getParentNode(); 
-			//if(parent.getNodeName().equals(NODE_NAME_REPEAT)||parent.getNodeName().equals(NODE_NAME_REPEAT_MINUS_PREFIX)){
 			if(XmlUtil.nodeNameEquals(parent.getNodeName(),XformConstants.NODE_NAME_REPEAT_MINUS_PREFIX)){
 				varName = (String)id2VarNameMap.get(parent.getAttribute(XformConstants.ATTRIBUTE_NAME_BIND) != null ? parent.getAttribute(XformConstants.ATTRIBUTE_NAME_BIND) : parent.getAttribute(XformConstants.ATTRIBUTE_NAME_NODESET));
 				

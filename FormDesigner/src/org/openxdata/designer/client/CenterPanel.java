@@ -564,7 +564,7 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 		if(layout != null)
 			this.formDef.setLayoutXml(layout);
 		else
-			layout = formDef.getLayoutXml(); //TODO Needs testing coz its new
+			layout = formDef.getLayoutXml();
 
 		txtLayoutXml.setText(layout);
 	}

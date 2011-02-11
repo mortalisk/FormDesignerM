@@ -140,24 +140,8 @@ public class FormDesignerDragController extends AbstractDragController{
 		}
 	}
 
-	/*private boolean isResizing(){
-		String s = DOM.getStyleAttribute(((DesignWidgetWrapper)context.draggable).getWrappedWidget().getElement(), "cursor");
-
-		if(s.equalsIgnoreCase("w-resize") || s.equalsIgnoreCase("se-resize") ||
-				s.equalsIgnoreCase("e-resize") || s.equalsIgnoreCase("sw-resize") ||
-				s.equalsIgnoreCase("n-resize") || s.equalsIgnoreCase("ne-resize") ||
-				s.equalsIgnoreCase("s-resize") || s.equalsIgnoreCase("nw-resize")){
-			return true;
-		}
-
-		return false;
-	}*/
-
 	@Override
 	public void dragEnd() {
-
-		//if(Context.getLockWidgets())
-		//	return;
 
 		assert context.finalDropController == null == (context.vetoException != null);
 		if (context.vetoException != null) {
@@ -183,9 +167,6 @@ public class FormDesignerDragController extends AbstractDragController{
 
 	public void dragMove() {
 
-		//if(Context.getLockWidgets())
-		//	return;
-
 		int desiredLeft = context.desiredDraggableX - boundaryOffsetX;
 		int desiredTop = context.desiredDraggableY - boundaryOffsetY;
 		if (getBehaviorConstrainedToBoundaryPanel()) {
@@ -198,24 +179,8 @@ public class FormDesignerDragController extends AbstractDragController{
 
 		if(!Context.getLockWidgets()){
 			if(context.draggable instanceof DesignWidgetWrapper){
-				/*DesignWidgetWrapper wrapper = (DesignWidgetWrapper)context.draggable;
-
-			String s = "";
-			if(wrapper.getWrappedWidget() instanceof DesignGroupWidget){
-				s = DOM.getStyleAttribute(((DesignGroupWidget)wrapper.getWrappedWidget()).getHeaderLabel().getWrappedWidget().getElement(), "cursor");
-				wrapper = ((DesignGroupWidget)wrapper.getWrappedWidget()).getHeaderLabel();
-			}*/
 
 				String cursor = DOM.getStyleAttribute(((DesignWidgetWrapper)context.draggable).getWrappedWidget().getElement(), "cursor");
-
-				if("default".equals(cursor) && ((DesignWidgetWrapper)context.draggable).getWrappedWidget() instanceof DesignGroupWidget){
-					//cursor = DOM.getStyleAttribute(((DesignGroupWidget)((DesignWidgetWrapper)context.draggable).getWrappedWidget()).getHeaderLabel().getElement(), "cursor");
-
-					//cursor = ((DesignGroupWidget)((DesignWidgetWrapper)context.draggable).getWrappedWidget()).getHeaderLabel().getDesignCursor(event.getClientX(),event.getClientY(),3);
-				}
-
-				//Event event = DOM.eventGetCurrentEvent();
-				//String cursor = ((DesignWidgetWrapper)context.draggable).getDesignCursor(event.getClientX(),event.getClientY(),3);
 
 				if(cursor.equalsIgnoreCase("w-resize"))
 					incrementWidth(false);
@@ -241,13 +206,11 @@ public class FormDesignerDragController extends AbstractDragController{
 					incrementHeight(false);
 					incrementWidth(false);
 				}
-				else /*if(cursor.equalsIgnoreCase("move"))*/{
-					//if(!"100%".equals(((DesignWidgetWrapper)context.draggable).getWidth()))
+				else{
 					DOMUtil.fastSetElementPosition(movablePanel.getElement(), desiredLeft, desiredTop);
 				}
 			}
 			else{
-				//DOM.setStyleAttribute(movablePanel.getElement(),"cursor","crosshair");
 				DOM.setStyleAttribute(movablePanel.getElement(), "cursor", "pointer");
 				DOMUtil.fastSetElementPosition(movablePanel.getElement(), desiredLeft, desiredTop);
 			}
@@ -308,11 +271,8 @@ public class FormDesignerDragController extends AbstractDragController{
 	public void dragStart() {
 
 		if(context.draggable instanceof DesignWidgetWrapper && "100%".equals(((DesignWidgetWrapper)context.draggable).getWidth())){
-			context.draggable = context.draggable;//.getParent().getParent().getParent().getParent();
+			context.draggable = context.draggable;
 		}
-
-		//if(Context.getLockWidgets())
-		//	return;
 
 		super.dragStart();
 
@@ -320,7 +280,6 @@ public class FormDesignerDragController extends AbstractDragController{
 			dragDropListener.onDragStart(context.draggable);
 
 		WidgetLocation currentDraggableLocation = new WidgetLocation(context.draggable,context.boundaryPanel);
-		//currentDraggableLocation.
 		if (getBehaviorDragProxy()) {
 			movablePanel = newDragProxy(context);
 
@@ -444,9 +403,6 @@ public class FormDesignerDragController extends AbstractDragController{
 	public void previewDragEnd() throws VetoDragException {
 		assert context.finalDropController == null;
 		assert context.vetoException == null;
-
-		//if(Context.getLockWidgets())
-		//	return;
 
 		try {
 			try {

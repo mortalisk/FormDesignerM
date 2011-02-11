@@ -174,7 +174,6 @@ public class AdvancedValidationRulesView extends Composite implements SelectionH
 
 	@Override
 	public void onItemSelected(Object sender, Object item) {
-		System.out.println("Something has been selected=====================");		
 	}
 
 	@Override

@@ -233,7 +233,6 @@ public class ItextParser {
 				textNode.setAttribute("value", (String)defaultTextMap.get(locale.getName()).get(id));
 				localeXformNode.appendChild(textNode);
 			}
-		    //..........................................................................
 		}
 	}
 	

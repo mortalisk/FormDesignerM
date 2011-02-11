@@ -205,9 +205,6 @@ public class UiElementBuilder {
 
 		//Make ODK happy.
 		setMediaType(node, type);
-		
-		//if(type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || type == QuestionDef.QTN_TYPE_LIST_MULTIPLE)
-		//	node.setAttribute("selection", "closed");
 
 		return node;
 	}

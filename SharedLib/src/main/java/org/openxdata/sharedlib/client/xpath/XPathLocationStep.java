@@ -90,16 +90,11 @@ public class XPathLocationStep implements Serializable {
 					.length()
 					- pattIndex - 1);
 		}
-
-		// System.out.println("this partial location: "+locationStep+" is parsed
-		// into");
-		// System.out.println("functionName="+functionName+" axis="+axis+"
-		// nodeTest="+nodeTest+" predicate="+predicate);
 	}
 
 	public XPathLocationStep(String locationStep) {
 		parseLocationStep(locationStep);
-	}// constructor
+	}
 
 	/**
 	 * the contextNodeSet is made of nodes that are instances of Element A fix
@@ -180,9 +175,6 @@ public class XPathLocationStep implements Serializable {
 			}
 		}
 
-		// other axes go here
-
-		// no axis whatsoever (or maybe unknown to me :)
 		if (axis.equals("")) {
 			if (nodeTest.equals("/")) {
 				Object startNode = null;
@@ -194,13 +186,7 @@ public class XPathLocationStep implements Serializable {
 				}
 
 				if (startNode instanceof Element) {
-					//Element tmp = null;
 					Node tmp = null;
-					//while ( (((Element)startNode).getParentNode() instanceof Element) && 
-					//((tmp = (Element)((Element) startNode).getParentNode()) != null))
-					
-					//while((tmp = (Element)((Element) startNode).getParentNode()) != null)
-					//	startNode = tmp;
 					tmp = ((Node) startNode).getParentNode();
 					while(tmp != null){
 						startNode = tmp;
@@ -209,8 +195,6 @@ public class XPathLocationStep implements Serializable {
 					
 					outputNodeSet.addElement(startNode);
 				} else {
-					// System.out.println("couldn't find root");
-					// couldn't find any elements in context
 					return contextNodeSet;
 				}
 			} else if (nodeTest.equals(".")) {

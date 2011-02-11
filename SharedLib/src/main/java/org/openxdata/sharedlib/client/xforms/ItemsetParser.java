@@ -88,7 +88,6 @@ public class ItemsetParser {
 				continue;
 
 			String name = child.getNodeName();
-			//if(name.equals(NODE_NAME_ITEM_MINUS_PREFIX)){
 			if(XmlUtil.nodeNameEquals(name,XformConstants.NODE_NAME_ITEM_MINUS_PREFIX)){
 				String parent = ((Element)child).getAttribute(XformConstants.ATTRIBUTE_NAME_PARENT);
 				if(parent == null || parent.trim().length() == 0)
@@ -124,14 +123,12 @@ public class ItemsetParser {
 
 				parseDynamicOptions(dynamicOptionDef,questionDef,parentQuestionDef,child,optionDef,parentOptionIdMap,formDef,orphanDynOptionQns);
 			}
-			//else if(name.equals(NODE_NAME_LABEL_MINUS_PREFIX)){
 			else if(XmlUtil.nodeNameEquals(name,XformConstants.NODE_NAME_LABEL_MINUS_PREFIX)){
 				if(child.getChildNodes().getLength() != 0){
-					label = child.getChildNodes().item(0).getNodeValue().trim(); //questionDef.setText(child.getChildNodes().item(0).getNodeValue().trim());
+					label = child.getChildNodes().item(0).getNodeValue().trim(); 
 					labelNode = (Element)child;
 				}
 			}
-			//else if(name.equals(NODE_NAME_VALUE_MINUS_PREFIX)){
 			else if(XmlUtil.nodeNameEquals(name,XformConstants.NODE_NAME_VALUE_MINUS_PREFIX)){
 				if(child.getChildNodes().getLength() != 0){
 					value = child.getChildNodes().item(0).getNodeValue().trim();
@@ -183,7 +180,6 @@ public class ItemsetParser {
 
 		//Get the dynamic option definition instance node.
 		Element instanceNode = XformUtil.getInstanceNode(formDef.getModelNode(), instanceId);
-		//assert(instanceNode != null);
 		if(instanceNode == null)
 			return; //This can only be a bug
 		

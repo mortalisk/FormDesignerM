@@ -821,7 +821,7 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 	 */
 	public void refresh(){
 		if(selectedTabIndex == SELECTED_INDEX_PREVIEW)
-			previewView.refresh(); //loadForm(formDef,designSurfaceView.getLayoutXml(),null);
+			previewView.refresh();
 		else if(selectedTabIndex == SELECTED_INDEX_DESIGN_SURFACE)
 			designSurfaceView.refresh();
 	}

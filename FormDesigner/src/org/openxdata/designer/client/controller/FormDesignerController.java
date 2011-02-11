@@ -213,7 +213,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 	 * @see org.openxdata.designer.client.controller.IFormActionListener#showAboutInfo()
 	 */
 	public void openForm() {
-		//if(isOfflineMode()){
 		String xml = centerPanel.getXformsSource();
 
 		//Only load layout if in layout mode and no xforms source is supplied.
@@ -238,7 +237,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 				dlg.center();
 			}
 		}
-		//}
 	}
 
 	/**
@@ -259,7 +257,7 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 				try{
 					String xml = centerPanel.getXformsSource().trim();
 					if(xml.length() > 0){
-						Document doc = ItextParser.parse(xml); /*XmlUtil.getDocument(xml);*/
+						Document doc = ItextParser.parse(xml);
 						FormDef formDef = XformParser.fromXform2FormDef(doc, xml,Context.getLanguageText());
 						formDef.setReadOnly(tempReadonly);
 
@@ -409,7 +407,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 					formDef.setXformXml(xml);
 					centerPanel.setXformsSource(xml,formSaveListener == null && isOfflineMode());
 					centerPanel.buildLayoutXml();
-					//formDef.setLayout(centerPanel.getLayoutXml());
 
 					centerPanel.saveLanguageText(false);
 					setLocaleText(formDef.getId(),Context.getLocale().getKey(), centerPanel.getLanguageXml());
@@ -429,7 +426,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 					//Save text for the current language
 					if(saveLocaleText)
 						saveTheLanguageText(false,false);
-					//saveLanguageText(false); Commented out because we may be called during change locale where caller needs to have us complete everything before he can do his stuff, and hence no more differed or delayed executions.
 				
 					if(localSaveAsMode)
 						saveAs();
@@ -726,7 +722,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 
 							openFormDeffered(formId,false);
 
-							//FormUtil.dlg.hide(); //openFormDeffered above will close it
 						}
 
 						public void onError(Request request, Throwable exception){
@@ -842,8 +837,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 		url += FormUtil.getFormDefRefreshUrlSuffix();
 		url += FormUtil.getFormIdName()+"="+this.formId;
 
-		//url += "&uname=Guyzb&pw=daniel123";
-
 		RequestBuilder builder = new RequestBuilder(RequestBuilder.GET,URL.encode(url));
 
 		try{
@@ -891,9 +884,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 
 						FormDef oldFormDef = centerPanel.getFormDef();
 
-						//If we are in offline mode, we completely overwrite the form 
-						//with the contents of the xforms source tab.
-						//if(!isOfflineMode())
 						formDef.refresh(oldFormDef);
 
 						formDef.updateDoc(false);
@@ -1078,7 +1068,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 						}
 					}
 					else if(Context.getCurrentMode() == Context.MODE_DESIGN){
-						//refreshObject(); //automatically load widgets on design surface after language switch.
 						DeferredCommand.addCommand(new Command(){
 							public void execute() {
 								refreshObject();
@@ -1293,8 +1282,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 	}
 
 	public void saveAsOpenXdataForm(){
-		//if(!isOfflineMode())
-		//	return;
 
 		if(isOfflineMode())
 			saveTheForm();
@@ -1310,9 +1297,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 						try{
 							FormDef formDef = leftPanel.getSelectedForm();
 							String xml = OpenXdataFormBuilder.build(formDef, Context.getLanguageText().get(formDef.getId()));
-
-							//This below messes up JS
-							//xml = FormDesignerUtil.formatXml(xml);
 
 							FormUtil.dlg.hide();
 

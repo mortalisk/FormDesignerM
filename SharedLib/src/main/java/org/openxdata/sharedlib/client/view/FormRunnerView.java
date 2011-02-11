@@ -986,7 +986,7 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 				}
 
 				widget.setAnswer(answer);
-				widget.isValid(); //TODO May need to fire change event instead
+				widget.isValid(); // TODO May need to fire change event instead
 				onValueChanged(widget);
 			}
 		}

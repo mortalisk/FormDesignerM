@@ -78,15 +78,6 @@ public class XformParser {
 
 		return fromXform2FormDef(XformUtil.normalizeNameSpace(formDef.getDoc(),
 				XmlUtil.fromDoc2String(formDef.getDoc())));
-
-		/*
-		 * if(formDef.getDoc() == null) return new FormDef(formDef); else
-		 * formDef.updateDoc(false);
-		 * 
-		 * return
-		 * fromXform2FormDef(XformUtil.normalizeNameSpace(formDef.getDoc()
-		 * ,XmlUtil.fromDoc2String(formDef.getDoc())));
-		 */
 	}
 
 	/**
@@ -180,7 +171,7 @@ public class XformParser {
 
 		// If model xml has been supplied, use it to replace the existing one.
 		if (modelXml != null) {
-			Node node = XmlUtil.getDocument(modelXml).getDocumentElement();// XformConverter.getNode(XformConverter.getDocument(modelXml).getDocumentElement().toString());
+			Node node = XmlUtil.getDocument(modelXml).getDocumentElement();
 			Element dataNode = XformUtil.getInstanceDataNode(doc);
 			Node parent = dataNode.getParentNode();
 			node = parent.getOwnerDocument().importNode(node, true);
@@ -241,8 +232,6 @@ public class XformParser {
 					if (questionDef.getBinding() == null)
 						continue;
 
-					// pageDef.removeQuestion(questionDef, formDef); //We do not
-					// want to remove the bindings, if any.
 					pageDef.getQuestions().remove(questionDef);
 					qtnNo--;
 				}
@@ -493,46 +482,16 @@ public class XformParser {
 				if (questionDef.getParent() instanceof PageDef
 						&& !formDef.moveQuestion2Page(questionDef, pageNo,
 								formDef))
-					formDef.getPageAt(pageNo - 1).addQuestion(questionDef); // This
-																			// is
-																			// new
-																			// attempt
-																			// to
-																			// solve
-																			// a
-																			// bug
-																			// and
-																			// hence
-																			// may
-																			// introduce
-																			// other
-																			// bugs.
+					formDef.getPageAt(pageNo - 1).addQuestion(questionDef); 
 				else if (questionDef.getParent() instanceof QuestionDef
 						&& questionDef.getParent() == parentQtn) {
-					if (formDef.getPageCount() < currentPageNo) { // Must be a
-																	// repeat
-																	// kid whose
-																	// parent
-																	// has no
-																	// form
-																	// added
-																	// page
+					if (formDef.getPageCount() < currentPageNo) { 
 						PageDef pageDef = new PageDef(formDef);
 						formDef.addPage(pageDef);
 						formDef.moveQuestion2Page(parentQtn, pageNo, formDef);
 					} else if (((PageDef) parentQtn.getParent()).getPageNo() == 1
-							&& pageNo != 1 /* != pageNo */)
-						formDef.moveQuestion2Page(parentQtn, pageNo, formDef); // Must
-																				// be
-																				// a
-																				// repeat
-																				// kid
-																				// in
-																				// a
-																				// wrong
-																				// page.
-																				// (page
-																				// 1)
+							&& pageNo != 1)
+						formDef.moveQuestion2Page(parentQtn, pageNo, formDef); 
 				}
 
 				setQuestionDataNode(questionDef, formDef, parentQtn);
@@ -563,8 +522,7 @@ public class XformParser {
 	private static void setQuestionDataNode(QuestionDef qtn, FormDef formDef,
 			QuestionDef parentQtn) {
 		String xpath = qtn.getBinding();
-
-		// xpath = new String(xpath.toCharArray(), 1, xpath.length()-1);
+		
 		int pos = xpath.lastIndexOf('@');
 		if (pos > 0) {
 			xpath = xpath.substring(0, pos - 1);
@@ -592,15 +550,11 @@ public class XformParser {
 			Object obj = e.nextElement();
 			if (obj instanceof Element) {
 				if (pos > 0) // Check if we are to set attribute value.
-					qtn.setDataNode(((Element) obj)); // ((Element)
-														// obj).setAttribute(attributeName,
-														// value);
+					qtn.setDataNode(((Element) obj)); 
 				else
-					qtn.setDataNode(((Element) obj));// ((Element)
-														// obj).addChild(Node.TEXT_NODE,
-														// value);
+					qtn.setDataNode(((Element) obj));
 
-				return; // break
+				return;
 			}
 		}
 
@@ -617,13 +571,9 @@ public class XformParser {
 				Object obj = e.nextElement();
 				if (obj instanceof Element) {
 					if (pos > 0) // Check if we are to set attribute value.
-						qtn.setDataNode(((Element) obj)); // ((Element)
-															// obj).setAttribute(attributeName,
-															// value);
+						qtn.setDataNode(((Element) obj)); 
 					else
-						qtn.setDataNode(((Element) obj));// ((Element)
-															// obj).addChild(Node.TEXT_NODE,
-															// value);
+						qtn.setDataNode(((Element) obj));
 
 					break;
 				}
@@ -755,10 +705,7 @@ public class XformParser {
 			try {
 				formDef.setId(Integer.parseInt(dataNode
 						.getAttribute(XformConstants.ATTRIBUTE_NAME_ID)));
-			} catch (Exception ex) {/*
-									 * We may have non numeric ids like for odk.
-									 * We just ignore them.
-									 */
+			} catch (Exception ex) {
 			}
 		}
 
@@ -929,8 +876,6 @@ public class XformParser {
 			RepeatQtnsDef repeatQtnsDef = new RepeatQtnsDef(qtn);
 			qtn.setRepeatQtnsDef(repeatQtnsDef);
 			repeatQtns.addElement(qtn);
-
-			// questionDef = qtn;
 		}
 
 		return qtn;
@@ -1091,14 +1036,6 @@ public class XformParser {
 	private static void parseLabelElement(FormDef formDef, Element child,
 			QuestionDef questionDef, NodeContext nodeContext) {
 		String parentName = ((Element) child.getParentNode()).getNodeName();
-		// if(parentName.equalsIgnoreCase(NODE_NAME_INPUT) ||
-		// parentName.equalsIgnoreCase(NODE_NAME_SELECT) ||
-		// parentName.equalsIgnoreCase(NODE_NAME_SELECT1) ||
-		// parentName.equalsIgnoreCase(NODE_NAME_ITEM)
-		// ||parentName.equalsIgnoreCase(NODE_NAME_INPUT_MINUS_PREFIX) ||
-		// parentName.equalsIgnoreCase(NODE_NAME_SELECT_MINUS_PREFIX) ||
-		// parentName.equalsIgnoreCase(NODE_NAME_SELECT1_MINUS_PREFIX) ||
-		// parentName.equalsIgnoreCase(NODE_NAME_ITEM_MINUS_PREFIX)){
 		if (XmlUtil.nodeNameEquals(parentName,
 				XformConstants.NODE_NAME_INPUT_MINUS_PREFIX)
 				|| XmlUtil.nodeNameEquals(parentName,
@@ -1109,26 +1046,19 @@ public class XformParser {
 						XformConstants.NODE_NAME_ITEM_MINUS_PREFIX)
 				|| XmlUtil.nodeNameEquals(parentName,
 						XformConstants.NODE_NAME_UPLOAD_MINUS_PREFIX)) {
-			if (true /* child.getChildNodes().getLength() != 0 */) {
-				nodeContext.setLabel(getText(child)); // questionDef.setText(child.getChildNodes().item(0).getNodeValue().trim());
+			if (true) {
+				nodeContext.setLabel(getText(child));
 				nodeContext.setLabelNode(child);
 			}
 		}
-		// else
-		// if(parentName.equalsIgnoreCase(NODE_NAME_REPEAT)||parentName.equalsIgnoreCase(NODE_NAME_REPEAT_MINUS_PREFIX)){
 		else if (XmlUtil.nodeNameEquals(parentName,
 				XformConstants.NODE_NAME_REPEAT_MINUS_PREFIX)) {
-			if (questionDef != null && true /*
-											 * child.getChildNodes().getLength()
-											 * != 0
-											 */)
+			if (questionDef != null && true)
 				questionDef.setText(getText(child));
 		}
-		// else
-		// if(parentName.equalsIgnoreCase(NODE_NAME_GROUP)||parentName.equalsIgnoreCase(NODE_NAME_GROUP_MINUS_PREFIX)){
 		else if (XmlUtil.nodeNameEquals(parentName,
 				XformConstants.NODE_NAME_GROUP_MINUS_PREFIX)) {
-			if (true /* child.getChildNodes().getLength() != 0 */) {
+			if (true) {
 				nodeContext.setLabel(getText(child));
 				nodeContext.setLabelNode(child);
 			}
@@ -1150,17 +1080,16 @@ public class XformParser {
 	private static void parseHintElement(FormDef formDef, Element child,
 			QuestionDef questionDef, NodeContext nodeContext) {
 		String parentName = ((Element) child.getParentNode()).getNodeName();
-		// if(parentName.equalsIgnoreCase(NODE_NAME_GROUP)||parentName.equalsIgnoreCase(NODE_NAME_GROUP_MINUS_PREFIX)){
 		if (XmlUtil.nodeNameEquals(parentName,
 				XformConstants.NODE_NAME_GROUP_MINUS_PREFIX)) {
-			if (true /* child.getChildNodes().getLength() != 0 */) {
+			if (true) {
 				nodeContext.setHint(getText(child));
 				nodeContext.setHintNode(child);
 			}
 		} else if (questionDef != null) {
-			if (true /* child.getChildNodes().getLength() != 0 */) {
+			if (true) {
 				questionDef.setHelpText(getText(child));
-				questionDef.setHintNode(child /* element */);
+				questionDef.setHintNode(child);
 			}
 		}
 	}

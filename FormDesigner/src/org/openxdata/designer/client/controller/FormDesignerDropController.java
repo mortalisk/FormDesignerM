@@ -93,19 +93,15 @@ public class FormDesignerDropController extends AbstractPositioningDropControlle
 			if(draggable.widget instanceof DesignWidgetWrapper){
 				draggable.positioner.removeFromParent();
 				dropTarget.add(draggable.widget, draggable.desiredX, draggable.desiredY);
-				//dropTarget.add(draggable.widget, draggable.widget.getAbsoluteLeft(), draggable.widget.getAbsoluteTop());
-				//dropTarget.add(draggable.widget, context.desiredDraggableX, context.desiredDraggableY);
 			}
 			else if(dragDropListener != null)
 				dragDropListener.onDrop(draggable.widget,context.mouseX,context.mouseY);
-				//dragDropListener.onDrop(draggable.widget,context.desiredDraggableX,context.desiredDraggableY);
 		}
 		super.onDrop(context);
 	}
 
 	@Override
 	public void onEnter(DragContext context) {
-		//super.onEnter(context);
 		assert draggableList.size() == 0;
 
 		dropTargetClientWidth = DOMUtil.getClientWidth(dropTarget.getElement());
@@ -132,7 +128,6 @@ public class FormDesignerDropController extends AbstractPositioningDropControlle
 			draggable.positioner.removeFromParent();
 		}
 		draggableList.clear();
-		//super.onLeave(context);
 	}
 
 	@Override

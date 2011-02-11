@@ -98,10 +98,7 @@ public class XformUtil {
 		for (int i = 0; i < numOfEntries; i++) {
 			if (element.getChildNodes().item(i).getNodeType() == Node.ELEMENT_NODE) {
 				Element child = (Element)element.getChildNodes().item(i);
-				//String tagname = getNodeName(child);
-				String tagname = child.getNodeName(); //NODE_NAME_INSTANCE has prefix
-				// if
-				// (tagname.equals(NODE_NAME_MODEL)||tagname.equals(NODE_NAME_MODEL_MINUS_PREFIX))
+				String tagname = child.getNodeName();
 				if(XmlUtil.nodeNameEquals(tagname,XformConstants.NODE_NAME_MODEL_MINUS_PREFIX))
 					return child;
 				else{
@@ -256,9 +253,7 @@ public class XformUtil {
 		for (int i = 0; i < numOfEntries; i++) {
 			if (element.getChildNodes().item(i).getNodeType() == Node.ELEMENT_NODE) {
 				Element child = (Element)element.getChildNodes().item(i);
-				//String tagname = getNodeName(child);
-				String tagname = child.getNodeName(); //NODE_NAME_INSTANCE has prefix
-				//if(tagname.equals(NODE_NAME_INSTANCE)||tagname.equals(NODE_NAME_INSTANCE_MINUS_PREFIX))
+				String tagname = child.getNodeName(); 
 				if(XmlUtil.nodeNameEquals(tagname,XformConstants.NODE_NAME_INSTANCE_MINUS_PREFIX))
 					return child;
 				else{

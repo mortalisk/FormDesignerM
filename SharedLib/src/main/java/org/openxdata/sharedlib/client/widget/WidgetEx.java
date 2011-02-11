@@ -138,8 +138,8 @@ public class WidgetEx extends Composite{
 		
 		this.left = widget.left;
 		this.top = widget.top;
-		this.width = widget.width; //getWidth();
-		this.height = widget.height; //getHeight();
+		this.width = widget.width;
+		this.height = widget.height;
 		this.parentBinding = widget.parentBinding;
 		this.binding = widget.binding;
 		this.tabIndex = widget.tabIndex;
@@ -197,8 +197,7 @@ public class WidgetEx extends Composite{
 			this.widget = new Image();
 			Image image = (Image)widget.widget;
 			((Image)this.widget).setUrl(image.getUrl());
-			((Image)this.widget).setVisibleRect(image.getOriginLeft(),image.getOriginTop(),FormUtil.convertDimensionToInt(width) /*image.getWidth()*/,FormUtil.convertDimensionToInt(height) /*image.getHeight()*/);
-			//((Image)this.widget).setVisibleRect(image.getOriginLeft(),image.getOriginTop(),image.getWidth(),image.getHeight());
+			((Image)this.widget).setVisibleRect(image.getOriginLeft(),image.getOriginTop(),FormUtil.convertDimensionToInt(width), FormUtil.convertDimensionToInt(height));
 		}
 		else if(widget.widget instanceof Hyperlink)
 			this.widget = new Hyperlink(((Hyperlink)widget.widget).getText(),"");
@@ -345,7 +344,6 @@ public class WidgetEx extends Composite{
 				setTabStyle("color", color);
 		}
 		catch(Exception ex){
-			//ex.printStackTrace();
 		}
 	}
 
@@ -358,7 +356,6 @@ public class WidgetEx extends Composite{
 				setTabStyle("fontWeight", fontWeight);
 		}
 		catch(Exception ex){
-			//ex.printStackTrace();
 		}
 	}
 
@@ -371,7 +368,6 @@ public class WidgetEx extends Composite{
 				setTabStyle("fontStyle", fontStyle);
 		}
 		catch(Exception ex){
-			//ex.printStackTrace();
 		}
 	}
 
@@ -384,7 +380,6 @@ public class WidgetEx extends Composite{
 				setTabStyle("fontSize", fontSize);
 		}
 		catch(Exception ex){
-			//ex.printStackTrace();
 		}
 	}
 	
@@ -397,7 +392,6 @@ public class WidgetEx extends Composite{
 				setTabStyle("fontFamily", fontFamily);
 		}
 		catch(Exception ex){
-			//ex.printStackTrace();
 		}
 	}
 	
@@ -410,7 +404,6 @@ public class WidgetEx extends Composite{
 				setTabStyle("textDecoration", textDecoration);
 		}
 		catch(Exception ex){
-			//ex.printStackTrace();
 		}
 	}
 	
@@ -423,12 +416,9 @@ public class WidgetEx extends Composite{
 				setTabStyle("textAlign", textAlign);
 		}
 		catch(Exception ex){
-			//ex.printStackTrace();
 		}
 	}
 	
-	//DOM.setStyleAttribute(wrapper.getWrappedWidget().getElement(),"textAlign", "center");
-
 	
 	public void setBackgroundColor(String backgroundColor){
 		try{
@@ -439,7 +429,6 @@ public class WidgetEx extends Composite{
 				setTabStyle("backgroundColor", backgroundColor);
 		}
 		catch(Exception ex){
-			//ex.printStackTrace();
 		}
 	}
 	
@@ -452,7 +441,6 @@ public class WidgetEx extends Composite{
 				setTabStyle("borderStyle", borderStyle);
 		}
 		catch(Exception ex){
-			//ex.printStackTrace();
 		}
 	}
 	
@@ -465,7 +453,6 @@ public class WidgetEx extends Composite{
 				setTabStyle("borderWidth", borderWidth);
 		}
 		catch(Exception ex){
-			//ex.printStackTrace();
 		}
 	}
 	
@@ -478,7 +465,6 @@ public class WidgetEx extends Composite{
 				setTabStyle("borderColor", borderColor);
 		}
 		catch(Exception ex){
-			//ex.printStackTrace();
 		}
 	}
 
@@ -842,7 +828,6 @@ public class WidgetEx extends Composite{
 		html.getElement().setAttribute("style", style);
 		DOM.setStyleAttribute(html.getElement(), property, value);	
 		((TabBar)widget).setTabHTML(((TabBar)widget).getSelectedTab(), html.toString().replace("div", "span"));
-		//System.out.println(((TabBar)widget).getTabHTML(((TabBar)widget).getSelectedTab()));	
 	}
 	
 	
@@ -855,6 +840,5 @@ public class WidgetEx extends Composite{
 		HTML html = new HTML(text,false);
 		html.getElement().setAttribute("style", style);	
 		((TabBar)widget).setTabHTML(((TabBar)widget).getSelectedTab(), html.toString().replace("div", "span"));
-		//System.out.println(((TabBar)widget).getTabHTML(((TabBar)widget).getSelectedTab()));	
 	}
 }

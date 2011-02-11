@@ -99,8 +99,6 @@ public class ConstraintBuilder {
 				value = " " + condition.getValue();
 
 			constraint = ". ";
-			//if(actionQtnDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT)
-			//	constraint = "count(.) ";
 			if(condition.getFunction() == ModelConstants.FUNCTION_LENGTH)
 				constraint = "length(.) ";
 			

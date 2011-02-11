@@ -364,7 +364,7 @@ public class DynamicListsView extends Composite implements ItemSelectionListener
 		//options for cases where they will be got from the server using the
 		//external source widget filter property.
 
-		if(dynamicOptionDef == null /*|| dynamicOptionDef.size() == 0*/){
+		if(dynamicOptionDef == null){
 			if(parentQuestionDef != null)
 				formDef.removeDynamicOptions(parentQuestionDef.getId());
 			return;
@@ -582,7 +582,6 @@ public class DynamicListsView extends Composite implements ItemSelectionListener
 					//automatically set the binding, if empty.
 					TextBox txtBinding = (TextBox)table.getWidget(row, 1);
 					String binding = txtBinding.getText();
-					//if(binding == null || binding.trim().length() == 0){
 					if(binding == null || binding.trim().length() == 0 || binding.equals(orgTextDefBinding)){
 						txtBinding.setText(FormDesignerUtil.getXmlTagName(optionDef.getText()));
 						optionDef.setVariableName(txtBinding.getText());
@@ -779,7 +778,7 @@ public class DynamicListsView extends Composite implements ItemSelectionListener
 			parentNode.removeChild(optionDef.getControlNode());
 		}
 
-		OptionDef currentItem; // = parent.getChild(index - 1);
+		OptionDef currentItem;
 		List<OptionDef> list = new ArrayList<OptionDef>();
 
 		//Remove all otions below selected index
@@ -793,7 +792,7 @@ public class DynamicListsView extends Composite implements ItemSelectionListener
 			if(i == 1){
 				optns.add(optionDef); //Add after the first item but before the current (second).
 
-				OptionDef optnDef = getNextSavedOption(list,i); //(OptionDef)list.get(i);
+				OptionDef optnDef = getNextSavedOption(list,i);
 				if(optnDef.getControlNode() != null && optionDef.getControlNode() != null)
 					parentNode.insertBefore(optionDef.getControlNode(), optnDef.getControlNode());
 				else if(parentNode != null)

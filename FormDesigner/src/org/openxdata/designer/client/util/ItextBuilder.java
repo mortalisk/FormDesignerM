@@ -69,17 +69,10 @@ public class ItextBuilder {
 				continue;
 
 			String value = ((Element)node).getAttribute("value");
-			String id = /*((Element)node).getAttribute("id");*/ FormDesignerUtil.getXmlTagName(value);
+			String id = FormDesignerUtil.getXmlTagName(value);
 
 			if(id == null || id.trim().length() == 0)
 				continue;
-
-			/*textNode.setAttribute("id", id);
-
-			Element valueNode = doc.createElement("value");
-			textNode.appendChild(valueNode);
-
-			valueNode.appendChild(doc.createTextNode(value));*/
 
 			String xpath = ((Element)node).getAttribute("xpath");
 			Vector<?> result = new XPathExpression(formDef.getDoc(), xpath).getResult();
@@ -88,10 +81,6 @@ public class ItextBuilder {
 
 				int pos = xpath.lastIndexOf('@');
 				if(pos > 0 && xpath.indexOf('=',pos) < 0){
-					//String attributeName = xpath.substring(pos + 1, xpath.indexOf(']',pos));
-					//targetNode.setAttribute(attributeName, value);
-
-					//xpath = FormUtil.getNodePath(formDef.getPageAt(0).getGroupNode());
 
 					NodeList titles = formDef.getDoc().getElementsByTagName("h:title");
 					if(titles == null || titles.getLength() == 0)
@@ -117,12 +106,6 @@ public class ItextBuilder {
 				
 				assert(result.size() == 1); //each xpath expression should point to not more than one node.
 
-				/*ItextModel itextModel = new ItextModel();
-				itextModel.set("xpath", xpath);
-				itextModel.set("id", id);
-				itextModel.set(localeKey, value);
-				list.add(itextModel);*/
-
 				if(id == null || id.trim().length() == 0)
 					continue;
 
@@ -132,12 +115,7 @@ public class ItextBuilder {
 				else
 					duplicatesMap.put(id, id);
 
-				addTextNode(formDef.getDoc(), translationNode, xpath,id, value, localeKey, ((Element)node).getAttribute(ATTRIBUTE_NAME_UNIQUE_ID)); //getKey()??????
-			}
-			else if(index == 0){
-				//NodeList titles = doc.getElementsByTagName("title");
-				//if(titles != null && titles.getLength() > 0)
-				//	addTextNode(doc,translationNode, list,FormUtil.getNodePath(titles.item(0)),id,value,locale.getKey());
+				addTextNode(formDef.getDoc(), translationNode, xpath,id, value, localeKey, ((Element)node).getAttribute(ATTRIBUTE_NAME_UNIQUE_ID));
 			}
 		}
 	}

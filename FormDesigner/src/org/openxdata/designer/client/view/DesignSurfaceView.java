@@ -68,7 +68,7 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
     final DesignerMessages designerMessages = GWT.create(DesignerMessages.class);
 
 	/** Height in pixels of the selected page. */
-	private String sHeight = "100%"; //"100%";
+	private String sHeight = "100%";
 
 	/** Width in pixels of the selected page. */
 	private String sWidth = "100%";
@@ -311,7 +311,6 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 
 		DeferredCommand.addCommand(new Command() {
 			public void execute() {
-				//onWindowResized(Window.getClientWidth(), Window.getClientHeight());
 				setHeight(getHeight());
 			}
 		});
@@ -994,7 +993,7 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 			else
 				widgetWrapper = addNewTextBox(select);
 
-			if(widgetWrapper != null){//addNewCheckBoxSet returns null
+			if(widgetWrapper != null){
 				widgetWrapper.setBinding(qtn.getBinding());
 				widgetWrapper.setQuestionDef(qtn);
 				widgetWrapper.setTitle(qtn.getText());
@@ -1239,7 +1238,7 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 			stopLabelEdit(false);
 
 		if(widget == null){
-			selectedDragController.clearSelection(); //New and may cause bugs
+			selectedDragController.clearSelection(); 
 			return;
 		}
 

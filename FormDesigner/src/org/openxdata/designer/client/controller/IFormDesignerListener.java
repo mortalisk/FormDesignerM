@@ -122,7 +122,6 @@ public interface IFormDesignerListener extends IFormActionListener{
 	 * @param sender the object requesting for the refresh.
 	 */
 	public void refresh(Object sender);
-	//public void saveFormLayoutAs();
 	
 	/**
 	 * Loads the xform and form layout localizable text from a previously saved locale document.

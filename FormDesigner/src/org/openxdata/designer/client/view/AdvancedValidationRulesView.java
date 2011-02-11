@@ -197,7 +197,6 @@ public class AdvancedValidationRulesView extends Composite implements SelectionH
 	}
 	public Tree addTree(Tree tree){
 		tree = new Tree();
-		//initWidget(tree);
 		tree.addSelectionHandler(this);
 		tree.ensureSelectedItemVisible();
 		questions = new TreeItem("Questions");

@@ -129,7 +129,6 @@ public class ItextParser {
 			if(textNode.getNodeType() != Node.ELEMENT_NODE)
 				continue;
 
-			//itext.put(((Element)textNode).getAttribute("id"), getValueText(textNode));
 			setValueText(((Element)textNode).getAttribute("id"), textNode, defaultText);
 		}
 
@@ -202,10 +201,7 @@ public class ItextParser {
 			//If the text node does not already exist, add it, else just update itx text.
 			if(!XmlUtil.setTextNodeValue(node, text))
 				node.appendChild(doc.createTextNode(text));
-			
-			
-			
-			//............................................................................
+						
 			//Skip the steps below if we have already processed this itext id.
 			if(duplicatesMap.containsKey(id))
 				continue;

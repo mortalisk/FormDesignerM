@@ -74,7 +74,7 @@ public class XformParser {
 		else
 			// Value of false creates bugs where repeat widgets are not loaded
 			// properly on data preview
-			formDef.updateDoc(true); // formDef.updateDoc(false);
+			formDef.updateDoc(true);
 
 		return fromXform2FormDef(XformUtil.normalizeNameSpace(formDef.getDoc(),
 				XmlUtil.fromDoc2String(formDef.getDoc())));
@@ -759,7 +759,6 @@ public class XformParser {
 		int pageNo = XformParser.currentPageNo;
 
 		String parentName = ((Element) child.getParentNode()).getNodeName();
-		// if(!(parentName.equalsIgnoreCase(NODE_NAME_GROUP)||parentName.equalsIgnoreCase(NODE_NAME_GROUP_MINUS_PREFIX))){
 		if (!XmlUtil.nodeNameEquals(parentName,
 				XformConstants.NODE_NAME_GROUP_MINUS_PREFIX)) {
 			if (formDef.getPageCount() < ++currentPageNo)

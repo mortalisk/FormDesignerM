@@ -155,7 +155,6 @@ public class RelevantParser {
 		//first try a value delimited by '
 		int pos2 = relevant.lastIndexOf('\'');
 		if(pos2 > 0){
-			//pos1++;
 			int pos1 = relevant.substring(0, pos2).lastIndexOf('\'',pos2);
 			if(pos1 < 0){
 				System.out.println("Relevant value not closed with ' characher");

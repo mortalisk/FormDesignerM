@@ -257,10 +257,6 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 			if(!designSurfaceView.hasWidgets())
 				designSurfaceView.refresh();
 		}
-
-
-		//else if(selectedTabIndex == SELECTED_INDEX_LAYOUT_XML)
-		//	txtLayoutXml.setText(designSurfaceView.getLayoutXml());
 		
 		eventBus.fireEvent(new CenterPanelTabSelectedEvent(selectedTabIndex));
 	}
@@ -276,8 +272,6 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 					commitChanges();
 					
 					List<RuntimeWidgetWrapper> externalSourceWidgets = new ArrayList<RuntimeWidgetWrapper>();
-					if(Context.isOfflineMode())
-						;//externalSourceWidgets = null;
 
 					previewView.loadForm(formDef,designSurfaceView.getLayoutXml(),getJavaScriptSource(),externalSourceWidgets,true);
 					FormUtil.dlg.hide();
@@ -297,8 +291,8 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 
 		int height = Window.getClientHeight();
 		int width = Window.getClientWidth();
-		designSurfaceView.setWidth(width+OpenXdataConstants.UNITS); //100% //1015"+OpenXdataConstants.UNITS
-		designSurfaceView.setHeight(height+OpenXdataConstants.UNITS); //707"+OpenXdataConstants.UNITS
+		designSurfaceView.setWidth(width+OpenXdataConstants.UNITS);
+		designSurfaceView.setHeight(height+OpenXdataConstants.UNITS);
 		designSurfaceView.setLayoutChangeListener(this);
 
 		scrollPanelDesign.setWidget(designSurfaceView);
@@ -345,8 +339,8 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 	 */
 	private void initPreview(){
 		tabs.add(scrollPanelPreview, constants.preview());
-		previewView.setWidth("100%"); //1015"+OpenXdataConstants.UNITS
-		previewView.setHeight("700"+OpenXdataConstants.UNITS); //707"+OpenXdataConstants.UNITS
+		previewView.setWidth("100%");
+		previewView.setHeight("700"+OpenXdataConstants.UNITS);
 		previewView.setSubmitListener(this);
 		previewView.setDesignSurface(designSurfaceView);
 		previewView.setCenterPanel(this);
@@ -450,14 +444,7 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 	public void loadForm(FormDef formDef, String layoutXml){
 		setFormDef(formDef);
 
-		//previewView.loadForm(formDef,designSurfaceView.getLayoutXml());
-		if(layoutXml == null || layoutXml.trim().length() == 0){
-			//This line is commented out because automatic widget formatting does not work well
-			//when originating from this method call for opening an xforms document.
-			;//designSurfaceView.setLayout(formDef);
-		}
-		else
-			designSurfaceView.setLayoutXml(layoutXml,formDef);
+		designSurfaceView.setLayoutXml(layoutXml,formDef);
 
 		previewView.clearPreview();
 		tabs.selectTab(SELECTED_INDEX_PROPERTIES);
@@ -941,7 +928,6 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 	 * Removes the language xml tab.
 	 */
 	public void removeLanguageTab(){
-		//if(tabs.getTabBar().getTabCount() == 7){
 		if(showLanguageXml){
 			tabs.remove(SELECTED_INDEX_LANGUAGE_XML);
 			
@@ -950,7 +936,6 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 			
 			showLanguageXml = false;
 		}
-		//}
 	}
 
 

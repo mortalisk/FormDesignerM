@@ -1,5 +1,6 @@
 package org.openxdata.designer.client.view;
 
+import com.google.gwt.core.client.GWT;
 import java.util.List;
 
 import org.openxdata.designer.client.controller.IFormSelectionListener;
@@ -11,7 +12,6 @@ import org.openxdata.designer.client.util.StyleUtil;
 import org.openxdata.designer.client.widget.DesignGroupWidget;
 import org.openxdata.designer.client.widget.DesignWidgetWrapper;
 import org.openxdata.sharedlib.client.OpenXdataConstants;
-import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.OptionDef;
 import org.openxdata.sharedlib.client.model.QuestionDef;
@@ -41,6 +41,8 @@ import com.google.gwt.user.client.ui.TabBar;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
+import org.openxdata.designer.client.DesignerMessages;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 
 /**
@@ -51,6 +53,8 @@ import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
  *
  */
 public class WidgetPropertiesView extends Composite implements WidgetSelectionListener, IFormSelectionListener{
+    final FormsConstants formsConstants = GWT.create(FormsConstants.class);
+    final DesignerMessages messages = GWT.create(DesignerMessages.class);
 
 	/** Widget for organising widgets in a tabular format. */
 	private FlexTable table = new FlexTable();
@@ -179,36 +183,36 @@ public class WidgetPropertiesView extends Composite implements WidgetSelectionLi
 		initStyles();
 
 		int index = -1;
-		table.setWidget(++index, 0, new Label(LocaleText.get("text")));
-		table.setWidget(++index, 0, new Label(LocaleText.get("toolTip")));
-		table.setWidget(++index, 0, new Label(LocaleText.get("binding")));
-		table.setWidget(++index, 0, new Label(LocaleText.get("childBinding")));
-		table.setWidget(++index, 0, new Label(LocaleText.get("width")));
-		table.setWidget(++index, 0, new Label(LocaleText.get("height")));
-		table.setWidget(++index, 0, new Label(LocaleText.get("enabled")));
-		table.setWidget(++index, 0, new Label(LocaleText.get("visible")));
-		table.setWidget(++index, 0, new Label(LocaleText.get("left")));
-		table.setWidget(++index, 0, new Label(LocaleText.get("top")));
-		table.setWidget(++index, 0, new Label(LocaleText.get("tabIndex")));
-		table.setWidget(++index, 0, new Label(LocaleText.get("repeat")));
+		table.setWidget(++index, 0, new Label(messages.text()));
+		table.setWidget(++index, 0, new Label(messages.toolTip()));
+		table.setWidget(++index, 0, new Label(formsConstants.binding()));
+		table.setWidget(++index, 0, new Label(messages.childBinding()));
+		table.setWidget(++index, 0, new Label(messages.width()));
+		table.setWidget(++index, 0, new Label(messages.height()));
+		table.setWidget(++index, 0, new Label(formsConstants.enabled()));
+		table.setWidget(++index, 0, new Label(formsConstants.visible()));
+		table.setWidget(++index, 0, new Label(messages.left()));
+		table.setWidget(++index, 0, new Label(messages.top()));
+		table.setWidget(++index, 0, new Label(messages.tabIndex()));
+		table.setWidget(++index, 0, new Label(messages.repeat()));
 
-		table.setWidget(++index, 0, new Label(LocaleText.get("externalSource")));
-		table.setWidget(++index, 0, new Label(LocaleText.get("displayField")));
-		table.setWidget(++index, 0, new Label(LocaleText.get("valueField")));
-		table.setWidget(++index, 0, new Label(LocaleText.get("filterField")));
+		table.setWidget(++index, 0, new Label(messages.externalSource()));
+		table.setWidget(++index, 0, new Label(messages.displayField()));
+		table.setWidget(++index, 0, new Label(messages.valueField()));
+		table.setWidget(++index, 0, new Label(messages.filterField()));
 
-		table.setWidget(++index, 0, new Label(LocaleText.get("fontFamily")));
-		table.setWidget(++index, 0, new Label(LocaleText.get("foreColor")));
-		table.setWidget(++index, 0, new Label(LocaleText.get("fontWeight")));
-		table.setWidget(++index, 0, new Label(LocaleText.get("fontStyle")));
-		table.setWidget(++index, 0, new Label(LocaleText.get("fontSize")));
-		table.setWidget(++index, 0, new Label(LocaleText.get("textDecoration")));
-		table.setWidget(++index, 0, new Label(LocaleText.get("textAlign")));
-		table.setWidget(++index, 0, new Label(LocaleText.get("backgroundColor")));
-		table.setWidget(++index, 0, new Label(LocaleText.get("borderStyle")));
-		table.setWidget(++index, 0, new Label(LocaleText.get("borderWidth")));
-		table.setWidget(++index, 0, new Label(LocaleText.get("borderColor")));
-		table.setWidget(++index, 0, new Label(LocaleText.get("id")));
+		table.setWidget(++index, 0, new Label(messages.fontFamily()));
+		table.setWidget(++index, 0, new Label(messages.foreColor()));
+		table.setWidget(++index, 0, new Label(messages.fontWeight()));
+		table.setWidget(++index, 0, new Label(messages.fontStyle()));
+		table.setWidget(++index, 0, new Label(messages.fontSize()));
+		table.setWidget(++index, 0, new Label(messages.textDecoration()));
+		table.setWidget(++index, 0, new Label(messages.textAlign()));
+		table.setWidget(++index, 0, new Label(messages.backgroundColor()));
+		table.setWidget(++index, 0, new Label(messages.borderStyle()));
+		table.setWidget(++index, 0, new Label(messages.borderWidth()));
+		table.setWidget(++index, 0, new Label(messages.borderColor()));
+		table.setWidget(++index, 0, new Label(messages.id()));
 
 		index = -1;
 		table.setWidget(++index, 1,txtText );

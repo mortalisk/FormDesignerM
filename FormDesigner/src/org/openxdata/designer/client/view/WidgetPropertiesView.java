@@ -42,7 +42,6 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
 import org.openxdata.designer.client.DesignerMessages;
-import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 
 /**
@@ -53,7 +52,6 @@ import org.openxdata.sharedlib.client.locale.FormsConstants;
  *
  */
 public class WidgetPropertiesView extends Composite implements WidgetSelectionListener, IFormSelectionListener{
-    final FormsConstants formsConstants = GWT.create(FormsConstants.class);
     final DesignerMessages messages = GWT.create(DesignerMessages.class);
 
 	/** Widget for organising widgets in a tabular format. */
@@ -185,12 +183,12 @@ public class WidgetPropertiesView extends Composite implements WidgetSelectionLi
 		int index = -1;
 		table.setWidget(++index, 0, new Label(messages.text()));
 		table.setWidget(++index, 0, new Label(messages.toolTip()));
-		table.setWidget(++index, 0, new Label(formsConstants.binding()));
+		table.setWidget(++index, 0, new Label(messages.binding()));
 		table.setWidget(++index, 0, new Label(messages.childBinding()));
 		table.setWidget(++index, 0, new Label(messages.width()));
 		table.setWidget(++index, 0, new Label(messages.height()));
-		table.setWidget(++index, 0, new Label(formsConstants.enabled()));
-		table.setWidget(++index, 0, new Label(formsConstants.visible()));
+		table.setWidget(++index, 0, new Label(messages.enabled()));
+		table.setWidget(++index, 0, new Label(messages.visible()));
 		table.setWidget(++index, 0, new Label(messages.left()));
 		table.setWidget(++index, 0, new Label(messages.top()));
 		table.setWidget(++index, 0, new Label(messages.tabIndex()));

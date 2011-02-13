@@ -186,8 +186,8 @@ public class PropertiesView extends Composite implements IFormSelectionListener,
 		table.setWidget(0, 0, new Label(designerMessages.text()));
 		table.setWidget(1, 0, new Label(formsConstants.helpText()));
 		table.setWidget(2, 0, new Label(formsConstants.type()));
-		table.setWidget(3, 0, new Label(formsConstants.binding()));
-		table.setWidget(4, 0, new Label(formsConstants.visible()));
+		table.setWidget(3, 0, new Label(designerMessages.binding()));
+		table.setWidget(4, 0, new Label(designerMessages.visible()));
 		table.setWidget(5, 0, new Label(formsConstants.enable()));
 		table.setWidget(6, 0, new Label(formsConstants.locked()));
 		table.setWidget(7, 0, new Label(formsConstants.required()));

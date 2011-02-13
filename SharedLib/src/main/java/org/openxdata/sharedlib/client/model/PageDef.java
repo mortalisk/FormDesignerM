@@ -452,15 +452,7 @@ public class PageDef implements Serializable{
 		Node parentDataNode = questionDef.getDataNode() != null ? questionDef.getDataNode().getParentNode() : null;
 		Node parentBindNode = questionDef.getBindNode() != null ? questionDef.getBindNode().getParentNode() : null;
 
-		/*if(controlNode != null && parentNode != null)
-			parentNode.removeChild(questionDef.getControlNode());
-
-		if(questionDef.getDataNode() != null && questionDef.getDataNode().getParentNode() != null)
-			questionDef.getDataNode().getParentNode().removeChild(questionDef.getDataNode());
-		if(questionDef.getBindNode() != null && questionDef.getBindNode().getParentNode() != null)
-			questionDef.getBindNode().getParentNode().removeChild(questionDef.getBindNode());*/
-
-		QuestionDef currentItem; // = parent.getChild(index - 1);
+		QuestionDef currentItem;
 		List<QuestionDef> list = new ArrayList<QuestionDef>();
 
 		while(questions.size() > 0 && questions.size() > index){
@@ -477,7 +469,7 @@ public class PageDef implements Serializable{
 					if(controlNode != null && parentNode != null)
 						parentNode.removeChild(controlNode);
 
-					QuestionDef qtnDef = getNextSavedQuestion(list,i); //(QuestionDef)list.get(i);
+					QuestionDef qtnDef = getNextSavedQuestion(list,i);
 					if(qtnDef.getControlNode() != null){
 						Node sibNode = qtnDef.getControlNode();
 						if(qtnDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT)
@@ -535,12 +527,10 @@ public class PageDef implements Serializable{
 					}
 				}
 
-				//parentDataNode.insertBefore(questionDef.getDataNode(), questionDef.getDataNode());
 				if(questionDef.getBindNode() != null && parentBindNode != null){
 					parentBindNode.removeChild(questionDef.getBindNode());
 					parentBindNode.appendChild(questionDef.getBindNode());
 				}
-				//parentBindNode.insertBefore(questionDef.getBindNode(), questionDef.getBindNode());
 			}
 		}
 	}
@@ -609,10 +599,7 @@ public class PageDef implements Serializable{
 				if(!allQuestionsNew && questionDef.getDataNode() == null)
 					newQuestions.add(questionDef);
 
-				if(questionDef.updateDoc(doc,xformsNode,formDef,formNode,modelNode,(groupNode == null) ? xformsNode : groupNode,true,withData, orgFormVarName)){
-					//for(int k=0; k<i; k++)
-					//moveQuestionUp(questionDef);
-				}
+				questionDef.updateDoc(doc,xformsNode,formDef,formNode,modelNode,(groupNode == null) ? xformsNode : groupNode,true,withData, orgFormVarName);
 			}
 		}
 
@@ -720,12 +707,6 @@ public class PageDef implements Serializable{
 			questionDef.refresh(qtn);
 
 			orderedQtns.add(questionDef); //add the question in the order it was before the refresh.
-
-			/*int index1 = this.getQuestionIndex(qtn.getVariableName());
-			if(index != index1 && index1 != -1 && index < this.getQuestionCount() - 1){
-				this.getQuestions().removeElement(questionDef);
-				this.getQuestions().insertElementAt(questionDef, index);
-			}*/
 		}
 
 		//now add the new questions which have just been added by refresh.
@@ -802,7 +783,6 @@ public class PageDef implements Serializable{
 	 * @param parentLangNode the language parent node for the page language nodes.
 	 */
 	public void buildLanguageNodes(com.google.gwt.xml.client.Document doc, Element parentLangNode){
-		//if(labelNode == null || groupNode == null)
 		if(groupNode == null && questions != null && questions.size() > 0){
 			Element controlNode = ((QuestionDef)questions.elementAt(0)).getControlNode();
 			if(controlNode != null)

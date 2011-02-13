@@ -648,20 +648,12 @@ public class FormDef implements Serializable {
 		}
 	}
 
-	/*private void copyDynamicOptions(HashMap<Integer,DynamicOptionDef>){
-
-	}*/
-
 	/**
 	 * Removes a page from the form.
 	 * 
 	 * @param pageFef the page to remove.
 	 */
 	public void removePage(PageDef pageDef){
-		/*for(int i=0; i<pages.size(); i++){
-			((PageDef)pages.elementAt(i)).removeAllQuestions();
-		}*/
-
 		pageDef.removeAllQuestions(this);
 
 		if(pageDef.getGroupNode() != null)
@@ -781,7 +773,7 @@ public class FormDef implements Serializable {
 		if(pageDef.getGroupNode() != null)
 			xformsNode.removeChild(pageDef.getGroupNode());
 
-		PageDef currentItem; // = parent.getChild(index - 1);
+		PageDef currentItem;
 		List<PageDef> list = new ArrayList<PageDef>();
 
 		while(pages.size() > 0 && pages.size() > index){
@@ -936,10 +928,6 @@ public class FormDef implements Serializable {
 	 * @param dynamicOptionDef the dynamic selection list object.
 	 */
 	private static void removeDynamicInstanceNode(DynamicOptionDef dynamicOptionDef){
-		//dataNode points to <dynamiclist>
-		//dataNode.getParentNode() points to <xf:instance id="theid">
-		//dataNode.getParentNode().getParentNode() points to <xf:model>
-
 		Element dataNode = dynamicOptionDef.getDataNode();
 		if(dataNode != null && dataNode.getParentNode() != null
 				&& dataNode.getParentNode().getParentNode() != null){
@@ -1307,19 +1295,6 @@ public class FormDef implements Serializable {
 		return count;
 	}
 	
-	/**
-	 * Gets the question at a given position in the first page.
-	 * 
-	 * @param index the question position.
-	 * @return the question definition object.
-	 */
-	/*public QuestionDef getQuestionAt(int index){
-		if(pages == null)
-			return null;
-		
-		return  getPageAt(0).getQuestionAt(index);
-	}*/
-
 	public void updateRuleConditionValue(String origValue, String newValue){
 		for(int index = 0; index < getSkipRuleCount(); index++)
 			getSkipRuleAt(index).updateConditionValue(origValue, newValue);

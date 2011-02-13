@@ -211,9 +211,6 @@ public class DynamicOptionDef  implements Serializable{
 	 *                          of options that this object contains.
 	 */
 	public void updateDoc(FormDef formDef, QuestionDef parentQuestionDef){
-		//if(parentToChildOptions == null)
-		//	return;
-
 		if(dataNode == null)
 			ItemsetBuilder.fromDynamicOptionDef2Xform(formDef.getDoc(),this,parentQuestionDef,formDef);
 		else{

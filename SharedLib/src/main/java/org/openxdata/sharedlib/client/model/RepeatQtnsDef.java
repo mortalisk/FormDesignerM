@@ -40,7 +40,6 @@ public class RepeatQtnsDef implements Serializable {
 	
 	/** Copy Constructor. */
 	public RepeatQtnsDef(RepeatQtnsDef repeatQtnsDef) {
-		//setQtnDef(new QuestionDef(repeatQtnsDef.getQtnDef()));
 		setQtnDef(repeatQtnsDef.getQtnDef());
 		copyQuestions(repeatQtnsDef.getQuestions());
 	}
@@ -76,7 +75,6 @@ public class RepeatQtnsDef implements Serializable {
 		if(questions == null)
 			questions = new Vector<QuestionDef>();
 		
-		//qtn.setId((byte)(questions.size()+1)); id should be set somewhere else
 		questions.addElement(qtn);
 	}
 	

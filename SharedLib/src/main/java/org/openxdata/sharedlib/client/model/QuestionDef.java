@@ -303,7 +303,6 @@ public class QuestionDef implements Serializable{
 	}
 
 	public void setDefaultValue(String defaultValue) {
-		//if(defaultValue != null && defaultValue.trim().length() > 0)
 		this.defaultValue = defaultValue;
 		this.answer =  defaultValue;
 	}
@@ -313,7 +312,6 @@ public class QuestionDef implements Serializable{
 	}
 
 	public void setAnswer(String answer) {
-		//if(defaultValue != null && defaultValue.trim().length() > 0)
 		this.answer = answer;
 	}
 
@@ -371,8 +369,6 @@ public class QuestionDef implements Serializable{
 	}
 
 	public List<OptionDef> getOptions() {
-		//if(!(type == QTN_TYPE_LIST_EXCLUSIVE || type == QTN_TYPE_LIST_MULTIPLE))
-		//	throw new Exception("Invalid Operation");
 		return (List<OptionDef>)options;
 	}
 
@@ -398,9 +394,6 @@ public class QuestionDef implements Serializable{
 		this.dataType = dataType;
 
 		if(changed){
-			//if(controlNode != null && (dataType == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || dataType == QuestionDef.QTN_TYPE_LIST_MULTIPLE))
-			//	options = new ArrayList();
-
 			for(int index = 0; index < changeListeners.size(); index++)
 				changeListeners.get(index).onDataTypeChanged(this, dataType);
 		}
@@ -705,7 +698,6 @@ public class QuestionDef implements Serializable{
 		if(node != null){
 			String binding = variableName;
 			if(!binding.startsWith("/"+ formDef.getBinding()+"/") && appendParentBinding){
-				//if(!binding.contains("/"+ formDef.getVariableName()+"/"))
 				if(!binding.startsWith(formDef.getBinding()+"/"))
 					binding = "/"+ formDef.getBinding()+"/" + binding;
 				else{
@@ -781,7 +773,7 @@ public class QuestionDef implements Serializable{
 				if(currentIndex == proposedIndex)
 					continue;
 
-				moveOptionNodesUp(optionDef,getRefOption(optns,newOptns,currentIndex /*currentIndex+1*/));
+				moveOptionNodesUp(optionDef,getRefOption(optns,newOptns,currentIndex));
 			}
 		}
 		else if(getDataType() == QuestionDef.QTN_TYPE_REPEAT){
@@ -859,11 +851,8 @@ public class QuestionDef implements Serializable{
 				DateTimeFormat formatter = (dataType == QuestionDef.QTN_TYPE_DATE_TIME) ? FormUtil.getDateTimeSubmitFormat() : FormUtil.getDateSubmitFormat(); //DateTimeFormat.getFormat(); //new DateTimeFormat("yyyy-MM-dd");
 
 				if(value.contains("now()") || value.contains("date()")
-						||value.contains("getdate()") || value.contains("today()"))
+						||value.contains("getdate()") || value.contains("today()")) {
 					value = formatter.format(new Date());
-				else{
-					//if(formatter != null)
-					//	value = formatter.format(FormUtil.getDateTimeDisplayFormat().parse(value));
 				}
 			}
 		}
@@ -876,7 +865,6 @@ public class QuestionDef implements Serializable{
 					NodeList childNodes = dataNode.getChildNodes();
 					while(childNodes.getLength() > 0)
 						dataNode.removeChild(childNodes.item(0));
-					//Window.alert(variableName+"="+value.length());
 					dataNode.appendChild(doc.createTextNode(value));
 				}
 				else{
@@ -913,10 +901,9 @@ public class QuestionDef implements Serializable{
 
 	private void updateAttributeValue(Element formNode, String value){
 		String xpath = variableName;		
-		Element elem = formNode; //(Element)formNode.getParentNode();
+		Element elem = formNode;
 
 		if(dataType != QuestionDef.QTN_TYPE_REPEAT){
-			//xpath = new String(xpath.toCharArray(), 1, xpath.length()-1);
 			int pos = xpath.lastIndexOf('@'); String attributeName = null;
 			if(pos > 0){
 				attributeName = xpath.substring(pos+1,xpath.length());
@@ -969,7 +956,6 @@ public class QuestionDef implements Serializable{
 				parent.replaceChild(node, dataNode);
 			else
 				parent.replaceChild(node, dataNode);
-			//formDef.getDataNode().replaceChild(node, parent);
 
 			dataNode = node;
 		}
@@ -997,14 +983,12 @@ public class QuestionDef implements Serializable{
 					return; //Some bindings have nested paths which expose some bug here.
 
 				Element parentNode = doc.createElement(parentName);
-				//parentNode = EpihandyXform.getNode(parentNode.toString());
 				Element parent = (Element)dataNode.getParentNode();
 				Element node = (Element)dataNode.cloneNode(true);
 				parentNode.appendChild(node);
 				if(formDef.getBinding().equals(parent.getNodeName()))
 					parent.replaceChild(parentNode, dataNode);
 				else
-					//if(dataNode.getParentNode().getParentNode() != null)
 					formDef.getDataNode().replaceChild(parentNode, dataNode.getParentNode());
 
 				dataNode = node;
@@ -1023,11 +1007,6 @@ public class QuestionDef implements Serializable{
 		if(controlNode != null&& controlNode.getAttribute(XformConstants.ATTRIBUTE_NAME_BIND) != null)
 			controlNode.setAttribute(XformConstants.ATTRIBUTE_NAME_BIND,id);
 		else if(controlNode != null && controlNode.getAttribute(XformConstants.ATTRIBUTE_NAME_REF) != null){
-			/*String ref = controlNode.getAttribute(EpihandyXform.ATTRIBUTE_NAME_REF);
-			if(!ref.contains("/"))
-				controlNode.setAttribute(EpihandyXform.ATTRIBUTE_NAME_REF,variableName);
-			else
-				ref = ref.substring(0,ref.indexOf('/')) + variableName;*/
 			controlNode.setAttribute(XformConstants.ATTRIBUTE_NAME_REF,id);
 		}
 
@@ -1295,12 +1274,6 @@ public class QuestionDef implements Serializable{
 			optionDef.setText(optn.getText());
 
 			orderedOptns.add(optionDef); //add the option in the order it was before the refresh.
-
-			/*int index1 = this.getOptionIndex(optn.getVariableName());
-			if(index != index1 && index1 != -1 && index < this.getOptionCount() - 1){
-				((List)this.getOptions()).remove(optionDef);
-				((List)this.getOptions()).set(index, optionDef);
-			}*/
 		}
 
 		int oldCount = questionDef.getOptionCount();
@@ -1397,7 +1370,7 @@ public class QuestionDef implements Serializable{
 		if(dataNode == null)
 			return;
 
-		String xpath = /*"/"+formDef.getVariableName()+"/"+*/dataNode.getNodeName();
+		String xpath = dataNode.getNodeName();
 		XPathExpression xpls = new XPathExpression(parentDataNode, xpath);
 		Vector<?> result = xpls.getResult();
 		if(result == null || result.size() == 0)
@@ -1495,4 +1468,3 @@ public class QuestionDef implements Serializable{
 		return displayText;
 	}
 }
-

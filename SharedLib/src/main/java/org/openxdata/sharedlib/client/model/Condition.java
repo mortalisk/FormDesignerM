@@ -409,7 +409,6 @@ public class Condition implements Serializable{
 	 * @return true if the condition is true, else false.
 	 */
 	private boolean isDateTrue(QuestionDef qtn, boolean validation){
-		//return value.equals(qtn.getAnswer());
 		try{
 			if(qtn.getAnswer() == null || qtn.getAnswer().trim().length() == 0){
 				if(validation && operator == ModelConstants.OPERATOR_IS_NOT_NULL)
@@ -501,9 +500,6 @@ public class Condition implements Serializable{
 	 * @return true if the condition is true, else false.
 	 */
 	private boolean isListMultipleTrue(QuestionDef qtn, boolean validation){
-		//if(qtn.answerContainsValue(value))
-		//	return true;
-		//return value.equals(qtn.getAnswer());
 		try{
 			if(qtn.getAnswer() == null || qtn.getAnswer().trim().length() == 0){
 				if(validation && operator == ModelConstants.OPERATOR_IS_NOT_NULL)
@@ -515,13 +511,12 @@ public class Condition implements Serializable{
 			}
 			else if(operator == ModelConstants.OPERATOR_IS_NOT_NULL)
 				return true;
-			//return qtn.getAnswer().contains(value);
 
 			switch(operator){
 			case ModelConstants.OPERATOR_EQUAL:
-				return qtn.getAnswer().contains(value); //qtn.getAnswer().equals(value);
+				return qtn.getAnswer().contains(value);
 			case ModelConstants.OPERATOR_NOT_EQUAL:
-				return !qtn.getAnswer().contains(value); //!qtn.getAnswer().equals(value);
+				return !qtn.getAnswer().contains(value);
 			case ModelConstants.OPERATOR_IN_LIST:
 				return value.contains(qtn.getAnswer());
 			case ModelConstants.OPERATOR_NOT_IN_LIST:
@@ -548,7 +543,6 @@ public class Condition implements Serializable{
 
 		try{
 			if(qtn.getAnswer() == null || qtn.getAnswer().trim().length() == 0){
-				//return operator != OpenXdataConstants.OPERATOR_EQUAL;
 				if(validation && operator == ModelConstants.OPERATOR_IS_NOT_NULL)
 					return false;
 				else if(validation || operator == ModelConstants.OPERATOR_NOT_EQUAL || 

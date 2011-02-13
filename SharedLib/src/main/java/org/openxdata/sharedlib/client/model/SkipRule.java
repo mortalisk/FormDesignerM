@@ -65,7 +65,7 @@ public class SkipRule implements Serializable{
 	 * @param action
 	 * @param actionTargets
 	 */
-	public SkipRule(int ruleId, Vector<Condition> conditions, int action, Vector<Integer> actionTargets /*, String name*/) {
+	public SkipRule(int ruleId, Vector<Condition> conditions, int action, Vector<Integer> actionTargets) {
 		setId(ruleId);
 		setConditions(conditions);
 		setAction(action);
@@ -209,14 +209,6 @@ public class SkipRule implements Serializable{
 				index++;
 			}
 		}
-		
-		/*for(int index = 0; index < getActionTargetCount(); index++){
-			Integer id = getActionTargetAt(index);
-			if(id.intValue() == questionDef.getId()){
-				this.actionTargets.remove(id);
-				index++;
-			}
-		}*/
 		
 		removeActionTarget(questionDef);
 	}

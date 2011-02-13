@@ -670,8 +670,7 @@ public class WidgetPropertiesView extends Composite implements WidgetSelectionLi
 	 * Updates the selected widget with the new text as typed by the user.
 	 */
 	private void updateText(){
-		//if(widget != null && txtText.getText().trim().length() > 0) //No setting of empty strings as text.
-		if(widget != null /*&& txtText.getText().length() > 0*/) //We now allow setting of empty strings as text.
+		if(widget != null) //We now allow setting of empty strings as text.
 			widget.setText(txtText.getText());
 	}
 
@@ -878,18 +877,6 @@ public class WidgetPropertiesView extends Composite implements WidgetSelectionLi
 			viewWidget = (DesignGroupView)widget;
 			this.widget = null;
 		}
-
-		//Removed from here for smooth updating where value has not changed
-		/*txtText.setText(null);
-		txtHelpText.setText(null);
-		txtBinding.setText(null);
-		txtHeight.setText(null);
-		txtWidth.setText(null);
-		chkVisible.setValue(false);
-		chkEnabled.setValues(false);
-		sgstBinding.setText(null);
-		txtTop.setText(null);
-		txtLeft.setText(null);*/
 
 		if(this.widget != null){
 			if(this.widget.getWrappedWidget() instanceof TabBar)

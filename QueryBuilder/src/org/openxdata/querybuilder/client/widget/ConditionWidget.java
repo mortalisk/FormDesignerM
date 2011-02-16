@@ -91,7 +91,7 @@ public class ConditionWidget extends Composite implements ItemSelectionListener,
 	 * @see org.openxdata.querybuilder.client.controller.ItemSelectionListener#ontemSelected(java.lang.Object, java.lang.Object)
 	 */
 	public void onItemSelected(Object sender, Object item) {
-		if(sender == fieldWidget /*fieldHyperlink*/){
+		if(sender == fieldWidget){
 			questionDef = (QuestionDef)item;
 			operatorHyperlink.setDataType(questionDef.getDataType());
 			valueWidget.setQuestionDef(questionDef);
@@ -114,10 +114,6 @@ public class ConditionWidget extends Composite implements ItemSelectionListener,
 
 		if(allowFieldSelection && sender != fieldWidget)
 			fieldWidget.stopSelection();
-		/*if(sender == operatorHyperlink){
-			fieldWidget.stopSelection();
-			//operatorHyperlink.startSelection();
-		}*/
 	}
 
 	public ConditionWidget addCondition(Widget sender){
@@ -146,17 +142,6 @@ public class ConditionWidget extends Composite implements ItemSelectionListener,
 
 		return condition;
 	}
-
-	/*public boolean setCondition(Condition condition){
-		this.condition = condition;
-		questionDef = formDef.getQuestion(condition.getQuestionId());
-		if(questionDef == null)
-			return false;
-
-		setQuestionDef(questionDef);
-
-		return true;
-	}*/
 
 	public void setQuestionDef(QuestionDef questionDef){
 		this.questionDef = questionDef;

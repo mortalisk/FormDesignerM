@@ -1,6 +1,6 @@
 package org.openxdata.querybuilder.client.widget;
 
-import org.openxdata.sharedlib.client.locale.LocaleText;
+import com.google.gwt.core.client.GWT;
 import org.openxdata.sharedlib.client.model.ModelConstants;
 
 import com.google.gwt.user.client.Command;
@@ -9,6 +9,7 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.PopupPanel;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 
 /**
@@ -17,11 +18,12 @@ import com.google.gwt.user.client.ui.PopupPanel;
  *
  */
 public class GroupHyperlink extends Anchor {
+    static final FormsConstants i18n = GWT.create(FormsConstants.class);
 
-	public static final String CONDITIONS_OPERATOR_TEXT_ALL = LocaleText.get("all");
-	public static final String CONDITIONS_OPERATOR_TEXT_ANY = LocaleText.get("any");
-	public static final String CONDITIONS_OPERATOR_TEXT_NONE = LocaleText.get("none");
-	public static final String CONDITIONS_OPERATOR_TEXT_NOT_ALL= LocaleText.get("notAll");
+	public static final String CONDITIONS_OPERATOR_TEXT_ALL = i18n.all();
+	public static final String CONDITIONS_OPERATOR_TEXT_ANY = i18n.any();
+	public static final String CONDITIONS_OPERATOR_TEXT_NONE = i18n.none();
+	public static final String CONDITIONS_OPERATOR_TEXT_NOT_ALL = i18n.notAll();
 
 	private PopupPanel popup;
 	private boolean enabled = true;

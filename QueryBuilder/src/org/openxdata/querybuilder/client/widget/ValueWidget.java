@@ -1,11 +1,11 @@
 package org.openxdata.querybuilder.client.widget;
 
+import com.google.gwt.core.client.GWT;
 import java.util.List;
 
 import org.openxdata.querybuilder.client.controller.ItemSelectionListener;
 import org.openxdata.querybuilder.client.util.QueryBuilderUtil;
 import org.openxdata.sharedlib.client.OpenXdataConstants;
-import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.model.DynamicOptionDef;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.ModelConstants;
@@ -41,6 +41,7 @@ import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 
 /**
@@ -49,10 +50,11 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  *
  */
 public class ValueWidget extends Composite implements ItemSelectionListener, CloseHandler<PopupPanel>{
+    final static FormsConstants i18n = GWT.create(FormsConstants.class);
 
 	private static final String EMPTY_VALUE = "_____";
-	private static final String BETWEEN_WIDGET_SEPARATOR = "   "+ LocaleText.get("and") + "   ";
-	private static final String BETWEEN_VALUE_SEPARATOR = " " + LocaleText.get("and") + " ";
+	private static final String BETWEEN_WIDGET_SEPARATOR = "   "+ i18n.and() + "   ";
+	private static final String BETWEEN_VALUE_SEPARATOR = " " + i18n.and() + " ";
 	private static final String LIST_SEPARATOR = " , ";
 
 	private QuestionDef questionDef;

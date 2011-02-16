@@ -1,5 +1,6 @@
 package org.openxdata.querybuilder.client.view;
 
+import com.google.gwt.core.client.GWT;
 import java.util.HashMap;
 
 import org.openxdata.querybuilder.client.controller.ConditionController;
@@ -11,7 +12,6 @@ import org.openxdata.querybuilder.client.widget.AddConditionHyperlink;
 import org.openxdata.querybuilder.client.widget.ConditionActionHyperlink;
 import org.openxdata.querybuilder.client.widget.ConditionWidget;
 import org.openxdata.querybuilder.client.widget.GroupHyperlink;
-import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.model.Condition;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.QuestionDef;
@@ -30,6 +30,7 @@ import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.Node;
 import com.google.gwt.xml.client.NodeList;
 import com.google.gwt.xml.client.XMLParser;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 
 /**
@@ -38,13 +39,14 @@ import com.google.gwt.xml.client.XMLParser;
  *
  */
 public class FilterConditionsView  extends Composite implements ConditionController, FilterRowActionListener{
+    final FormsConstants i18n = GWT.create(FormsConstants.class);
 
 	private static final int HORIZONTAL_SPACING = 5;
 	private static final int VERTICAL_SPACING = 5;
 
 
 	private VerticalPanel verticalPanel = new VerticalPanel();
-	private AddConditionHyperlink addConditionAnchor = new AddConditionHyperlink(LocaleText.get("clickToAddNewCondition"), "#", 1);
+	private AddConditionHyperlink addConditionAnchor = new AddConditionHyperlink(i18n.clickToAddNewCondition(), "#", 1);
 	private GroupHyperlink groupHyperlink = new GroupHyperlink(GroupHyperlink.CONDITIONS_OPERATOR_TEXT_ALL ,1);
 	private ConditionActionHyperlink actionHyperlink;
 
@@ -66,7 +68,7 @@ public class FilterConditionsView  extends Composite implements ConditionControl
 		horizontalPanel.add(actionHyperlink);
 		horizontalPanel.add(new Label("Choose records where")); //LocaleText.get("when")
 		horizontalPanel.add(groupHyperlink);
-		horizontalPanel.add(new Label(LocaleText.get("ofTheFollowingApply")));
+		horizontalPanel.add(new Label(i18n.ofTheFollowingApply()));
 		verticalPanel.add(horizontalPanel);
 
 		addConditionAnchor.addClickHandler(new ClickHandler(){
@@ -115,7 +117,7 @@ public class FilterConditionsView  extends Composite implements ConditionControl
 		if(index == -1)
 			index = verticalPanel.getWidgetIndex(((ConditionActionHyperlink)sender).getAddConditionHyperlink().getParent());
 
-		AddConditionHyperlink addConditionLink = new AddConditionHyperlink(LocaleText.get("clickToAddNewCondition") , "#", depth);
+		AddConditionHyperlink addConditionLink = new AddConditionHyperlink(i18n.clickToAddNewCondition(), "#", depth);
 		ConditionActionHyperlink actionHyperlink = new ConditionActionHyperlink("<>", "#",true,depth,addConditionLink,this);
 
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
@@ -127,7 +129,7 @@ public class FilterConditionsView  extends Composite implements ConditionControl
 
 		GroupHyperlink groupHyperlink = new GroupHyperlink(operator != null ? operator : GroupHyperlink.CONDITIONS_OPERATOR_TEXT_ALL, depth);
 		horizontalPanel.add(groupHyperlink);
-		horizontalPanel.add(new Label(LocaleText.get("ofTheFollowingApply")));
+		horizontalPanel.add(new Label(i18n.ofTheFollowingApply()));
 
 		verticalPanel.insert(horizontalPanel, index);
 

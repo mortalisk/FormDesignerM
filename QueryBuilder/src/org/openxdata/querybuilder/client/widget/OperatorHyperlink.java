@@ -1,8 +1,8 @@
 package org.openxdata.querybuilder.client.widget;
 
+import com.google.gwt.core.client.GWT;
 import org.openxdata.querybuilder.client.controller.ItemSelectionListener;
 import org.openxdata.sharedlib.client.OpenXdataConstants;
-import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.model.ModelConstants;
 import org.openxdata.sharedlib.client.model.QuestionDef;
 
@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
+import org.openxdata.querybuilder.client.Translations;
 
 
 /**
@@ -20,23 +21,24 @@ import com.google.gwt.user.client.ui.ScrollPanel;
  *
  */
 public class OperatorHyperlink extends Hyperlink implements ItemSelectionListener {
+    final static Translations i18n = GWT.create(Translations.class);
 
-	public static final String OP_TEXT_EQUAL = LocaleText.get("isEqualTo");
-	public static final String OP_TEXT_NOT_EQUAL = LocaleText.get("isNotEqual");
-	public static final String OP_TEXT_LESS_THAN = LocaleText.get("isLessThan");
-	public static final String OP_TEXT_LESS_THAN_EQUAL = LocaleText.get("isLessThanOrEqual");
-	public static final String OP_TEXT_GREATER_THAN = LocaleText.get("isGreaterThan");
-	public static final String OP_TEXT_GREATER_THAN_EQUAL = LocaleText.get("isGreaterThanOrEqual");
-	public static final String OP_TEXT_NULL = LocaleText.get("isNull");
-	public static final String OP_TEXT_IN_LIST = LocaleText.get("isInList");
-	public static final String OP_TEXT_NOT_IN_LIST = LocaleText.get("isNotInList");
-	public static final String OP_TEXT_STARTS_WITH = LocaleText.get("startsWith");
-	public static final String OP_TEXT_NOT_START_WITH = LocaleText.get("doesNotStartWith");
-	public static final String OP_TEXT_CONTAINS = LocaleText.get("contains");
-	public static final String OP_TEXT_NOT_CONTAIN = LocaleText.get("doesNotContain");
-	public static final String OP_TEXT_BETWEEN = LocaleText.get("isBetween");
-	public static final String OP_TEXT_NOT_BETWEEN = LocaleText.get("isNotBetween");
-	public static final String OP_TEXT_NOT_NULL = "is not null";//LocaleText.get("?????");
+	public static final String OP_TEXT_EQUAL = i18n.isEqualTo();
+	public static final String OP_TEXT_NOT_EQUAL = i18n.isNotEqual();
+	public static final String OP_TEXT_LESS_THAN = i18n.isLessThan();
+	public static final String OP_TEXT_LESS_THAN_EQUAL = i18n.isLessThanOrEqual();
+	public static final String OP_TEXT_GREATER_THAN = i18n.isGreaterThan();
+	public static final String OP_TEXT_GREATER_THAN_EQUAL = i18n.isGreaterThanOrEqual();
+	public static final String OP_TEXT_NULL = i18n.isNull();
+	public static final String OP_TEXT_IN_LIST = i18n.isInList();
+	public static final String OP_TEXT_NOT_IN_LIST = i18n.isNotInList();
+	public static final String OP_TEXT_STARTS_WITH = i18n.startsWith();
+	public static final String OP_TEXT_NOT_START_WITH = i18n.doesNotStartWith();
+	public static final String OP_TEXT_CONTAINS = i18n.contains();
+	public static final String OP_TEXT_NOT_CONTAIN = i18n.doesNotContain();
+	public static final String OP_TEXT_BETWEEN = i18n.isBetween();
+	public static final String OP_TEXT_NOT_BETWEEN = i18n.isNotBetween();
+	public static final String OP_TEXT_NOT_NULL = i18n.isNotNull();
 
 	private PopupPanel popup;
 	private int dataType =  QuestionDef.QTN_TYPE_TEXT;

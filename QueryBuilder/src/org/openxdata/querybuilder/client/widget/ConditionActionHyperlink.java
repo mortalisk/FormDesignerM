@@ -1,8 +1,8 @@
 package org.openxdata.querybuilder.client.widget;
 
 
+import com.google.gwt.core.client.GWT;
 import org.openxdata.querybuilder.client.controller.FilterRowActionListener;
-import org.openxdata.sharedlib.client.locale.LocaleText;
 
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
@@ -10,6 +10,7 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 
 /**
@@ -18,6 +19,7 @@ import com.google.gwt.user.client.ui.Widget;
  *
  */
 public class ConditionActionHyperlink extends AddConditionHyperlink {
+    final FormsConstants i18n = GWT.create(FormsConstants.class);
 
 	private PopupPanel popup;
 	private FilterRowActionListener actionListener;
@@ -48,11 +50,11 @@ public class ConditionActionHyperlink extends AddConditionHyperlink {
 
 		final Widget w = this;
 		if(allowDelete){
-			menuBar.addItem(LocaleText.get("deleteCondition"),true, new Command(){
+			menuBar.addItem(i18n.deleteCondition(),true, new Command(){
 				public void execute() {popup.hide(); actionListener.deleteCurrentRow(w);}});
 		}
 
-		menuBar.addItem(LocaleText.get("addCondition"),true, new Command(){
+		menuBar.addItem(i18n.addCondition(),true, new Command(){
 			public void execute() {popup.hide(); actionListener.addCondition(w);}});
 
 		menuBar.addItem("Add Bracket",true, new Command(){ //LocaleText.get("???")

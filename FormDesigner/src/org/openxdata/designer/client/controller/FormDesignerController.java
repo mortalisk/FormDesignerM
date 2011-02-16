@@ -1,5 +1,6 @@
 package org.openxdata.designer.client.controller;
 
+import com.google.gwt.core.client.GWT;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +19,6 @@ import org.openxdata.designer.client.xforms.OpenXdataFormBuilder;
 import org.openxdata.designer.client.xforms.XhtmlBuilder;
 import org.openxdata.sharedlib.client.OpenXdataConstants;
 import org.openxdata.sharedlib.client.controller.OpenFileDialogEventListener;
-import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.Locale;
 import org.openxdata.sharedlib.client.model.ModelConstants;
@@ -43,6 +43,8 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.XMLParser;
+import org.openxdata.designer.client.DesignerMessages;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 
 /**
@@ -104,6 +106,8 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 	private Object refreshObject;
 	
 	private boolean saveAsMode = false;
+        
+        final DesignerMessages messages = GWT.create(DesignerMessages.class); 
 
 
 	/**
@@ -249,7 +253,7 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 		final int tempFormId = id;
 		final boolean tempReadonly = readonly;
 
-		FormUtil.dlg.setText(LocaleText.get("openingForm"));
+		FormUtil.dlg.setText(messages.openingForm());
 		FormUtil.dlg.center();
 
 		DeferredCommand.addCommand(new Command(){
@@ -322,7 +326,7 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 	public void openFormLayoutDeffered(boolean selectTabs) {
 		final boolean selectTbs = selectTabs;
 
-		FormUtil.dlg.setText(LocaleText.get("openingFormLayout"));
+		FormUtil.dlg.setText(messages.openingFormLayout());
 		FormUtil.dlg.center();
 
 		DeferredCommand.addCommand(new Command(){
@@ -357,7 +361,7 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 		
 		final FormDef obj = leftPanel.getSelectedForm();
 		if(obj == null){
-			Window.alert(LocaleText.get("selectSaveItem"));
+			Window.alert(messages.selectSaveItem());
 			return;
 		}
 		
@@ -374,7 +378,7 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 			return;
 		}
 
-		FormUtil.dlg.setText(LocaleText.get("savingForm"));
+		FormUtil.dlg.setText(messages.savingForm());
 		FormUtil.dlg.center();
 
 		DeferredCommand.addCommand(new Command(){
@@ -450,7 +454,7 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 	 * @see org.openxdata.formtools.client.controller.IFormDesignerController#saveFormLayout()
 	 */
 	public void saveFormLayout() {
-		FormUtil.dlg.setText(LocaleText.get("savingFormLayout"));
+		FormUtil.dlg.setText(messages.savingFormLayout());
 		FormUtil.dlg.center();
 
 		DeferredCommand.addCommand(new Command(){
@@ -615,7 +619,7 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 				Context.getCurrentMode() == Context.MODE_XFORMS_SOURCE){ //TODO This controller should not know about LeftPanel implementation details.
 
 			if(formId != null){
-				FormUtil.dlg.setText(LocaleText.get("refreshingForm"));
+				FormUtil.dlg.setText(messages.refreshingForm());
 				FormUtil.dlg.center();
 
 				DeferredCommand.addCommand(new Command(){
@@ -649,7 +653,7 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 	 * Loads a form from the server.
 	 */
 	private void loadForm(){
-		FormUtil.dlg.setText(LocaleText.get("openingForm"));
+		FormUtil.dlg.setText(messages.openingForm());
 		FormUtil.dlg.center();
 
 		DeferredCommand.addCommand(new Command(){
@@ -673,7 +677,7 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 							String xml = response.getText();
 							if(xml == null || xml.length() == 0){
 								FormUtil.dlg.hide();
-								Window.alert(LocaleText.get("noDataFound"));
+								Window.alert(messages.noDataFound());
 								return;
 							}
 
@@ -779,7 +783,7 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 					}
 
 					FormUtil.dlg.hide();
-					Window.alert(LocaleText.get("formSaveSuccess"));
+					Window.alert(messages.formSaveSuccess());
 				}
 
 				public void onError(Request request, Throwable exception){
@@ -810,7 +814,7 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 					}
 
 					FormUtil.dlg.hide();
-					Window.alert(LocaleText.get("formSaveSuccess"));
+					Window.alert(messages.formSaveSuccess());
 				}
 
 				public void onError(Request request, Throwable exception){
@@ -850,7 +854,7 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 
 					String xml = response.getText();
 					if(xml == null || xml.length() == 0){
-						Window.alert(LocaleText.get("noDataFound"));
+						Window.alert(messages.noDataFound());
 						return;
 					}
 
@@ -872,7 +876,7 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 	 * Refreshes the selected from in a deferred command.
 	 */
 	private void refreshFormDeffered(){
-		FormUtil.dlg.setText(LocaleText.get("refreshingForm"));
+		FormUtil.dlg.setText(messages.refreshingForm());
 		FormUtil.dlg.center();
 
 		DeferredCommand.addCommand(new Command(){
@@ -1001,7 +1005,7 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 				fileName = formDef.getName();
 
 			if(centerPanel.isInLayoutMode())
-				fileName += "-" + LocaleText.get("layout");
+				fileName += "-" + messages.layout();
 
 			SaveFileDialog dlg = new SaveFileDialog(FormUtil.getFileSaveUrl(),data,fileName);
 			dlg.center();
@@ -1016,7 +1020,7 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 	 */
 	public void openLanguageText(){
 
-		FormUtil.dlg.setText(LocaleText.get("translatingFormLanguage"));
+		FormUtil.dlg.setText(messages.translatingFormLanguage());
 		FormUtil.dlg.center();
 
 		DeferredCommand.addCommand(new Command(){
@@ -1106,7 +1110,7 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 	public void saveLanguageTextDeffered(boolean selectTab){
 		final boolean selTab = selectTab;
 
-		FormUtil.dlg.setText(LocaleText.get("savingLanguageText"));
+		FormUtil.dlg.setText(messages.savingLanguageText());
 		FormUtil.dlg.center();
 
 		DeferredCommand.addCommand(new Command(){
@@ -1165,7 +1169,7 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 		//We need to have saved a form in order to translate it.
 		if(formDef.getDoc() == null)
 			saveForm();
-		else if(!Window.confirm(LocaleText.get("localeChangePrompt")))
+		else if(!Window.confirm(messages.localeChangePrompt()))
 			return false;
 
 		//We need to do the translation in a differed command such that it happens after form saving,
@@ -1257,11 +1261,11 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 
 		final Object obj = leftPanel.getSelectedForm();
 		if(obj == null){
-			Window.alert(LocaleText.get("selectSaveItem"));
+			Window.alert(messages.selectSaveItem());
 			return;
 		}
 
-		FormUtil.dlg.setText(LocaleText.get("savingForm"));
+		FormUtil.dlg.setText(messages.savingForm());
 		FormUtil.dlg.center();
 
 		DeferredCommand.addCommand(new Command(){
@@ -1289,7 +1293,7 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 		DeferredCommand.addCommand(new Command(){
 			public void execute() {
 
-				FormUtil.dlg.setText(LocaleText.get("savingForm"));
+				FormUtil.dlg.setText(messages.savingForm());
 				FormUtil.dlg.center();
 
 				DeferredCommand.addCommand(new Command(){

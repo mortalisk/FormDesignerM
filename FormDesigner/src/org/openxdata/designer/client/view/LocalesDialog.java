@@ -1,10 +1,10 @@
 package org.openxdata.designer.client.view;
 
+import com.google.gwt.core.client.GWT;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.openxdata.designer.client.Context;
-import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.model.Locale;
 import org.openxdata.sharedlib.client.util.FormUtil;
 
@@ -25,6 +25,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 
 /**
@@ -34,13 +35,15 @@ import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
  *
  */
 public class LocalesDialog  extends DialogBox {
+    
+        private final FormsConstants i18n = GWT.create(FormsConstants.class);
 
 	private FlexTable table = new FlexTable();
 	
 	/** Button to add a new language. */
-	private Button btnAdd = new Button(LocaleText.get("addNew"));
+	private Button btnAdd = new Button(i18n.addNew());
 	
-	
+        
 	/**
 	 * Creates a new instance of the locale dialog box.
 	 */
@@ -67,7 +70,7 @@ public class LocalesDialog  extends DialogBox {
 		FormUtil.maximizeWidget(horzPanel);
 		panel.add(horzPanel);
 		
-		Button btn = new Button(LocaleText.get("save"), new ClickHandler() {
+		Button btn = new Button(i18n.save(), new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				save();
 				hide();
@@ -77,7 +80,7 @@ public class LocalesDialog  extends DialogBox {
 		horzPanel.add(btn);
 		horzPanel.setCellHorizontalAlignment(btn, HasAlignment.ALIGN_LEFT);
 		
-		btn = new Button(LocaleText.get("cancel"), new ClickHandler() {
+		btn = new Button(i18n.cancel(), new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				hide();
 			}
@@ -86,7 +89,7 @@ public class LocalesDialog  extends DialogBox {
 		horzPanel.add(btn);
 		horzPanel.setCellHorizontalAlignment(btn, HasAlignment.ALIGN_RIGHT);
 
-		setText(LocaleText.get("languages"));
+		setText(i18n.languages());
 		
 		loadLocales();
 		
@@ -176,7 +179,7 @@ public class LocalesDialog  extends DialogBox {
 	
 	
 	private void deleteLocale(Widget widget){		
-		if(!Window.confirm("Do you really want to delete the " + getLanguageName(widget) + " " + LocaleText.get("language") + "?"))
+		if(!Window.confirm("Do you really want to delete the " + getLanguageName(widget) + " " + i18n.language() + "?"))
 			return;
 		
 		table.removeRow(getWidgetIndex(widget));

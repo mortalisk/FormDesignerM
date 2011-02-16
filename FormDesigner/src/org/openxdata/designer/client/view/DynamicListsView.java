@@ -1,5 +1,6 @@
 package org.openxdata.designer.client.view;
 
+import com.google.gwt.core.client.GWT;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -10,7 +11,6 @@ import org.openxdata.designer.client.FormDesignerWidget;
 import org.openxdata.designer.client.controller.ItemSelectionListener;
 import org.openxdata.designer.client.util.FormDesignerUtil;
 import org.openxdata.designer.client.widget.skiprule.FieldWidget;
-import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.model.DynamicOptionDef;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.OptionDef;
@@ -41,6 +41,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
 import com.google.gwt.xml.client.Node;
+import org.openxdata.designer.client.DesignerMessages;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 
 /**
@@ -51,14 +53,17 @@ import com.google.gwt.xml.client.Node;
  */
 public class DynamicListsView extends Composite implements ItemSelectionListener, ClickHandler{
 
-	/** The main or root widget. */
+	private final FormsConstants i18n = GWT.create(FormsConstants.class);
+        private final DesignerMessages messages = GWT.create(DesignerMessages.class);
+    
+        /** The main or root widget. */
 	private VerticalPanel verticalPanel = new VerticalPanel();
 
 	/** Widget to display the "Values for" text. */
-	private Label lblValuesFor = new Label(LocaleText.get("valuesFor"));
+	private Label lblValuesFor = new Label(i18n.valuesFor());
 
 	/** Widget to display the is equal to text. */
-	private Label lblEqual = new Label(" "+LocaleText.get("isEqualTo"));
+	private Label lblEqual = new Label(" "+i18n.isEqualTo());
 
 	/** The widget for selection of the parent questions.
 	 * The parent question is the one on which the single select dynamic question depends.
@@ -72,7 +77,7 @@ public class DynamicListsView extends Composite implements ItemSelectionListener
 	private FlexTable table = new FlexTable();
 
 	/** Button to add a new dynamic selection list option. */
-	private Button btnAdd = new Button(LocaleText.get("addNew"));
+	private Button btnAdd = new Button(i18n.addNew());
 
 	/** The form definition object that this dynamic list belongs to. */
 	private FormDef formDef;
@@ -132,9 +137,9 @@ public class DynamicListsView extends Composite implements ItemSelectionListener
 		btnAdd.addClickHandler(this);
 
 		table.setStyleName("cw-FlexTable");
-		table.setWidget(0, 0,new Label(LocaleText.get("text")));
-		table.setWidget(0, 1,new Label(LocaleText.get("binding")));
-		table.setWidget(0, 2,new Label(LocaleText.get("action")));
+		table.setWidget(0, 0,new Label(i18n.text()));
+		table.setWidget(0, 1,new Label(messages.binding()));
+		table.setWidget(0, 2,new Label(i18n.action()));
 		table.getFlexCellFormatter().setColSpan(0, 2, 3);
 
 		table.setWidth("100%");
@@ -164,7 +169,7 @@ public class DynamicListsView extends Composite implements ItemSelectionListener
 		clear();
 
 		if(questionDef == null){			
-			lblValuesFor.setText(LocaleText.get("valuesFor"));
+			lblValuesFor.setText(i18n.valuesFor());
 		}
 		
 		if(questionDef != null){
@@ -178,7 +183,7 @@ public class DynamicListsView extends Composite implements ItemSelectionListener
 			else
 				formDef = ((PageDef)((QuestionDef)questionDef.getParent()).getParent()).getParent();
 
-			lblValuesFor.setText(LocaleText.get("valuesFor") + questionDef.getDisplayText() + "  "+LocaleText.get("whenAnswerFor"));
+			lblValuesFor.setText(i18n.valuesFor() + questionDef.getDisplayText() + "  "+i18n.whenAnswerFor());
 		}
 		
 		this.questionDef = questionDef;
@@ -220,7 +225,7 @@ public class DynamicListsView extends Composite implements ItemSelectionListener
 			updateDynamicLists();
 
 		questionDef = null;
-		lblValuesFor.setText(LocaleText.get("valuesFor"));
+		lblValuesFor.setText(i18n.valuesFor());
 		lbOption.clear();
 
 		while(verticalPanel.getWidgetCount() > 4)
@@ -417,7 +422,7 @@ public class DynamicListsView extends Composite implements ItemSelectionListener
 				//Delete button
 				if(sender == table.getWidget(row, 2)){
 					OptionDef optionDef = optionList.get(row-1);
-					if(!Window.confirm(LocaleText.get("removeRowPrompt") + " [" + optionDef.getText() + " - " + optionDef.getVariableName() + "]"))
+					if(!Window.confirm(i18n.removeRowPrompt() + " [" + optionDef.getText() + " - " + optionDef.getVariableName() + "]"))
 						return;
 
 					table.removeRow(row);
@@ -493,17 +498,17 @@ public class DynamicListsView extends Composite implements ItemSelectionListener
 		txtBinding.setEnabled(!Context.isStructureReadOnly());
 
 		PushButton button = new PushButton(FormUtil.createImage(FormDesignerWidget.images.delete()));
-		button.setTitle(LocaleText.get("deleteItem"));
+		button.setTitle(i18n.deleteItem());
 		button.addClickHandler(this);
 		table.setWidget(row, 2,button);
 
 		button = new PushButton(FormUtil.createImage(FormDesignerWidget.images.moveup()));
-		button.setTitle(LocaleText.get("moveUp"));
+		button.setTitle(i18n.moveUp());
 		button.addClickHandler(this);
 		table.setWidget(row, 3,button);
 
 		button = new PushButton(FormUtil.createImage(FormDesignerWidget.images.movedown()));
-		button.setTitle(LocaleText.get("moveDown"));
+		button.setTitle(i18n.moveDown());
 		button.addClickHandler(this);
 		table.setWidget(row, 4,button);
 

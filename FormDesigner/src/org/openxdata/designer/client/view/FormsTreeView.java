@@ -1,5 +1,6 @@
 package org.openxdata.designer.client.view;
 
+import com.google.gwt.core.client.GWT;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +20,6 @@ import org.openxdata.designer.client.util.FormDesignerUtil;
 import org.openxdata.designer.client.vew.widget.images.FormDesignerImages;
 import org.openxdata.designer.client.widget.CompositeTreeItem;
 import org.openxdata.designer.client.widget.TreeItemWidget;
-import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.ModelConstants;
 import org.openxdata.sharedlib.client.model.OptionDef;
@@ -45,6 +45,7 @@ import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 
 /**
@@ -55,6 +56,8 @@ import com.google.gwt.user.client.ui.TreeItem;
  */
 public class FormsTreeView extends Composite implements SelectionHandler<TreeItem>,IFormChangeListener,IFormActionListener {
 
+        final FormsConstants i18n = GWT.create(FormsConstants.class);
+        
 	/** The main or root widget for displaying the list of forms and their contents
 	 * in a tree view.
 	 */
@@ -106,7 +109,7 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 	 * @param formSelectionListener the form item selection events listener.
 	 */
 	public FormsTreeView(FormDesignerImages images, IFormSelectionListener formSelectionListener) {
-
+            
 		this.images = images;
 		this.formSelectionListeners.add(formSelectionListener);
 
@@ -177,40 +180,40 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 		popup = new PopupPanel(true,true);
 
 		MenuBar menuBar = new MenuBar(true);
-		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.add(),LocaleText.get("addNew")),true, new Command(){
+		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.add(),i18n.addNew()),true, new Command(){
 			public void execute() {popup.hide(); addNewItem();}});
 
 		menuBar.addSeparator();		  
-		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),LocaleText.get("addNewChild")),true, new Command(){
+		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.addchild(),i18n.addNewChild()),true, new Command(){
 			public void execute() {popup.hide(); addNewChildItem();}});
 
 		menuBar.addSeparator();		  
-		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.delete(),LocaleText.get("deleteItem")),true,new Command(){
+		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.delete(),i18n.deleteItem()),true,new Command(){
 			public void execute() {popup.hide(); deleteSelectedItem();}});
 
 		menuBar.addSeparator();		  
-		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.moveup(),LocaleText.get("moveUp")),true, new Command(){
+		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.moveup(),i18n.moveUp()),true, new Command(){
 			public void execute() {popup.hide(); moveItemUp();}});
 
-		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.movedown(),LocaleText.get("moveDown")),true, new Command(){
+		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.movedown(),i18n.moveDown()),true, new Command(){
 			public void execute() {popup.hide(); moveItemDown();}});
 
 		menuBar.addSeparator();		  
-		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.cut(),LocaleText.get("cut")),true,new Command(){
+		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.cut(),i18n.cut()),true,new Command(){
 			public void execute() {popup.hide(); cutItem();}});
 
-		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.copy(),LocaleText.get("copy")),true,new Command(){
+		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.copy(),i18n.copy()),true,new Command(){
 			public void execute() {popup.hide(); copyItem();}});
 
-		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.paste(),LocaleText.get("paste")),true,new Command(){
+		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.paste(),i18n.paste()),true,new Command(){
 			public void execute() {popup.hide(); pasteItem();}});
 
 		menuBar.addSeparator();		  
-		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.save(),LocaleText.get("save")),true,new Command(){
+		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.save(),i18n.save()),true,new Command(){
 			public void execute() {popup.hide(); saveItem();}});
 
 		menuBar.addSeparator();		  
-		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.refresh(),LocaleText.get("refresh")),true,new Command(){
+		menuBar.addItem(FormDesignerUtil.createHeaderHTML(images.refresh(),i18n.refresh()),true,new Command(){
 			public void execute() {popup.hide(); refreshItem();}});
 
 		popup.setWidget(menuBar);
@@ -444,14 +447,14 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 	public void deleteSelectedItem(){
 		TreeItem item = tree.getSelectedItem();
 		if(item == null){
-			Window.alert(LocaleText.get("selectDeleteItem"));
+			Window.alert(i18n.selectDeleteItem());
 			return;
 		}
 
 		if(inReadOnlyMode() && !(item.getUserObject() instanceof FormDef))
 			return;
 
-		if(!inCutMode && !Window.confirm(LocaleText.get("deleteTreeItemPrompt")))
+		if(!inCutMode && !Window.confirm(i18n.deleteTreeItemPrompt()))
 			return;
 
 		deleteItem(item);
@@ -562,21 +565,21 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 			Object userObj = item.getUserObject();
 			if(userObj instanceof QuestionDef){
 				int id = ++nextQuestionId;
-				QuestionDef questionDef = new QuestionDef(id,LocaleText.get("question")+id,QuestionDef.QTN_TYPE_TEXT,"question"+id,item.getParentItem().getUserObject());
+				QuestionDef questionDef = new QuestionDef(id,i18n.question()+id,QuestionDef.QTN_TYPE_TEXT,"question"+id,item.getParentItem().getUserObject());
 				item = addImageItem(item.getParentItem(), questionDef.getText(), images.lookup(),questionDef,questionDef.getHelpText());
 				addFormDefItem(questionDef,item.getParentItem());
 				tree.setSelectedItem(item);
 			}
 			else if(userObj instanceof OptionDef){
 				int id = ++nextOptionId;
-				OptionDef optionDef = new OptionDef(id,LocaleText.get("option")+id,"option"+id,(QuestionDef)item.getParentItem().getUserObject());
+				OptionDef optionDef = new OptionDef(id,i18n.option()+id,"option"+id,(QuestionDef)item.getParentItem().getUserObject());
 				item = addImageItem(item.getParentItem(), optionDef.getText(), images.markRead(),optionDef,null);
 				addFormDefItem(optionDef,item.getParentItem());
 				tree.setSelectedItem(item);	
 			}
 			else if(userObj instanceof PageDef){
 				int id = ++nextPageId;
-				PageDef pageDef = new PageDef(LocaleText.get("page")+id,id,null,(FormDef)item.getParentItem().getUserObject());
+				PageDef pageDef = new PageDef(i18n.page()+id,id,null,(FormDef)item.getParentItem().getUserObject());
 				item = addImageItem(item.getParentItem(), pageDef.getName(), images.drafts(),pageDef,null);
 				addFormDefItem(pageDef,item.getParentItem());
 				tree.setSelectedItem(item);
@@ -624,13 +627,13 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 				
 		// first add the page
 		int pageId = ++nextPageId;
-		PageDef pageDef = new PageDef(LocaleText.get("page") + pageId, pageId, null, formDef);
+		PageDef pageDef = new PageDef(i18n.page() + pageId, pageId, null, formDef);
 		TreeItem pageDefItem = addImageItem(parentItem, pageDef.getName(), images.drafts(), pageDef, null);
 		addFormDefItem(pageDef, parentItem);
 		
 		// now the question
 		int quesId = ++nextQuestionId;
-		QuestionDef questionDef = new QuestionDef(quesId, LocaleText.get("question") + quesId, QuestionDef.QTN_TYPE_TEXT, "question" + quesId, pageDef);
+		QuestionDef questionDef = new QuestionDef(quesId, i18n.question() + quesId, QuestionDef.QTN_TYPE_TEXT, "question" + quesId, pageDef);
 		TreeItem quesDefItem = addImageItem(pageDefItem, questionDef.getText(), images.lookup(), questionDef, questionDef.getHelpText());
 		addFormDefItem(questionDef, pageDefItem);
 		tree.setSelectedItem(quesDefItem);
@@ -650,7 +653,7 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 			Object userObj = item.getUserObject();
 			if(userObj instanceof QuestionDef){
 				int id = ++nextQuestionId;
-				QuestionDef questionDef = new QuestionDef(id,LocaleText.get("question")+id,QuestionDef.QTN_TYPE_TEXT,"question"+id,item.getParentItem().getUserObject());
+				QuestionDef questionDef = new QuestionDef(id,i18n.question()+id,QuestionDef.QTN_TYPE_TEXT,"question"+id,item.getParentItem().getUserObject());
 				questionDef.setDataType(dataType);
 				item = addImageItem(item.getParentItem(), questionDef.getText(), images.lookup(),questionDef,questionDef.getHelpText());
 				addFormDefItem(questionDef,item.getParentItem());
@@ -662,7 +665,7 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 			}
 			else if(userObj instanceof OptionDef){
 				int id = ++nextQuestionId;
-				QuestionDef questionDef = new QuestionDef(id,LocaleText.get("question")+id,QuestionDef.QTN_TYPE_TEXT,"question"+id,item.getParentItem().getParentItem().getUserObject());
+				QuestionDef questionDef = new QuestionDef(id,i18n.question()+id,QuestionDef.QTN_TYPE_TEXT,"question"+id,item.getParentItem().getParentItem().getUserObject());
 				questionDef.setDataType(dataType);
 				item = addImageItem(item.getParentItem().getParentItem(), questionDef.getText(), images.lookup(),questionDef,questionDef.getHelpText());
 				addFormDefItem(questionDef,item.getParentItem());
@@ -674,7 +677,7 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 			}
 			else if(userObj instanceof PageDef){
 				int id = ++nextQuestionId;
-				QuestionDef questionDef = new QuestionDef(id,LocaleText.get("question")+id,QuestionDef.QTN_TYPE_TEXT,"question"+id,item.getUserObject());
+				QuestionDef questionDef = new QuestionDef(id,i18n.question()+id,QuestionDef.QTN_TYPE_TEXT,"question"+id,item.getUserObject());
 				questionDef.setDataType(dataType);
 				item = addImageItem(item, questionDef.getText(), images.lookup(),questionDef,questionDef.getHelpText());
 				addFormDefItem(questionDef,item.getParentItem());
@@ -694,7 +697,7 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 				TreeItem parentItem = item.getChild(0);
 				
 				int id = ++nextQuestionId;
-				QuestionDef questionDef = new QuestionDef(id,LocaleText.get("question")+id,QuestionDef.QTN_TYPE_TEXT,"question"+id,parentItem.getUserObject());
+				QuestionDef questionDef = new QuestionDef(id,i18n.question()+id,QuestionDef.QTN_TYPE_TEXT,"question"+id,parentItem.getUserObject());
 				questionDef.setDataType(dataType);
 				item = addImageItem(parentItem, questionDef.getText(), images.lookup(),questionDef,questionDef.getHelpText());
 				addFormDefItem(questionDef,item.getParentItem());
@@ -722,7 +725,7 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 	
 	private void addNewOptionDef(QuestionDef questionDef, TreeItem parentItem){
 		int id = ++nextOptionId;
-		OptionDef optionDef = new OptionDef(id,LocaleText.get("option")+id,"option"+id,questionDef);
+		OptionDef optionDef = new OptionDef(id,i18n.option()+id,"option"+id,questionDef);
 		addImageItem(parentItem, optionDef.getText(), images.markRead(),optionDef,null);
 		addFormDefItem(optionDef,parentItem);
 		
@@ -747,7 +750,7 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 
 	public void addNewForm(){
 		int id = ++nextFormId;
-		addNewForm(LocaleText.get("newForm")+id,"new_form"+id,id);
+		addNewForm(i18n.newForm()+id,"new_form"+id,id);
 
 		//Automatically add a new page
 		addNewChildItem(false);
@@ -798,7 +801,7 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 				(userObj instanceof QuestionDef && ((QuestionDef)userObj).getDataType() ==  QuestionDef.QTN_TYPE_REPEAT) ){
 
 			int id = ++nextQuestionId;
-			QuestionDef questionDef = new QuestionDef(id,LocaleText.get("question")+id,QuestionDef.QTN_TYPE_TEXT,"question"+id,userObj);
+			QuestionDef questionDef = new QuestionDef(id,i18n.question()+id,QuestionDef.QTN_TYPE_TEXT,"question"+id,userObj);
 			item = addImageItem(item, questionDef.getText(), images.lookup(),questionDef,questionDef.getHelpText());
 			addFormDefItem(questionDef,item.getParentItem());
 			tree.setSelectedItem(item);
@@ -809,7 +812,7 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 						((QuestionDef)userObj).getDataType() ==  QuestionDef.QTN_TYPE_LIST_MULTIPLE ) ){
 
 			int id = ++nextOptionId;
-			OptionDef optionDef = new OptionDef(id,LocaleText.get("option")+id,"option"+id,(QuestionDef)userObj);
+			OptionDef optionDef = new OptionDef(id,i18n.option()+id,"option"+id,(QuestionDef)userObj);
 			item = addImageItem(item, optionDef.getText(), images.markRead(),optionDef,null);
 			addFormDefItem(optionDef,item.getParentItem());
 			tree.setSelectedItem(item);
@@ -817,7 +820,7 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 		}
 		else if(userObj instanceof FormDef){
 			int id = ++nextPageId;
-			PageDef pageDef = new PageDef(LocaleText.get("page")+id,id,null,(FormDef)userObj);
+			PageDef pageDef = new PageDef(i18n.page()+id,id,null,(FormDef)userObj);
 			item = addImageItem(item, pageDef.getName(), images.drafts(),pageDef,null);
 			addFormDefItem(pageDef,item.getParentItem());
 			tree.setSelectedItem(item);
@@ -1196,7 +1199,7 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 			if(pageNos.containsKey(pageNo)){
 				tree.setSelectedItem(child);
 				tree.ensureSelectedItemVisible();
-				Window.alert(LocaleText.get("selectedPage") + pageDef.getName() +LocaleText.get("shouldNotSharePageBinding") + pageNos.get(pageNo)+ "]");
+				Window.alert(i18n.selectedPage() + pageDef.getName() +i18n.shouldNotSharePageBinding() + pageNos.get(pageNo)+ "]");
 				return false;
 			}
 			else
@@ -1218,7 +1221,7 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 			if(bindings.containsKey(variableName) /*&& questionDef.getParent() == bindings.get(variableName).getParent()*/){
 				tree.setSelectedItem(child);
 				tree.ensureSelectedItemVisible();
-				Window.alert(LocaleText.get("selectedQuestion") + questionDef.getText()+LocaleText.get("shouldNotShareQuestionBinding") + bindings.get(variableName).getDisplayText()+ "]");
+				Window.alert(i18n.selectedQuestion() + questionDef.getText()+i18n.shouldNotShareQuestionBinding() + bindings.get(variableName).getDisplayText()+ "]");
 				return false;
 			}
 			else
@@ -1249,7 +1252,7 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 			if(bindings.containsKey(variableName)){
 				tree.setSelectedItem(child);
 				tree.ensureSelectedItemVisible();
-				Window.alert(LocaleText.get("selectedOption") + optionDef.getText()+LocaleText.get("shouldNotShareOptionBinding") + bindings.get(variableName)+ "]");
+				Window.alert(i18n.selectedOption() + optionDef.getText()+i18n.shouldNotShareOptionBinding() + bindings.get(variableName)+ "]");
 				return false;
 			}
 			else

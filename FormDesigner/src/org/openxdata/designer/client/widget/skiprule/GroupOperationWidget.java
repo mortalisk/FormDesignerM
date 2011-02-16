@@ -1,11 +1,12 @@
 package org.openxdata.designer.client.widget.skiprule;
 
-import org.openxdata.sharedlib.client.locale.LocaleText;
+import com.google.gwt.core.client.GWT;
 import org.openxdata.sharedlib.client.model.ModelConstants;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasEnabled;
 import com.google.gwt.user.client.ui.ListBox;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 /**
  * Widget used to display the conditions grouping operators (all,any,none)
@@ -15,15 +16,17 @@ import com.google.gwt.user.client.ui.ListBox;
  *
  */
 public class GroupOperationWidget extends Composite implements HasEnabled {
+    
+        final static FormsConstants i18n = GWT.create(FormsConstants.class);
 
 	/** The conditions grouping operator text: all */
-	public static final String CONDITIONS_OPERATOR_TEXT_ALL = LocaleText.get("all");
+	public static final String CONDITIONS_OPERATOR_TEXT_ALL = i18n.all();
 	
 	/** The conditions grouping operator text: any */
-	public static final String CONDITIONS_OPERATOR_TEXT_ANY = LocaleText.get("any");
+	public static final String CONDITIONS_OPERATOR_TEXT_ANY = i18n.any();
 	
 	/** The conditions grouping operator text: none */
-	public static final String CONDITIONS_OPERATOR_TEXT_NONE = LocaleText.get("none");
+	public static final String CONDITIONS_OPERATOR_TEXT_NONE = i18n.none();
 	
 	/** ListBox that holds the grouping operators */
 	private final ListBox groupingOptions = new ListBox();

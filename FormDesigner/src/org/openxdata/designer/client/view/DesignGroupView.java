@@ -19,7 +19,6 @@ import org.openxdata.designer.client.widget.DesignGroupWidget;
 import org.openxdata.designer.client.widget.DesignWidgetWrapper;
 import org.openxdata.designer.client.widget.PaletteWidget;
 import org.openxdata.sharedlib.client.OpenXdataConstants;
-import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.model.OptionDef;
 import org.openxdata.sharedlib.client.model.QuestionDef;
 import org.openxdata.sharedlib.client.util.FormUtil;
@@ -31,6 +30,7 @@ import org.openxdata.sharedlib.client.widget.TextBoxWidget;
 import org.openxdata.sharedlib.client.widget.TimeWidget;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
@@ -51,6 +51,8 @@ import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import org.openxdata.designer.client.DesignerMessages;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 
 /**
@@ -60,6 +62,9 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class DesignGroupView extends Composite implements WidgetSelectionListener,IWidgetPopupMenuListener,DragDropListener,WidgetPropertyChangeListener{
 
+        private final FormsConstants i18n = GWT.create(FormsConstants.class);
+        private final DesignerMessages messages = GWT.create(DesignerMessages.class);
+	
 	protected static final int MOVE_LEFT = 1;
 	protected static final int MOVE_RIGHT = 2;
 	protected static final int MOVE_UP = 3;
@@ -338,7 +343,7 @@ public class DesignGroupView extends Composite implements WidgetSelectionListene
 	}
 
 	protected boolean deleteWidgets(){
-		if(!Window.confirm(LocaleText.get("deleteWidgetPrompt")))
+		if(!Window.confirm(i18n.deleteWidgetPrompt()))
 			return true;
 
 		for(int i=0; i<selectedDragController.getSelectedWidgetCount(); i++){
@@ -1010,7 +1015,7 @@ public class DesignGroupView extends Composite implements WidgetSelectionListene
 		pasteSeparator.setVisible(visible);
 		pasteMenu.setVisible(visible); 
 
-		lockWidgetsMenu.setHTML(FormDesignerUtil.createHeaderHTML(images.add(),Context.getLockWidgets() ? LocaleText.get("unLockWidgets") : LocaleText.get("lockWidgets")));
+		lockWidgetsMenu.setHTML(FormDesignerUtil.createHeaderHTML(images.add(),Context.getLockWidgets() ? messages.unLockWidgets() : messages.lockWidgets()));
 	}
 
 	/**
@@ -1082,7 +1087,7 @@ public class DesignGroupView extends Composite implements WidgetSelectionListene
 	 */
 	protected DesignWidgetWrapper addNewLabel(String text, boolean select){
 		if(text == null)
-			text = LocaleText.get("label");
+			text = i18n.label();
 		Label label = new Label(text);
 
 		DesignWidgetWrapper wrapper = addNewWidget(label,select);		
@@ -1100,7 +1105,7 @@ public class DesignGroupView extends Composite implements WidgetSelectionListene
 	 */
 	protected DesignWidgetWrapper addNewVideoAudio(String text, boolean select){
 		if(text == null)
-			text = LocaleText.get("clickToPlay");
+			text = i18n.clickToPlay();
 		Hyperlink link = new Hyperlink(text,"");
 
 		DesignWidgetWrapper wrapper = addNewWidget(link,select);
@@ -1118,7 +1123,7 @@ public class DesignGroupView extends Composite implements WidgetSelectionListene
 	 */
 	protected DesignWidgetWrapper addNewServerSearch(String text, boolean select){
 		if(text == null)
-			text = LocaleText.get("noSelection");
+			text = i18n.noSelection();
 		Label label = new Label(text);
 
 		DesignWidgetWrapper wrapper = addNewWidget(label,select);
@@ -1199,7 +1204,7 @@ public class DesignGroupView extends Composite implements WidgetSelectionListene
 	 * @return the newly added widget.
 	 */
 	protected DesignWidgetWrapper addNewCheckBox(boolean select){
-		DesignWidgetWrapper wrapper = addNewWidget(new CheckBox(LocaleText.get("checkBox")),select);		
+		DesignWidgetWrapper wrapper = addNewWidget(new CheckBox(i18n.checkBox()),select);		
 		wrapper.setFontFamily(FormUtil.getDefaultFontFamily());
 		wrapper.setFontSize(FormUtil.getDefaultFontSize());
 		return wrapper;
@@ -1212,7 +1217,7 @@ public class DesignGroupView extends Composite implements WidgetSelectionListene
 	 * @return the newly added widget.
 	 */
 	protected DesignWidgetWrapper addNewRadioButton(boolean select){
-		DesignWidgetWrapper wrapper = addNewWidget(new RadioButtonWidget("RadioButton",LocaleText.get("radioButton")),select);
+		DesignWidgetWrapper wrapper = addNewWidget(new RadioButtonWidget("RadioButton",i18n.radioButton()),select);
 		wrapper.setFontFamily(FormUtil.getDefaultFontFamily());
 		wrapper.setFontSize(FormUtil.getDefaultFontSize());
 		return wrapper;
@@ -1271,7 +1276,7 @@ public class DesignGroupView extends Composite implements WidgetSelectionListene
 	 * @return the new button widget.
 	 */
 	protected DesignWidgetWrapper addSubmitButton(boolean select){
-		return addNewButton(LocaleText.get("submit"),"submit",select);
+		return addNewButton(i18n.submit(),"submit",select);
 	}
 
 	/**
@@ -1281,7 +1286,7 @@ public class DesignGroupView extends Composite implements WidgetSelectionListene
 	 * @return the new button.
 	 */
 	protected DesignWidgetWrapper addCancelButton(boolean select){
-		return addNewButton(LocaleText.get("cancel"),"cancel",select);
+		return addNewButton(i18n.cancel(),"cancel",select);
 	}
 
 	public void onCopy(Widget sender) {
@@ -1313,33 +1318,33 @@ public class DesignGroupView extends Composite implements WidgetSelectionListene
 
 		DesignWidgetWrapper retWidget = null;
 
-		if(text.equals(LocaleText.get("label")))
-			retWidget = addNewLabel(LocaleText.get("label"),true);
-		else if(text.equals(LocaleText.get("textBox")))
+		if(text.equals(i18n.label()))
+			retWidget = addNewLabel(i18n.label(),true);
+		else if(text.equals(i18n.textBox()))
 			retWidget = addNewTextBox(true);
-		else if(text.equals(LocaleText.get("checkBox")))
+		else if(text.equals(i18n.checkBox()))
 			retWidget = addNewCheckBox(true);
-		else if(text.equals(LocaleText.get("radioButton")))
+		else if(text.equals(i18n.radioButton()))
 			retWidget = addNewRadioButton(true);
-		else if(text.equals(LocaleText.get("listBox")))
+		else if(text.equals(i18n.listBox()))
 			retWidget = addNewDropdownList(true);
-		else if(text.equals(LocaleText.get("textArea")))
+		else if(text.equals(i18n.textArea()))
 			retWidget = addNewTextArea(true);
-		else if(text.equals(LocaleText.get("button")))
-			retWidget = addNewButton(LocaleText.get("button"),null,true);
-		else if(text.equals(LocaleText.get("datePicker")))
+		else if(text.equals(i18n.button()))
+			retWidget = addNewButton(i18n.button(),null,true);
+		else if(text.equals(i18n.datePicker()))
 			retWidget = addNewDatePicker(true);
-		else if(text.equals(LocaleText.get("dateTimeWidget")))
+		else if(text.equals(messages.dateTimeWidget()))
 			retWidget = addNewDateTimeWidget(true);
-		else if(text.equals(LocaleText.get("timeWidget")))
+		else if(text.equals(messages.timeWidget()))
 			retWidget = addNewTimeWidget(true);
-		else if(text.equals(LocaleText.get("groupBox")))
+		else if(text.equals(i18n.groupBox()))
 			retWidget = addNewGroupBox(true);
-		else if(text.equals(LocaleText.get("repeatSection")))
+		else if(text.equals(i18n.repeatSection()))
 			retWidget = addNewRepeatSection(true);
-		else if(text.equals(LocaleText.get("picture")))
+		else if(text.equals(i18n.picture()))
 			retWidget = addNewPictureSection(null,null,true);
-		else if(text.equals(LocaleText.get("videoAudio")))
+		else if(text.equals(i18n.videoAudio()))
 			retWidget = addNewVideoAudioSection(null,null,true);
 
 		if(retWidget != null){
@@ -1851,7 +1856,7 @@ public class DesignGroupView extends Composite implements WidgetSelectionListene
 		if(selectedPanel.getAbsoluteTop() > 0)
 			y += selectedPanel.getAbsoluteTop();
 
-		addNewButton(LocaleText.get("addNew"),"addnew",false);
+		addNewButton(i18n.addNew(),"addnew",false);
 
 		selectedDragController.clearSelection();
 
@@ -1911,11 +1916,11 @@ public class DesignGroupView extends Composite implements WidgetSelectionListene
 		if(selectedPanel.getAbsoluteTop() > 0)
 			y += selectedPanel.getAbsoluteTop();
 
-		addNewButton(LocaleText.get("browse"),"browse",false).setParentBinding(parentBinding);
+		addNewButton(i18n.browse(),"browse",false).setParentBinding(parentBinding);
 		x = 120;
 		if(selectedPanel.getAbsoluteLeft() > 0)
 			x += selectedPanel.getAbsoluteLeft();
-		addNewButton(LocaleText.get("clear"),"clear",false).setParentBinding(parentBinding);
+		addNewButton(i18n.clear(),"clear",false).setParentBinding(parentBinding);
 
 		selectedDragController.clearSelection();
 
@@ -2007,11 +2012,11 @@ public class DesignGroupView extends Composite implements WidgetSelectionListene
 		if(selectedPanel.getAbsoluteTop() > 0)
 			y += selectedPanel.getAbsoluteTop();
 
-		addNewButton(LocaleText.get("browse"),"browse",false).setParentBinding(parentBinding);
+		addNewButton(i18n.browse(),"browse",false).setParentBinding(parentBinding);
 		x = 120;
 		if(selectedPanel.getAbsoluteLeft() > 0)
 			x += selectedPanel.getAbsoluteLeft();
-		addNewButton(LocaleText.get("clear"),"clear",false).setParentBinding(parentBinding);
+		addNewButton(i18n.clear(),"clear",false).setParentBinding(parentBinding);
 
 		selectedDragController.clearSelection();
 
@@ -2032,7 +2037,7 @@ public class DesignGroupView extends Composite implements WidgetSelectionListene
 
 		y = selectedPanel.getAbsoluteTop();
 		x = selectedPanel.getAbsoluteLeft();
-		DesignWidgetWrapper headerLabel = addNewLabel(text != null ? text : LocaleText.get("recording"), false);
+		DesignWidgetWrapper headerLabel = addNewLabel(text != null ? text : i18n.recording(), false);
 		headerLabel.setBackgroundColor(StyleUtil.COLOR_GROUP_HEADER);
 		DOM.setStyleAttribute(headerLabel.getElement(), "width","100%");
 		headerLabel.setTextAlign("center");

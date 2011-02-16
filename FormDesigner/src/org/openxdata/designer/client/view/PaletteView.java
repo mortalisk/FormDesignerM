@@ -3,15 +3,17 @@ package org.openxdata.designer.client.view;
 import org.openxdata.designer.client.controller.FormDesignerDragController;
 import org.openxdata.designer.client.vew.widget.images.FormDesignerImages;
 import org.openxdata.designer.client.widget.PaletteWidget;
-import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.util.FormUtil;
 
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import org.openxdata.designer.client.DesignerMessages;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 
 /**
@@ -22,6 +24,10 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  *
  */
 public class PaletteView extends Composite {
+    
+        private final FormsConstants i18n = GWT.create(FormsConstants.class);
+        private final DesignerMessages messages = GWT.create(DesignerMessages.class);
+	
 
 	/** The panel to contain the palette widgets. */
 	private VerticalPanel verticalPanel = new VerticalPanel();
@@ -48,22 +54,22 @@ public class PaletteView extends Composite {
 		verticalPanel.setSpacing(10);
 		verticalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 
-		verticalPanel.add(createPaletteWidget(new HTML(LocaleText.get("label"))));
-		verticalPanel.add(createPaletteWidget(new HTML(LocaleText.get("textBox"))));
-		verticalPanel.add(createPaletteWidget(new HTML(LocaleText.get("checkBox"))));
-		verticalPanel.add(createPaletteWidget(new HTML(LocaleText.get("radioButton"))));
-		verticalPanel.add(createPaletteWidget(new HTML(LocaleText.get("listBox"))));
-		verticalPanel.add(createPaletteWidget(new HTML(LocaleText.get("textArea"))));
-		verticalPanel.add(createPaletteWidget(new HTML(LocaleText.get("button"))));
-		verticalPanel.add(createPaletteWidget(new HTML(LocaleText.get("datePicker"))));
-		verticalPanel.add(createPaletteWidget(new HTML(LocaleText.get("dateTimeWidget"))));
-		verticalPanel.add(createPaletteWidget(new HTML(LocaleText.get("timeWidget"))));
-		verticalPanel.add(createPaletteWidget(new HTML(LocaleText.get("groupBox"))));
-		verticalPanel.add(createPaletteWidget(new HTML(LocaleText.get("repeatSection"))));
-		verticalPanel.add(createPaletteWidget(new HTML(LocaleText.get("picture"))));
-		verticalPanel.add(createPaletteWidget(new HTML(LocaleText.get("videoAudio"))));
+		verticalPanel.add(createPaletteWidget(new HTML(i18n.label())));
+		verticalPanel.add(createPaletteWidget(new HTML(i18n.textBox())));
+		verticalPanel.add(createPaletteWidget(new HTML(i18n.checkBox())));
+		verticalPanel.add(createPaletteWidget(new HTML(i18n.radioButton())));
+		verticalPanel.add(createPaletteWidget(new HTML(i18n.listBox())));
+		verticalPanel.add(createPaletteWidget(new HTML(i18n.textArea())));
+		verticalPanel.add(createPaletteWidget(new HTML(i18n.button())));
+		verticalPanel.add(createPaletteWidget(new HTML(i18n.datePicker())));
+		verticalPanel.add(createPaletteWidget(new HTML(messages.dateTimeWidget())));
+		verticalPanel.add(createPaletteWidget(new HTML(messages.timeWidget())));
+		verticalPanel.add(createPaletteWidget(new HTML(i18n.groupBox())));
+		verticalPanel.add(createPaletteWidget(new HTML(i18n.repeatSection())));
+		verticalPanel.add(createPaletteWidget(new HTML(i18n.picture())));
+		verticalPanel.add(createPaletteWidget(new HTML(i18n.videoAudio())));
 		
-		//verticalPanel.add(createPaletteWidget(new HTML(LocaleText.get("searchServer"))));
+		//verticalPanel.add(createPaletteWidget(new HTML(i18n.searchServer())));
 
 		initWidget(verticalPanel);
 		FormUtil.maximizeWidget(verticalPanel);

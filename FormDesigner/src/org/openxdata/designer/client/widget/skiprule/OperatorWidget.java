@@ -1,7 +1,7 @@
 package org.openxdata.designer.client.widget.skiprule;
 
+import com.google.gwt.core.client.GWT;
 import org.openxdata.designer.client.controller.ItemSelectionListener;
-import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.model.ModelConstants;
 import org.openxdata.sharedlib.client.model.QuestionDef;
 
@@ -9,6 +9,8 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.ListBox;
+import org.openxdata.designer.client.DesignerMessages;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 
 /**
@@ -19,42 +21,45 @@ import com.google.gwt.user.client.ui.ListBox;
  *
  */
 public class OperatorWidget extends Composite implements ChangeHandler {
+    
+        private static final FormsConstants i18n = GWT.create(FormsConstants.class);
+        private static final DesignerMessages messages = GWT.create(DesignerMessages.class);
 	
 	/** The operator text: is equal to */
-	public static final String OP_TEXT_EQUAL = LocaleText.get("isEqualTo");
+	public static final String OP_TEXT_EQUAL = i18n.isEqualTo();
 	
 	/** The operator text: is not equal to */
-	public static final String OP_TEXT_NOT_EQUAL = LocaleText.get("isNotEqual");
+	public static final String OP_TEXT_NOT_EQUAL = messages.isNotEqual();
 	
 	/** The operator text: is less than */
-	public static final String OP_TEXT_LESS_THAN = LocaleText.get("isLessThan");
+	public static final String OP_TEXT_LESS_THAN = messages.isLessThan();
 	
 	/** The operator text: is less than or equal to */
-	public static final String OP_TEXT_LESS_THAN_EQUAL = LocaleText.get("isLessThanOrEqual");
+	public static final String OP_TEXT_LESS_THAN_EQUAL = messages.isLessThanOrEqual();
 	
 	/** The operator text: is greater than */
-	public static final String OP_TEXT_GREATER_THAN = LocaleText.get("isGreaterThan");
+	public static final String OP_TEXT_GREATER_THAN = messages.isGreaterThan();
 	
 	/** The operator text: is greater than or equal to */
-	public static final String OP_TEXT_GREATER_THAN_EQUAL = LocaleText.get("isGreaterThanOrEqual");
+	public static final String OP_TEXT_GREATER_THAN_EQUAL = messages.isGreaterThanOrEqual();
 	
 	/** The operator text: is null */
-	public static final String OP_TEXT_NULL = LocaleText.get("isNull");
+	public static final String OP_TEXT_NULL = messages.isNull();
 	
 	/** The operator text: is null */
-	public static final String OP_TEXT_NOT_NULL = LocaleText.get("isNotNull");
+	public static final String OP_TEXT_NOT_NULL = messages.isNotNull();
 	
 	/** The operator text: is in list */
-	public static final String OP_TEXT_IN_LIST = LocaleText.get("isInList");
+	public static final String OP_TEXT_IN_LIST = messages.isInList();
 	
 	/** The operator text: is not in list */
-	public static final String OP_TEXT_NOT_IN_LIST = LocaleText.get("isNotInList");
+	public static final String OP_TEXT_NOT_IN_LIST = messages.isNotInList();
 	
 	/** The operator text: is between */
-	public static final String OP_TEXT_BETWEEN = LocaleText.get("isBetween");
+	public static final String OP_TEXT_BETWEEN = messages.isBetween();
 	
 	/** The operator text: is not between */
-	public static final String OP_TEXT_NOT_BETWEEN = LocaleText.get("isNotBetween");
+	public static final String OP_TEXT_NOT_BETWEEN = messages.isNotBetween();
 
 	/** The current question data type. */
 	private int dataType =  QuestionDef.QTN_TYPE_TEXT;

@@ -1,9 +1,9 @@
 package org.openxdata.designer.client.widget.skiprule;
 
+import com.google.gwt.core.client.GWT;
 import org.openxdata.designer.client.controller.ItemSelectionListener;
 import org.openxdata.designer.client.widget.SelectItemCommand;
 import org.openxdata.sharedlib.client.OpenXdataConstants;
-import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.model.ModelConstants;
 import org.openxdata.sharedlib.client.model.QuestionDef;
 
@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 
 /**
@@ -23,12 +24,14 @@ import com.google.gwt.user.client.ui.ScrollPanel;
  *
  */
 public class FunctionHyperlink extends Hyperlink implements ItemSelectionListener {
+    
+        final static FormsConstants i18n = GWT.create(FormsConstants.class);
 	
 	/** The length function text: Length */
-	public static final String FUNCTION_TEXT_LENGTH = LocaleText.get("length");
+	public static final String FUNCTION_TEXT_LENGTH = i18n.length();
 	
 	/** The value function text: Length */
-	public static final String FUNCTION_TEXT_VALUE = LocaleText.get("value");
+	public static final String FUNCTION_TEXT_VALUE = i18n.value();
 	
 	/** The popup to display functions. */
 	private PopupPanel popup;

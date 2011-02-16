@@ -27,30 +27,6 @@ public class QueryBuilderUtil {
 	/** The form designer title. */
 	private static String title = "OpenXdata QueryBuilder";
 	
-
-	/**
-	 * Creates an HTML fragment that places an image & caption together, for use
-	 * in a group header.
-	 * 
-	 * @param imageProto an image prototype for an image
-	 * @param caption the group caption
-	 * @return the header HTML fragment
-	 */
-	/*public static String createHeaderHTML(ImageResource imageProto, String caption) {
-
-		//Add the image and text to a horizontal panel
-		HorizontalPanel hPanel = new HorizontalPanel();
-		hPanel.setSpacing(0);
-
-		hPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-		hPanel.add(FormUtil.createImage(imageProto));
-		HTML headerText = new HTML(caption);
-		hPanel.add(headerText);
-
-		return hPanel.getElement().getString();
-	}*/
-
-
 	/**
 	 * Adds formatting to an XML string
 	 */
@@ -267,7 +243,6 @@ public class QueryBuilderUtil {
 		if (letters.indexOf(token.charAt(0)) == -1 || token.startsWith("xml"))
 			token = "_" + token;
 		
-		// return token
 		return token;
 	}
 }

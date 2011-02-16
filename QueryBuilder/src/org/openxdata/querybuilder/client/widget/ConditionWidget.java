@@ -1,9 +1,9 @@
 package org.openxdata.querybuilder.client.widget;
 
+import com.google.gwt.core.client.GWT;
 import org.openxdata.querybuilder.client.controller.ConditionController;
 import org.openxdata.querybuilder.client.controller.FilterRowActionListener;
 import org.openxdata.querybuilder.client.controller.ItemSelectionListener;
-import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.model.Condition;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.ModelConstants;
@@ -14,7 +14,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 /**
  * 
@@ -22,6 +22,7 @@ import com.google.gwt.user.client.ui.Widget;
  *
  */
 public class ConditionWidget extends Composite implements ItemSelectionListener, FilterRowActionListener{
+    final FormsConstants i18n = GWT.create(FormsConstants.class);
 
 	private static final int HORIZONTAL_SPACING = 5;
 
@@ -37,7 +38,7 @@ public class ConditionWidget extends Composite implements ItemSelectionListener,
 	private int operator;
 	private ConditionController view;
 	private Condition condition;
-	private Label lbLabel = new Label(LocaleText.get("value"));
+	private Label lbLabel = new Label(i18n.value());
 
 	private boolean allowFieldSelection = false;
 	private int depth = 1;
@@ -69,7 +70,7 @@ public class ConditionWidget extends Composite implements ItemSelectionListener,
 			horizontalPanel.add(fieldWidget);
 		else{
 			if(questionDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT)
-				lbLabel.setText(LocaleText.get("count"));
+				lbLabel.setText(i18n.count());
 			horizontalPanel.add(lbLabel);
 		}
 

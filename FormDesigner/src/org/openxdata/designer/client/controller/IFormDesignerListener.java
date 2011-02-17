@@ -41,11 +41,6 @@ public interface IFormDesignerListener extends IFormActionListener{
 	public void viewToolbar();
 	
 	/**
-	 * Shows the form designer's help files.
-	 */
-	public void showHelpContents();
-	
-	/**
 	 * Shows tbe list of languages or locales supported by the form designer.
 	 */
 	public void showLanguages();

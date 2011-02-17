@@ -208,7 +208,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 		//This is needed for IE which does not seem to set the height properly.
 		DeferredCommand.addCommand(new Command() {
 			public void execute() {
-				//onWindowResized(Window.getClientWidth(), Window.getClientHeight());
 				setHeight(getHeight());
 			}
 		});
@@ -405,7 +404,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 
 		DeferredCommand.addCommand(new Command() {
 			public void execute() {
-				//onWindowResized(Window.getClientWidth(), Window.getClientHeight());
 				setHeight(getHeight());
 			}
 		});
@@ -591,10 +589,10 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 					if(!xpath.startsWith(formDef.getBinding()))
 						xpath = "/" + formDef.getBinding() + "/" + binding;
 
-					String extension = "";//.3gp ".mpeg";
+					String extension = "";
 					String contentType = "&contentType=video/3gpp";
 					if(questionDef.getDataType() == QuestionDef.QTN_TYPE_AUDIO)
-						contentType = "&contentType=audio/3gpp"; //"&contentType=audio/x-wav";
+						contentType = "&contentType=audio/3gpp";
 
 					contentType += "&name="+questionDef.getBinding()+".3gp";
 
@@ -846,7 +844,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 		}
 
 		if(!valid){
-			//Window.alert("Please first correct the errors on the form.");
 			tabs.selectTab(pageNo);
 			assert(firstInvalidWidget != null);
 			firstInvalidWidget.setFocus();
@@ -915,7 +912,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 	 */
 	private void onValueChanged(QuestionDef questionDef){
 		fireSkipRules();
-		//doCalculations();
 		updateDynamicOptions(questionDef);
 
 		List<Label> labels = labelMap.get(questionDef);
@@ -934,7 +930,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 
 			for(RuntimeWidgetWrapper widget : widgets){
 				Calculation calculation = formDef.getCalculation(widget.getQuestionDef());
-				//String calcExpression = calculation.getCalculateExpression();
 				String calcExpression = replaceCalcExpression(calculation.getCalculateExpression(),widget.getQuestionDef()); //calcExpression.replace(binding, answer);
 
 				int type = widget.getQuestionDef().getDataType();

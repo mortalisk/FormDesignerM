@@ -64,7 +64,7 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 	public static int SELECTED_INDEX_XFORMS_SOURCE = 1;
 
 	/** Index for the design surface tab. */
-	public static int SELECTED_INDEX_DESIGN_SURFACE = 2;
+	public static int SELECTED_INDEX_DESIGN_SURFACE = 1;
 	
 	/** Index for the javascript source tab. */
 	public static int SELECTED_INDEX_JAVASCRIPT_SOURCE = 3;
@@ -76,7 +76,7 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 	public static int SELECTED_INDEX_LANGUAGE_XML = 5;
 
 	/** Index for the preview tab. */
-	public static int SELECTED_INDEX_PREVIEW = 6;
+	public static int SELECTED_INDEX_PREVIEW = 2;
 
 	/** Index for the model xml tab. */
 	public static int SELECTED_INDEX_MODEL_XML = 7;
@@ -104,7 +104,7 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 	private PropertiesView propertiesView = new PropertiesView();
 
 	/**
-	 * View onto which user drags and drops ui controls in a WUSIWUG manner.
+	 * View onto which user drags and drops ui controls in a WYSIWYG manner.
 	 */
 	private DesignSurfaceView designSurfaceView;
 	
@@ -152,13 +152,13 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 		previewView = new PreviewView(images);
 
 		initProperties();
-		initXformsSource();
+		//initXformsSource();
 		initDesignSurface();
-		initJavaScriptSource();
-		initLayoutXml();
-		initLanguageXml();
+		//initJavaScriptSource();
+		//initLayoutXml();
+		//initLanguageXml();
 		initPreview();
-		initModelXml();
+		//initModelXml();
 
 		FormUtil.maximizeWidget(tabs);
 
@@ -201,7 +201,6 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 			}
 		});
 	}
-
 
 	/**
 	 * Sets the listener to form item property change events.
@@ -261,7 +260,6 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 		eventBus.fireEvent(new CenterPanelTabSelectedEvent(selectedTabIndex));
 	}
 	
-
 	private void loadPreview(){
 		FormUtil.dlg.setText(constants.loadingPreview());
 		FormUtil.dlg.center();
@@ -923,24 +921,22 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 		return selectedTabIndex == SELECTED_INDEX_DESIGN_SURFACE || selectedTabIndex == SELECTED_INDEX_PREVIEW;
 	}
 
-
 	/**
 	 * Removes the language xml tab.
 	 */
 	public void removeLanguageTab(){
-		if(showLanguageXml){
+		/*if(showLanguageXml){
 			tabs.remove(SELECTED_INDEX_LANGUAGE_XML);
 			
 			--SELECTED_INDEX_PREVIEW;
 			--SELECTED_INDEX_MODEL_XML;
 			
 			showLanguageXml = false;
-		}
+		}*/
 	}
 
-
 	public void removeXformSourceTab(){
-		if(showXformsSource){
+		/*if(showXformsSource){
 			tabs.remove(SELECTED_INDEX_XFORMS_SOURCE);
 
 			--SELECTED_INDEX_DESIGN_SURFACE;
@@ -951,11 +947,11 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 			--SELECTED_INDEX_MODEL_XML;
 			
 			showXformsSource = false;
-		}
+		}*/
 	}
 
 	public void removeJavaScriptSourceTab(){
-		if(showJavaScriptSource){
+		/*if(showJavaScriptSource){
 			tabs.remove(SELECTED_INDEX_JAVASCRIPT_SOURCE);
 
 			--SELECTED_INDEX_LAYOUT_XML;
@@ -964,12 +960,11 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 			--SELECTED_INDEX_MODEL_XML;
 			
 			showJavaScriptSource = false;
-		}
+		}*/
 	}
 
-
 	public void removeLayoutXmlTab(){
-		if(showLayoutXml){
+		/*if(showLayoutXml){
 			tabs.remove(SELECTED_INDEX_LAYOUT_XML);
 
 			--SELECTED_INDEX_LANGUAGE_XML;
@@ -977,17 +972,15 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 			--SELECTED_INDEX_MODEL_XML;
 			
 			showLayoutXml = false;
-		}
+		}*/
 	}
-
 
 	public void removeModelXmlTab(){
-		if(showModelXml){
+		/*if(showModelXml){
 			tabs.remove(SELECTED_INDEX_MODEL_XML);
 			showModelXml = false;
-		}
+		}*/
 	}
-	
 	
 	public WidgetPropertyChangeListener getWidgetPropertyChangeListener(){
 		return designSurfaceView;

@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.openxdata.designer.client.Context;
-import org.openxdata.designer.client.widget.DesignGroupWidget;
 import org.openxdata.designer.client.widget.DesignWidgetWrapper;
 import org.openxdata.designer.client.widget.PaletteWidget;
 import org.openxdata.sharedlib.client.OpenXdataConstants;

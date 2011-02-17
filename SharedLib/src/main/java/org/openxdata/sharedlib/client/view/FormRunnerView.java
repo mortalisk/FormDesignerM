@@ -227,7 +227,7 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 	public void loadForm(FormDef formDef,String layoutXml, String javaScriptSrc, List<RuntimeWidgetWrapper> externalSourceWidgets, boolean previewMode){
 		FormUtil.initialize();
 
-		if(previewMode /*externalSourceWidgets == null*/){
+		if(previewMode){
 			//Here we must be in preview mode where we need to create a new copy of the formdef
 			//such that we don't set preview values as default formdef values.
 			if(formDef == null)
@@ -425,7 +425,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 		HashMap<Integer,RuntimeWidgetWrapper> widgets = new HashMap<Integer,RuntimeWidgetWrapper>();
 		int maxTabIndex = 0;
 
-		//RuntimeWidgetWrapper wrapper = new RuntimeWidgetWrapper(null,null,null);
 		for(int i=0; i<nodes.getLength(); i++){
 			if(nodes.item(i).getNodeType() != Node.ELEMENT_NODE)
 				continue;
@@ -446,7 +445,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 			if(widget != null){
 				selectedPanel.add(widget);
 				FormUtil.setWidgetPosition(widget,widget.getLeft(),widget.getTop());
-				//FormUtil.setWidgetPosition(selectedPanel,widget,widget.getLeft(),widget.getTop());
 			}
 		}
 	}
@@ -570,7 +568,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 
 			widget = new RuntimeGroupWidget(images,formDef,repeatQtnsDef,this,repeated);
 			((RuntimeGroupWidget)widget).loadWidgets(formDef,node.getChildNodes(),externalSourceWidgets,calcQtnMappings,calcWidgetMap,filtDynOptWidgetMap);
-			//((RuntimeGroupWidget)widget).setTabIndex(tabIndex);
 			copyLabelMap(((RuntimeGroupWidget)widget).getLabelMap());
 			copyLabelText(((RuntimeGroupWidget)widget).getLabelText());
 			copyLabelReplaceText(((RuntimeGroupWidget)widget).getLabelReplaceText());
@@ -654,7 +651,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 		if(questionDef != null){
 			if(questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC){
 				questionDef.setOptions(null); //may have been set by the preview
-				//if(wrapper.getWrappedWidget() instanceof ListBox || wrapper.getWrappedWidget() instanceof TextBox)
 				if(wrapper.getFilterField() != null && wrapper.getFilterField().trim().length() > 0)
 					filtDynOptWidgetMap.put(questionDef, wrapper);
 			}
@@ -734,13 +730,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 					}
 				});
 			}
-			else if(binding.equals("search") && parentBinding != null){
-				((Button)widget).addClickHandler(new ClickHandler(){
-					public void onClick(ClickEvent event){
-						onSearch(null,(Widget)event.getSource());
-					}
-				});
-			}
 		}
 
 		if(wrapper.isEditable() && questionDef != null)
@@ -778,7 +767,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 				parentWrapper = new RuntimeWidgetWrapper(widget,images.error(),this);
 				parentWrapper.setQuestionDef(qtn,true);
 				parentBindingWidgetMap.put(parentBinding, parentWrapper);
-				//selectedPanel.add(parentWrapper);		//will be added by the caller		
 				qtn.addChangeListener(this);
 				List<CheckBox> list = new ArrayList<CheckBox>();
 				list.add((CheckBox)widget);
@@ -821,11 +809,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 			submitListener.onCancel();
 	}
 
-	public void onSearch(String key,Widget widget){
-		//FormUtil.searchExternal(key,widget.getElement(),widget.getElement(),null);
-	}
-
-
 	/**
 	 * Does the actual submission of form data to the submit listener.
 	 */
@@ -839,7 +822,7 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 			return;
 
 		String xml = XformUtil.getInstanceDataDoc(formDef.getDoc()).toString();
-		xml = FormUtil.formatXml(xml); //"<?xml version='1.0' encoding='UTF-8' ?> " + 
+		xml = FormUtil.formatXml(xml);
 		submitListener.onSubmit(xml);
 	}
 
@@ -1714,9 +1697,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 
 		String filterField = widget.getFilterField();
 		if(filterField != null && filterField.trim().length() > 0){
-			//All QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC widgets are already changed to QTN_TYPE_LIST_EXCLUSIVE, by the time we reach here.
-			//if(widget.getQuestionDef().getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC && (filterValue == null || filterValue.trim().length() == 0))
-			//	return;
 
 			if(filtDynOptWidgetMap.get(widget.getQuestionDef()) != null && (filterValue == null || filterValue.trim().length() == 0)){
 				fillNextExternalSourceWidget();
@@ -1813,25 +1793,4 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 
 		widget.loadQuestion();
 	}
-
-	//Recursion fails here for very big lists and we are therefore using iteration
-	/*private void fillWidgetValues(String text, int beginIndex, QuestionDef questionDef){
-		String displayField = null, valueField = null;
-		int pos = text.indexOf(FIELD_SEPARATOR,beginIndex);
-		if(pos > 0){
-			displayField = text.substring(beginIndex, pos);
-
-			beginIndex = pos+1;
-			pos = text.indexOf(RECORD_SEPARATOR, beginIndex);
-			if(pos > 0){
-				valueField = text.substring(beginIndex, pos);
-				questionDef.addOption(new OptionDef(questionDef.getOptionCount()+1,displayField,valueField,questionDef));
-				fillWidgetValues(text,pos+1,questionDef);
-			}
-			else{
-				valueField = text.substring(beginIndex);
-				questionDef.addOption(new OptionDef(questionDef.getOptionCount()+1,displayField,valueField,questionDef));
-			}
-		}
-	}*/
 }

@@ -111,8 +111,7 @@ public class DesignGroupView extends Composite implements WidgetSelectionListene
 	protected Label rubberBand = new Label("");
 
 	protected final FormDesignerImages images;
-
-	//These three do not belong here (should be only for DesignSurfaceView)
+	
 	/** Tabs for displaying pages. */
 	protected DecoratedTabPanel tabs = new DecoratedTabPanel();
 	protected HashMap<Integer,DesignWidgetWrapper> pageWidgets = new HashMap<Integer,DesignWidgetWrapper>();

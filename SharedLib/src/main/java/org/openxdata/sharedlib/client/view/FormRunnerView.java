@@ -198,8 +198,7 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 	 *
 	 * @param images reference to images used in the application.
 	 */
-	public FormRunnerView(/*Images images*/){
-		//this.images = images;
+	public FormRunnerView(){
 
 		FormUtil.maximizeWidget(tabs);
 

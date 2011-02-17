@@ -191,8 +191,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 	private List<RuntimeWidgetWrapper> externalSourceWidgets;
 	private int externalSourceWidgetIndex = 0;
 
-
-
 	/**
 	 * Constructs an instance of the form runner.
 	 *
@@ -251,16 +249,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 		if(script != null)
 			script.removeFromParent();
 
-		/*String s = " function calculateAge(){ " +
-		" 	var element2 = document.getElementById('question5'); " +
-		"   var element1 = document.getElementById('question1'); " +
-		" 	element2.value = element1.value;	 " +
-		" } " +
-		"  " +
-		"  " +
-		" var element = document.getElementById('question1'); " +
-		" element.addEventListener('change',calculateAge ,false) ";*/
-
 		if(javaScriptSrc != null){
 			Document document = Document.get();
 			script = document.createElement("script");
@@ -283,7 +271,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 		moveToNextWidget(-1);
 	}
 
-
 	/**
 	 * Sets focus to the focusable widget whose tab index is next to a given index.
 	 * 
@@ -300,7 +287,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 				break;
 		}
 	}
-
 
 	/**
 	 * Loads widgets in a given layout xml and populates a list of widgets whose source of
@@ -369,7 +355,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 			tabs.selectTab(0);
 	}
 
-
 	/**
 	 * Sets up the main panel widget.
 	 */
@@ -408,7 +393,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 			}
 		});
 	}
-
 
 	/**
 	 * Loads widgets contained in a list of nodes for a page.
@@ -736,7 +720,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 		return tabIndex;
 	}
 
-
 	/**
 	 * Check if a widget can have a validation rule.
 	 * 
@@ -748,7 +731,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 				(wrapper.getWrappedWidget() instanceof HTML) || (wrapper.getWrappedWidget() instanceof Hyperlink) ||
 				(wrapper.getWrappedWidget() instanceof Button));
 	}
-
 
 	/**
 	 * Gets a widget that has a given parent binding value as that of a given widget.
@@ -789,14 +771,12 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 			FormUtil.isAuthenticated();
 	}
 
-
 	/**
 	 * Called when one clicks the submit button on the form to submit form data.
 	 */
 	public void onSubmit(){
 		submit();
 	}
-
 
 	/**
 	 * Called when one clicks the cancel button on the form, meaning that they have
@@ -823,7 +803,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 		xml = FormUtil.formatXml(xml);
 		submitListener.onSubmit(xml);
 	}
-
 
 	/**
 	 * Checks if form data has validation errors.
@@ -903,7 +882,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 		onValueChanged(widget.getQuestionDef());
 		fireParentQtnValidationRules(widget);
 	}
-
 
 	/**
 	 * Called when the value or answer of a question changes.
@@ -1163,7 +1141,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 		}
 	}
 
-
 	/**
 	 * Copies from a given label map to our class level one.
 	 * 
@@ -1193,7 +1170,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 		}
 	}
 
-
 	/**
 	 * Copies from a given label text map to our class level one.
 	 * 
@@ -1207,7 +1183,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 		}
 	}
 
-
 	/**
 	 * Copies from a given label replace text map to our class level one.
 	 * 
@@ -1220,7 +1195,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 			this.labelReplaceText.put(entry.getKey(), entry.getValue());
 		}
 	}
-
 
 	/**
 	 * Copies from a given check box group map to our class level one.
@@ -1452,7 +1426,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 		return bottomYpos;
 	}
 
-
 	/**
 	 * @see org.openxdata.sharedlib.client.widget.EditListener#onRowRemoved(org.openxdata.sharedlib.client.widget.RuntimeWidgetWrapper)
 	 */
@@ -1542,7 +1515,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 		}
 	}
 
-
 	/**
 	 * Processes global keyboard events.
 	 * 
@@ -1559,7 +1531,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 
 		return true;
 	}
-
 
 	public static HashMap<QuestionDef,List<QuestionDef>> getCalcQtnMappings(FormDef formDef){
 		HashMap<QuestionDef,List<QuestionDef>> calcQtnMappings = new HashMap<QuestionDef,List<QuestionDef>>();
@@ -1601,7 +1572,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 
 		return calcQtnMappings;
 	}
-
 
 	public static void updateCalcWidgetMapping(RuntimeWidgetWrapper widget, HashMap<QuestionDef,List<QuestionDef>> calcQtnMappings,
 			HashMap<QuestionDef,List<RuntimeWidgetWrapper>> calcWidgetMap){
@@ -1674,7 +1644,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 		return answer;
 	}
 
-
 	/**
 	 * Fills a widget with a list of possible values/answers from a source 
 	 * external to the xform. e.g database,web services, etc.
@@ -1743,7 +1712,6 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 				onValueChanged(widget.getQuestionDef());
 		}
 	}
-
 
 	private void fillNextExternalSourceWidget(){
 		if(externalSourceWidgetIndex < externalSourceWidgets.size())

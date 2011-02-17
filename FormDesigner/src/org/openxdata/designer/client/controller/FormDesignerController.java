@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.openxdata.designer.client.AboutDialog;
 import org.openxdata.designer.client.CenterPanel;
 import org.openxdata.designer.client.Context;
 import org.openxdata.designer.client.LeftPanel;
@@ -468,15 +467,6 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 				}	
 			}
 		});
-	}
-
-	/**
-	 * @see org.openxdata.formtools.client.controller.IFormDesignerController#showAboutInfo()
-	 */
-	public void showAboutInfo() {
-		AboutDialog dlg = new AboutDialog();
-		dlg.setAnimationEnabled(true);
-		dlg.center();
 	}
 
 	/**

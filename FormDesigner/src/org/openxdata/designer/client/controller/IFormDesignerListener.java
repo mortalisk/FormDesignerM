@@ -46,11 +46,6 @@ public interface IFormDesignerListener extends IFormActionListener{
 	public void showHelpContents();
 	
 	/**
-	 * Shows the about dialog box.
-	 */
-	public void showAboutInfo();
-	
-	/**
 	 * Shows tbe list of languages or locales supported by the form designer.
 	 */
 	public void showLanguages();

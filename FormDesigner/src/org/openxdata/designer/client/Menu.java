@@ -157,23 +157,12 @@ public class Menu extends Composite {
 			public void execute() {controller.showOptions();}});
 
 
-		//Set up the help menu.
-		MenuBar helpMenu = new MenuBar(true);
-		helpMenu.addItem(FormDesignerUtil.createHeaderHTML(images.info(),formConstants.helpContents()),true, new Command(){
-			public void execute() {controller.showHelpContents();}});
-
-		helpMenu.addSeparator();
-		helpMenu.addItem(formConstants.about() + " " + FormDesignerUtil.getTitle(), new Command(){
-			public void execute() {controller.showAboutInfo();}});
-
-
 		//Add all the top level menus to the GWT menu bar.
 		menuBar = new MenuBar();
 		menuBar.addItem(formConstants.file(), fileMenu);
 		menuBar.addItem(formConstants.view(), viewMenu);
 		menuBar.addItem(formConstants.item(),itemMenu);
 		menuBar.addItem(formConstants.tools(), toolsMenu);
-		menuBar.addItem(formConstants.help(), helpMenu);
 
 		menuBar.setAnimationEnabled(true);
 	}

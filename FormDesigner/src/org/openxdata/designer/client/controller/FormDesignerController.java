@@ -513,14 +513,16 @@ public class FormDesignerController implements IFormDesignerListener,
 
 			}});
 	}
+	
 
 	/**
 	 * @see org.openxdata.formtools.client.controller.IFormDesignerController#alignLeft()
 	 */
 	public void showHelpContents() {
-		// TODO Auto-generated method stub
+		// TODO do nothing
 
 	}
+	
 
 	/**
 	 * @see org.openxdata.formtools.client.controller.IFormDesignerController#showLanguages()
@@ -529,22 +531,24 @@ public class FormDesignerController implements IFormDesignerListener,
 		LocalesDialog dlg = new LocalesDialog();
 		dlg.center();
 	}
+	
 
 	/**
 	 * @see org.openxdata.formtools.client.controller.IFormDesignerController#showOptions()
 	 */
 	public void showOptions() {
-		// TODO Auto-generated method stub
+		// do nothing
 
 	}
+	
 
 	/**
 	 * @see org.openxdata.formtools.client.controller.IFormDesignerController#viewToolbar()
 	 */
 	public void viewToolbar() {
-		// TODO Auto-generated method stub
-
+		// do nothing
 	}
+	
 
 	/**
 	 * @see org.openxdata.formtools.client.controller.IFormDesignerController#alignLeft()
@@ -664,16 +668,9 @@ public class FormDesignerController implements IFormDesignerListener,
 		// or the forms tree view is the one which has requested a refresh.
 		if (!centerPanel.allowsRefresh()
 				|| refreshObject instanceof FormsTreeView
-				|| Context.getCurrentMode() == Context.MODE_XFORMS_SOURCE) { // TODO
-																				// This
-																				// controller
-																				// should
-																				// not
-																				// know
-																				// about
-																				// LeftPanel
-																				// implementation
-																				// details.
+				|| Context.getCurrentMode() == Context.MODE_XFORMS_SOURCE) { 
+			
+			// TODO This controller should not know about LeftPanel implementation details.
 
 			if (formId != null) {
 				FormUtil.dlg.setText(messages.refreshingForm());

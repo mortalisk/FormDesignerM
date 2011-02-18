@@ -12,6 +12,8 @@ import org.openxdata.sharedlib.client.util.FormUtil;
 import org.openxdata.sharedlib.client.widget.RuntimeWidgetWrapper;
 import org.openxdata.sharedlib.client.xforms.XformParser;
 
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
@@ -50,7 +52,7 @@ public class FormRunnerController implements SubmitListener{
 		FormUtil.dlg.setText(LocaleText.get("openingForm"));
 		FormUtil.dlg.center();
 
-		DeferredCommand.addCommand(new Command(){
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			public void execute() {
 
 				String url = FormUtil.getHostPageBaseURL();
@@ -111,7 +113,7 @@ public class FormRunnerController implements SubmitListener{
 		FormUtil.dlg.setText(LocaleText.get("openingForm"));
 		FormUtil.dlg.center();
 
-		DeferredCommand.addCommand(new Command(){
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			public void execute() {
 				try{
 					List<RuntimeWidgetWrapper> externalSourceWidgets = new ArrayList<RuntimeWidgetWrapper>();
@@ -146,9 +148,8 @@ public class FormRunnerController implements SubmitListener{
 
 		final String submitXml = xml;
 
-		DeferredCommand.addCommand(new Command(){
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			public void execute() {
-				//"http://127.0.0.1:8080/openmrs/module/xforms/xformDataUpload.form"
 				String url = FormUtil.getHostPageBaseURL();
 				url += FormUtil.getFormDataUploadUrlSuffix();
 

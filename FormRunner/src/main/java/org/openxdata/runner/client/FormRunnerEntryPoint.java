@@ -7,6 +7,8 @@ import org.openxdata.sharedlib.client.view.FormRunnerView.Images;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.Window;
@@ -38,7 +40,7 @@ public class FormRunnerEntryPoint implements EntryPoint{
 		
 		publishJS();
 
-		DeferredCommand.addCommand(new Command() {
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			public void execute() {
 				onModuleLoadDeffered();
 			}
@@ -72,7 +74,7 @@ public class FormRunnerEntryPoint implements EntryPoint{
 				Window.alert(LocaleText.get("noFormId") + FormUtil.getEntityIdName() + LocaleText.get("divFound"));
 			}
 
-			DeferredCommand.addCommand(new Command() {
+			Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 				public void execute() {
 					String formId = FormUtil.getFormId();
 					String entityId = FormUtil.getEntityId();

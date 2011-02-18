@@ -708,107 +708,79 @@ public class FormDesignerController implements IFormDesignerListener,
 						URL.encode(url));
 
 				try {
-					builder.sendRequest(null, new RequestCallback() {
-						public void onResponseReceived(Request request,
-								Response response) {
-
-							if (response.getStatusCode() != Response.SC_OK) {
-								FormUtil.displayReponseError(response);
-								return;
-							}
-
-							String xml = response.getText();
-							if (xml == null || xml.length() == 0) {
-								FormUtil.dlg.hide();
-								Window.alert(messages.noDataFound());
-								return;
-							}
-
-							String xformXml, layoutXml = null, localeXml = null, javaScriptSrc = null;
-
-							int pos = xml
-									.indexOf(OpenXdataConstants.OPENXDATA_FORMDEF_LAYOUT_XML_SEPARATOR);
-							int pos2 = xml
-									.indexOf(OpenXdataConstants.OPENXDATA_FORMDEF_LOCALE_XML_SEPARATOR);
-							int pos3 = xml
-									.indexOf(OpenXdataConstants.OPENXDATA_FORMDEF_JAVASCRIPT_SRC_SEPARATOR);
-							if (pos > 0) {
-								xformXml = xml.substring(0, pos);
-								layoutXml = FormUtil.formatXml(xml
-										.substring(
-												pos
-														+ OpenXdataConstants.OPENXDATA_FORMDEF_LAYOUT_XML_SEPARATOR
-																.length(),
-												(pos2 > 0 ? pos2
-														: (pos3 > 0 ? pos3
-																: xml.length()))));
-
-								if (pos2 > 0)
-									localeXml = FormUtil.formatXml(xml
-											.substring(
-													pos2
-															+ OpenXdataConstants.OPENXDATA_FORMDEF_LOCALE_XML_SEPARATOR
-																	.length(),
-													pos3 > 0 ? pos3 : xml
-															.length()));
-
-								if (pos3 > 0)
-									javaScriptSrc = xml
-											.substring(
-													pos3
-															+ OpenXdataConstants.OPENXDATA_FORMDEF_JAVASCRIPT_SRC_SEPARATOR
-																	.length(),
-													xml.length());
-							} else if (pos2 > 0) {
-								xformXml = xml.substring(0, pos2);
-								localeXml = FormUtil.formatXml(xml
-										.substring(
-												pos2
-														+ OpenXdataConstants.OPENXDATA_FORMDEF_LOCALE_XML_SEPARATOR
-																.length(),
-												pos3 > 0 ? pos3 : xml.length()));
-
-								if (pos3 > 0)
-									javaScriptSrc = xml
-											.substring(
-													pos3
-															+ OpenXdataConstants.OPENXDATA_FORMDEF_JAVASCRIPT_SRC_SEPARATOR
-																	.length(),
-													xml.length());
-							} else if (pos3 > 0) {
-								xformXml = xml.substring(0, pos3);
-								javaScriptSrc = xml
-										.substring(
-												pos3
-														+ OpenXdataConstants.OPENXDATA_FORMDEF_JAVASCRIPT_SRC_SEPARATOR
-																.length(),
-												xml.length());
-							} else
-								xformXml = xml;
-
-							LanguageUtil.loadLanguageText(formId, localeXml,
-									Context.getLanguageText());
-
-							centerPanel.setXformsSource(
-									FormUtil.formatXml(xformXml), false);
-							centerPanel.setLayoutXml(layoutXml, false);
-							centerPanel.setJavaScriptSource(javaScriptSrc);
-
-							openFormDeffered(formId, false);
-
-						}
-
-						public void onError(Request request, Throwable exception) {
-							FormUtil.displayException(exception);
-						}
-					});
+					prepareFormForLoading(builder);
 				} catch (RequestException ex) {
 					FormUtil.displayException(ex);
 				}
 			}
 		});
 	}
-	
+
+	private void prepareFormForLoading(RequestBuilder builder)
+			throws RequestException {
+		builder.sendRequest(null, new RequestCallback() {
+			public void onResponseReceived(Request request, Response response) {
+
+				if (response.getStatusCode() != Response.SC_OK) {
+					FormUtil.displayReponseError(response);
+					return;
+				}
+
+				String xml = response.getText();
+				if (xml == null || xml.length() == 0) {
+					FormUtil.dlg.hide();
+					Window.alert(messages.noDataFound());
+					return;
+				}
+
+				String xformXml, layoutXml = null, localeXml = null, javaScriptSrc = null;
+
+				int pos = xml
+						.indexOf(OpenXdataConstants.OPENXDATA_FORMDEF_LAYOUT_XML_SEPARATOR);
+				int pos2 = xml
+						.indexOf(OpenXdataConstants.OPENXDATA_FORMDEF_LOCALE_XML_SEPARATOR);
+				int pos3 = xml
+						.indexOf(OpenXdataConstants.OPENXDATA_FORMDEF_JAVASCRIPT_SRC_SEPARATOR);
+				if (pos > 0) {
+					xformXml = xml.substring(0, pos);
+					layoutXml = FormUtil.formatXml(xml.substring(pos + OpenXdataConstants.OPENXDATA_FORMDEF_LAYOUT_XML_SEPARATOR.length(), (pos2 > 0 ? pos2	: (pos3 > 0 ? pos3 : xml.length()))));
+
+					if (pos2 > 0)
+						localeXml = FormUtil.formatXml(xml.substring(pos2 + OpenXdataConstants.OPENXDATA_FORMDEF_LOCALE_XML_SEPARATOR.length(), pos3 > 0 ? pos3 : xml.length()));
+
+					if (pos3 > 0)
+						javaScriptSrc = xml.substring(pos3 + OpenXdataConstants.OPENXDATA_FORMDEF_JAVASCRIPT_SRC_SEPARATOR.length(), xml.length());
+				} else if (pos2 > 0) {
+					xformXml = xml.substring(0, pos2);
+					localeXml = FormUtil.formatXml(xml.substring(pos2+ OpenXdataConstants.OPENXDATA_FORMDEF_LOCALE_XML_SEPARATOR.length(), pos3 > 0 ? pos3 : xml.length()));
+
+					if (pos3 > 0)
+						javaScriptSrc = xml.substring(pos3 + OpenXdataConstants.OPENXDATA_FORMDEF_JAVASCRIPT_SRC_SEPARATOR.length(), xml.length());
+				} else if (pos3 > 0) {
+					xformXml = xml.substring(0, pos3);
+					javaScriptSrc = xml.substring(pos3 + OpenXdataConstants.OPENXDATA_FORMDEF_JAVASCRIPT_SRC_SEPARATOR.length(), xml.length());
+				} else
+					xformXml = xml;
+
+				LanguageUtil.loadLanguageText(formId, localeXml,
+						Context.getLanguageText());
+
+				centerPanel.setXformsSource(FormUtil.formatXml(xformXml), false);
+				centerPanel.setLayoutXml(layoutXml, false);
+				centerPanel.setJavaScriptSource(javaScriptSrc);
+
+				openFormDeffered(formId, false);
+
+			}
+
+			@Override
+			public void onError(Request request, Throwable exception) {
+				FormUtil.displayException(exception);
+
+			}
+
+		});
+	}
 
 	/**
 	 * Loads or opens a form with a given id.

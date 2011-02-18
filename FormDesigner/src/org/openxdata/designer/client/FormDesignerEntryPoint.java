@@ -5,18 +5,20 @@ import java.util.List;
 
 import org.openxdata.designer.client.util.FormDesignerUtil;
 import org.openxdata.sharedlib.client.OpenXdataConstants;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 import org.openxdata.sharedlib.client.model.Locale;
 import org.openxdata.sharedlib.client.util.FormUtil;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
-import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -41,7 +43,7 @@ public class FormDesignerEntryPoint implements EntryPoint ,ResizeHandler{
 		
 		publishJS();
 
-		DeferredCommand.addCommand(new Command() {
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			public void execute() {
 				onModuleLoadDeffered();
 			}
@@ -104,7 +106,7 @@ public class FormDesignerEntryPoint implements EntryPoint ,ResizeHandler{
 			// Call the window resized handler to get the initial sizes setup. Doing
 			// this in a deferred command causes it to occur after all widgets' sizes
 			// have been computed by the browser.
-			DeferredCommand.addCommand(new Command() {
+			Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 				public void execute() {
 					designer.onWindowResized(Window.getClientWidth(), Window.getClientHeight());
 					

@@ -210,7 +210,9 @@ public class Toolbar extends Composite implements ILocaleListChangeListener, Xfo
 		controller.makeSameSize();
 	}
 	
-	public void onLocaleListChanged(){
+	@UiHandler("btnAdvancedViews")
+	public void handleAdvancedViews(){
+		
 	}
 
 	@Override

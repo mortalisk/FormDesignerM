@@ -53,7 +53,6 @@ public class FormRunnerController implements SubmitListener{
 		DeferredCommand.addCommand(new Command(){
 			public void execute() {
 
-				//"http://127.0.0.1:8080/openmrs/moduleServlet/xforms/xformDownload?target=xformentry&formId="+formId+"&patientId="+patientId+"&contentType=xml&uname=Guyzb&pw=daniel123"
 				String url = FormUtil.getHostPageBaseURL();
 				url += FormUtil.getEntityFormDefDownloadUrlSuffix();
 				url += FormUtil.getFormIdName()+"="+formId;
@@ -89,7 +88,6 @@ public class FormRunnerController implements SubmitListener{
 									javaScriptSrc = xml.substring(pos2+OpenXdataConstants.OPENXDATA_FORMDEF_JAVASCRIPT_SRC_SEPARATOR.length(), xml.length());
 
 								openForm();
-								//FormUtil.dlg.hide(); //open form above will close it
 							}
 							else{
 								FormUtil.dlg.hide();

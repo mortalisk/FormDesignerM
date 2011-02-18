@@ -60,6 +60,7 @@ public class Toolbar extends Composite implements ILocaleListChangeListener, Xfo
 	@UiField PushButton btnSameWidth;
 	@UiField PushButton btnSameHeight;
 	@UiField PushButton btnSameSize;
+	@UiField PushButton btnAdvancedViews;
 	
 	/** Listener to the tool bar button click events. */
 	private final IFormDesignerListener controller;
@@ -126,6 +127,7 @@ public class Toolbar extends Composite implements ILocaleListChangeListener, Xfo
 		btnSameWidth.setTitle(designerMessages.makeSameWidth());
 		btnSameHeight.setTitle(designerMessages.makeSameHeight());
 		btnSameSize.setTitle(designerMessages.makeSameSize());
+		btnAdvancedViews.setTitle(designerMessages.advancedViews());
 	}
 	
 	@UiHandler("btnOpenForm")

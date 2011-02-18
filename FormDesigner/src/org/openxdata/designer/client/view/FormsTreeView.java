@@ -1,6 +1,9 @@
 package org.openxdata.designer.client.view;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -142,7 +145,7 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 
 
 	private void scrollToLeft(){
-		DeferredCommand.addCommand(new Command(){
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			public void execute(){
 				Element element = (Element)getParent().getParent().getParent().getElement().getChildNodes().getItem(0).getChildNodes().getItem(0);
 				DOM.setElementPropertyInt(element, "scrollLeft", 0);

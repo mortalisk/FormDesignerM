@@ -653,9 +653,10 @@ public class FormDesignerController implements IFormDesignerListener,
 		// or the forms tree view is the one which has requested a refresh.
 		if (!centerPanel.allowsRefresh()
 				|| refreshObject instanceof FormsTreeView
-				|| Context.getCurrentMode() == Context.MODE_XFORMS_SOURCE) { 
-			
-			// TODO This controller should not know about LeftPanel implementation details.
+				|| Context.getCurrentMode() == Context.MODE_XFORMS_SOURCE) {
+
+			// TODO This controller should not know about LeftPanel
+			// implementation details.
 
 			if (formId != null) {
 				FormUtil.dlg.setText(messages.refreshingForm());
@@ -1375,8 +1376,7 @@ public class FormDesignerController implements IFormDesignerListener,
 			public void execute() {
 				try {
 					FormDef formDef = new FormDef((FormDef) obj);
-					formDef.setDoc(((FormDef) obj).getDoc()); // We want to copy
-																// the model xml
+					formDef.setDoc(((FormDef) obj).getDoc()); 
 					String xml = XhtmlBuilder.fromFormDef2Xhtml(formDef);
 					xml = FormDesignerUtil.formatXml(xml);
 					centerPanel.setXformsSource(xml, formSaveListener == null);

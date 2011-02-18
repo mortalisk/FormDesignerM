@@ -32,6 +32,7 @@
 	<ui:image field="samewidth" src="vew/widget/images/samewidth.gif" />
 	<ui:image field="sameheight" src="vew/widget/images/sameheight.gif" />
 	<ui:image field="samesize" src="vew/widget/images/samesize.gif" />
+	<ui:image field="notes" src="vew/widget/images/note.gif" />
 	
 	<g:HorizontalPanel>
 		<g:HorizontalPanel spacing="2">
@@ -96,7 +97,7 @@
 				<g:upFace image="{samesize}" />
 			</g:PushButton>
 			<g:PushButton ui:field="btnAdvancedViews">
-				<g:upFace image="{note}" />
+				<g:upFace image="{notes}" />
 			</g:PushButton>
 		</g:HorizontalPanel>
 	</g:HorizontalPanel>

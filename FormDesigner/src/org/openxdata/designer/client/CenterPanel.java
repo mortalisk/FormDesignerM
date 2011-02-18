@@ -89,7 +89,7 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 
 
 	/**
-	 * Tab widget housing the contents.
+	 * Tab widget housing thwe contents.
 	 */
 	private DecoratedTabPanel tabs = new DecoratedTabPanel();
 

@@ -95,6 +95,9 @@
 			<g:PushButton ui:field="btnSameSize">
 				<g:upFace image="{samesize}" />
 			</g:PushButton>
+			<g:PushButton ui:field="btnAdvancedViews">
+				<g:upFace image="{note}" />
+			</g:PushButton>
 		</g:HorizontalPanel>
 	</g:HorizontalPanel>
 </ui:UiBinder> 

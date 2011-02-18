@@ -180,7 +180,7 @@ public class FormRunnerController implements SubmitListener{
 										url += "=" + response.getText();
 								}
 
-								Window.Location.replace(url); //"http://127.0.0.1:8080/openmrs/patientDashboard.form?patientId=13"
+								Window.Location.replace(url);
 							}
 							else
 								FormUtil.displayReponseError(response);

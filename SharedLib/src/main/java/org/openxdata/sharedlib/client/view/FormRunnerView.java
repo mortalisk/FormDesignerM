@@ -37,6 +37,8 @@ import org.openxdata.sharedlib.client.xforms.XformParser;
 import org.openxdata.sharedlib.client.xforms.XformUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -204,7 +206,7 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 		tabs.addSelectionHandler(this);
 
 		//This is needed for IE which does not seem to set the height properly.
-		DeferredCommand.addCommand(new Command() {
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			public void execute() {
 				setHeight(getHeight());
 			}
@@ -364,7 +366,7 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 		selectedPanel = panel;
 
 		//This is needed for IE
-		DeferredCommand.addCommand(new Command() {
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			public void execute() {
 				setHeight(getHeight());
 			}
@@ -387,7 +389,7 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 		selectedTabIndex = tabs.getWidgetCount() - 1;
 		tabs.selectTab(selectedTabIndex);
 
-		DeferredCommand.addCommand(new Command() {
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			public void execute() {
 				setHeight(getHeight());
 			}

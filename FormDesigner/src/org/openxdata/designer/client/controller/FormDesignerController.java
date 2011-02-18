@@ -193,10 +193,7 @@ public class FormDesignerController implements IFormDesignerListener,
 	 * @see org.openxdata.designer.client.controller.IFormActionListener#deleteSelectedItems()
 	 */
 	public void deleteSelectedItem() {
-		if (Context.getCurrentMode() != Context.MODE_DESIGN/*
-															 * Context.
-															 * MODE_QUESTION_PROPERTIES
-															 */)
+		if (Context.getCurrentMode() != Context.MODE_DESIGN)
 			leftPanel.deleteSelectedItem();
 		else
 			centerPanel.deleteSelectedItem();

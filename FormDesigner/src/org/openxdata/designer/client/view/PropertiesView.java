@@ -1,6 +1,9 @@
 package org.openxdata.designer.client.view;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+
 import org.openxdata.designer.client.Context;
 import org.openxdata.designer.client.controller.IFormActionListener;
 import org.openxdata.designer.client.controller.IFormChangeListener;
@@ -931,7 +934,7 @@ public class PropertiesView extends Composite implements IFormSelectionListener,
 
 		//Skip logic processing is a bit slow and hence we wanna update the 
 		//UI with the rest of simple quick properties as we process skip logic
-		DeferredCommand.addCommand(new Command(){
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			public void execute() {
 				skipRulesView.setQuestionDef((QuestionDef)propertiesObj);
 				validationRulesView.setQuestionDef((QuestionDef)propertiesObj);

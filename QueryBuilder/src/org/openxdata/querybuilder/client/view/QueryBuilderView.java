@@ -118,7 +118,7 @@ public class QueryBuilderView  extends Composite implements SelectionHandler<Int
 	} 
 	
 	private void parseXform(){
-		FormUtil.dlg.setText("Parsing Xform"); //LocaleText.get("???????")
+		FormUtil.dlg.setText("Parsing Xform");
 		FormUtil.dlg.center();
 
 		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
@@ -142,7 +142,7 @@ public class QueryBuilderView  extends Composite implements SelectionHandler<Int
 	}
 	
 	private void parseQueryDef(){
-		FormUtil.dlg.setText("Parsing Query Definition"); //LocaleText.get("???????")
+		FormUtil.dlg.setText("Parsing Query Definition"); 
 		FormUtil.dlg.center();
 
 		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
@@ -162,63 +162,6 @@ public class QueryBuilderView  extends Composite implements SelectionHandler<Int
 			}
 		});
 	}
-	
-	/*private String getTestXform(){
-		return "<xf:xforms xmlns:xf=\"http://www.w3.org/2002/xforms\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"> " +
-			" <xf:model> " +
-			"   <xf:instance id=\"newform1\"> " +
-			"     <newform1 name=\"New Form1\" id=\"1\"> " +
-			"       <question1/> " +
-			"       <question2/> " +
-			"     </newform1> " +
-			"   </xf:instance> " +
-			"   <xf:bind id=\"question1\" nodeset=\"/newform1/question1\" type=\"xsd:string\"/> " +
-			"   <xf:bind id=\"question2\" nodeset=\"/newform1/question2\" type=\"xsd:string\"/> " +
-			"   <xf:bind id=\"question3\" nodeset=\"/newform1/question3\" type=\"xsd:int\"/> " +
-			"   <xf:bind id=\"question4\" nodeset=\"/newform1/question4\" type=\"xsd:date\"/> " +
-			" </xf:model> " +
-			" <xf:group id=\"1\"> " +
-			"   <xf:label>Page1</xf:label> " +
-			"  <xf:input bind=\"question1\"> " +
-			"    <xf:label>Question1</xf:label> " +
-			"  </xf:input> " +
-			"  <xf:input bind=\"question2\"> " +
-			"    <xf:label>Question2</xf:label> " +
-			"  </xf:input> " +
-			"  <xf:input bind=\"question3\"> " +
-			"    <xf:label>Question3</xf:label> " +
-			"  </xf:input> " +
-			"  <xf:input bind=\"question4\"> " +
-			"    <xf:label>Question4</xf:label> " +
-			"  </xf:input> " +
-			" </xf:group> " +
-			" </xf:xforms>";
-	}
-	
-	private String getTestQueryDef(){
-		return "<querydef> "+
-			  " <FilterConditions> "+
-			  " <group operator=\"all\"> "+
-			  " <group operator=\"all\"> "+
-			  "     <condition field=\"question1\" operator=\"1\" value=\"aaa\"/> "+
-			  "   </group> "+
-			  "   <group operator=\"all\"> "+
-			  "     <condition field=\"question1\" operator=\"1\" value=\"bbbb\"/> "+
-			  "   </group> "+
-			  " </group> "+
-			  " </FilterConditions> " +
-			  " <DisplayFields> " +
-			  " 	<Field name=\"question1\" text=\"Last Name\"/> " +
-			  " 	<Field name=\"question2\" text=\"First Name\"/> " +
-			  " 	<Field name=\"question3\" text=\"Weight\" AggFunc=\"COUNT\" /> " +
-			  " 	<Field name=\"question4\" text=\"Date of Birth\"/> " +
-			  " </DisplayFields> " +
-			  " <SortFields> " +
-			  " 	<Field name=\"question1\" sortOrder=\"1\"/> " +
-			  " 	<Field name=\"question2\" sortOrder=\"2\"/> " +
-			  " </SortFields> " +
-			  " </querydef>";
-	}*/
 	
 	private void buildSql(){
 		txtSql.setText(SqlBuilder.buildSql(filterConditionsView.getFormDef(),displayFieldsView.getDisplayFields(),filterConditionsView.getFilterConditionRows(),displayFieldsView.getSortFields()));

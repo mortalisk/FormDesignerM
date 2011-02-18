@@ -1,11 +1,11 @@
 package org.openxdata.designer.client.view;
 
-import com.google.gwt.core.client.GWT;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
+import org.openxdata.designer.client.DesignerMessages;
 import org.openxdata.designer.client.controller.DragDropListener;
 import org.openxdata.designer.client.controller.FormDesignerDragController;
 import org.openxdata.designer.client.controller.IWidgetPopupMenuListener;
@@ -16,6 +16,7 @@ import org.openxdata.designer.client.vew.widget.images.FormDesignerImages;
 import org.openxdata.designer.client.widget.DesignGroupWidget;
 import org.openxdata.designer.client.widget.DesignWidgetWrapper;
 import org.openxdata.sharedlib.client.OpenXdataConstants;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.OptionDef;
 import org.openxdata.sharedlib.client.model.PageDef;
@@ -28,6 +29,9 @@ import org.openxdata.sharedlib.client.widget.TimeWidget;
 import org.openxdata.sharedlib.client.widget.WidgetEx;
 import org.openxdata.sharedlib.client.xforms.XformConstants;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.Command;
@@ -53,8 +57,6 @@ import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.Node;
 import com.google.gwt.xml.client.NodeList;
 import com.google.gwt.xml.client.XMLParser;
-import org.openxdata.designer.client.DesignerMessages;
-import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 
 /**
@@ -182,11 +184,13 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 		dragControllers.add(tabs.getWidgetCount()-1,selectedDragController);
 		panel.setHeight(sHeight);
 		//This is needed for IE
-		DeferredCommand.addCommand(new Command() {
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+
+			@Override
 			public void execute() {
 				setHeight(getHeight());
-			}
-		});
+
+			}});
 	}
 
 	/**
@@ -309,12 +313,14 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 		widget.setFontWeight("normal");
 		pageWidgets.put(tabs.getTabBar().getTabCount()-1, widget);
 
-		DeferredCommand.addCommand(new Command() {
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+
+			@Override
 			public void execute() {
 				setHeight(getHeight());
+
 			}
-		});
-		
+		});		
 		return widget;
 	}
 	
@@ -1044,7 +1050,9 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 		FormUtil.dlg.setText(formsConstants.refreshingDesignSurface());
 		FormUtil.dlg.center();
 
-		DeferredCommand.addCommand(new Command(){
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+
+			@Override
 			public void execute() {
 				try{
 					boolean loading = false;
@@ -1058,15 +1066,14 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 						else
 							setLayout(formDef);
 					}
-
+					
 					if(!loading)
 						FormUtil.dlg.hide();
 				}
 				catch(Exception ex){
 					FormUtil.displayException(ex);
 				}
-			}
-		});
+			}});
 	}
 	
 	
@@ -1095,7 +1102,9 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 		FormUtil.dlg.setText(formsConstants.loadingDesignSurface());
 		FormUtil.dlg.center();
 
-		DeferredCommand.addCommand(new Command(){
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+
+			@Override
 			public void execute() {
 				try{
 					if(!setLayoutXml(formDef.getLayoutXml(), formDef))
@@ -1106,8 +1115,7 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 				catch(Exception ex){
 					FormUtil.displayException(ex);
 				}
-			}
-		});
+			}});
 	}
 
 	/**

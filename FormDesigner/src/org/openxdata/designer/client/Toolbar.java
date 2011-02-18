@@ -210,8 +210,8 @@ public class Toolbar extends Composite implements XformItemSelectHandler, XformL
 	}
 	
 	@UiHandler("btnAdvancedViews")
-	public void handleAdvancedViews(){
-		
+	public void handleAdvancedViews(ClickEvent event){
+		controller.launchAdvancedViews();
 	}
 
 	@Override

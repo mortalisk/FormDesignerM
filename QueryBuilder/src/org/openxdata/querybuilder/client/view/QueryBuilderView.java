@@ -7,6 +7,8 @@ import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.util.FormUtil;
 import org.openxdata.sharedlib.client.xforms.XformParser;
 
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.logical.shared.ResizeEvent;
@@ -58,7 +60,7 @@ public class QueryBuilderView  extends Composite implements SelectionHandler<Int
 		Window.addResizeHandler(this);
 
 		//		This is needed for IE
-		DeferredCommand.addCommand(new Command() {
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			public void execute() {
 				onWindowResized(Window.getClientWidth(), Window.getClientHeight());
 			}
@@ -92,7 +94,7 @@ public class QueryBuilderView  extends Composite implements SelectionHandler<Int
 		FormUtil.dlg.setText("Building " + (selectedTabIndex == 3 ? "Query Definition" : "SQL")); //LocaleText.get("???????")
 		FormUtil.dlg.center();
 
-		DeferredCommand.addCommand(new Command(){
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			public void execute() {
 				try{
 					if(selectedTabIndex == 3)
@@ -119,7 +121,7 @@ public class QueryBuilderView  extends Composite implements SelectionHandler<Int
 		FormUtil.dlg.setText("Parsing Xform"); //LocaleText.get("???????")
 		FormUtil.dlg.center();
 
-		DeferredCommand.addCommand(new Command(){
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			public void execute() {
 				try{
 					FormDef formDef = null;
@@ -143,7 +145,7 @@ public class QueryBuilderView  extends Composite implements SelectionHandler<Int
 		FormUtil.dlg.setText("Parsing Query Definition"); //LocaleText.get("???????")
 		FormUtil.dlg.center();
 
-		DeferredCommand.addCommand(new Command(){
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			public void execute() {
 				try{
 					String xml = txtDefXml.getText().trim();

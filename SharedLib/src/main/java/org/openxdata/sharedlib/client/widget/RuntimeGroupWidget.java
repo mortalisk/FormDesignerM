@@ -20,6 +20,8 @@ import org.openxdata.sharedlib.client.xforms.XformConstants;
 import org.openxdata.sharedlib.client.xforms.XmlUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.http.client.URL;
@@ -168,13 +170,10 @@ public class RuntimeGroupWidget extends Composite implements OpenFileDialogEvent
 
 		if(isRepeated){
 
-			DeferredCommand.addCommand(new Command() {
+			Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 				public void execute() {
 					RuntimeWidgetWrapper widget = widgets.get(0);
 					if(!(widget.getQuestionDef() == null || widget.getQuestionDef().getDataNode() == null)){
-						/*Element dataNode = (Element)widget.getQuestionDef().getDataNode().getParentNode();
-						Element parent = (Element)dataNode.getParentNode();
-						NodeList nodeList = parent.getElementsByTagName(dataNode.getNodeName());*/
 
 						Element repeatDataNode = getParentNode(widget.getQuestionDef().getDataNode(),(widget.getWrappedWidget() instanceof CheckBox) ? widget.getParentBinding() : widget.getBinding());
 						Element parent = (Element)repeatDataNode.getParentNode();

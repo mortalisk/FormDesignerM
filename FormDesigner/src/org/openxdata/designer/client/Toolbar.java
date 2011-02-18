@@ -135,7 +135,6 @@ public class Toolbar extends Composite implements ILocaleListChangeListener, Xfo
 	
 	@UiHandler("btnSaveForm")
 	public void handleSaveForm(ClickEvent event) {
-		System.out.println("========================================saving");
 		controller.saveForm();
 	}
 	

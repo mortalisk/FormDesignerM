@@ -12,6 +12,7 @@ import org.openxdata.designer.client.util.FormDesignerUtil;
 import org.openxdata.designer.client.util.ItextBuilder;
 import org.openxdata.designer.client.util.ItextParser;
 import org.openxdata.designer.client.util.LanguageUtil;
+import org.openxdata.designer.client.view.AdvancedViewDialog;
 import org.openxdata.designer.client.view.FormsTreeView;
 import org.openxdata.designer.client.view.LocalesDialog;
 import org.openxdata.designer.client.xforms.OpenXdataFormBuilder;
@@ -1485,5 +1486,12 @@ public class FormDesignerController implements IFormDesignerListener,
 		}
 
 		return true;
+	}
+
+	@Override
+	public void launchAdvancedViews() {
+		AdvancedViewDialog dialog = new AdvancedViewDialog(null);
+		dialog.center();
+
 	}
 }

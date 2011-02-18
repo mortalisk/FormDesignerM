@@ -422,12 +422,13 @@ public class FormDesignerController implements IFormDesignerListener,
 					return;
 				}
 
-			}});
+			}
+		});
 	}
 
 	private void prepareFormForSaving(final boolean localSaveAsMode,
 			final FormDef obj) {
-		
+
 		centerPanel.commitChanges();
 
 		// TODO Need to preserve user's model and any others.
@@ -511,9 +512,9 @@ public class FormDesignerController implements IFormDesignerListener,
 					FormUtil.displayException(ex);
 				}
 
-			}});
+			}
+		});
 	}
-	
 
 	/**
 	 * @see org.openxdata.formtools.client.controller.IFormDesignerController#alignLeft()
@@ -522,7 +523,6 @@ public class FormDesignerController implements IFormDesignerListener,
 		// TODO do nothing
 
 	}
-	
 
 	/**
 	 * @see org.openxdata.formtools.client.controller.IFormDesignerController#showLanguages()
@@ -531,7 +531,6 @@ public class FormDesignerController implements IFormDesignerListener,
 		LocalesDialog dlg = new LocalesDialog();
 		dlg.center();
 	}
-	
 
 	/**
 	 * @see org.openxdata.formtools.client.controller.IFormDesignerController#showOptions()
@@ -540,7 +539,6 @@ public class FormDesignerController implements IFormDesignerListener,
 		// do nothing
 
 	}
-	
 
 	/**
 	 * @see org.openxdata.formtools.client.controller.IFormDesignerController#viewToolbar()
@@ -548,7 +546,6 @@ public class FormDesignerController implements IFormDesignerListener,
 	public void viewToolbar() {
 		// do nothing
 	}
-	
 
 	/**
 	 * @see org.openxdata.formtools.client.controller.IFormDesignerController#alignLeft()
@@ -556,7 +553,6 @@ public class FormDesignerController implements IFormDesignerListener,
 	public void alignLeft() {
 		centerPanel.alignLeft();
 	}
-	
 
 	/**
 	 * @see org.openxdata.formtools.client.controller.IFormDesignerController#alignRight()
@@ -564,7 +560,6 @@ public class FormDesignerController implements IFormDesignerListener,
 	public void alignRight() {
 		centerPanel.alignRight();
 	}
-	
 
 	/**
 	 * @see org.openxdata.formtools.client.controller.IFormDesignerController#alignTop()
@@ -572,7 +567,6 @@ public class FormDesignerController implements IFormDesignerListener,
 	public void alignTop() {
 		centerPanel.alignTop();
 	}
-	
 
 	/**
 	 * @see org.openxdata.formtools.client.controller.IFormDesignerController#alignBottom()
@@ -580,7 +574,6 @@ public class FormDesignerController implements IFormDesignerListener,
 	public void alignBottom() {
 		centerPanel.alignBottom();
 	}
-	
 
 	/**
 	 * @see org.openxdata.formtools.client.controller.IFormDesignerController#makeSameHeight()
@@ -588,7 +581,6 @@ public class FormDesignerController implements IFormDesignerListener,
 	public void makeSameHeight() {
 		centerPanel.makeSameHeight();
 	}
-	
 
 	/**
 	 * @see org.openxdata.formtools.client.controller.IFormDesignerController#makeSameSize()
@@ -596,7 +588,6 @@ public class FormDesignerController implements IFormDesignerListener,
 	public void makeSameSize() {
 		centerPanel.makeSameSize();
 	}
-	
 
 	/**
 	 * @see org.openxdata.formtools.client.controller.IFormDesignerController#makeSameWidth()
@@ -604,7 +595,6 @@ public class FormDesignerController implements IFormDesignerListener,
 	public void makeSameWidth() {
 		centerPanel.makeSameWidth();
 	}
-	
 
 	/**
 	 * @see org.openxdata.designer.client.controller.IFormActionListener#copyItem()
@@ -617,7 +607,6 @@ public class FormDesignerController implements IFormDesignerListener,
 				centerPanel.copyItem();
 		}
 	}
-	
 
 	/**
 	 * @see org.openxdata.designer.client.controller.IFormActionListener#cutItem()
@@ -630,7 +619,6 @@ public class FormDesignerController implements IFormDesignerListener,
 				centerPanel.cutItem();
 		}
 	}
-	
 
 	/**
 	 * @see org.openxdata.designer.client.controller.IFormActionListener#pasteItem()
@@ -643,7 +631,6 @@ public class FormDesignerController implements IFormDesignerListener,
 				centerPanel.pasteItem();
 		}
 	}
-	
 
 	/**
 	 * @see org.openxdata.designer.client.controller.IFormActionListener#refreshItem()
@@ -652,7 +639,6 @@ public class FormDesignerController implements IFormDesignerListener,
 		if (!Context.isStructureReadOnly())
 			leftPanel.refreshItem();
 	}
-	
 
 	/**
 	 * @see org.openxdata.formtools.client.controller.IFormDesignerController#format()
@@ -660,7 +646,6 @@ public class FormDesignerController implements IFormDesignerListener,
 	public void format() {
 		centerPanel.format();
 	}
-	
 
 	private void refreshObject() {
 
@@ -683,7 +668,8 @@ public class FormDesignerController implements IFormDesignerListener,
 						refreshForm();
 						FormUtil.dlg.hide();
 
-					}});
+					}
+				});
 			} else
 				refreshFormDeffered();
 		} else {
@@ -691,7 +677,6 @@ public class FormDesignerController implements IFormDesignerListener,
 			leftPanel.refresh();
 		}
 	}
-	
 
 	public void refresh(Object sender) {
 		refreshObject = sender;
@@ -703,7 +688,6 @@ public class FormDesignerController implements IFormDesignerListener,
 			FormUtil.isAuthenticated();
 		}
 	}
-	
 
 	/**
 	 * Loads a form from the server.
@@ -841,7 +825,6 @@ public class FormDesignerController implements IFormDesignerListener,
 			FormUtil.isAuthenticated();
 		}
 	}
-	
 
 	public void saveForm(String xformXml, String layoutXml, String languageXml,
 			String javaScriptSrc) {
@@ -887,7 +870,6 @@ public class FormDesignerController implements IFormDesignerListener,
 			FormUtil.displayException(ex);
 		}
 	}
-	
 
 	public void saveLocaleText(String languageXml) {
 		String url = FormUtil.getHostPageBaseURL();
@@ -920,7 +902,6 @@ public class FormDesignerController implements IFormDesignerListener,
 			FormUtil.displayException(ex);
 		}
 	}
-	
 
 	/**
 	 * Checks if the form designer is in offline mode.
@@ -930,7 +911,6 @@ public class FormDesignerController implements IFormDesignerListener,
 	public boolean isOfflineMode() {
 		return formId == null;
 	}
-	
 
 	private void refreshForm() {
 		String url = FormUtil.getHostPageBaseURL();
@@ -968,7 +948,6 @@ public class FormDesignerController implements IFormDesignerListener,
 			FormUtil.displayException(ex);
 		}
 	}
-	
 
 	/**
 	 * Refreshes the selected from in a deferred command.
@@ -1006,7 +985,6 @@ public class FormDesignerController implements IFormDesignerListener,
 			}
 		});
 	}
-	
 
 	/**
 	 * Sets the listener to form save events.
@@ -1017,7 +995,6 @@ public class FormDesignerController implements IFormDesignerListener,
 	public void setFormSaveListener(IFormSaveListener formSaveListener) {
 		this.formSaveListener = formSaveListener;
 	}
-	
 
 	/**
 	 * @see org.openxdata.designer.client.controller.IFormActionListener#moveUp()
@@ -1025,7 +1002,6 @@ public class FormDesignerController implements IFormDesignerListener,
 	public void moveUp() {
 		leftPanel.getFormActionListener().moveUp();
 	}
-	
 
 	/**
 	 * @see org.openxdata.designer.client.controller.IFormActionListener#moveDown()
@@ -1033,7 +1009,6 @@ public class FormDesignerController implements IFormDesignerListener,
 	public void moveDown() {
 		leftPanel.getFormActionListener().moveUp();
 	}
-	
 
 	/**
 	 * @see org.openxdata.designer.client.controller.IFormActionListener#moveToParent()
@@ -1041,7 +1016,6 @@ public class FormDesignerController implements IFormDesignerListener,
 	public void moveToParent() {
 		leftPanel.getFormActionListener().moveToParent();
 	}
-	
 
 	/**
 	 * @see org.openxdata.designer.client.controller.IFormActionListener#moveToChild()
@@ -1049,7 +1023,6 @@ public class FormDesignerController implements IFormDesignerListener,
 	public void moveToChild() {
 		leftPanel.getFormActionListener().moveToChild();
 	}
-	
 
 	/**
 	 * @see org.openxdata.sharedlib.client.controller.OpenFileDialogEventListener#onSetFileContents()
@@ -1062,7 +1035,6 @@ public class FormDesignerController implements IFormDesignerListener,
 			FormUtil.isAuthenticated();
 		}
 	}
-	
 
 	private void setFileContents() {
 
@@ -1098,7 +1070,6 @@ public class FormDesignerController implements IFormDesignerListener,
 			FormUtil.displayException(ex);
 		}
 	}
-	
 
 	public void saveAs() {
 		try {
@@ -1122,7 +1093,6 @@ public class FormDesignerController implements IFormDesignerListener,
 			FormUtil.displayException(ex);
 		}
 	}
-	
 
 	/**
 	 * @see org.openxdata.designer.client.controller.IFormDesignerListener#openLanguageText()
@@ -1197,7 +1167,6 @@ public class FormDesignerController implements IFormDesignerListener,
 			}
 		});
 	}
-	
 
 	/**
 	 * Saves locale text for the selected form.
@@ -1208,7 +1177,6 @@ public class FormDesignerController implements IFormDesignerListener,
 	public void saveLanguageText(boolean selectTab) {
 		saveLanguageTextDeffered(selectTab);
 	}
-	
 
 	/**
 	 * Saves locale text for the selected form.
@@ -1216,7 +1184,6 @@ public class FormDesignerController implements IFormDesignerListener,
 	public void saveLanguageText() {
 		saveLanguageTextDeffered(true);
 	}
-	
 
 	/**
 	 * Saves locale text for the selected form, in a deferred command.
@@ -1236,7 +1203,6 @@ public class FormDesignerController implements IFormDesignerListener,
 			}
 		});
 	}
-	
 
 	/**
 	 * Saves locale text for the selected form, in a non deferred command.
@@ -1277,7 +1243,6 @@ public class FormDesignerController implements IFormDesignerListener,
 			FormUtil.displayException(ex);
 		}
 	}
-	
 
 	/**
 	 * Reloads forms in a given locale.
@@ -1326,7 +1291,6 @@ public class FormDesignerController implements IFormDesignerListener,
 
 		return true;
 	}
-	
 
 	/**
 	 * Sets locale text for a given form.
@@ -1347,7 +1311,6 @@ public class FormDesignerController implements IFormDesignerListener,
 
 		map.put(locale, text);
 	}
-	
 
 	/**
 	 * Gets locale text for a given form.
@@ -1364,7 +1327,6 @@ public class FormDesignerController implements IFormDesignerListener,
 			return map.get(locale);
 		return null;
 	}
-	
 
 	/**
 	 * Sets xforms and layout locale text for a given form.
@@ -1382,7 +1344,6 @@ public class FormDesignerController implements IFormDesignerListener,
 			String layout) {
 		setLocaleText(formId, locale, LanguageUtil.getLocaleText(xform, layout));
 	}
-	
 
 	/**
 	 * Sets the default locale used by the form designer.
@@ -1393,7 +1354,6 @@ public class FormDesignerController implements IFormDesignerListener,
 	public void setDefaultLocale(Locale locale) {
 		Context.setDefaultLocale(locale);
 	}
-	
 
 	/**
 	 * Embeds the selected xform into xhtml.
@@ -1427,7 +1387,6 @@ public class FormDesignerController implements IFormDesignerListener,
 			}
 		});
 	}
-	
 
 	public void saveAsOpenXdataForm() {
 
@@ -1470,7 +1429,6 @@ public class FormDesignerController implements IFormDesignerListener,
 			}
 		});
 	}
-	
 
 	/**
 	 * This is called from the server after an attempt to authenticate the
@@ -1502,7 +1460,6 @@ public class FormDesignerController implements IFormDesignerListener,
 		} else
 			loginDlg.center();
 	}
-	
 
 	/**
 	 * Called to handle form designer global keyboard short cuts.
@@ -1523,7 +1480,6 @@ public class FormDesignerController implements IFormDesignerListener,
 
 		return true;
 	}
-	
 
 	@Override
 	public void launchAdvancedViews() {

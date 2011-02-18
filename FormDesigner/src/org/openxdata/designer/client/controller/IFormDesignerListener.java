@@ -149,4 +149,9 @@ public interface IFormDesignerListener extends IFormActionListener{
 	 * @return true if you want the event to propagate to other event handlers, else false.
 	 */
 	public boolean handleKeyBoardEvent(Event event);
+
+	/**
+	 * Launches advanced XML views in a dialog.
+	 */
+	public void launchAdvancedViews();
 }

@@ -1,9 +1,5 @@
 package org.openxdata.designer.client.view;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +19,7 @@ import org.openxdata.designer.client.util.FormDesignerUtil;
 import org.openxdata.designer.client.vew.widget.images.FormDesignerImages;
 import org.openxdata.designer.client.widget.CompositeTreeItem;
 import org.openxdata.designer.client.widget.TreeItemWidget;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.ModelConstants;
 import org.openxdata.sharedlib.client.model.OptionDef;
@@ -30,6 +27,9 @@ import org.openxdata.sharedlib.client.model.PageDef;
 import org.openxdata.sharedlib.client.model.QuestionDef;
 import org.openxdata.sharedlib.client.util.FormUtil;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseUpEvent;
@@ -40,7 +40,6 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
@@ -48,7 +47,6 @@ import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
-import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 
 /**

@@ -1,10 +1,7 @@
 package org.openxdata.designer.client.view;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
-
 import org.openxdata.designer.client.Context;
+import org.openxdata.designer.client.DesignerMessages;
 import org.openxdata.designer.client.controller.IFormActionListener;
 import org.openxdata.designer.client.controller.IFormChangeListener;
 import org.openxdata.designer.client.controller.IFormSelectionListener;
@@ -12,6 +9,7 @@ import org.openxdata.designer.client.controller.ItemSelectionListener;
 import org.openxdata.designer.client.util.FormDesignerUtil;
 import org.openxdata.designer.client.view.helper.PropertiesViewHelper;
 import org.openxdata.designer.client.widget.DescTemplateWidget;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 import org.openxdata.sharedlib.client.model.Calculation;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.OptionDef;
@@ -20,6 +18,9 @@ import org.openxdata.sharedlib.client.model.QuestionDef;
 import org.openxdata.sharedlib.client.model.RepeatQtnsDef;
 import org.openxdata.sharedlib.client.util.FormUtil;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -31,9 +32,7 @@ import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
-import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -47,8 +46,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import org.openxdata.designer.client.DesignerMessages;
-import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 
 /**

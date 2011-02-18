@@ -31,6 +31,8 @@ import org.openxdata.sharedlib.client.xforms.XformUtil;
 import org.openxdata.sharedlib.client.xforms.XmlUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
@@ -269,59 +271,63 @@ public class FormDesignerController implements IFormDesignerListener,
 		FormUtil.dlg.setText(messages.openingForm());
 		FormUtil.dlg.center();
 
-		DeferredCommand.addCommand(new Command() {
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+
+			@Override
 			public void execute() {
+
 				try {
-					String xml = centerPanel.getXformsSource().trim();
-					if (xml.length() > 0) {
-						Document doc = ItextParser.parse(xml);
-						FormDef formDef = XformParser.fromXform2FormDef(doc,
-								xml, Context.getLanguageText());
-						formDef.setReadOnly(tempReadonly);
-
-						if (tempFormId != ModelConstants.NULL_ID)
-							formDef.setId(tempFormId);
-
-						if (formDef.getLayoutXml() != null)
-							centerPanel.setLayoutXml(formDef.getLayoutXml(),
-									false);
-						else {
-							// Could be from form runner which puts these
-							// contents in center panel
-							// because it does not yet have a formdef by the
-							// time it has this data.
-							formDef.setXformXml(centerPanel.getXformsSource());
-							formDef.setLayoutXml(centerPanel.getLayoutXml());
-						}
-
-						if (formDef.getJavaScriptSource() != null)
-							centerPanel.setJavaScriptSource(formDef
-									.getJavaScriptSource());
-						else
-							formDef.setJavaScriptSource(centerPanel
-									.getJavaScriptSource());
-
-						// TODO May also need to refresh UI if form was not
-						// stored in default lang.
-						HashMap<String, String> locales = Context
-								.getLanguageText().get(formDef.getId());
-						if (locales != null) {
-							formDef.setLanguageXml(FormUtil.formatXml(locales
-									.get(Context.getLocale())));
-							centerPanel.setLanguageXml(
-									formDef.getLanguageXml(), false);
-						}
-
-						leftPanel.loadForm(formDef);
-						centerPanel.loadForm(formDef, formDef.getLayoutXml());
-						centerPanel.format();
-					}
+					prepareFormForLoading(tempFormId, tempReadonly);
 					FormUtil.dlg.hide();
 				} catch (Exception ex) {
 					FormUtil.displayException(ex);
 				}
 			}
 		});
+	}
+
+	private void prepareFormForLoading(final int tempFormId,
+			final boolean tempReadonly) {
+		String xml = centerPanel.getXformsSource().trim();
+		if (xml.length() > 0) {
+			Document doc = ItextParser.parse(xml);
+			FormDef formDef = XformParser.fromXform2FormDef(doc, xml,
+					Context.getLanguageText());
+			formDef.setReadOnly(tempReadonly);
+
+			if (tempFormId != ModelConstants.NULL_ID)
+				formDef.setId(tempFormId);
+
+			if (formDef.getLayoutXml() != null)
+				centerPanel.setLayoutXml(formDef.getLayoutXml(), false);
+			else {
+				// Could be from form runner which puts these
+				// contents in center panel
+				// because it does not yet have a formdef by the
+				// time it has this data.
+				formDef.setXformXml(centerPanel.getXformsSource());
+				formDef.setLayoutXml(centerPanel.getLayoutXml());
+			}
+
+			if (formDef.getJavaScriptSource() != null)
+				centerPanel.setJavaScriptSource(formDef.getJavaScriptSource());
+			else
+				formDef.setJavaScriptSource(centerPanel.getJavaScriptSource());
+
+			// TODO May also need to refresh UI if form was not
+			// stored in default lang.
+			HashMap<String, String> locales = Context.getLanguageText().get(
+					formDef.getId());
+			if (locales != null) {
+				formDef.setLanguageXml(FormUtil.formatXml(locales.get(Context
+						.getLocale())));
+				centerPanel.setLanguageXml(formDef.getLanguageXml(), false);
+			}
+
+			leftPanel.loadForm(formDef);
+			centerPanel.loadForm(formDef, formDef.getLayoutXml());
+			centerPanel.format();
+		}
 	}
 
 	/**
@@ -354,7 +360,9 @@ public class FormDesignerController implements IFormDesignerListener,
 		FormUtil.dlg.setText(messages.openingFormLayout());
 		FormUtil.dlg.center();
 
-		DeferredCommand.addCommand(new Command() {
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+
+			@Override
 			public void execute() {
 				try {
 					centerPanel.openFormLayout(selectTbs);
@@ -405,74 +413,78 @@ public class FormDesignerController implements IFormDesignerListener,
 		FormUtil.dlg.setText(messages.savingForm());
 		FormUtil.dlg.center();
 
-		DeferredCommand.addCommand(new Command() {
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+
+			@Override
 			public void execute() {
 				try {
-					centerPanel.commitChanges();
-
-					// TODO Need to preserve user's model and any others.
-					String xml = null;
-					FormDef formDef = obj;
-					if (formDef.getDoc() == null) {
-						if (FormUtil.isJavaRosaSaveFormat())
-							xml = XhtmlBuilder.fromFormDef2Xhtml(formDef);
-						else
-							xml = XformBuilder.fromFormDef2Xform(formDef);
-					} else {
-						formDef.updateDoc(false);
-
-						if (FormUtil.isJavaRosaSaveFormat())
-							ItextBuilder.build(formDef);
-
-						xml = XmlUtil.fromDoc2String(formDef.getDoc());
-					}
-
-					xml = XformUtil.normalizeNameSpace(formDef.getDoc(), xml);
-
-					xml = FormDesignerUtil.formatXml(xml);
-
-					formDef.setXformXml(xml);
-					centerPanel.setXformsSource(xml, formSaveListener == null
-							&& isOfflineMode());
-					centerPanel.buildLayoutXml();
-
-					centerPanel.saveLanguageText(false);
-					setLocaleText(formDef.getId(),
-							Context.getLocale().getKey(),
-							centerPanel.getLanguageXml());
-
-					centerPanel.saveJavaScriptSource();
-
-					if (!isOfflineMode() && formSaveListener == null)
-						saveForm(xml, centerPanel.getLayoutXml(),
-								OpenXdataFormBuilder
-										.getCombinedLanguageText(Context
-												.getLanguageText().get(
-														formDef.getId())),
-								centerPanel.getJavaScriptSource());
-
-					boolean saveLocaleText = false;
-					if (formSaveListener != null)
-						saveLocaleText = formSaveListener.onSaveForm(
-								formDef.getId(), xml,
-								centerPanel.getLayoutXml(),
-								centerPanel.getJavaScriptSource());
-
-					if (isOfflineMode() || formSaveListener != null)
-						FormUtil.dlg.hide();
-
-					// Save text for the current language
-					if (saveLocaleText)
-						saveTheLanguageText(false, false);
-
-					if (localSaveAsMode)
-						saveAs();
+					prepareFormForSaving(localSaveAsMode, obj);
 				} catch (Exception ex) {
 					FormUtil.displayException(ex);
 					return;
 				}
-			}
-		});
+
+			}});
+	}
+
+	private void prepareFormForSaving(final boolean localSaveAsMode,
+			final FormDef obj) {
+		
+		centerPanel.commitChanges();
+
+		// TODO Need to preserve user's model and any others.
+		String xml = null;
+		FormDef formDef = obj;
+		if (formDef.getDoc() == null) {
+			if (FormUtil.isJavaRosaSaveFormat())
+				xml = XhtmlBuilder.fromFormDef2Xhtml(formDef);
+			else
+				xml = XformBuilder.fromFormDef2Xform(formDef);
+		} else {
+			formDef.updateDoc(false);
+
+			if (FormUtil.isJavaRosaSaveFormat())
+				ItextBuilder.build(formDef);
+
+			xml = XmlUtil.fromDoc2String(formDef.getDoc());
+		}
+
+		xml = XformUtil.normalizeNameSpace(formDef.getDoc(), xml);
+
+		xml = FormDesignerUtil.formatXml(xml);
+
+		formDef.setXformXml(xml);
+		centerPanel.setXformsSource(xml, formSaveListener == null
+				&& isOfflineMode());
+		centerPanel.buildLayoutXml();
+
+		centerPanel.saveLanguageText(false);
+		setLocaleText(formDef.getId(), Context.getLocale().getKey(),
+				centerPanel.getLanguageXml());
+
+		centerPanel.saveJavaScriptSource();
+
+		if (!isOfflineMode() && formSaveListener == null)
+			saveForm(xml, centerPanel.getLayoutXml(),
+					OpenXdataFormBuilder.getCombinedLanguageText(Context
+							.getLanguageText().get(formDef.getId())),
+					centerPanel.getJavaScriptSource());
+
+		boolean saveLocaleText = false;
+		if (formSaveListener != null)
+			saveLocaleText = formSaveListener.onSaveForm(formDef.getId(), xml,
+					centerPanel.getLayoutXml(),
+					centerPanel.getJavaScriptSource());
+
+		if (isOfflineMode() || formSaveListener != null)
+			FormUtil.dlg.hide();
+
+		// Save text for the current language
+		if (saveLocaleText)
+			saveTheLanguageText(false, false);
+
+		if (localSaveAsMode)
+			saveAs();
 	}
 
 	/**
@@ -490,7 +502,9 @@ public class FormDesignerController implements IFormDesignerListener,
 		FormUtil.dlg.setText(messages.savingFormLayout());
 		FormUtil.dlg.center();
 
-		DeferredCommand.addCommand(new Command() {
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+
+			@Override
 			public void execute() {
 				try {
 					centerPanel.saveFormLayout();
@@ -498,8 +512,8 @@ public class FormDesignerController implements IFormDesignerListener,
 				} catch (Exception ex) {
 					FormUtil.displayException(ex);
 				}
-			}
-		});
+
+			}});
 	}
 
 	/**
@@ -655,12 +669,14 @@ public class FormDesignerController implements IFormDesignerListener,
 				FormUtil.dlg.setText(messages.refreshingForm());
 				FormUtil.dlg.center();
 
-				DeferredCommand.addCommand(new Command() {
+				Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+
+					@Override
 					public void execute() {
 						refreshForm();
 						FormUtil.dlg.hide();
-					}
-				});
+
+					}});
 			} else
 				refreshFormDeffered();
 		} else {

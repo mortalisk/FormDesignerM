@@ -1,12 +1,12 @@
 package org.openxdata.designer.client.controller;
 
-import com.google.gwt.core.client.GWT;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import org.openxdata.designer.client.CenterPanel;
 import org.openxdata.designer.client.Context;
+import org.openxdata.designer.client.DesignerMessages;
 import org.openxdata.designer.client.LeftPanel;
 import org.openxdata.designer.client.util.FormDesignerUtil;
 import org.openxdata.designer.client.util.ItextBuilder;
@@ -30,6 +30,7 @@ import org.openxdata.sharedlib.client.xforms.XformParser;
 import org.openxdata.sharedlib.client.xforms.XformUtil;
 import org.openxdata.sharedlib.client.xforms.XmlUtil;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
@@ -42,8 +43,6 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.XMLParser;
-import org.openxdata.designer.client.DesignerMessages;
-import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 
 /**

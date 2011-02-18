@@ -697,23 +697,24 @@ public class FormDesignerController implements IFormDesignerListener,
 		FormUtil.dlg.setText(messages.openingForm());
 		FormUtil.dlg.center();
 
-		DeferredCommand.addCommand(new Command() {
-			public void execute() {
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 
+			@Override
+			public void execute() {
 				String url = FormUtil.getHostPageBaseURL();
 				url += FormUtil.getFormDefDownloadUrlSuffix();
 				url += FormUtil.getFormIdName() + "=" + formId;
-
+				
 				RequestBuilder builder = new RequestBuilder(RequestBuilder.GET,
 						URL.encode(url));
-
+				
 				try {
 					prepareFormForLoading(builder);
 				} catch (RequestException ex) {
 					FormUtil.displayException(ex);
 				}
-			}
-		});
+
+			}});
 	}
 
 	private void prepareFormForLoading(RequestBuilder builder)
@@ -928,8 +929,8 @@ public class FormDesignerController implements IFormDesignerListener,
 	private void refreshFormDeffered() {
 		FormUtil.dlg.setText(messages.refreshingForm());
 		FormUtil.dlg.center();
-
-		DeferredCommand.addCommand(new Command() {
+		
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			public void execute() {
 				try {
 					String xml = centerPanel.getXformsSource();
@@ -1075,7 +1076,7 @@ public class FormDesignerController implements IFormDesignerListener,
 		FormUtil.dlg.setText(messages.translatingFormLanguage());
 		FormUtil.dlg.center();
 
-		DeferredCommand.addCommand(new Command() {
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			public void execute() {
 				try {
 					int selFormId = -1;
@@ -1121,14 +1122,14 @@ public class FormDesignerController implements IFormDesignerListener,
 						openFormLayout(false);
 
 						if (Context.getCurrentMode() == Context.MODE_PREVIEW) {
-							DeferredCommand.addCommand(new Command() {
+							Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 								public void execute() {
 									refreshObject();
 								}
 							});
 						}
 					} else if (Context.getCurrentMode() == Context.MODE_DESIGN) {
-						DeferredCommand.addCommand(new Command() {
+						Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 							public void execute() {
 								refreshObject();
 							}
@@ -1170,7 +1171,7 @@ public class FormDesignerController implements IFormDesignerListener,
 		FormUtil.dlg.setText(messages.savingLanguageText());
 		FormUtil.dlg.center();
 
-		DeferredCommand.addCommand(new Command() {
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			public void execute() {
 				saveTheLanguageText(selTab, true);
 			}
@@ -1238,7 +1239,7 @@ public class FormDesignerController implements IFormDesignerListener,
 		// We need to do the translation in a differed command such that it
 		// happens after form saving,
 		// just in case form hadn't yet been saved.
-		DeferredCommand.addCommand(new Command() {
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			public void execute() {
 
 				// Store the new locale.
@@ -1344,7 +1345,7 @@ public class FormDesignerController implements IFormDesignerListener,
 		FormUtil.dlg.setText(messages.savingForm());
 		FormUtil.dlg.center();
 
-		DeferredCommand.addCommand(new Command() {
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			public void execute() {
 				try {
 					FormDef formDef = new FormDef((FormDef) obj);
@@ -1365,13 +1366,13 @@ public class FormDesignerController implements IFormDesignerListener,
 		if (isOfflineMode())
 			saveTheForm();
 
-		DeferredCommand.addCommand(new Command() {
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			public void execute() {
 
 				FormUtil.dlg.setText(messages.savingForm());
 				FormUtil.dlg.center();
 
-				DeferredCommand.addCommand(new Command() {
+				Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 					public void execute() {
 						try {
 							FormDef formDef = leftPanel.getSelectedForm();

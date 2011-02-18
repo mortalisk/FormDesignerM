@@ -27,6 +27,8 @@ import org.openxdata.sharedlib.client.util.FormUtil;
 import org.openxdata.sharedlib.client.widget.RuntimeWidgetWrapper;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -227,11 +229,14 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 			if(formDef != null && formDef.getQuestionCount() > 0 && !designSurfaceView.hasWidgets()){
 				tabs.selectTab(SELECTED_INDEX_DESIGN_SURFACE);
 				
-				DeferredCommand.addCommand(new Command(){
+				Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+
+					@Override
 					public void execute() {
 						tabs.selectTab(SELECTED_INDEX_PREVIEW);
-					}
-				});
+
+
+					}});
 				return;
 			}
 			
@@ -264,7 +269,9 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 		FormUtil.dlg.setText(constants.loadingPreview());
 		FormUtil.dlg.center();
 
-		DeferredCommand.addCommand(new Command(){
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+
+			@Override
 			public void execute() {
 				try{
 					commitChanges();
@@ -277,8 +284,8 @@ public class CenterPanel extends Composite implements SelectionHandler<Integer>,
 				catch(Exception ex){
 					FormUtil.displayException(ex);
 				}
-			}
-		});
+
+			}});
 	}
 
 	/**

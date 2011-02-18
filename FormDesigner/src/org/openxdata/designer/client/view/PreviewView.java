@@ -7,21 +7,23 @@ import org.openxdata.designer.client.controller.ICenterPanel;
 import org.openxdata.designer.client.util.FormDesignerUtil;
 import org.openxdata.designer.client.vew.widget.images.FormDesignerImages;
 import org.openxdata.sharedlib.client.controller.SubmitListener;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 import org.openxdata.sharedlib.client.util.FormUtil;
 import org.openxdata.sharedlib.client.view.FormRunnerView;
 import org.openxdata.sharedlib.client.widget.RuntimeWidgetWrapper;
 import org.openxdata.sharedlib.client.xforms.XformBuilder;
 import org.openxdata.sharedlib.client.xforms.XformUtil;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.PopupPanel;
-import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 
 /**
@@ -65,7 +67,7 @@ public class PreviewView extends FormRunnerView {
 		DOM.sinkEvents(getElement(),DOM.getEventsSunk(getElement()) | Event.ONMOUSEDOWN);
 
 		//This is needed for IE
-		DeferredCommand.addCommand(new Command() {
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			public void execute() {
 				setHeight(getHeight());
 			}
@@ -89,7 +91,7 @@ public class PreviewView extends FormRunnerView {
 		selectedPanel = panel;
 
 		//This is needed for IE
-		DeferredCommand.addCommand(new Command() {
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			public void execute() {
 				setHeight(getHeight());
 			}
@@ -168,7 +170,7 @@ public class PreviewView extends FormRunnerView {
 		FormUtil.dlg.setText(formsConstants.refreshingPreview());
 		FormUtil.dlg.center();
 
-		DeferredCommand.addCommand(new Command(){
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			public void execute() {
 				try{
 					centerPanel.commitChanges();

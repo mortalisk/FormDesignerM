@@ -6,6 +6,8 @@ import org.openxdata.sharedlib.client.model.QuestionDef;
 import org.openxdata.sharedlib.client.util.FormUtil;
 import org.zenika.widget.client.util.DateUtil;
 
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -159,7 +161,9 @@ public class DatePickerWidget extends DatePickerEx implements KeyPressHandler, C
 	}
 	
 	public void fireChangeEvent(final HasHandlers handlerSource) {
-		DeferredCommand.addCommand(new Command() {
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+
+			@Override
 			public void execute() {
 				Timer t = new Timer() {
 					public void run() {
@@ -167,8 +171,8 @@ public class DatePickerWidget extends DatePickerEx implements KeyPressHandler, C
 					}
 				};
 				t.schedule(300);
-			}
-		});
+
+			}});
 	}
 
 	/**

@@ -4,6 +4,8 @@ import org.openxdata.sharedlib.client.locale.FormsConstants;
 import org.openxdata.sharedlib.client.util.FormUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -127,7 +129,7 @@ public class LoginDialog extends DialogBox {
 		
 		setWidget(panel);
 		
-		DeferredCommand.addCommand(new Command() {
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			public void execute() {
 				txtUserName.setFocus(true);
 			}
@@ -177,7 +179,7 @@ public class LoginDialog extends DialogBox {
 		
 		//Some how focus will not get to the user name unless when called within
 		//a deffered command.
-		DeferredCommand.addCommand(new Command() {
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			public void execute() {
 				txtUserName.setFocus(true);
 			}

@@ -732,16 +732,6 @@ public class FormDesignerController implements IFormDesignerListener,
 
 							String xformXml, layoutXml = null, localeXml = null, javaScriptSrc = null;
 
-							/*
-							 * int pos = xml.indexOf(OpenXdataConstants.
-							 * OPENXDATA_FORMDEF_LAYOUT_XML_SEPARATOR); if(pos >
-							 * 0){ xformXml = xml.substring(0,pos); layoutXml =
-							 * FormUtil
-							 * .formatXml(xml.substring(pos+OpenXdataConstants
-							 * .OPENXDATA_FORMDEF_LAYOUT_XML_SEPARATOR.length(),
-							 * xml.length())); } else xformXml = xml;
-							 */
-
 							int pos = xml
 									.indexOf(OpenXdataConstants.OPENXDATA_FORMDEF_LAYOUT_XML_SEPARATOR);
 							int pos2 = xml

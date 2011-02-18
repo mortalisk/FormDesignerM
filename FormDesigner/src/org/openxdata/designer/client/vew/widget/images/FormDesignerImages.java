@@ -43,8 +43,9 @@ public interface FormDesignerImages extends Resources {
 	ImageResource info();
 	
 	ImageResource error();
+
 	ImageResource loading();
-	
+
 	ImageResource picture();
 	
 }

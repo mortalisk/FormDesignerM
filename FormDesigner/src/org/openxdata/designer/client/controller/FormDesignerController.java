@@ -69,9 +69,7 @@ public class FormDesignerController implements IFormDesignerListener, OpenFileDi
 	 * The identifier of the loaded or opened form.
 	 */
 	private Integer formId;	
-
-	//These are constants to remember the current action during the login call back
-	//such that we know which action to execute.
+	
 	/** No current action. */
 	private static final byte CA_NONE = 0;
 

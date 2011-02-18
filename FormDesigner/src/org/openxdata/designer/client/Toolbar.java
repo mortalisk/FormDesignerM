@@ -1,14 +1,14 @@
 package org.openxdata.designer.client;
 
 import org.openxdata.designer.client.controller.IFormDesignerListener;
-import org.openxdata.designer.client.controller.ILocaleListChangeListener;
 import org.openxdata.designer.client.event.CenterPanelTabSelectedEvent;
 import org.openxdata.designer.client.event.CenterPanelTabSelectedHandler;
+import org.openxdata.designer.client.event.FormDesignerEventBus;
 import org.openxdata.designer.client.event.XformItemSelectEvent;
 import org.openxdata.designer.client.event.XformItemSelectHandler;
-import org.openxdata.designer.client.event.FormDesignerEventBus;
 import org.openxdata.designer.client.event.XformListEmptyEvent;
 import org.openxdata.designer.client.event.XformListEmptyHandler;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 import org.openxdata.sharedlib.client.model.QuestionDef;
 
 import com.google.gwt.core.client.GWT;
@@ -20,7 +20,6 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.Widget;
-import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 /**
  * This widget is the main tool bar for the form designer.
@@ -28,7 +27,7 @@ import org.openxdata.sharedlib.client.locale.FormsConstants;
  *  www.openxdata.org - Licensed as written in license.txt and original sources of this file and its authors are found in sources.txt.
  *
  */
-public class Toolbar extends Composite implements ILocaleListChangeListener, XformItemSelectHandler, XformListEmptyHandler, 
+public class Toolbar extends Composite implements XformItemSelectHandler, XformListEmptyHandler, 
 													CenterPanelTabSelectedHandler {
     final FormsConstants formsConstants = GWT.create(FormsConstants.class);
     final DesignerMessages designerMessages = GWT.create(DesignerMessages.class);

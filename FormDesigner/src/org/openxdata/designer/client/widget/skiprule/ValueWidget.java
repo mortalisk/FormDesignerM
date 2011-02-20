@@ -97,10 +97,6 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 		if(this.operator != operator){ 
 			if(this.operator == ModelConstants.OPERATOR_IS_NULL || this.operator == ModelConstants.OPERATOR_IS_NOT_NULL)
 				valueAnchor.setText(EMPTY_VALUE);
-
-			/*if((this.operator == OpenXdataConstants.OPERATOR_IN_LIST || this.operator == OpenXdataConstants.OPERATOR_NOT_IN_LIST) &&
-			  !(operator == OpenXdataConstants.OPERATOR_IN_LIST || operator == OpenXdataConstants.OPERATOR_NOT_IN_LIST))
-		    	valueHyperlink.setText(EMPTY_VALUE);*/
 		}
 
 		this.operator = operator;
@@ -128,13 +124,6 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 				startEdit();
 			}
 		});
-
-		//Cuases wiered behaviour when editing with between operator
-		/*txtValue1.addFocusListener(new FocusListenerAdapter(){
-			public void onLostFocus(Widget sender){
-				stopEdit();
-			}
-		});*/
 
 		setupTextListeners();
 
@@ -164,11 +153,6 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 		});
 
 		if(!(operator == ModelConstants.OPERATOR_BETWEEN || operator == ModelConstants.OPERATOR_NOT_BETWEEN)){
-			txtValue1.addBlurHandler(new BlurHandler(){
-				public void onBlur(BlurEvent event){
-					//stopEdit(true);
-				}
-			});
 			txtValue2.addBlurHandler(new BlurHandler(){
 				public void onBlur(BlurEvent event){
 					stopEdit(true);
@@ -206,8 +190,6 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 				horizontalPanel.remove(sgstField);
 				horizontalPanel.remove(chkQuestionValue);
 				if(txtValue1.getParent() != null && txtValue1.getParent() instanceof SuggestBox){
-					//txtValue1.removeKeyboardListener(keyboardListener1);
-					//txtValue2.removeKeyboardListener(keyboardListener2);
 					if(handlerReg1 != null){
 						handlerReg1.removeHandler();
 						handlerReg2.removeHandler();
@@ -268,11 +250,6 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 			
 			maxSize*=12;
 
-			/*ScrollPanel scrollPanel = new ScrollPanel();
-			scrollPanel.setWidget(menuBar);
-			scrollPanel.setHeight("200"+OpenXdataConstants.UNITS);
-			scrollPanel.setWidth((maxSize*11)+OpenXdataConstants.UNITS);*/
-
 			int height = options.size()*29;
 			if(height > 400)
 				height = 400;
@@ -284,7 +261,7 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 			
 			ScrollPanel scrollPanel = new ScrollPanel();
 			scrollPanel.setWidget(menuBar);
-			scrollPanel.setHeight(height+OpenXdataConstants.UNITS); //"200"+OpenXdataConstants.UNITS
+			scrollPanel.setHeight(height+OpenXdataConstants.UNITS);
 			scrollPanel.setWidth((maxSize)+OpenXdataConstants.UNITS);
 
 			popup = new PopupPanel(true,false);
@@ -342,7 +319,7 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 			
 			ScrollPanel scrollPanel = new ScrollPanel();
 			scrollPanel.setWidget(panel);
-			scrollPanel.setHeight(height+OpenXdataConstants.UNITS); //"200"+OpenXdataConstants.UNITS
+			scrollPanel.setHeight(height+OpenXdataConstants.UNITS);
 			scrollPanel.setWidth((maxSize)+OpenXdataConstants.UNITS);
 
 			popup = new PopupPanel(true,false);
@@ -352,27 +329,13 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 			popup.show();
 		}
 		else{
-			//horizontalPanel.remove(valueHyperlink);
-			//horizontalPanel.add(txtValue1);
-
-			//if(!valueHyperlink.getText().equals(EMPTY_VALUE))
-			//	txtValue1.setText(valueHyperlink.getText());
-
-			//txtValue1.removeKeyboardListener(keyboardListener1);
-			//txtValue2.removeKeyboardListener(keyboardListener2);
 			if(handlerReg1 != null){
 				handlerReg1.removeHandler();
 				handlerReg2.removeHandler();
 			}
 
-			/*if(questionDef.getDataType() ==  QuestionDef.QTN_TYPE_DATE){
-				txtValue1 = new DatePickerWidget();
-				txtValue2 = new DatePickerWidget();
-			}
-			else*/{
-				txtValue1 = new TextBox();
-				txtValue2 = new TextBox();
-			}
+			txtValue1 = new TextBox();
+			txtValue2 = new TextBox();
 
 			if(chkQuestionValue.getValue() == true)
 				setupPopup();
@@ -654,11 +617,9 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 
 	public void setFormDef(FormDef formDef){
 		this.formDef = formDef;
-		//setupPopup();
 	}
 
 	private void setupPopup(){
-		//txtValue1.removeKeyboardListener(keyboardListener1);
 		if(handlerReg1 != null)
 			handlerReg1.removeHandler();
 
@@ -677,19 +638,12 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 			FormDesignerUtil.loadQuestions(false, formDef.getPageAt(i).getQuestions(),questionDef,oracle,false,questionDef.getDataType() != QuestionDef.QTN_TYPE_REPEAT, parentQuestionDef);
 
 		sgstField = new SuggestBox(oracle,txtValue1);
-		//selectFirstQuestion();
 
 		sgstField.addSelectionHandler(new SelectionHandler<SuggestOracle.Suggestion>(){
 			public void onSelection(SelectionEvent<SuggestOracle.Suggestion> event){
 				stopEdit(true);
 			}
 		});
-
-		/*sgstField.addFocusListener(new FocusListenerAdapter(){
-			public void onLostFocus(Widget sender){
-				stopSelection();
-			}
-		});*/
 	}
 
 	public QuestionDef getValueQtnDef(){

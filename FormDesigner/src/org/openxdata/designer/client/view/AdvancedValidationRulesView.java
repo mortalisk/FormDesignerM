@@ -2,8 +2,6 @@ package org.openxdata.designer.client.view;
 
 import java.util.List;
 
-import org.openxdata.designer.client.controller.IConditionController;
-import org.openxdata.designer.client.controller.ItemSelectionListener;
 import org.openxdata.sharedlib.client.locale.FormsConstants;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.PageDef;

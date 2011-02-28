@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.openxdata.designer.client.controller.IConditionController;
 import org.openxdata.designer.client.controller.ItemSelectionListener;
-import org.openxdata.designer.client.widget.skiprule.ConditionWidget;
 import org.openxdata.sharedlib.client.locale.FormsConstants;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.PageDef;
@@ -33,7 +32,7 @@ import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class AdvancedValidationRulesView extends Composite implements SelectionHandler<TreeItem>,IConditionController,ItemSelectionListener, ClickHandler{
+public class AdvancedValidationRulesView extends Composite implements SelectionHandler<TreeItem>,ClickHandler{
 
 	private FormsConstants constants = GWT.create(FormsConstants.class);
 	
@@ -126,14 +125,9 @@ public class AdvancedValidationRulesView extends Composite implements SelectionH
 		initWidget(verticalPanel);
 		
 	}
+
 	public void okAction(){
 		descriptionLabel.setText(expressionEditor.getText());
-		}
-	public void cancelAction(){
-		System.out.println("cancel==================");		
-	}
-	public void helpAction(){
-		System.out.println("help==================");
 	}
 	 
 	public void addQuestions(PageDef pageDef){
@@ -161,39 +155,13 @@ public class AdvancedValidationRulesView extends Composite implements SelectionH
 	}
 
 	@Override
-	public void addCondition() {
-		// adds the condition to the question
-		
-	}
-
-	@Override
-	public void deleteCondition(ConditionWidget conditionWidget) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onItemSelected(Object sender, Object item) {
-	}
-
-	@Override
-	public void onStartItemSelection(Object sender) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void onClick(ClickEvent event) {
 		Object sender = event.getSource();
 		if(sender == okBtn){
 			okAction();
-		}else if(sender == cancelBtn){
-			cancelAction();
-		}else if(sender == helpBtn){
-			helpAction();
 		}
-		
 	}
+
 	public Tree addTree(Tree tree){
 		tree = new Tree();
 		tree.addSelectionHandler(this);
@@ -284,12 +252,6 @@ public class AdvancedValidationRulesView extends Composite implements SelectionH
 	public void onSelection(SelectionEvent<TreeItem> event) {
 		TreeItem itm = event.getSelectedItem();
 		exprElements(itm.getText().trim());
-		
-	}
-
-	@Override
-	public void addBracket() {
-		// TODO Auto-generated method stub
 		
 	}
 

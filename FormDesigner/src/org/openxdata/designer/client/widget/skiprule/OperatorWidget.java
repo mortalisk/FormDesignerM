@@ -10,8 +10,6 @@ import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.ListBox;
 import org.openxdata.designer.client.DesignerMessages;
-import org.openxdata.sharedlib.client.locale.FormsConstants;
-
 
 /**
  * Widget used to display the condition operators (eg equal to, less than, greater than, etc)
@@ -20,207 +18,99 @@ import org.openxdata.sharedlib.client.locale.FormsConstants;
  *  www.openxdata.org - Licensed as written in license.txt and original sources of this file and its authors are found in sources.txt.
  *
  */
-public class OperatorWidget extends Composite implements ChangeHandler {
-    
-        private static final FormsConstants i18n = GWT.create(FormsConstants.class);
-        private static final DesignerMessages messages = GWT.create(DesignerMessages.class);
-	
-	/** The operator text: is equal to */
-	public static final String OP_TEXT_EQUAL = i18n.isEqualTo();
-	
-	/** The operator text: is not equal to */
-	public static final String OP_TEXT_NOT_EQUAL = messages.isNotEqual();
-	
-	/** The operator text: is less than */
-	public static final String OP_TEXT_LESS_THAN = messages.isLessThan();
-	
-	/** The operator text: is less than or equal to */
-	public static final String OP_TEXT_LESS_THAN_EQUAL = messages.isLessThanOrEqual();
-	
-	/** The operator text: is greater than */
-	public static final String OP_TEXT_GREATER_THAN = messages.isGreaterThan();
-	
-	/** The operator text: is greater than or equal to */
-	public static final String OP_TEXT_GREATER_THAN_EQUAL = messages.isGreaterThanOrEqual();
-	
-	/** The operator text: is null */
-	public static final String OP_TEXT_NULL = messages.isNull();
-	
-	/** The operator text: is null */
-	public static final String OP_TEXT_NOT_NULL = messages.isNotNull();
-	
-	/** The operator text: is in list */
-	public static final String OP_TEXT_IN_LIST = messages.isInList();
-	
-	/** The operator text: is not in list */
-	public static final String OP_TEXT_NOT_IN_LIST = messages.isNotInList();
-	
-	/** The operator text: is between */
-	public static final String OP_TEXT_BETWEEN = messages.isBetween();
-	
-	/** The operator text: is not between */
-	public static final String OP_TEXT_NOT_BETWEEN = messages.isNotBetween();
+final public class OperatorWidget extends Composite implements ChangeHandler {
 
-	/** The current question data type. */
-	private int dataType =  QuestionDef.QTN_TYPE_TEXT;
-	
-	/** The selection change listener. */
-	private ItemSelectionListener itemSelectionListener;
+    private final DesignerMessages i18n = GWT.create(DesignerMessages.class);
+    /** The current question data type. */
+    private int dataType = QuestionDef.QTN_TYPE_TEXT;
+    /** The selection change listener. */
+    private ItemSelectionListener itemSelectionListener;
+    /** List box that contains the operators the user can select from */
+    private final ListBox operators;
 
-	/** List box that contains the operators the user can select from */
-	private final ListBox listbox;
-	
-	/**
-	 * Creates a new instance of the operator widget
-	 * 
-	 * @param text the default display text.
-	 * @param itemSelectionListener the listener to selection change events.
-	 */
-	public OperatorWidget(String displayText, ItemSelectionListener itemSelectionListener){
-		listbox = new ListBox();
-		listbox.addChangeHandler(this);
-		initWidget(listbox);
-		this.itemSelectionListener = itemSelectionListener;
-		
-		buildOptionList();
-		setSelectedOperator(displayText);
-	}
-	
-	/**
-	 * Sets the data type of the question to which the operator is being applied.
-	 * 
-	 * @param dataType the data type.
-	 */
-	public void setDataType(int dataType){
-		this.dataType = dataType;
-		buildOptionList();
-	}
-	  
-	/**
-	 * Builds the options to put in the list box. The options are based
-	 * on the data type of the question
-	 */
-	private void buildOptionList(){
-		listbox.clear();
-		
-		if(!(dataType == QuestionDef.QTN_TYPE_GPS || dataType == QuestionDef.QTN_TYPE_VIDEO ||
-				dataType == QuestionDef.QTN_TYPE_AUDIO || dataType == QuestionDef.QTN_TYPE_IMAGE ||
-				dataType == QuestionDef.QTN_TYPE_BARCODE)){
-			listbox.addItem(OP_TEXT_EQUAL);
-			listbox.addItem(OP_TEXT_NOT_EQUAL);
-		}
-		  
-		if(dataType == QuestionDef.QTN_TYPE_DATE || dataType == QuestionDef.QTN_TYPE_DATE_TIME ||
-			dataType == QuestionDef.QTN_TYPE_DECIMAL || dataType == QuestionDef.QTN_TYPE_NUMERIC ||
-			dataType == QuestionDef.QTN_TYPE_TIME || dataType == QuestionDef.QTN_TYPE_REPEAT){
-			
-			listbox.addItem(OP_TEXT_GREATER_THAN);	  
-			listbox.addItem(OP_TEXT_GREATER_THAN_EQUAL);	  
-			listbox.addItem(OP_TEXT_LESS_THAN);			  	  
-			listbox.addItem(OP_TEXT_LESS_THAN_EQUAL);		  
-			listbox.addItem(OP_TEXT_BETWEEN);	  
-			listbox.addItem(OP_TEXT_NOT_BETWEEN);
-		}
-		
-		if(dataType == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || dataType == QuestionDef.QTN_TYPE_LIST_MULTIPLE){		  
-			listbox.addItem(OP_TEXT_IN_LIST);	  
-			listbox.addItem(OP_TEXT_NOT_IN_LIST);
-		}
-			  
-		listbox.addItem(OP_TEXT_NULL);
-		listbox.addItem(OP_TEXT_NOT_NULL);
-	}
-	
-	@Override
-	public void onChange(ChangeEvent event) {
-		String itemSelected = listbox.getItemText(listbox.getSelectedIndex());
-		itemSelectionListener.onItemSelected(this, fromOperatorText2Value(itemSelected));
-	}
-	
-	/**
-	 * Converts operator text to its int representation.
-	 * 
-	 * @param text the operator text.
-	 * @return the operator int value.
-	 */
-	private int fromOperatorText2Value(String text){
-		if(text.equals(OP_TEXT_EQUAL))
-			return ModelConstants.OPERATOR_EQUAL;
-		else if(text.equals(OP_TEXT_NOT_EQUAL))
-			return ModelConstants.OPERATOR_NOT_EQUAL;
-		else if(text.equals(OP_TEXT_LESS_THAN))
-			return ModelConstants.OPERATOR_LESS;
-		else if(text.equals(OP_TEXT_LESS_THAN_EQUAL))
-			return ModelConstants.OPERATOR_LESS_EQUAL;
-		else if(text.equals(OP_TEXT_GREATER_THAN))
-			return ModelConstants.OPERATOR_GREATER;
-		else if(text.equals(OP_TEXT_GREATER_THAN_EQUAL))
-			return ModelConstants.OPERATOR_GREATER_EQUAL;
-		else if(text.equals(OP_TEXT_NULL))
-			return ModelConstants.OPERATOR_IS_NULL;
-		else if(text.equals(OP_TEXT_NOT_NULL))
-			return ModelConstants.OPERATOR_IS_NOT_NULL;
-		else if(text.equals(OP_TEXT_IN_LIST))
-			return ModelConstants.OPERATOR_IN_LIST;
-		else if(text.equals(OP_TEXT_NOT_IN_LIST))
-			return ModelConstants.OPERATOR_NOT_IN_LIST;
-		else if(text.equals(OP_TEXT_BETWEEN))
-			return ModelConstants.OPERATOR_BETWEEN;
-		else if(text.equals(OP_TEXT_NOT_BETWEEN))
-			return ModelConstants.OPERATOR_NOT_BETWEEN;
-		return ModelConstants.OPERATOR_NULL;
-	}
-	
-	/**
-	 * Converts the operator int value to its text representation.
-	 * 
-	 * @param operator the operator int value.
-	 */
-	public void setOperator(int operator){
-		String operatorText = null;
-		
-		if(operator == ModelConstants.OPERATOR_EQUAL)
-			operatorText = OP_TEXT_EQUAL;
-		else if(operator == ModelConstants.OPERATOR_NOT_EQUAL)
-			operatorText = OP_TEXT_NOT_EQUAL;
-		else if(operator == ModelConstants.OPERATOR_LESS)
-			operatorText = OP_TEXT_LESS_THAN;
-		else if(operator == ModelConstants.OPERATOR_LESS_EQUAL)
-			operatorText = OP_TEXT_LESS_THAN_EQUAL;
-		else if(operator == ModelConstants.OPERATOR_GREATER)
-			operatorText = OP_TEXT_GREATER_THAN;
-		else if(operator == ModelConstants.OPERATOR_GREATER_EQUAL)
-			operatorText = OP_TEXT_GREATER_THAN_EQUAL;
-		else if(operator == ModelConstants.OPERATOR_IS_NULL)
-			operatorText = OP_TEXT_NULL;
-		else if(operator == ModelConstants.OPERATOR_IS_NOT_NULL)
-			operatorText = OP_TEXT_NOT_NULL;
-		else if(operator == ModelConstants.OPERATOR_IN_LIST)
-			operatorText = OP_TEXT_IN_LIST;
-		else if(operator == ModelConstants.OPERATOR_NOT_IN_LIST)
-			operatorText = OP_TEXT_NOT_IN_LIST;
-		else if(operator == ModelConstants.OPERATOR_BETWEEN)
-			operatorText = OP_TEXT_BETWEEN;
-		else if(operator == ModelConstants.OPERATOR_NOT_BETWEEN)
-			operatorText = OP_TEXT_NOT_BETWEEN;
-		
-		// now set the operator as the selected option in the listbox
-		setSelectedOperator(operatorText);
-	}
+    /**
+     * Creates a new instance of the operator widget
+     * 
+     * @param text the default display text.
+     * @param itemSelectionListener the listener to selection change events.
+     */
+    public OperatorWidget(int operator, ItemSelectionListener itemSelectionListener) {
+        operators = new ListBox();
+        operators.addChangeHandler(this);
+        initWidget(operators);
+        this.itemSelectionListener = itemSelectionListener;
 
-	/**
-	 * Given an operator string, this method will attempt to set the corresponding
-	 * option in the list box as the currently selected item
-	 * 
-	 * @param operatorText
-	 */
-	private void setSelectedOperator(String operatorText) {
-		int optionCnt = listbox.getItemCount();
-		for(int i = 0; i < optionCnt; i++) {
-			if (listbox.getItemText(i).equals(operatorText)) {
-				listbox.setSelectedIndex(i);
-				break;
-			}
-		}
-	}
+        buildOptionList();
+        setOperator(operator);
+    }
+
+    /**
+     * Sets the data type of the question to which the operator is being applied.
+     * 
+     * @param dataType the data type.
+     */
+    public void setDataType(int dataType) {
+        this.dataType = dataType;
+        buildOptionList();
+    }
+
+    /**
+     * Builds the options to put in the list box. The options are based
+     * on the data type of the question
+     */
+    private void buildOptionList() {
+        operators.clear();
+
+        if (!(dataType == QuestionDef.QTN_TYPE_GPS || dataType == QuestionDef.QTN_TYPE_VIDEO
+                || dataType == QuestionDef.QTN_TYPE_AUDIO || dataType == QuestionDef.QTN_TYPE_IMAGE
+                || dataType == QuestionDef.QTN_TYPE_BARCODE)) {
+
+            addOperator(i18n.isEqualTo(), ModelConstants.OPERATOR_EQUAL);
+            addOperator(i18n.isNotEqual(), ModelConstants.OPERATOR_NOT_EQUAL);
+        }
+
+        if (dataType == QuestionDef.QTN_TYPE_DATE || dataType == QuestionDef.QTN_TYPE_DATE_TIME
+                || dataType == QuestionDef.QTN_TYPE_DECIMAL || dataType == QuestionDef.QTN_TYPE_NUMERIC
+                || dataType == QuestionDef.QTN_TYPE_TIME || dataType == QuestionDef.QTN_TYPE_REPEAT) {
+
+            addOperator(i18n.isGreaterThan(), ModelConstants.OPERATOR_GREATER);
+            addOperator(i18n.isGreaterThanOrEqual(), ModelConstants.OPERATOR_GREATER_EQUAL);
+            addOperator(i18n.isLessThan(), ModelConstants.OPERATOR_LESS);
+            addOperator(i18n.isLessThanOrEqual(), ModelConstants.OPERATOR_LESS_EQUAL);
+            addOperator(i18n.isBetween(), ModelConstants.OPERATOR_BETWEEN);
+            addOperator(i18n.isNotBetween(), ModelConstants.OPERATOR_NOT_BETWEEN);
+        }
+
+        if (dataType == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || dataType == QuestionDef.QTN_TYPE_LIST_MULTIPLE) {
+            addOperator(i18n.isInList(), ModelConstants.OPERATOR_IN_LIST);
+            addOperator(i18n.isNotInList(), ModelConstants.OPERATOR_NOT_IN_LIST);
+        }
+
+        addOperator(i18n.isNull(), ModelConstants.OPERATOR_IS_NULL);
+        addOperator(i18n.isNotNull(), ModelConstants.OPERATOR_IS_NOT_NULL);
+    }
+
+    private void addOperator(String caption, int lookupValue) {
+        operators.addItem(caption, Integer.toString(lookupValue));
+    }
+
+    @Override
+    public void onChange(ChangeEvent event) {
+        String selected = operators.getValue(operators.getSelectedIndex());
+        itemSelectionListener.onItemSelected(this, Integer.parseInt(selected));
+    }
+
+    /**
+     * Set the operator for the given operator value to its text representation.
+     * 
+     * @param operator the operator int value.
+     */
+    public void setOperator(int operator) {
+        for (int i = 0; i < operators.getItemCount(); i++) {
+            if (Integer.parseInt(operators.getValue(i)) == operator) {
+                operators.setSelectedIndex(i);
+                return;
+            }
+        }
+    }
 }

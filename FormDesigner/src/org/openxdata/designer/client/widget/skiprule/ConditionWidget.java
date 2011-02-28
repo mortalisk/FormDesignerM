@@ -105,7 +105,7 @@ public class ConditionWidget extends Composite implements ItemSelectionListener{
 			fieldWidget.setQuestion(questionDef);
 		}
 
-		operatorWidget = new OperatorWidget(OperatorWidget.OP_TEXT_EQUAL, this);
+		operatorWidget = new OperatorWidget(ModelConstants.OPERATOR_EQUAL, this);
 		funcHyperlink = new FunctionHyperlink(FunctionHyperlink.FUNCTION_TEXT_VALUE,"",this);
 		
 		horizontalPanel = new HorizontalPanel();

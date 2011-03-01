@@ -1,7 +1,6 @@
 package org.openxdata.runner.client;
 
 import org.openxdata.runner.client.widget.FormRunnerWidget;
-import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.util.FormUtil;
 import org.openxdata.sharedlib.client.view.FormRunnerView.Images;
 
@@ -11,12 +10,15 @@ import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 
 /**
  * This is the GWT entry point for the form runtime engine.
  */
 public class FormRunnerEntryPoint implements EntryPoint{
+
+    private final FormsConstants i18n = GWT.create(FormsConstants.class);
 
 	/** The form runtime widget. */
 	private FormRunnerWidget formRunner;
@@ -33,7 +35,7 @@ public class FormRunnerEntryPoint implements EntryPoint{
 	 */
 	public void onModuleLoad() {
 		
-		FormUtil.dlg.setText(LocaleText.get("loading"));
+		FormUtil.dlg.setText(i18n.loading());
 		FormUtil.dlg.center();
 		
 		publishJS();
@@ -69,7 +71,7 @@ public class FormRunnerEntryPoint implements EntryPoint{
 				formRunner.loadForm(Integer.parseInt(formId),Integer.parseInt(entityId));
 			else{
 				FormUtil.dlg.hide();
-				Window.alert(LocaleText.get("noFormId") + FormUtil.getEntityIdName() + LocaleText.get("divFound"));
+				Window.alert(i18n.noFormId() + FormUtil.getEntityIdName() + i18n.divFound());
 			}
 
 			Scheduler.get().scheduleDeferred(new ScheduledCommand() {

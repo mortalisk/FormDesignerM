@@ -1,12 +1,12 @@
 package org.openxdata.runner.client.controller;
 
+import com.google.gwt.core.client.GWT;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.openxdata.runner.client.widget.FormRunnerWidget;
 import org.openxdata.sharedlib.client.OpenXdataConstants;
 import org.openxdata.sharedlib.client.controller.SubmitListener;
-import org.openxdata.sharedlib.client.locale.LocaleText;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.util.FormUtil;
 import org.openxdata.sharedlib.client.widget.RuntimeWidgetWrapper;
@@ -21,6 +21,7 @@ import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Window;
+import org.openxdata.sharedlib.client.locale.FormsConstants;
 
 
 /**
@@ -31,6 +32,8 @@ import com.google.gwt.user.client.Window;
  *
  */
 public class FormRunnerController implements SubmitListener{
+
+    private final FormsConstants i18n = GWT.create(FormsConstants.class);
 
 	private FormRunnerWidget formRunner;
 	private String xformXml;
@@ -47,7 +50,7 @@ public class FormRunnerController implements SubmitListener{
 		this.formId = frmId;
 		this.entityId = entyId;
 
-		FormUtil.dlg.setText(LocaleText.get("openingForm"));
+		FormUtil.dlg.setText(i18n.openingForm());
 		FormUtil.dlg.center();
 
 		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
@@ -72,7 +75,7 @@ public class FormRunnerController implements SubmitListener{
 							String xml = response.getText();
 							if(xml == null || xml.length() == 0){
 								FormUtil.dlg.hide();
-								Window.alert(LocaleText.get("noDataFound"));
+								Window.alert(i18n.noDataFound());
 								return;
 							}
 
@@ -91,7 +94,7 @@ public class FormRunnerController implements SubmitListener{
 							}
 							else{
 								FormUtil.dlg.hide();
-								Window.alert(LocaleText.get("noFormLayout"));
+								Window.alert(i18n.noFormLayout());
 							}
 						}
 
@@ -108,7 +111,7 @@ public class FormRunnerController implements SubmitListener{
 	}
 
 	public void openForm() {
-		FormUtil.dlg.setText(LocaleText.get("openingForm"));
+		FormUtil.dlg.setText(i18n.openingForm());
 		FormUtil.dlg.center();
 
 		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
@@ -141,7 +144,7 @@ public class FormRunnerController implements SubmitListener{
 
 	public void onSubmit(String xml){
 
-		FormUtil.dlg.setText(LocaleText.get("submitting"));
+		FormUtil.dlg.setText(i18n.submitting());
 		FormUtil.dlg.center();
 
 		final String submitXml = xml;
@@ -165,7 +168,7 @@ public class FormRunnerController implements SubmitListener{
 
 							if(response.getStatusCode() == Response.SC_OK){
 								if(FormUtil.showSubmitSuccessMsg())
-									Window.alert(LocaleText.get("formSubmitSuccess"));
+									Window.alert(i18n.formSubmitSuccess());
 
 								String url = FormUtil.getHostPageBaseURL();
 								url += FormUtil.getAfterSubmitUrlSuffix();

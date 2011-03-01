@@ -138,9 +138,8 @@ public class ConditionWidget extends Composite implements ItemSelectionListener{
 	 * @see org.openxdata.designer.client.controller.ItemSelectionListener#onItemSelected(java.lang.Object, java.lang.Object)
 	 */
 	public void onItemSelected(Object sender, Object item) {
-		if(sender == fieldWidget /*fieldHyperlink*/){
+		if(sender == fieldWidget){
 			questionDef = (QuestionDef)item;
-			//operatorHyperlink.setDataType(questionDef.getDataType());
 			setOperatorDataType(questionDef);
 			valueWidget.setQuestionDef(questionDef);
 		}
@@ -155,10 +154,6 @@ public class ConditionWidget extends Composite implements ItemSelectionListener{
 			function = ((Integer)item).intValue();
 			valueWidget.setFunction(function);
 			setOperatorDataType(questionDef);
-			//operatorHyperlink.setDataType(function == ModelConstants.FUNCTION_LENGTH ? QuestionDef.QTN_TYPE_NUMERIC : questionDef.getDataType());
-		}
-		else if(sender == valueWidget){
-			
 		}
 	}
 
@@ -233,16 +228,8 @@ public class ConditionWidget extends Composite implements ItemSelectionListener{
 	 */
 	public void setQuestionDef(QuestionDef questionDef){
 		this.questionDef = questionDef;
+		valueWidget.setQuestionDef(questionDef);
 		
-		/*//operatorHyperlink.setDataType(questionDef.getDataType());
-		setOperatorDataType(questionDef);*/
-		
-		//if(allowFieldSelection)
-			valueWidget.setQuestionDef(questionDef);
-		
-		/*//operatorHyperlink.setDataType(questionDef.getDataType());
-		setOperatorDataType(questionDef);*/
-
 		setOperatorDataType(questionDef);
 		
 		if(condition != null){
@@ -260,7 +247,6 @@ public class ConditionWidget extends Composite implements ItemSelectionListener{
 			valueWidget.setValue(condition.getValue());
 		}
 	}
-	
 	
 	private void setOperatorDataType(QuestionDef questionDef){
 		operatorWidget.setDataType(function == ModelConstants.FUNCTION_LENGTH ? QuestionDef.QTN_TYPE_NUMERIC : questionDef.getDataType());

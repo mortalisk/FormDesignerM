@@ -1716,8 +1716,8 @@ public class DesignGroupView extends Composite implements WidgetSelectionListene
 
 		if(questionDef.getDataType() == QuestionDef.QTN_TYPE_BOOLEAN){
 			options = new ArrayList<OptionDef>();
-			options.add(new OptionDef(1,QuestionDef.TRUE_DISPLAY_VALUE,QuestionDef.TRUE_VALUE,questionDef));
-			options.add(new OptionDef(1,QuestionDef.FALSE_DISPLAY_VALUE,QuestionDef.FALSE_VALUE,questionDef));
+			options.add(new OptionDef(1, i18n.displayValueTrue(), QuestionDef.TRUE_VALUE, questionDef));
+			options.add(new OptionDef(1, i18n.displayValueFalse(), QuestionDef.FALSE_VALUE, questionDef));
 		}
 
 		for(int i=0; i<options.size(); i++){

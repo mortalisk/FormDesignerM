@@ -433,8 +433,8 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 			}
 		}
 		else if(questionDef.getDataType() == QuestionDef.QTN_TYPE_BOOLEAN){
-			addImageItem(questionRoot, QuestionDef.TRUE_DISPLAY_VALUE, images.markRead(),null,null);
-			addImageItem(questionRoot, QuestionDef.FALSE_DISPLAY_VALUE, images.markRead(),null,null);
+			addImageItem(questionRoot, i18n.displayValueTrue(), images.markRead(),null,null);
+			addImageItem(questionRoot, i18n.displayValueFalse(), images.markRead(),null,null);
 		}
 		else if(questionDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT)
 			loadQuestions(questionDef.getRepeatQtnsDef().getQuestions(),questionRoot);

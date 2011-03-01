@@ -427,8 +427,8 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 		else if(type == QuestionDef.QTN_TYPE_BOOLEAN && widget instanceof ListBox){
 			ListBox listBox = (ListBox)widget;
 			listBox.addItem("","");
-			listBox.addItem(QuestionDef.TRUE_DISPLAY_VALUE, QuestionDef.TRUE_VALUE);
-			listBox.addItem(QuestionDef.FALSE_DISPLAY_VALUE ,QuestionDef.FALSE_VALUE);
+			listBox.addItem(constants.displayValueTrue(), QuestionDef.TRUE_VALUE);
+			listBox.addItem(constants.displayValueFalse(), QuestionDef.FALSE_VALUE);
 			listBox.setSelectedIndex(0);
 
 			if(defaultValue != null){

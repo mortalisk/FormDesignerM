@@ -212,8 +212,8 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 	private void startEdit(){
 		if(questionDef.getDataType() == QuestionDef.QTN_TYPE_BOOLEAN){
 			MenuBar menuBar = new MenuBar(true);
-			menuBar.addItem(QuestionDef.TRUE_DISPLAY_VALUE,true, new SelectItemCommand(QuestionDef.TRUE_DISPLAY_VALUE,this));
-			menuBar.addItem(QuestionDef.FALSE_DISPLAY_VALUE,true, new SelectItemCommand(QuestionDef.FALSE_DISPLAY_VALUE,this));
+			menuBar.addItem(i18n.displayValueTrue(), true, new SelectItemCommand(i18n.displayValueTrue(),this));
+			menuBar.addItem(i18n.displayValueFalse(), true, new SelectItemCommand(i18n.displayValueFalse(),this));
 
 			popup = new PopupPanel(true,false);
 			popup.setWidget(menuBar);
@@ -538,9 +538,9 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 			}
 		}
 		else if(questionDef.getDataType() == QuestionDef.QTN_TYPE_BOOLEAN){
-			if(val.equals(QuestionDef.TRUE_DISPLAY_VALUE))
+			if(val.equals(i18n.displayValueTrue()))
 				val = QuestionDef.TRUE_VALUE;
-			else if(val.equals(QuestionDef.FALSE_DISPLAY_VALUE))
+			else if(val.equals(i18n.displayValueFalse()))
 				val = QuestionDef.FALSE_VALUE;
 		}
 
@@ -604,9 +604,9 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 			}
 			else if(questionDef.getDataType() == QuestionDef.QTN_TYPE_BOOLEAN){
 				if(sValue.equals(QuestionDef.TRUE_VALUE))
-					sValue = QuestionDef.TRUE_DISPLAY_VALUE;
+					sValue = i18n.displayValueTrue();
 				else if(sValue.equals(QuestionDef.FALSE_VALUE))
-					sValue = QuestionDef.FALSE_DISPLAY_VALUE;
+					sValue = i18n.displayValueFalse();
 			}
 		}
 		else

@@ -196,7 +196,7 @@ public class XformUtil {
 	 * @return the instance node.
 	 */
 	public static Element getInstanceNode(Document doc){
-		return getInstanceNode(doc.getDocumentElement());
+		return getModelNode(doc.getDocumentElement());
 	}
 
 	
@@ -239,31 +239,6 @@ public class XformUtil {
 		}
 
 		return dataDoc;
-	}
-
-	
-	/**
-	 * Gets the instance node of an xforms document with a given root node.
-	 * 
-	 * @param element the root node of the xforms document.
-	 * @return the instance node.
-	 */
-	public static Element getInstanceNode(Element element){
-		int numOfEntries = element.getChildNodes().getLength();
-		for (int i = 0; i < numOfEntries; i++) {
-			if (element.getChildNodes().item(i).getNodeType() == Node.ELEMENT_NODE) {
-				Element child = (Element)element.getChildNodes().item(i);
-				String tagname = child.getNodeName(); 
-				if(XmlUtil.nodeNameEquals(tagname,XformConstants.NODE_NAME_INSTANCE_MINUS_PREFIX))
-					return child;
-				else{
-					child = getInstanceNode(child);
-					if(child != null)
-						return child;
-				}
-			}
-		}
-		return null;
 	}
 
 	

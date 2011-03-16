@@ -1,0 +1,10 @@
+
+<module rename-to='Condition'>
+    <inherits name='com.google.gwt.user.User'/>
+    <inherits name='com.google.gwt.user.theme.standard.Standard'/>
+    <inherits name='org.openxdata.sharedlib.SharedLib'/>
+
+    <entry-point class='org.openxdata.gwt.designer.client.widget.skiprule.ConditionEntryPoint'/>
+
+    <source path="client" />
+</module>

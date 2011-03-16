@@ -38,6 +38,24 @@
             <version>1.1</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>1.8.5</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-library</artifactId>
+            <version>1.1</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -56,7 +74,54 @@
                 <configuration>
                     <i18nMessagesBundle>org.openxdata.designer.client.DesignerMessages</i18nMessagesBundle>
                 </configuration>
-            </plugin>    
-        </plugins>    
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <configLocation>src/main/config/checkstyle.xml</configLocation>
+                    <includes>org/openxdata/gwt/**/*.java</includes>
+                    <consoleOutput>true</consoleOutput>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <check>
+                        <packageLineRate>85</packageLineRate>
+                        <packageBranchRate>85</packageBranchRate>
+                    </check>
+                    <instrumentation>
+                        <excludes>
+                            <!-- Hard to run unit test against the GUI -->
+                            <exclude>**/*View*.class</exclude>
+                            <!-- Legacy code-->
+                            <exclude>**/*Legacy*.class</exclude>
+                            <exclude>org/openxdata/designer/**/*.class</exclude>
+                        </excludes>
+                    </instrumentation>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>clean</goal>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 </project>

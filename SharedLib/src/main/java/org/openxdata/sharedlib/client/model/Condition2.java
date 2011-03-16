@@ -1,4 +1,4 @@
-package org.openxdata.gwt.designer.client.widget.skiprule;
+package org.openxdata.sharedlib.client.model;
 
 import org.openxdata.sharedlib.client.model.Operator;
 
@@ -50,20 +50,20 @@ public final class Condition2 {
         this.value1 = value1;
     }
 
-    void setQuestion(final Question question) {
+    public void setQuestion(final Question question) {
         validateCorrectOperator(question, operator);
         this.question = question;
     }
 
-    Question getQuestion() {
+    public Question getQuestion() {
         return question;
     }
 
-    String getValue2() {
+    public String getValue2() {
         return value2;
     }
 
-    void setValue2(final String value2) {
+    public void setValue2(final String value2) {
         Validate.notNull(value2, "value2");
         this.value2 = value2;
     }

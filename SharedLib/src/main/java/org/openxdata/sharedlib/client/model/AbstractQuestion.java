@@ -1,4 +1,4 @@
-package org.openxdata.gwt.designer.client.widget.skiprule;
+package org.openxdata.sharedlib.client.model;
 
 import org.openxdata.sharedlib.client.model.Operator;
 

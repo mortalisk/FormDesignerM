@@ -1,5 +1,6 @@
 package org.openxdata.gwt.designer.client.widget.skiprule;
 
+import org.openxdata.sharedlib.client.model.Condition2;
 import org.openxdata.sharedlib.client.model.Operator;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;

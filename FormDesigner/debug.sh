@@ -1,11 +1,13 @@
-#!/bin/sh
+#!/bin/bash
+MODULE=$1
+
 MAVEN_CLASSPATH=`mvn dependency:build-classpath|grep -v "^\["`
 
 #Need to add gwt-dev to the CLASSPATH
 CLASSPATH_WITH_NEWLINES=`echo $MAVEN_CLASSPATH | sed s/':'/'\n'/g`
 
 #Code in FormDesigner
-CLASSPATH=src/:target/generated-sources/gwt/
+CLASSPATH=src/main/java/:src/main/resources/:src/test/java/:target/generated-sources/gwt/
 
 #Code in SharedLib
 CLASSPATH=$CLASSPATH:../SharedLib/src/main/java/:../SharedLib/target/generated-sources/gwt
@@ -21,5 +23,11 @@ do
   fi
 done
 
+GWT_XML=`find src/main/resources/ -name $MODULE.gwt.xml`
+GWT_XML=${GWT_XML:19}
+GWT_XML=${GWT_XML/.gwt.xml/}
+GWT_XML=${GWT_XML//\//.}
+echo $GWT_XML
+
 #Run in debug mode
-java -Xdebug -Xmx512m -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,address=8000,suspend=n -classpath $CLASSPATH com.google.gwt.dev.DevMode -startupUrl FormDesigner.html org.openxdata.designer.FormDesigner
+java -Xdebug -Xmx512m -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,address=8000,suspend=n -classpath $CLASSPATH com.google.gwt.dev.DevMode -startupUrl $MODULE.html $GWT_XML

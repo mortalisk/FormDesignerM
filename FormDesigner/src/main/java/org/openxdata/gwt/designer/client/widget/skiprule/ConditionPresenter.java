@@ -8,6 +8,9 @@ import java.util.Set;
 
 /**
  * Presenter for Condition widget.
+ *
+ * @apiviz.uses org.openxdata.gwt.designer.client.widget.skiprule.ConditionView
+ * @apiviz.has org.openxdata.gwt.designer.client.widget.skiprule.Condition2
  */
 public final class ConditionPresenter {
 

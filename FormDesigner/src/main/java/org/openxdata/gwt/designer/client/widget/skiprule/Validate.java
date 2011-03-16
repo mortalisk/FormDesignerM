@@ -2,6 +2,8 @@ package org.openxdata.gwt.designer.client.widget.skiprule;
 
 /**
  * Small validation methods.
+ *
+ * @apiviz.exclude
  */
 public final class Validate {
 

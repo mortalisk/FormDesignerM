@@ -5,6 +5,9 @@ import org.openxdata.sharedlib.client.model.Operator;
 /**
  * Model for a Condition. Usually used in a skip logic rule.
  * Contains an operator and its value(s).
+ *
+ * @apiviz.composedOf org.openxdata.gwt.designer.client.widget.skiprule.Operator
+ * @apiviz.composedOf org.openxdata.gwt.designer.client.widget.skiprule.Question
  */
 public final class Condition2 {
 

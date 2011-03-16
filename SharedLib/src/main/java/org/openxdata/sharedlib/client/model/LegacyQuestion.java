@@ -1,9 +1,7 @@
 package org.openxdata.sharedlib.client.model;
 
-import org.openxdata.sharedlib.client.model.Operator;
 import java.util.HashSet;
 import java.util.Set;
-import org.openxdata.sharedlib.client.model.QuestionDef;
 
 /**
  * Temporary wrapper for QuestionDef in new code.

@@ -1,7 +1,5 @@
 package org.openxdata.sharedlib.client.model;
 
-import org.openxdata.sharedlib.client.model.Operator;
-
 /**
  * Model for a Condition. Usually used in a skip logic rule.
  * Contains an operator and its value(s).

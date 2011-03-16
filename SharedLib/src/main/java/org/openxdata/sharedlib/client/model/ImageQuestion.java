@@ -1,6 +1,5 @@
 package org.openxdata.sharedlib.client.model;
 
-import org.openxdata.sharedlib.client.model.Operator;
 import java.util.EnumSet;
 import java.util.Set;
 

@@ -1,7 +1,5 @@
 package org.openxdata.sharedlib.client.model;
 
-import org.openxdata.sharedlib.client.model.Operator;
-
 /**
  * Provide some default behavior for questions.
  */

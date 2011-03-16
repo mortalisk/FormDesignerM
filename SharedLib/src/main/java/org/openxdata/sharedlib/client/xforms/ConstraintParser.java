@@ -11,6 +11,7 @@ import org.openxdata.sharedlib.client.model.QuestionDef;
 import org.openxdata.sharedlib.client.model.ValidationRule;
 
 import com.google.gwt.xml.client.Element;
+import org.openxdata.sharedlib.client.model.Operator;
 
 
 /**
@@ -116,7 +117,8 @@ public class ConstraintParser {
 	private static Condition getValidationRuleCondition(FormDef formDef, String constraint, int questionId){		
 		Condition condition  = new Condition();
 		condition.setId(questionId);
-		condition.setOperator(XformParserUtil.getOperator(constraint,ModelConstants.ACTION_ENABLE));
+        Operator operator = XformParserUtil.getOperator(constraint,ModelConstants.ACTION_ENABLE);
+		condition.setOperator(operator);
 		condition.setQuestionId(questionId);
 
 		//eg . &lt;= 40"
@@ -141,9 +143,11 @@ public class ConstraintParser {
 			pos1++;
 			value = constraint.substring(pos1,pos2);
 		}
-		else //else we take whole value after operator	
-			value = constraint.substring(pos+XformParserUtil.getOperatorSize(condition.getOperator(),ModelConstants.ACTION_ENABLE),constraint.length());
-
+		else {//else we take whole value after operator	
+            Operator operator2 = condition.getOperator();
+            int pos1 = pos+XformParserUtil.getOperatorSize(operator2,ModelConstants.ACTION_ENABLE);
+			value = constraint.substring(pos1,constraint.length());
+        }
 		value = value.trim();
 		if(!(value.equals("null") || value.equals(""))){
 			condition.setValue(value);
@@ -152,11 +156,11 @@ public class ConstraintParser {
 			if(value.startsWith(formDef.getBinding() + "/"))
 				condition.setValueQtnDef(formDef.getQuestion(value.substring(value.indexOf('/')+1)));
 
-			if(condition.getOperator() == ModelConstants.OPERATOR_NULL)
+			if(condition.getOperator() == Operator.NONE)
 				return null; //no operator set hence making the condition invalid
 		}
 		else
-			condition.setOperator(ModelConstants.OPERATOR_IS_NULL);
+			condition.setOperator(Operator.IS_NULL);
 
 		if(constraint.contains("length(.)") || constraint.contains("count(.)"))
 			condition.setFunction(ModelConstants.FUNCTION_LENGTH);

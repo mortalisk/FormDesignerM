@@ -2,7 +2,6 @@ package org.openxdata.designer.client.widget.skiprule;
 
 import com.google.gwt.core.client.GWT;
 import org.openxdata.designer.client.controller.ItemSelectionListener;
-import org.openxdata.sharedlib.client.model.ModelConstants;
 import org.openxdata.sharedlib.client.model.QuestionDef;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -10,6 +9,7 @@ import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.ListBox;
 import org.openxdata.designer.client.DesignerMessages;
+import org.openxdata.sharedlib.client.model.Operator;
 
 /**
  * Widget used to display the condition operators (eg equal to, less than, greater than, etc)
@@ -34,7 +34,7 @@ final public class OperatorWidget extends Composite implements ChangeHandler {
      * @param text the default display text.
      * @param itemSelectionListener the listener to selection change events.
      */
-    public OperatorWidget(int operator, ItemSelectionListener itemSelectionListener) {
+    public OperatorWidget(Operator operator, ItemSelectionListener itemSelectionListener) {
         operators = new ListBox();
         operators.addChangeHandler(this);
         initWidget(operators);
@@ -65,39 +65,40 @@ final public class OperatorWidget extends Composite implements ChangeHandler {
                 || dataType == QuestionDef.QTN_TYPE_AUDIO || dataType == QuestionDef.QTN_TYPE_IMAGE
                 || dataType == QuestionDef.QTN_TYPE_BARCODE)) {
 
-            addOperator(i18n.isEqualTo(), ModelConstants.OPERATOR_EQUAL);
-            addOperator(i18n.isNotEqual(), ModelConstants.OPERATOR_NOT_EQUAL);
+            addOperator(i18n.isEqualTo(), Operator.EQUAL);
+            addOperator(i18n.isNotEqual(), Operator.NOT_EQUAL);
         }
 
         if (dataType == QuestionDef.QTN_TYPE_DATE || dataType == QuestionDef.QTN_TYPE_DATE_TIME
                 || dataType == QuestionDef.QTN_TYPE_DECIMAL || dataType == QuestionDef.QTN_TYPE_NUMERIC
                 || dataType == QuestionDef.QTN_TYPE_TIME || dataType == QuestionDef.QTN_TYPE_REPEAT) {
 
-            addOperator(i18n.isGreaterThan(), ModelConstants.OPERATOR_GREATER);
-            addOperator(i18n.isGreaterThanOrEqual(), ModelConstants.OPERATOR_GREATER_EQUAL);
-            addOperator(i18n.isLessThan(), ModelConstants.OPERATOR_LESS);
-            addOperator(i18n.isLessThanOrEqual(), ModelConstants.OPERATOR_LESS_EQUAL);
-            addOperator(i18n.isBetween(), ModelConstants.OPERATOR_BETWEEN);
-            addOperator(i18n.isNotBetween(), ModelConstants.OPERATOR_NOT_BETWEEN);
+            addOperator(i18n.isGreaterThan(), Operator.GREATER);
+            addOperator(i18n.isGreaterThanOrEqual(), Operator.GREATER_EQUAL);
+            addOperator(i18n.isLessThan(), Operator.LESS);
+            addOperator(i18n.isLessThanOrEqual(), Operator.LESS_EQUAL);
+            addOperator(i18n.isBetween(), Operator.BETWEEN);
+            addOperator(i18n.isNotBetween(), Operator.NOT_BETWEEN);
         }
 
         if (dataType == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || dataType == QuestionDef.QTN_TYPE_LIST_MULTIPLE) {
-            addOperator(i18n.isInList(), ModelConstants.OPERATOR_IN_LIST);
-            addOperator(i18n.isNotInList(), ModelConstants.OPERATOR_NOT_IN_LIST);
+            addOperator(i18n.isInList(), Operator.IN_LIST);
+            addOperator(i18n.isNotInList(), Operator.NOT_IN_LIST);
         }
 
-        addOperator(i18n.isNull(), ModelConstants.OPERATOR_IS_NULL);
-        addOperator(i18n.isNotNull(), ModelConstants.OPERATOR_IS_NOT_NULL);
+        addOperator(i18n.isNull(), Operator.IS_NULL);
+        addOperator(i18n.isNotNull(), Operator.IS_NOT_NULL);
     }
 
-    private void addOperator(String caption, int lookupValue) {
-        operators.addItem(caption, Integer.toString(lookupValue));
+    private void addOperator(String caption, Operator operator) {
+        String lookup = operator.name();
+        operators.addItem(caption, lookup);
     }
 
     @Override
     public void onChange(ChangeEvent event) {
         String selected = operators.getValue(operators.getSelectedIndex());
-        itemSelectionListener.onItemSelected(this, Integer.parseInt(selected));
+        itemSelectionListener.onItemSelected(this, Operator.valueOf(selected));
     }
 
     /**
@@ -105,9 +106,9 @@ final public class OperatorWidget extends Composite implements ChangeHandler {
      * 
      * @param operator the operator int value.
      */
-    public void setOperator(int operator) {
+    public void setOperator(Operator operator) {
         for (int i = 0; i < operators.getItemCount(); i++) {
-            if (Integer.parseInt(operators.getValue(i)) == operator) {
+            if (operators.getValue(i).equals(operator.name())) {
                 operators.setSelectedIndex(i);
                 return;
             }

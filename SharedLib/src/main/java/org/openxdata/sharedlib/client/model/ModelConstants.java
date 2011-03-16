@@ -32,63 +32,6 @@ public class ModelConstants implements Serializable{
 	/** Conditions Operator OR */
 	public static final int CONDITIONS_OPERATOR_OR = 2;
 	
-	/** Operator not set numeric value */
-	public static final int OPERATOR_NULL = 0;
-	
-	/** Operator Equal */
-	public static final int OPERATOR_EQUAL = 1;
-	
-	/** Operator Not Equal */
-	public static final int OPERATOR_NOT_EQUAL = 2;
-	
-	/** Operator Greater */
-	public static final int OPERATOR_GREATER = 3;
-	
-	/** Operator Greater of Equal */
-	public static final int OPERATOR_GREATER_EQUAL = 4;
-	
-	/** Operator Less */
-	public static final int OPERATOR_LESS = 5;
-	
-	/** Operator Less than or equal to */
-	public static final int OPERATOR_LESS_EQUAL = 6;
-	
-	/** Operator In List. */
-	public static final int OPERATOR_IN_LIST = 7;
-	
-	/**Operator Not In List. */
-	public static final int OPERATOR_NOT_IN_LIST = 8;
-	
-	/** Operator Is Null. */
-	public static final int OPERATOR_IS_NULL = 9;
-	
-	/** Operator Between. */
-	public static final int OPERATOR_BETWEEN = 10;
-	
-	/** Operator Not Between. */
-	public static final int OPERATOR_NOT_BETWEEN = 11;
-	
-	/** Operator Contains. */
-	public static final int OPERATOR_CONTAINS = 12;
-	
-	/** Operator Not Contain. */
-	public static final int OPERATOR_NOT_CONTAIN = 13;
-	
-	/** Operator Starts With. */
-	public static final int OPERATOR_STARTS_WITH = 14;
-	
-	/** Operator Not Starts With. */
-	public static final int OPERATOR_NOT_START_WITH = 15;
-	
-	/** Operator Is Not Null. */
-	public static final int OPERATOR_IS_NOT_NULL = 16;
-	
-	/** Operator Ends With. */
-	public static final int OPERATOR_ENDS_WITH = 17;
-	
-	/** Operator Not End With. */
-	public static final int OPERATOR_NOT_END_WITH = 18;
-	
 	/** The Value Function. */
 	public static final int FUNCTION_VALUE = 1;
 	
@@ -116,18 +59,4 @@ public class ModelConstants implements Serializable{
 	/** Rule action to make a question optional */
 	public static final int ACTION_MAKE_OPTIONAL = 1 << 6;
 	
-	/**
-	 * Indicates whether the given operator takes a pair of values, rather than a single 
-	 * value, as its second operand. For example, in the expression "x isBetween 0 and 10", 
-	 * the right-hand operand is a pair. Thus, 
-	 * 
-	 * <code>operatorTakesSecondValue(OPERATOR_IS_BETWEEN) == true</code>
-	 * 
-	 * @param op	the operator to test
-	 * @return		true if <code>op</code> takes a pair of values as its second operand, false otherwise.
-	 */
-	public static boolean operatorTakesSecondValue(int op){
-		return op == OPERATOR_BETWEEN ||
-				op == OPERATOR_NOT_BETWEEN;
-	}
 }

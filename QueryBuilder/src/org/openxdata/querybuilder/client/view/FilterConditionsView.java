@@ -31,6 +31,7 @@ import com.google.gwt.xml.client.Node;
 import com.google.gwt.xml.client.NodeList;
 import com.google.gwt.xml.client.XMLParser;
 import org.openxdata.sharedlib.client.locale.FormsConstants;
+import org.openxdata.sharedlib.client.model.Operator;
 
 
 /**
@@ -303,7 +304,9 @@ public class FilterConditionsView  extends Composite implements ConditionControl
 				else if(node.getNodeName().equalsIgnoreCase(XmlBuilder.NODE_NAME_CONDITION)){
 					ConditionWidget conditionWidget = addCondition(actionHyperlink);
 					conditionWidget.setQuestionDef(formDef.getQuestion(((Element)node).getAttribute(XmlBuilder.ATTRIBUTE_NAME_FIELD)));
-					conditionWidget.setOparator(Integer.parseInt(((Element)node).getAttribute(XmlBuilder.ATTRIBUTE_NAME_OPERATOR)));
+                    int op = Integer.parseInt(((Element)node).getAttribute(XmlBuilder.ATTRIBUTE_NAME_OPERATOR));
+                    Operator operator = Operator.fromId(op);
+					conditionWidget.setOparator(operator);
 					conditionWidget.setValue(((Element)node).getAttribute(XmlBuilder.ATTRIBUTE_NAME_VALUE));
 				}
 			}

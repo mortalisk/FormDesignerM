@@ -9,6 +9,7 @@ import org.openxdata.sharedlib.client.model.QuestionDef;
 import org.openxdata.sharedlib.client.model.ValidationRule;
 
 import com.google.gwt.xml.client.Element;
+import org.openxdata.sharedlib.client.model.Operator;
 
 
 /**
@@ -102,21 +103,23 @@ public class ConstraintBuilder {
 			if(condition.getFunction() == ModelConstants.FUNCTION_LENGTH)
 				constraint = "length(.) ";
 			
-			if(condition.getOperator() == ModelConstants.OPERATOR_BETWEEN)
-				 constraint += XformBuilderUtil.getXpathOperator(ModelConstants.OPERATOR_GREATER, action) + value + " and " + ". " +
-				 				XformBuilderUtil.getXpathOperator(ModelConstants.OPERATOR_LESS, action) + condition.getSecondValue();
-			else if(condition.getOperator() == ModelConstants.OPERATOR_NOT_BETWEEN)
-				 constraint +=XformBuilderUtil.getXpathOperator(ModelConstants.OPERATOR_GREATER,action)+condition.getSecondValue() + " or "+ "." + XformBuilderUtil.getXpathOperator( ModelConstants.OPERATOR_LESS,action)+value ;
-			else if (condition.getOperator() == ModelConstants.OPERATOR_STARTS_WITH)
+			if(condition.getOperator() == Operator.BETWEEN)
+				 constraint += XformBuilderUtil.getXpathOperator(Operator.GREATER, action) + value + " and " + ". " +
+				 				XformBuilderUtil.getXpathOperator(Operator.LESS, action) + condition.getSecondValue();
+			else if(condition.getOperator() == Operator.NOT_BETWEEN)
+				 constraint +=XformBuilderUtil.getXpathOperator(Operator.GREATER,action)+condition.getSecondValue() + " or "+ "." + XformBuilderUtil.getXpathOperator( Operator.LESS,action)+value ;
+			else if (condition.getOperator() == Operator.STARTS_WITH)
 				 constraint += "starts-with(.,"+ value+")"; 
-			else if (condition.getOperator() == ModelConstants.OPERATOR_NOT_START_WITH)
+			else if (condition.getOperator() == Operator.NOT_START_WITH)
 				 constraint += "not(starts-with(.,"+ value+"))";
-			else if (condition.getOperator() == ModelConstants.OPERATOR_CONTAINS)
+			else if (condition.getOperator() == Operator.CONTAINS)
 				 constraint += "contains(.,"+ value+")";
-			else if (condition.getOperator() == ModelConstants.OPERATOR_NOT_CONTAIN)
+			else if (condition.getOperator() == Operator.NOT_CONTAIN)
 				 constraint += "not(contains(.,"+ value+"))";
-			else
-				constraint += XformBuilderUtil.getXpathOperator(condition.getOperator(),action)+value;
+            else {
+                Operator operator = condition.getOperator();
+				constraint += XformBuilderUtil.getXpathOperator(operator,action)+value;
+            }
 		}
 		return constraint;
 	}

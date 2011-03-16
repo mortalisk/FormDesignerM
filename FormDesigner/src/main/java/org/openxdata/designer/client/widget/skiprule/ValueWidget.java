@@ -43,6 +43,7 @@ import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import org.openxdata.sharedlib.client.locale.FormsConstants;
+import org.openxdata.sharedlib.client.model.Operator;
 
 
 /**
@@ -60,7 +61,7 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 	public static final String LIST_SEPARATOR = " , ";
 
 	private QuestionDef questionDef;
-	private int operator = ModelConstants.OPERATOR_NULL;
+	private Operator operator = Operator.NONE;
 	private int function = ModelConstants.FUNCTION_VALUE;
 
 	private HorizontalPanel horizontalPanel;
@@ -93,17 +94,17 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 		this.questionDef = questionDef;
 	}
 
-	public void setOperator(int operator){
+	public void setOperator(Operator operator){
 		if(this.operator != operator){ 
-			if(this.operator == ModelConstants.OPERATOR_IS_NULL || this.operator == ModelConstants.OPERATOR_IS_NOT_NULL)
+			if(this.operator == Operator.IS_NULL || this.operator == Operator.IS_NOT_NULL)
 				valueAnchor.setText(EMPTY_VALUE);
 		}
 
 		this.operator = operator;
 
-		if(operator == ModelConstants.OPERATOR_IS_NULL || operator == ModelConstants.OPERATOR_IS_NOT_NULL)
+		if(operator == Operator.IS_NULL || operator == Operator.IS_NOT_NULL)
 			valueAnchor.setText("");
-		else if(operator == ModelConstants.OPERATOR_BETWEEN || operator == ModelConstants.OPERATOR_NOT_BETWEEN)
+		else if(operator == Operator.BETWEEN || operator == Operator.NOT_BETWEEN)
 			valueAnchor.setText(EMPTY_VALUE + BETWEEN_VALUE_SEPARATOR + EMPTY_VALUE);
 	}
 
@@ -152,7 +153,7 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 			}
 		});
 
-		if(!(operator == ModelConstants.OPERATOR_BETWEEN || operator == ModelConstants.OPERATOR_NOT_BETWEEN)){
+		if(!(operator == Operator.BETWEEN || operator == Operator.NOT_BETWEEN)){
 			txtValue2.addBlurHandler(new BlurHandler(){
 				public void onBlur(BlurEvent event){
 					stopEdit(true);
@@ -222,7 +223,7 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 		}
 		else if( (questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_MULTIPLE
 				|| questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC) &&
-				(operator == ModelConstants.OPERATOR_EQUAL || operator == ModelConstants.OPERATOR_NOT_EQUAL) ){
+				(operator == Operator.EQUAL || operator == Operator.NOT_EQUAL) ){
 
 			MenuBar menuBar = new MenuBar(true);
 
@@ -271,7 +272,7 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 		}
 		else if( (questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_MULTIPLE
 				|| questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC) &&
-				(operator == ModelConstants.OPERATOR_IN_LIST || operator == ModelConstants.OPERATOR_NOT_IN_LIST) ){
+				(operator == Operator.IN_LIST || operator == Operator.NOT_IN_LIST) ){
 
 			String values = valueAnchor.getText();
 			String[] vals = null;
@@ -367,8 +368,8 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 			}
 			txtValue1.selectAll();
 
-			if(operator ==  ModelConstants.OPERATOR_BETWEEN ||
-					operator ==  ModelConstants.OPERATOR_NOT_BETWEEN){
+			if(operator ==  Operator.BETWEEN ||
+					operator ==  Operator.NOT_BETWEEN){
 				horizontalPanel.add(lblAnd);
 				horizontalPanel.add(txtValue2);
 
@@ -442,8 +443,8 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 		}
 
 		String val = val1 + 
-		((operator == ModelConstants.OPERATOR_BETWEEN || 
-				operator == ModelConstants.OPERATOR_NOT_BETWEEN) ? (BETWEEN_VALUE_SEPARATOR + val2 ): "");
+		((operator == Operator.BETWEEN || 
+				operator == Operator.NOT_BETWEEN) ? (BETWEEN_VALUE_SEPARATOR + val2 ): "");
 
 		if(updateValue)
 			valueAnchor.setText(val);

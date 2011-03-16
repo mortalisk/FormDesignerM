@@ -8,6 +8,7 @@ import org.openxdata.sharedlib.client.model.ModelConstants;
 import org.openxdata.sharedlib.client.model.QuestionDef;
 
 import com.google.gwt.xml.client.Element;
+import org.openxdata.sharedlib.client.model.Operator;
 
 
 /**
@@ -36,60 +37,60 @@ public class XformParserUtil {
 	 * @return the operator constant.
 	 */
 	//TODO Add the other xpath operators
-	public static int getOperator(String expression, int action){
+	public static Operator getOperator(String expression, int action){
 		//We return the operator which is the opposite of the expression
 		if(expression.indexOf(">=") > 0 || expression.indexOf("&gt;=") > 0){
 			if(XformBuilderUtil.isPositiveAction(action))
-				return ModelConstants.OPERATOR_GREATER_EQUAL;
-			return ModelConstants.OPERATOR_LESS;
+				return Operator.GREATER_EQUAL;
+			return Operator.LESS;
 		}
 		else if(expression.indexOf('>') > 0 || expression.indexOf("&gt;") > 0){
 			if(XformBuilderUtil.isPositiveAction(action))
-				return ModelConstants.OPERATOR_GREATER;
-			return ModelConstants.OPERATOR_LESS_EQUAL;
+				return Operator.GREATER;
+			return Operator.LESS_EQUAL;
 		}
 		else if(expression.indexOf("<=") > 0 || expression.indexOf("&lt;=") > 0){
 			if(XformBuilderUtil.isPositiveAction(action))
-				return ModelConstants.OPERATOR_LESS_EQUAL;
-			return ModelConstants.OPERATOR_GREATER;
+				return Operator.LESS_EQUAL;
+			return Operator.GREATER;
 		}
 		else if(expression.indexOf('<') > 0 || expression.indexOf("&lt;") > 0){
 			if(XformBuilderUtil.isPositiveAction(action))
-				return ModelConstants.OPERATOR_LESS;
-			return ModelConstants.OPERATOR_GREATER_EQUAL;
+				return Operator.LESS;
+			return Operator.GREATER_EQUAL;
 		}
 		else if(expression.indexOf("!=") > 0 || expression.indexOf("!=") > 0){
 			if(XformBuilderUtil.isPositiveAction(action))
-				return ModelConstants.OPERATOR_NOT_EQUAL;
-			return ModelConstants.OPERATOR_EQUAL;
+				return Operator.NOT_EQUAL;
+			return Operator.EQUAL;
 		}
 		else if(expression.indexOf('=') > 0){
 			if(XformBuilderUtil.isPositiveAction(action))
-				return ModelConstants.OPERATOR_EQUAL;
-			return ModelConstants.OPERATOR_NOT_EQUAL;
+				return Operator.EQUAL;
+			return Operator.NOT_EQUAL;
 		}
 		else if(expression.indexOf("not(starts-with") > 0){
 			if(XformBuilderUtil.isPositiveAction(action))
-				return ModelConstants.OPERATOR_NOT_START_WITH;
-			return ModelConstants.OPERATOR_STARTS_WITH;
+				return Operator.NOT_START_WITH;
+			return Operator.STARTS_WITH;
 		}
 		else if(expression.indexOf("starts-with") > 0){
 			if(XformBuilderUtil.isPositiveAction(action))
-				return ModelConstants.OPERATOR_STARTS_WITH;
-			return ModelConstants.OPERATOR_NOT_START_WITH;
+				return Operator.STARTS_WITH;
+			return Operator.NOT_START_WITH;
 		}
 		else if(expression.indexOf("not(contains") > 0){
 			if(XformBuilderUtil.isPositiveAction(action))
-				return ModelConstants.OPERATOR_NOT_CONTAIN;
-			return ModelConstants.OPERATOR_CONTAINS;
+				return Operator.NOT_CONTAIN;
+			return Operator.CONTAINS;
 		}
 		else if(expression.indexOf("contains") > 0){
 			if(XformBuilderUtil.isPositiveAction(action))
-				return ModelConstants.OPERATOR_CONTAINS;
-			return ModelConstants.OPERATOR_NOT_CONTAIN;
+				return Operator.CONTAINS;
+			return Operator.NOT_CONTAIN;
 		}
 
-		return ModelConstants.OPERATOR_NULL;
+		return Operator.NONE;
 	}
 
 	
@@ -100,14 +101,14 @@ public class XformParserUtil {
 	 * @param action the skip or validation rule target action.
 	 * @return the xpath operator size.
 	 */
-	public static int getOperatorSize(int operator, int action){
-		if(operator == ModelConstants.OPERATOR_GREATER_EQUAL || 
-				operator == ModelConstants.OPERATOR_LESS_EQUAL ||
-				operator == ModelConstants.OPERATOR_NOT_EQUAL)
+	public static int getOperatorSize(Operator operator, int action){
+		if(operator == Operator.GREATER_EQUAL || 
+				operator == Operator.LESS_EQUAL ||
+				operator == Operator.NOT_EQUAL)
 			return XformBuilderUtil.isPositiveAction(action) ? 2 : 1;
-		else if(operator == ModelConstants.OPERATOR_LESS ||
-				operator == ModelConstants.OPERATOR_GREATER || 
-				operator == ModelConstants.OPERATOR_EQUAL)
+		else if(operator == Operator.LESS ||
+				operator == Operator.GREATER || 
+				operator == Operator.EQUAL)
 			return XformBuilderUtil.isPositiveAction(action) ? 1 : 2;
 
 		return 0;

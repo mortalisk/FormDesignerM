@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import org.openxdata.querybuilder.client.Translations;
+import org.openxdata.sharedlib.client.model.Operator;
 
 
 /**
@@ -138,80 +139,81 @@ public class OperatorHyperlink extends Hyperlink implements ItemSelectionListene
 		}
 	}
 
-	private int fromOperatorText2Value(String text){
+	private Operator fromOperatorText2Value(String text){
 		if(text.equals(OP_TEXT_EQUAL))
-			return ModelConstants.OPERATOR_EQUAL;
+			return Operator.EQUAL;
 		else if(text.equals(OP_TEXT_NOT_EQUAL))
-			return ModelConstants.OPERATOR_NOT_EQUAL;
+			return Operator.NOT_EQUAL;
 		else if(text.equals(OP_TEXT_LESS_THAN))
-			return ModelConstants.OPERATOR_LESS;
+			return Operator.LESS;
 		else if(text.equals(OP_TEXT_LESS_THAN_EQUAL))
-			return ModelConstants.OPERATOR_LESS_EQUAL;
+			return Operator.LESS_EQUAL;
 		else if(text.equals(OP_TEXT_GREATER_THAN))
-			return ModelConstants.OPERATOR_GREATER;
+			return Operator.GREATER;
 		else if(text.equals(OP_TEXT_GREATER_THAN_EQUAL))
-			return ModelConstants.OPERATOR_GREATER_EQUAL;
+			return Operator.GREATER_EQUAL;
 		else if(text.equals(OP_TEXT_NULL))
-			return ModelConstants.OPERATOR_IS_NULL;
+			return Operator.IS_NULL;
 		else if(text.equals(OP_TEXT_IN_LIST))
-			return ModelConstants.OPERATOR_IN_LIST;
+			return Operator.IN_LIST;
 		else if(text.equals(OP_TEXT_NOT_IN_LIST))
-			return ModelConstants.OPERATOR_NOT_IN_LIST;
+			return Operator.NOT_IN_LIST;
 		else if(text.equals(OP_TEXT_STARTS_WITH))
-			return ModelConstants.OPERATOR_STARTS_WITH;
+			return Operator.STARTS_WITH;
 		else if(text.equals(OP_TEXT_NOT_START_WITH))
-			return ModelConstants.OPERATOR_NOT_START_WITH;
+			return Operator.NOT_START_WITH;
 		else if(text.equals(OP_TEXT_CONTAINS))
-			return ModelConstants.OPERATOR_CONTAINS;
+			return Operator.CONTAINS;
 		else if(text.equals(OP_TEXT_NOT_CONTAIN))
-			return ModelConstants.OPERATOR_NOT_CONTAIN;
+			return Operator.NOT_CONTAIN;
 		else if(text.equals(OP_TEXT_BETWEEN))
-			return ModelConstants.OPERATOR_BETWEEN;
+			return Operator.BETWEEN;
 		else if(text.equals(OP_TEXT_NOT_BETWEEN))
-			return ModelConstants.OPERATOR_NOT_BETWEEN;
+			return Operator.NOT_BETWEEN;
 		else if(text.equals(OP_TEXT_NOT_NULL))
-			return ModelConstants.OPERATOR_IS_NOT_NULL;
-		return ModelConstants.OPERATOR_NULL;
+			return Operator.IS_NOT_NULL;
+
+		return Operator.NONE;
 	}
 
 	public void onStartItemSelection(Object sender){
 
 	}
 
-	public void setOperator(int operator){
+	public void setOperator(Operator operator){
 		String operatorText = null;
 
-		if(operator == ModelConstants.OPERATOR_EQUAL)
+		if(operator == Operator.EQUAL)
 			operatorText = OP_TEXT_EQUAL;
-		else if(operator == ModelConstants.OPERATOR_NOT_EQUAL)
+		else if(operator == Operator.NOT_EQUAL)
 			operatorText = OP_TEXT_NOT_EQUAL;
-		else if(operator == ModelConstants.OPERATOR_LESS)
+		else if(operator == Operator.LESS)
 			operatorText = OP_TEXT_LESS_THAN;
-		else if(operator == ModelConstants.OPERATOR_LESS_EQUAL)
+		else if(operator == Operator.LESS_EQUAL)
 			operatorText = OP_TEXT_LESS_THAN_EQUAL;
-		else if(operator == ModelConstants.OPERATOR_GREATER)
+		else if(operator == Operator.GREATER)
 			operatorText = OP_TEXT_GREATER_THAN;
-		else if(operator == ModelConstants.OPERATOR_GREATER_EQUAL)
+		else if(operator == Operator.GREATER_EQUAL)
 			operatorText = OP_TEXT_GREATER_THAN_EQUAL;
-		else if(operator == ModelConstants.OPERATOR_IS_NULL)
+		else if(operator == Operator.IS_NULL)
 			operatorText = OP_TEXT_NULL;
-		else if(operator == ModelConstants.OPERATOR_IN_LIST)
+		else if(operator == Operator.IN_LIST)
 			operatorText = OP_TEXT_IN_LIST;
-		else if(operator == ModelConstants.OPERATOR_NOT_IN_LIST)
+		else if(operator == Operator.NOT_IN_LIST)
 			operatorText = OP_TEXT_NOT_IN_LIST;
-		else if(operator == ModelConstants.OPERATOR_STARTS_WITH)
+		else if(operator == Operator.STARTS_WITH)
 			operatorText = OP_TEXT_STARTS_WITH;
-		else if(operator == ModelConstants.OPERATOR_NOT_START_WITH)
+		else if(operator == Operator.NOT_START_WITH)
 			operatorText = OP_TEXT_NOT_START_WITH;
-		else if(operator == ModelConstants.OPERATOR_CONTAINS)
+		else if(operator == Operator.CONTAINS)
 			operatorText = OP_TEXT_CONTAINS;
-		else if(operator == ModelConstants.OPERATOR_NOT_CONTAIN)
+		else if(operator == Operator.NOT_CONTAIN)
 			operatorText = OP_TEXT_NOT_CONTAIN;
-		else if(operator == ModelConstants.OPERATOR_BETWEEN)
+		else if(operator == Operator.BETWEEN)
 			operatorText = OP_TEXT_BETWEEN;
-		else if(operator == ModelConstants.OPERATOR_NOT_BETWEEN)
+		else if(operator == Operator.NOT_BETWEEN)
 			operatorText = OP_TEXT_NOT_BETWEEN;
-		else if(operator == ModelConstants.OPERATOR_IS_NOT_NULL)
+		else if(operator == Operator.IS_NOT_NULL)
 			operatorText = OP_TEXT_NOT_NULL;
 
 		setText(operatorText);

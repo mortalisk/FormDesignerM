@@ -11,6 +11,7 @@ import org.openxdata.sharedlib.client.xpath.XPathExpression;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
+import org.openxdata.sharedlib.client.model.Operator;
 
 /**
  * Utility methods used during the building of xforms documents.
@@ -215,22 +216,22 @@ public class XformBuilderUtil {
 	 *            the skip or validation rule target action.
 	 * @return the xpath expression operator.
 	 */
-	public static String getXpathOperator(int operator, int action) {
-		if (operator == ModelConstants.OPERATOR_EQUAL)
+	public static String getXpathOperator(Operator operator, int action) {
+		if (operator == Operator.EQUAL)
 			return isPositiveAction(action) ? "=" : "!=";
-		else if (operator == ModelConstants.OPERATOR_NOT_EQUAL)
+		else if (operator == Operator.NOT_EQUAL)
 			return isPositiveAction(action) ? "!=" : "=";
-		else if (operator == ModelConstants.OPERATOR_LESS)
+		else if (operator == Operator.LESS)
 			return isPositiveAction(action) ? "<" : ">=";
-		else if (operator == ModelConstants.OPERATOR_GREATER)
+		else if (operator == Operator.GREATER)
 			return isPositiveAction(action) ? ">" : "<=";
-		else if (operator == ModelConstants.OPERATOR_LESS_EQUAL)
+		else if (operator == Operator.LESS_EQUAL)
 			return isPositiveAction(action) ? "<=" : ">";
-		else if (operator == ModelConstants.OPERATOR_GREATER_EQUAL)
+		else if (operator == Operator.GREATER_EQUAL)
 			return isPositiveAction(action) ? ">=" : "<";
-		else if (operator == ModelConstants.OPERATOR_IS_NOT_NULL)
+		else if (operator == Operator.IS_NOT_NULL)
 			return isPositiveAction(action) ? "!=" : "=";
-		else if (operator == ModelConstants.OPERATOR_IS_NULL)
+		else if (operator == Operator.IS_NULL)
 			return isPositiveAction(action) ? "=" : "!=";
 
 		return "=";

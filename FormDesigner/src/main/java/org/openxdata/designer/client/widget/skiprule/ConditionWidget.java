@@ -12,6 +12,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import org.openxdata.sharedlib.client.model.Operator;
 
 
 /**
@@ -46,7 +47,7 @@ public class ConditionWidget extends Composite implements ItemSelectionListener{
 	private QuestionDef questionDef;
 	
 	/** The selected operator for the condition. */
-	private int operator;
+	private Operator operator;
 	
 	/** Listener to condition events. */
 	private IConditionController view;
@@ -105,7 +106,7 @@ public class ConditionWidget extends Composite implements ItemSelectionListener{
 			fieldWidget.setQuestion(questionDef);
 		}
 
-		operatorWidget = new OperatorWidget(ModelConstants.OPERATOR_EQUAL, this);
+		operatorWidget = new OperatorWidget(Operator.EQUAL, this);
 		funcHyperlink = new FunctionHyperlink(FunctionHyperlink.FUNCTION_TEXT_VALUE,"",this);
 		
 		horizontalPanel = new HorizontalPanel();
@@ -130,7 +131,7 @@ public class ConditionWidget extends Composite implements ItemSelectionListener{
 		
 		valueWidget.setFormDef(formDef);
 
-		operator = ModelConstants.OPERATOR_EQUAL;
+		operator = Operator.EQUAL;
 		valueWidget.setOperator(operator);
 	}
 
@@ -144,7 +145,7 @@ public class ConditionWidget extends Composite implements ItemSelectionListener{
 			valueWidget.setQuestionDef(questionDef);
 		}
 		else if(sender == operatorWidget){
-			operator = ((Integer)item).intValue();
+			operator = (Operator) item;
 			valueWidget.setOperator(operator);
 
 			if(allowFieldSelection)
@@ -187,7 +188,7 @@ public class ConditionWidget extends Composite implements ItemSelectionListener{
 		condition.setQuestionId(questionDef.getId());
 		condition.setOperator(operator);
 		
-		if (ModelConstants.operatorTakesSecondValue(operator)){
+		if (operator.getNumberOfValues() > 1){
 			String[] valuePair = valueWidget.getValue().split(ValueWidget.BETWEEN_VALUE_SEPARATOR);
 			condition.setValue(valuePair[0].trim());
 			condition.setSecondValue(valuePair[1].trim());

@@ -1,5 +1,7 @@
 package org.openxdata.querybuilder.client.model;
 
+import org.openxdata.sharedlib.client.model.Operator;
+
 
 
 /**
@@ -17,7 +19,7 @@ public class FilterCondition extends FilterConditionRow {
 	private String fieldName;
 	private String firstValue;
 	private String secondValue;
-	private int operator;
+	private Operator operator;
 	private int dataType;
 	
 	
@@ -49,11 +51,11 @@ public class FilterCondition extends FilterConditionRow {
 		this.secondValue = secondValue;
 	}
 
-	public int getOperator() {
+	public Operator getOperator() {
 		return operator;
 	}
 
-	public void setOperator(int operator) {
+	public void setOperator(Operator operator) {
 		this.operator = operator;
 	}
 

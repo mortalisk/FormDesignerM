@@ -7,6 +7,7 @@ import java.util.Vector;
 import org.openxdata.sharedlib.client.model.Condition;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.ModelConstants;
+import org.openxdata.sharedlib.client.model.Operator;
 import org.openxdata.sharedlib.client.model.QuestionDef;
 import org.openxdata.sharedlib.client.model.SkipRule;
 
@@ -156,7 +157,8 @@ public class RelevantParser {
 			String relevant, int id, int action) {
 		Condition condition = new Condition();
 		condition.setId(id);
-		condition.setOperator(XformParserUtil.getOperator(relevant, action));
+        Operator operator = XformParserUtil.getOperator(relevant, action);
+		condition.setOperator(operator);
 
 		// eg relevant="/data/question10='7'"
 		int pos = XformParserUtil.getOperatorPos(relevant);
@@ -187,14 +189,12 @@ public class RelevantParser {
 			}
 			pos1++;
 			value = relevant.substring(pos1, pos2);
-		} else
+		} else {
 			// else we take whole value after operator
-			value = relevant.substring(
-					pos
-							+ XformParserUtil.getOperatorSize(
-									condition.getOperator(), action),
-					relevant.length());
-
+            Operator operator2 = condition.getOperator();
+            int pos1 = pos + XformParserUtil.getOperatorSize(operator2, action);
+            value = relevant.substring(pos1,relevant.length());
+        }
 		value = value.trim();
 		if (!(value.equals("null") || value.equals(""))) {
 			condition.setValue(value);
@@ -204,15 +204,15 @@ public class RelevantParser {
 				condition.setValueQtnDef(formDef.getQuestion(value
 						.substring(value.indexOf('/') + 1)));
 
-			if (condition.getOperator() == ModelConstants.OPERATOR_NULL)
+			if (condition.getOperator() == Operator.NONE)
 				return null; // no operator set hence making the condition
 								// invalid
-		} else if (condition.getOperator() == ModelConstants.OPERATOR_NOT_EQUAL)
-			condition.setOperator(ModelConstants.OPERATOR_IS_NOT_NULL); // must
+		} else if (condition.getOperator() == Operator.NOT_EQUAL)
+			condition.setOperator(Operator.IS_NOT_NULL); // must
 																		// be !=
 																		// ''
 		else
-			condition.setOperator(ModelConstants.OPERATOR_IS_NULL); // must be =
+			condition.setOperator(Operator.IS_NULL); // must be =
 																	// ''
 
 		return condition;

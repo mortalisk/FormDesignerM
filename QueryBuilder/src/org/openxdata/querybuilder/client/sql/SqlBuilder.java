@@ -10,6 +10,7 @@ import org.openxdata.querybuilder.client.model.SortField;
 import org.openxdata.querybuilder.client.widget.GroupHyperlink;
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.ModelConstants;
+import org.openxdata.sharedlib.client.model.Operator;
 import org.openxdata.sharedlib.client.model.QuestionDef;
 
 
@@ -145,54 +146,52 @@ public class SqlBuilder {
 		return filter;
 	}
 
-	private static String getDBOperator(int operator)
+	private static String getDBOperator(Operator operator)
 	{
-		switch(operator)
-		{
-		case ModelConstants.OPERATOR_EQUAL:
-			return " = ";
-		case ModelConstants.OPERATOR_NOT_EQUAL:
-			return " <> ";
-		case ModelConstants.OPERATOR_LESS:
-			return " < ";
-		case ModelConstants.OPERATOR_LESS_EQUAL:
-			return " <= ";
-		case ModelConstants.OPERATOR_GREATER:
-			return " > ";
-		case ModelConstants.OPERATOR_GREATER_EQUAL:
-			return " >= ";
-		case ModelConstants.OPERATOR_IS_NULL:
-			return " IS NULL";
-		case ModelConstants.OPERATOR_IS_NOT_NULL:
-			return " IS NOT NULL";
-		case ModelConstants.OPERATOR_IN_LIST:
-			return " IN (";
-		case ModelConstants.OPERATOR_NOT_IN_LIST:
-			return " NOT IN (";
-		case ModelConstants.OPERATOR_STARTS_WITH:
-			return " LIKE ";
-		case ModelConstants.OPERATOR_NOT_START_WITH:
-			return " NOT LIKE ";
-		case ModelConstants.OPERATOR_CONTAINS:
-			return " LIKE ";
-		case ModelConstants.OPERATOR_NOT_CONTAIN:
-			return " NOT LIKE ";
-		case ModelConstants.OPERATOR_BETWEEN:
-			return " BETWEEN ";
-		case ModelConstants.OPERATOR_NOT_BETWEEN:
-			return " NOT BETWEEN ";
-		case ModelConstants.OPERATOR_ENDS_WITH:
-			return " LIKE ";
-		case ModelConstants.OPERATOR_NOT_END_WITH:
+		if(operator == Operator.EQUAL){
+			return " = ";}
+        else if(operator == Operator.NOT_EQUAL){
+			return " <> ";}
+		else if(operator ==  Operator.LESS){
+			return " < ";}
+		else if(operator ==  Operator.LESS_EQUAL){
+			return " <= ";}
+		else if(operator ==  Operator.GREATER){
+			return " > ";}
+		else if(operator ==  Operator.GREATER_EQUAL){
+			return " >= ";}
+		else if(operator ==  Operator.IS_NULL){
+			return " IS NULL";}
+		else if(operator ==  Operator.IS_NOT_NULL){
+			return " IS NOT NULL";}
+		else if(operator ==  Operator.IN_LIST){
+			return " IN (";}
+		else if(operator ==  Operator.NOT_IN_LIST){
+			return " NOT IN (";}
+		else if(operator ==  Operator.STARTS_WITH){
+			return " LIKE ";}
+		else if(operator ==  Operator.NOT_START_WITH){
+			return " NOT LIKE ";}
+		else if(operator ==  Operator.CONTAINS){
+			return " LIKE ";}
+		else if(operator ==  Operator.NOT_CONTAIN){
+			return " NOT LIKE ";}
+		else if(operator ==  Operator.BETWEEN){
+			return " BETWEEN ";}
+		else if(operator ==  Operator.NOT_BETWEEN){
+			return " NOT BETWEEN ";}
+		else if(operator ==  Operator.ENDS_WITH){
+			return " LIKE ";}
+		else if(operator ==  Operator.NOT_END_WITH){
 			return " NOT LIKE ";
 		}
 
 		return null;
 	}
 
-	private static String getQuotedValue(String fieldVal,int dataType, int operator)
+	private static String getQuotedValue(String fieldVal,int dataType, Operator operator)
 	{
-		if(operator == ModelConstants.OPERATOR_IS_NULL || operator == ModelConstants.OPERATOR_IS_NOT_NULL)
+		if(operator == Operator.IS_NULL || operator == Operator.IS_NOT_NULL)
 			return "";
 		
 		switch(dataType)
@@ -202,11 +201,11 @@ public class SqlBuilder {
 		case QuestionDef.QTN_TYPE_LIST_MULTIPLE:
 		case QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC:
 		{
-			if(operator == ModelConstants.OPERATOR_STARTS_WITH || operator == ModelConstants.OPERATOR_NOT_START_WITH)
+			if(operator == Operator.STARTS_WITH || operator == Operator.NOT_START_WITH)
 				return "'" + fieldVal + LIKE_SEPARATOR + "'";
-			if(operator == ModelConstants.OPERATOR_NOT_END_WITH || operator == ModelConstants.OPERATOR_NOT_END_WITH)
+			if(operator == Operator.NOT_END_WITH || operator == Operator.NOT_END_WITH)
 				return "'" + LIKE_SEPARATOR + fieldVal + "'";
-			if(operator == ModelConstants.OPERATOR_CONTAINS || operator == ModelConstants.OPERATOR_NOT_CONTAIN)
+			if(operator == Operator.CONTAINS || operator == Operator.NOT_CONTAIN)
 				return "'" + LIKE_SEPARATOR + fieldVal + LIKE_SEPARATOR  + "'";
 			else
 				return "'" + fieldVal + "'";

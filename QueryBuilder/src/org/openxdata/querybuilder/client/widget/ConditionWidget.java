@@ -6,7 +6,6 @@ import org.openxdata.querybuilder.client.controller.FilterRowActionListener;
 import org.openxdata.querybuilder.client.controller.ItemSelectionListener;
 import org.openxdata.sharedlib.client.model.Condition;
 import org.openxdata.sharedlib.client.model.FormDef;
-import org.openxdata.sharedlib.client.model.ModelConstants;
 import org.openxdata.sharedlib.client.model.QuestionDef;
 
 import com.google.gwt.user.client.ui.CheckBox;
@@ -15,6 +14,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import org.openxdata.sharedlib.client.locale.FormsConstants;
+import org.openxdata.sharedlib.client.model.Operator;
 
 /**
  * 
@@ -35,7 +35,7 @@ public class ConditionWidget extends Composite implements ItemSelectionListener,
 	private CheckBox chkSelect = new CheckBox();
 
 	private QuestionDef questionDef;
-	private int operator;
+	private Operator operator;
 	private ConditionController view;
 	private Condition condition;
 	private Label lbLabel = new Label(i18n.value());
@@ -83,7 +83,7 @@ public class ConditionWidget extends Composite implements ItemSelectionListener,
 			fieldWidget.setFormDef(formDef);
 		valueWidget.setFormDef(formDef);
 
-		operator = ModelConstants.OPERATOR_EQUAL;
+		operator = Operator.EQUAL;
 		valueWidget.setOperator(operator);
 	}
 
@@ -97,7 +97,7 @@ public class ConditionWidget extends Composite implements ItemSelectionListener,
 			valueWidget.setQuestionDef(questionDef);
 		}
 		else if(sender == operatorHyperlink){
-			operator = ((Integer)item).intValue();
+			operator = (Operator) item;
 			valueWidget.setOperator(operator);
 
 			if(allowFieldSelection)
@@ -151,7 +151,7 @@ public class ConditionWidget extends Composite implements ItemSelectionListener,
 		fieldWidget.setQuestion(questionDef);
 	}
 	
-	public void setOparator(int operator){
+	public void setOparator(Operator operator){
 		this.operator = operator;
 		this.operatorHyperlink.setOperator(operator);
 		this.valueWidget.setOperator(operator);

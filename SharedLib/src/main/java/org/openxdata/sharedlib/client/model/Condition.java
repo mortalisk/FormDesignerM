@@ -28,7 +28,7 @@ public class Condition implements Serializable{
 	private int questionId = ModelConstants.NULL_ID;
 
 	/** The operator of the condition. Eg Equal to, Greater than, etc. */
-	private int operator = ModelConstants.OPERATOR_NULL;
+	private Operator operator = Operator.NONE;
 
 	/** The aggregate function. Eg Length, Value. */
 	private int function = ModelConstants.FUNCTION_VALUE;
@@ -72,7 +72,7 @@ public class Condition implements Serializable{
 	 * @param operator - the condition operator.
 	 * @param value - the value to be equated to.
 	 */
-	public Condition(int id,int questionId, int operator, int function, String value) {
+	public Condition(int id,int questionId, Operator operator, int function, String value) {
 		this();
 		setQuestionId(questionId);
 		setOperator(operator);
@@ -81,10 +81,10 @@ public class Condition implements Serializable{
 		setId(id);
 	}
 
-	public int getOperator() {
+	public Operator getOperator() {
 		return operator;
 	}
-	public void setOperator(int operator) {
+	public void setOperator(Operator operator) {
 		this.operator = operator;
 	}
 	public int getFunction() {
@@ -283,14 +283,14 @@ public class Condition implements Serializable{
 	private boolean isNumericTrue(QuestionDef qtn, boolean validation){
 		try{
 			if(qtn.getAnswer() == null || qtn.getAnswer().trim().length() == 0){
-				if(validation && operator == ModelConstants.OPERATOR_IS_NOT_NULL)
+				if(validation && operator == Operator.IS_NOT_NULL)
 					return false;
-				else if(validation || operator == ModelConstants.OPERATOR_NOT_EQUAL ||
-						operator == ModelConstants.OPERATOR_NOT_BETWEEN)
+				else if(validation || operator == Operator.NOT_EQUAL ||
+						operator == Operator.NOT_BETWEEN)
 					return true;
-				return operator == ModelConstants.OPERATOR_IS_NULL;
+				return operator == Operator.IS_NULL;
 			}
-			else if(operator == ModelConstants.OPERATOR_IS_NOT_NULL)
+			else if(operator == Operator.IS_NOT_NULL)
 				return true;
 
 			String answerString = qtn.getAnswer();
@@ -307,21 +307,21 @@ public class Condition implements Serializable{
 			if(secondValue != null && secondValue.trim().length() > 0)
 				secondValueLong = Long.parseLong(secondValue);
 
-			if(operator == ModelConstants.OPERATOR_EQUAL)
+			if(operator == Operator.EQUAL)
 				return valueLong == answerLong;
-			else if(operator == ModelConstants.OPERATOR_NOT_EQUAL)
+			else if(operator == Operator.NOT_EQUAL)
 				return valueLong != answerLong;
-			else if(operator == ModelConstants.OPERATOR_LESS)
+			else if(operator == Operator.LESS)
 				return answerLong < valueLong;
-			else if(operator == ModelConstants.OPERATOR_LESS_EQUAL)
+			else if(operator == Operator.LESS_EQUAL)
 				return answerLong < valueLong || valueLong == answerLong;
-			else if(operator == ModelConstants.OPERATOR_GREATER)
+			else if(operator == Operator.GREATER)
 				return answerLong > valueLong;
-			else if(operator == ModelConstants.OPERATOR_GREATER_EQUAL)
+			else if(operator == Operator.GREATER_EQUAL)
 				return answerLong > valueLong || valueLong == answerLong;
-			else if(operator == ModelConstants.OPERATOR_BETWEEN)
+			else if(operator == Operator.BETWEEN)
 				return answerLong > valueLong && valueLong < secondValueLong;
-			else if(operator == ModelConstants.OPERATOR_NOT_BETWEEN)
+			else if(operator == Operator.NOT_BETWEEN)
 				return !(answerLong > valueLong && valueLong < secondValueLong);
 		}
 		catch(Exception ex){
@@ -343,29 +343,29 @@ public class Condition implements Serializable{
 
 		if(function == ModelConstants.FUNCTION_VALUE){
 			if(answer == null || answer.trim().length() == 0){
-				if(validation && operator == ModelConstants.OPERATOR_IS_NOT_NULL)
+				if(validation && operator == Operator.IS_NOT_NULL)
 					return false;
-				else if(validation || operator == ModelConstants.OPERATOR_NOT_EQUAL ||
-						operator == ModelConstants.OPERATOR_NOT_START_WITH ||
-						operator == ModelConstants.OPERATOR_NOT_CONTAIN)
+				else if(validation || operator == Operator.NOT_EQUAL ||
+						operator == Operator.NOT_START_WITH ||
+						operator == Operator.NOT_CONTAIN)
 					return true;
 
-				return operator == ModelConstants.OPERATOR_IS_NULL;
+				return operator == Operator.IS_NULL;
 			}
-			else if(operator == ModelConstants.OPERATOR_IS_NOT_NULL)
+			else if(operator == Operator.IS_NOT_NULL)
 				return true;
 
-			if(operator == ModelConstants.OPERATOR_EQUAL)
+			if(operator == Operator.EQUAL)
 				return value.equals(qtn.getAnswer());
-			else if(operator == ModelConstants.OPERATOR_NOT_EQUAL)
+			else if(operator == Operator.NOT_EQUAL)
 				return !value.equals(qtn.getAnswer());
-			else if(operator == ModelConstants.OPERATOR_STARTS_WITH)
+			else if(operator == Operator.STARTS_WITH)
 				return answer.startsWith(value);
-			else if(operator == ModelConstants.OPERATOR_NOT_START_WITH)
+			else if(operator == Operator.NOT_START_WITH)
 				return !answer.startsWith(value);
-			else if(operator == ModelConstants.OPERATOR_CONTAINS)
+			else if(operator == Operator.CONTAINS)
 				return answer.contains(value);
-			else if(operator == ModelConstants.OPERATOR_NOT_CONTAIN)
+			else if(operator == Operator.NOT_CONTAIN)
 				return !answer.contains(value);
 		}
 		else{
@@ -380,21 +380,21 @@ public class Condition implements Serializable{
 
 			len = answer.trim().length();
 
-			if(operator == ModelConstants.OPERATOR_EQUAL)
+			if(operator == Operator.EQUAL)
 				return len == len1;
-			else if(operator == ModelConstants.OPERATOR_NOT_EQUAL)
+			else if(operator == Operator.NOT_EQUAL)
 				return len != len1;
-			else if(operator == ModelConstants.OPERATOR_LESS)
+			else if(operator == Operator.LESS)
 				return len < len1;
-			else if(operator == ModelConstants.OPERATOR_LESS_EQUAL)
+			else if(operator == Operator.LESS_EQUAL)
 				return len <= len1;
-			else if(operator == ModelConstants.OPERATOR_GREATER)
+			else if(operator == Operator.GREATER)
 				return len > len1;
-				else if(operator == ModelConstants.OPERATOR_GREATER_EQUAL)
+				else if(operator == Operator.GREATER_EQUAL)
 					return len >= len1;
-					else if(operator == ModelConstants.OPERATOR_BETWEEN)
+					else if(operator == Operator.BETWEEN)
 						return len > len1 && len < len2;
-						else if(operator == ModelConstants.OPERATOR_NOT_BETWEEN)
+						else if(operator == Operator.NOT_BETWEEN)
 							return !(len > len1 && len < len2);
 		}
 
@@ -411,14 +411,14 @@ public class Condition implements Serializable{
 	private boolean isDateTrue(QuestionDef qtn, boolean validation){
 		try{
 			if(qtn.getAnswer() == null || qtn.getAnswer().trim().length() == 0){
-				if(validation && operator == ModelConstants.OPERATOR_IS_NOT_NULL)
+				if(validation && operator == Operator.IS_NOT_NULL)
 					return false;
-				else if(validation || operator == ModelConstants.OPERATOR_NOT_EQUAL ||
-						operator == ModelConstants.OPERATOR_NOT_BETWEEN)
+				else if(validation || operator == Operator.NOT_EQUAL ||
+						operator == Operator.NOT_BETWEEN)
 					return true;
-				return operator == ModelConstants.OPERATOR_IS_NULL;
+				return operator == Operator.IS_NULL;
 			}
-			else if(operator == ModelConstants.OPERATOR_IS_NOT_NULL)
+			else if(operator == Operator.IS_NOT_NULL)
 				return true;
 
 			Date answer = getDateTimeSubmitFormat(qtn).parse(qtn.getAnswer());
@@ -436,21 +436,21 @@ public class Condition implements Serializable{
 					secondDateValue = getDateTimeSubmitFormat(qtn).parse(secondValue);
 			}
 
-			if(operator == ModelConstants.OPERATOR_EQUAL)
+			if(operator == Operator.EQUAL)
 				return dateValue.equals(answer);
-			else if(operator == ModelConstants.OPERATOR_NOT_EQUAL)
+			else if(operator == Operator.NOT_EQUAL)
 				return !dateValue.equals(answer);
-			else if(operator == ModelConstants.OPERATOR_LESS)
+			else if(operator == Operator.LESS)
 				return answer.before(dateValue);
-			else if(operator == ModelConstants.OPERATOR_LESS_EQUAL)
+			else if(operator == Operator.LESS_EQUAL)
 				return answer.before(dateValue) || dateValue.equals(answer);
-			else if(operator == ModelConstants.OPERATOR_GREATER)
+			else if(operator == Operator.GREATER)
 				return answer.after(dateValue);
-			else if(operator == ModelConstants.OPERATOR_GREATER_EQUAL)
+			else if(operator == Operator.GREATER_EQUAL)
 				return answer.after(dateValue) || dateValue.equals(answer);
-			else if(operator == ModelConstants.OPERATOR_BETWEEN)
+			else if(operator == Operator.BETWEEN)
 				return answer.after(dateValue) && dateValue.before(secondDateValue);
-			else if(operator == ModelConstants.OPERATOR_NOT_BETWEEN)
+			else if(operator == Operator.NOT_BETWEEN)
 				return !(answer.after(dateValue) && dateValue.before(secondDateValue));
 		}
 		catch(Exception ex){
@@ -502,28 +502,28 @@ public class Condition implements Serializable{
 	private boolean isListMultipleTrue(QuestionDef qtn, boolean validation){
 		try{
 			if(qtn.getAnswer() == null || qtn.getAnswer().trim().length() == 0){
-				if(validation && operator == ModelConstants.OPERATOR_IS_NOT_NULL)
+				if(validation && operator == Operator.IS_NOT_NULL)
 					return false;
-				else if(validation || operator == ModelConstants.OPERATOR_NOT_EQUAL || 
-						operator == ModelConstants.OPERATOR_NOT_IN_LIST)
+				else if(validation || operator == Operator.NOT_EQUAL || 
+						operator == Operator.NOT_IN_LIST)
 					return true;
-				return operator == ModelConstants.OPERATOR_IS_NULL;
+				return operator == Operator.IS_NULL;
 			}
-			else if(operator == ModelConstants.OPERATOR_IS_NOT_NULL)
+			else if(operator == Operator.IS_NOT_NULL)
 				return true;
 
-			switch(operator){
-			case ModelConstants.OPERATOR_EQUAL:
-				return qtn.getAnswer().contains(value);
-			case ModelConstants.OPERATOR_NOT_EQUAL:
-				return !qtn.getAnswer().contains(value);
-			case ModelConstants.OPERATOR_IN_LIST:
-				return value.contains(qtn.getAnswer());
-			case ModelConstants.OPERATOR_NOT_IN_LIST:
-				return !value.contains(qtn.getAnswer());
-			default:
-				return false;
-			}
+			
+            if (operator == Operator.EQUAL) {
+                return qtn.getAnswer().contains(value);
+            } else if (operator == Operator.NOT_EQUAL) {
+                return !qtn.getAnswer().contains(value);
+            } else if (operator == Operator.IN_LIST) {
+                return value.contains(qtn.getAnswer());
+            } else if (operator == Operator.NOT_IN_LIST) {
+                return !value.contains(qtn.getAnswer());
+            }
+            return false;
+
 		}
 		catch(Exception ex){
 			ex.printStackTrace();
@@ -543,28 +543,27 @@ public class Condition implements Serializable{
 
 		try{
 			if(qtn.getAnswer() == null || qtn.getAnswer().trim().length() == 0){
-				if(validation && operator == ModelConstants.OPERATOR_IS_NOT_NULL)
+				if(validation && operator == Operator.IS_NOT_NULL)
 					return false;
-				else if(validation || operator == ModelConstants.OPERATOR_NOT_EQUAL || 
-						operator == ModelConstants.OPERATOR_NOT_IN_LIST)
+				else if(validation || operator == Operator.NOT_EQUAL || 
+						operator == Operator.NOT_IN_LIST)
 					return true;
-				return operator == ModelConstants.OPERATOR_IS_NULL;
+				return operator == Operator.IS_NULL;
 			}
-			else if(operator == ModelConstants.OPERATOR_IS_NOT_NULL)
+			else if(operator == Operator.IS_NOT_NULL)
 				return true;
 
-			switch(operator){
-			case ModelConstants.OPERATOR_EQUAL:
-				return qtn.getAnswer().equals(value);
-			case ModelConstants.OPERATOR_NOT_EQUAL:
-				return !qtn.getAnswer().equals(value);
-			case ModelConstants.OPERATOR_IN_LIST:
-				return value.contains(qtn.getAnswer());
-			case ModelConstants.OPERATOR_NOT_IN_LIST:
-				return !value.contains(qtn.getAnswer());
-			default:
-				return false;
-			}
+            if (operator == Operator.EQUAL) {
+                return qtn.getAnswer().equals(value);
+            } else if (operator == Operator.NOT_EQUAL) {
+                return !qtn.getAnswer().equals(value);
+            } else if (operator == Operator.IN_LIST) {
+                return value.contains(qtn.getAnswer());
+            } else if (operator == Operator.NOT_IN_LIST) {
+                return !value.contains(qtn.getAnswer());
+            }
+            return false;
+            
 		}
 		catch(Exception ex){
 			ex.printStackTrace();
@@ -584,14 +583,14 @@ public class Condition implements Serializable{
 	private boolean isDecimalTrue(QuestionDef qtn, boolean validation){
 		try{
 			if(qtn.getAnswer() == null || qtn.getAnswer().trim().length() == 0){
-				if(validation && operator == ModelConstants.OPERATOR_IS_NOT_NULL)
+				if(validation && operator == Operator.IS_NOT_NULL)
 					return false;
-				else if(validation || operator == ModelConstants.OPERATOR_NOT_EQUAL ||
-						operator == ModelConstants.OPERATOR_NOT_BETWEEN)
+				else if(validation || operator == Operator.NOT_EQUAL ||
+						operator == Operator.NOT_BETWEEN)
 					return true;
-				return operator == ModelConstants.OPERATOR_IS_NULL;
+				return operator == Operator.IS_NULL;
 			}
-			else if(operator == ModelConstants.OPERATOR_IS_NOT_NULL)
+			else if(operator == Operator.IS_NOT_NULL)
 				return true;
 
 			
@@ -609,21 +608,21 @@ public class Condition implements Serializable{
 			if(secondValue != null && secondValue.trim().length() > 0)
 				secondDoubleValue = Double.parseDouble(secondValue);
 
-			if(operator == ModelConstants.OPERATOR_EQUAL)
+			if(operator == Operator.EQUAL)
 				return doubleValue == answer;
-			else if(operator == ModelConstants.OPERATOR_NOT_EQUAL)
+			else if(operator == Operator.NOT_EQUAL)
 				return doubleValue != answer;
-			else if(operator == ModelConstants.OPERATOR_LESS)
+			else if(operator == Operator.LESS)
 				return answer < doubleValue;
-			else if(operator == ModelConstants.OPERATOR_LESS_EQUAL)
+			else if(operator == Operator.LESS_EQUAL)
 				return answer < doubleValue || doubleValue == answer;
-			else if(operator == ModelConstants.OPERATOR_GREATER)
+			else if(operator == Operator.GREATER)
 				return answer > doubleValue;
-			else if(operator == ModelConstants.OPERATOR_GREATER_EQUAL)
+			else if(operator == Operator.GREATER_EQUAL)
 				return answer > doubleValue || doubleValue == answer;
-			else if(operator == ModelConstants.OPERATOR_BETWEEN)
+			else if(operator == Operator.BETWEEN)
 				return answer > doubleValue && doubleValue < secondDoubleValue;
-			else if(operator == ModelConstants.OPERATOR_NOT_BETWEEN)
+			else if(operator == Operator.NOT_BETWEEN)
 				return !(answer > doubleValue && doubleValue < secondDoubleValue);
 		}
 		catch(Exception ex){

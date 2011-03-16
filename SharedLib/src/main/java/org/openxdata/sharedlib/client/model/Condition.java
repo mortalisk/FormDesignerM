@@ -380,22 +380,23 @@ public class Condition implements Serializable{
 
 			len = answer.trim().length();
 
-			if(operator == Operator.EQUAL)
-				return len == len1;
-			else if(operator == Operator.NOT_EQUAL)
-				return len != len1;
-			else if(operator == Operator.LESS)
-				return len < len1;
-			else if(operator == Operator.LESS_EQUAL)
-				return len <= len1;
-			else if(operator == Operator.GREATER)
-				return len > len1;
-				else if(operator == Operator.GREATER_EQUAL)
-					return len >= len1;
-					else if(operator == Operator.BETWEEN)
-						return len > len1 && len < len2;
-						else if(operator == Operator.NOT_BETWEEN)
-							return !(len > len1 && len < len2);
+            if (operator == Operator.EQUAL) {
+                return len == len1;
+            } else if (operator == Operator.NOT_EQUAL) {
+                return len != len1;
+            } else if (operator == Operator.LESS) {
+                return len < len1;
+            } else if (operator == Operator.LESS_EQUAL) {
+                return len <= len1;
+            } else if (operator == Operator.GREATER) {
+                return len > len1;
+            } else if (operator == Operator.GREATER_EQUAL) {
+                return len >= len1;
+            } else if (operator == Operator.BETWEEN) {
+                return len > len1 && len < len2;
+            } else if (operator == Operator.NOT_BETWEEN) {
+                return !(len > len1 && len < len2);
+            }
 		}
 
 		return false;

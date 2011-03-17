@@ -698,8 +698,10 @@ public class QuestionDef implements Serializable{
 				}
 			}
 
-			if(dataType != QuestionDef.QTN_TYPE_REPEAT)
-				node.setAttribute(XformConstants.ATTRIBUTE_NAME_TYPE, XformBuilderUtil.getXmlType(dataType,node));
+			if(dataType != QuestionDef.QTN_TYPE_REPEAT) {
+                QuestionType questionType = QuestionType.fromLegacyConstant(dataType);
+				node.setAttribute(XformConstants.ATTRIBUTE_NAME_TYPE, XformBuilderUtil.getXmlType(questionType,node));
+            }
 			if(node.getAttribute(XformConstants.ATTRIBUTE_NAME_NODESET) != null)
 				node.setAttribute(XformConstants.ATTRIBUTE_NAME_NODESET,binding);
 			if(node.getAttribute(XformConstants.ATTRIBUTE_NAME_REF) != null)

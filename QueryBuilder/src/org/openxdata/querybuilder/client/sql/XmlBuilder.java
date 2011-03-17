@@ -13,6 +13,7 @@ import org.openxdata.sharedlib.client.xforms.XformBuilderUtil;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.XMLParser;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 
 /**
@@ -107,7 +108,8 @@ public class XmlBuilder {
 			Element node = doc.createElement(NODE_NAME_FIELD);
 			node.setAttribute(ATTRIBUTE_NAME_NAME, field.getName());
 			node.setAttribute(ATTRIBUTE_NAME_TEXT, field.getText());
-			node.setAttribute(ATTRIBUTE_NAME_TYPE, XformBuilderUtil.getXmlType(field.getDataType(),null));
+            QuestionType type = QuestionType.fromLegacyConstant(field.getDataType());
+			node.setAttribute(ATTRIBUTE_NAME_TYPE, XformBuilderUtil.getXmlType(type,null));
 			if(field.getAggFunc() != null)
 				node.setAttribute(ATTRIBUTE_NAME_AGG_FUNC, field.getAggFunc());
 			displayFieldsNode.appendChild(node);

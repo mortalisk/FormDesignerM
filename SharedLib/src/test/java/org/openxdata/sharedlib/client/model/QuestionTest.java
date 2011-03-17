@@ -46,4 +46,14 @@ public class QuestionTest {
     private void assertThatOperatorIsNotEmpty(Set<Operator> operators) {
         assertThat(operators.size(), greaterThan(0));
     }
+
+    @Test
+    public void answerShouldNotBeNull() {
+        assertThat(textQuestion.getAnswer(), notNullValue());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void setAnswerShouldNotAllowNull() {
+        textQuestion.setAnswer(null);
+    }
 }

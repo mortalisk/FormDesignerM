@@ -71,4 +71,14 @@ public final class LegacyQuestion implements Question {
     public Operator defaultOperator() {
         return Operator.IS_NULL;
     }
+
+    @Override
+    public String getAnswer() {
+        return legacyQuestion.getAnswer();
+    }
+
+    @Override
+    public void setAnswer(String answer) {
+        legacyQuestion.setAnswer(answer);
+    }
 }

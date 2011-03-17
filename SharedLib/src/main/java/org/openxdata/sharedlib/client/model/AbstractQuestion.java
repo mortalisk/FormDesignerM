@@ -6,6 +6,7 @@ package org.openxdata.sharedlib.client.model;
 public abstract class AbstractQuestion implements Question {
 
     private String identifier = "";
+    private String answer = "";
 
     /**
      * Returns the identifier, will never return null.
@@ -30,5 +31,25 @@ public abstract class AbstractQuestion implements Question {
     @Override
     public final Operator defaultOperator() {
         return validOperators().iterator().next();
+    }
+
+    /**
+     * Sets the answer.
+     * @param answer
+     * @throws IllegalArgumentException when answer is null
+     */
+    @Override
+    public final void setAnswer(String answer) {
+        Validate.notNull(answer, "answer");
+        this.answer = answer;
+    }
+
+    /**
+     *
+     * @return the answer, can never be null
+     */
+    @Override
+    public final String getAnswer() {
+        return answer;
     }
 }

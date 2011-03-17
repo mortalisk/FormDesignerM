@@ -28,6 +28,15 @@ public interface Question {
         public Operator defaultOperator() {
             return Operator.EQUAL;
         }
+
+        @Override
+        public String getAnswer() {
+            return "";
+        }
+
+        @Override
+        public void setAnswer(String answer) {
+        }
     };
 
     Set<Operator> validOperators();
@@ -37,4 +46,8 @@ public interface Question {
     String getIdentifier();
 
     void setIdentifier(String string);
+
+    String getAnswer();
+
+    void setAnswer(String answer);
 }

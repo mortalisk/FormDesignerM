@@ -1335,7 +1335,7 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 	/**
 	 * @see org.openxdata.sharedlib.client.controller.QuestionChangeListener#onDataTypeChanged(QuestionDef, int)
 	 */
-	public void onDataTypeChanged(QuestionDef sender,int dataType){
+	public void onDataTypeChanged(QuestionDef sender, QuestionType dataType){
 
 	}
 

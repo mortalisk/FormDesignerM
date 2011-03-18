@@ -800,7 +800,7 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 
 		Object userObj = item.getUserObject();
 		if(userObj instanceof PageDef || 
-				(userObj instanceof QuestionDef && ((QuestionDef)userObj).getDataType() ==  QuestionDef.QTN_TYPE_REPEAT) ){
+				(userObj instanceof QuestionDef && ((QuestionDef)userObj).getDataType() ==  QuestionType.REPEAT) ){
 
 			int id = ++nextQuestionId;
 			QuestionDef questionDef = new QuestionDef(id,i18n.question()+id,QuestionType.TEXT.getLegacyConstant(),"question"+id,userObj);
@@ -810,8 +810,8 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 			item.getParentItem().setState(true);
 		}
 		else if(userObj instanceof QuestionDef && 
-				( ((QuestionDef)userObj).getDataType() ==  QuestionDef.QTN_TYPE_LIST_EXCLUSIVE ||
-						((QuestionDef)userObj).getDataType() ==  QuestionDef.QTN_TYPE_LIST_MULTIPLE ) ){
+				( ((QuestionDef)userObj).getDataType() ==  QuestionType.LIST_EXCLUSIVE ||
+						((QuestionDef)userObj).getDataType() ==  QuestionType.LIST_MULTIPLE ) ){
 
 			int id = ++nextOptionId;
 			OptionDef optionDef = new OptionDef(id,i18n.option()+id,"option"+id,(QuestionDef)userObj);
@@ -1064,7 +1064,7 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 			//Questions can be pasted only as kids of pages or repeat questions.
 			if(! ( (userObj instanceof PageDef) || 
 					(userObj instanceof QuestionDef && 
-							((QuestionDef)userObj).getDataType() == QuestionDef.QTN_TYPE_REPEAT) )){
+							((QuestionDef)userObj).getDataType() == QuestionType.REPEAT) )){
 				return;
 			}
 
@@ -1072,7 +1072,7 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 			QuestionDef questionDef = new QuestionDef((QuestionDef)clipboardItem,userObj);
 
 			//Repeat question can only be child of a page but not another question.
-			if(questionDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT && userObj instanceof QuestionDef)
+			if(questionDef.getDataType() == QuestionType.REPEAT && userObj instanceof QuestionDef)
 				return;
 
 			questionDef.setId(item.getChildCount()+1);
@@ -1107,8 +1107,8 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 		else if(clipboardItem instanceof OptionDef){
 			//Question options can be pasted only as kids of single and multi select questions.
 			if(!(userObj instanceof QuestionDef 
-					&& (((QuestionDef)userObj).getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE)||
-					((QuestionDef)userObj).getDataType() == QuestionDef.QTN_TYPE_LIST_MULTIPLE))
+					&& (((QuestionDef)userObj).getDataType() == QuestionType.LIST_EXCLUSIVE)||
+					((QuestionDef)userObj).getDataType() == QuestionType.LIST_MULTIPLE))
 				return;
 
 			//			create a copy of the clipboard page.
@@ -1229,12 +1229,12 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 			else
 				bindings.put(variableName, questionDef);
 
-			if(questionDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT){
+			if(questionDef.getDataType() == QuestionType.REPEAT){
 				if(!isValidQuestionList(child,bindings))
 					return false;
 			}
-			else if(questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE ||
-					questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_MULTIPLE){
+			else if(questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE ||
+					questionDef.getDataType() == QuestionType.LIST_MULTIPLE){
 				if(!isValidOptionList(child))
 					return false;
 			}

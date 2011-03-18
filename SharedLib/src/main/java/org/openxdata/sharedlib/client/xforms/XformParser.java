@@ -367,7 +367,7 @@ public class XformParser {
 			} else if (XmlUtil.nodeNameEquals(tagname,
 					XformConstants.NODE_NAME_ITEMSET_MINUS_PREFIX)) {
 				questionDef
-						.setDataType(QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC);
+						.setDataType(QuestionType.LIST_EXCLUSIVE_DYNAMIC);
 				questionDef.setFirstOptionNode(child);
 				ItemsetParser.parseDynamicOptionsList(questionDef, child
 						.getAttribute(XformConstants.ATTRIBUTE_NAME_NODESET),
@@ -633,7 +633,7 @@ public class XformParser {
 		qtn.setId(getNextQuestionId());
 
 		if (child.getAttribute(XformConstants.ATTRIBUTE_NAME_TYPE) == null)
-			qtn.setDataType(QuestionDef.QTN_TYPE_TEXT);
+			qtn.setDataType(QuestionType.TEXT);
 		else
 			XformParserUtil.setQuestionType(qtn,
 					child.getAttribute(XformConstants.ATTRIBUTE_NAME_TYPE),
@@ -949,14 +949,14 @@ public class XformParser {
 					|| XmlUtil.nodeNameEquals(tagname,
 							XformConstants.NODE_NAME_SELECT_MINUS_PREFIX)) {
 				qtn.setDataType((XmlUtil.nodeNameEquals(tagname,
-						XformConstants.NODE_NAME_SELECT1_MINUS_PREFIX)) ? QuestionDef.QTN_TYPE_LIST_EXCLUSIVE
-						: QuestionDef.QTN_TYPE_LIST_MULTIPLE);
+						XformConstants.NODE_NAME_SELECT1_MINUS_PREFIX)) ? QuestionType.LIST_EXCLUSIVE
+						: QuestionType.LIST_MULTIPLE);
 				qtn.setOptions(new Vector<OptionDef>());
 			}// TODO first addition for repeats
 			else if (XmlUtil.nodeNameEquals(tagname,
 					XformConstants.NODE_NAME_REPEAT_MINUS_PREFIX)
 					&& !nodeContext.getLabel().equals("")) {
-				qtn.setDataType(QuestionDef.QTN_TYPE_REPEAT);
+				qtn.setDataType(QuestionType.REPEAT);
 				qtn.setText(nodeContext.getLabel());
 				qtn.setHelpText(nodeContext.getHint());
 				qtn.setRepeatQtnsDef(new RepeatQtnsDef(qtn));
@@ -978,13 +978,13 @@ public class XformParser {
 					XformConstants.NODE_NAME_UPLOAD_MINUS_PREFIX)) {
 				if ("image/*".equalsIgnoreCase(child
 						.getAttribute(XformConstants.ATTRIBUTE_NAME_MEDIATYPE)))
-					qtn.setDataType(QuestionDef.QTN_TYPE_IMAGE);
+					qtn.setDataType(QuestionType.IMAGE);
 				else if ("audio/*".equalsIgnoreCase(child
 						.getAttribute(XformConstants.ATTRIBUTE_NAME_MEDIATYPE)))
-					qtn.setDataType(QuestionDef.QTN_TYPE_AUDIO);
+					qtn.setDataType(QuestionType.AUDIO);
 				else if ("video/*".equalsIgnoreCase(child
 						.getAttribute(XformConstants.ATTRIBUTE_NAME_MEDIATYPE)))
-					qtn.setDataType(QuestionDef.QTN_TYPE_VIDEO);
+					qtn.setDataType(QuestionType.VIDEO);
 			}
 
 			// TODO second addition for repeats

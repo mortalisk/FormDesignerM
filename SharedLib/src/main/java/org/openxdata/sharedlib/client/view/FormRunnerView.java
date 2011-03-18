@@ -672,7 +672,7 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 
 				if(!(questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE
 						||questionDef.getDataType() == QuestionType.LIST_MULTIPLE)){
-					questionDef.setDataType(QuestionDef.QTN_TYPE_LIST_EXCLUSIVE);
+					questionDef.setDataType(QuestionType.LIST_EXCLUSIVE);
 				}
 
 				externalSourceWidgets.add(wrapper);

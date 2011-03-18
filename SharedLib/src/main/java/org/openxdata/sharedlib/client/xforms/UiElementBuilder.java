@@ -190,25 +190,25 @@ public class UiElementBuilder {
 
 		String name = XformConstants.NODE_NAME_INPUT;
 
-		int type = qtnDef.getDataType().getLegacyConstant();
-		if(type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC)
+		QuestionType type = qtnDef.getDataType();
+		if(type == QuestionType.LIST_EXCLUSIVE || type == QuestionType.LIST_EXCLUSIVE_DYNAMIC)
 			name = XformConstants.NODE_NAME_SELECT1;
-		else if(type == QuestionDef.QTN_TYPE_LIST_MULTIPLE)
+		else if(type == QuestionType.LIST_MULTIPLE)
 			name = XformConstants.NODE_NAME_SELECT;
-		else if(type == QuestionDef.QTN_TYPE_REPEAT)
+		else if(type == QuestionType.REPEAT)
 			name = XformConstants.NODE_NAME_GROUP;
-		else if(type == QuestionDef.QTN_TYPE_IMAGE || type == QuestionDef.QTN_TYPE_AUDIO || type == QuestionDef.QTN_TYPE_VIDEO)
+		else if(type == QuestionType.IMAGE || type == QuestionType.AUDIO || type == QuestionType.VIDEO)
 			name = XformConstants.NODE_NAME_UPLOAD;
 
 		String id = XformBuilderUtil.getBindIdFromVariableName(qtnDef.getBinding(), isRepeatKid);
 		Element node = doc.createElement(name);
-		if(type != QuestionDef.QTN_TYPE_REPEAT)
+		if(type != QuestionType.REPEAT)
 			node.setAttribute(bindAttributeName, id);
 		else
 			node.setAttribute(XformConstants.ATTRIBUTE_NAME_ID, qtnDef.getBinding());
 
 		//Make ODK happy.
-		setMediaType(node, QuestionType.fromLegacyConstant(type));
+		setMediaType(node, type);
 
 		return node;
 	}

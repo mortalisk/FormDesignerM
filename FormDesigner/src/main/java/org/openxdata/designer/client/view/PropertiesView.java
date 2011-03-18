@@ -988,7 +988,7 @@ public class PropertiesView extends Composite implements IFormSelectionListener,
 	 * 
 	 * @param type the current question's data type.
 	 */
-	private void setDataType(int type){
+	private void setDataType(QuestionType type){
 		int index = DT_INDEX_NONE;
 
 		switch(type){

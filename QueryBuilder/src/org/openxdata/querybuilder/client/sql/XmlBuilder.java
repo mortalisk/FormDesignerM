@@ -108,7 +108,7 @@ public class XmlBuilder {
 			Element node = doc.createElement(NODE_NAME_FIELD);
 			node.setAttribute(ATTRIBUTE_NAME_NAME, field.getName());
 			node.setAttribute(ATTRIBUTE_NAME_TEXT, field.getText());
-            QuestionType type = QuestionType.fromLegacyConstant(field.getDataType());
+            QuestionType type = field.getDataType();
 			node.setAttribute(ATTRIBUTE_NAME_TYPE, XformBuilderUtil.getXmlType(type,null));
 			if(field.getAggFunc() != null)
 				node.setAttribute(ATTRIBUTE_NAME_AGG_FUNC, field.getAggFunc());

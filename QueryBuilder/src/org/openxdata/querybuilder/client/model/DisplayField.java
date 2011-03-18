@@ -19,7 +19,7 @@ public class DisplayField implements Serializable {
 	private String name;
 	private String text;
 	private String AggFunc;
-	private int dataType;
+	private QuestionType dataType;
 	
 	public DisplayField(){
 		
@@ -30,7 +30,7 @@ public class DisplayField implements Serializable {
 		this.name = name;
 		this.text = text;
 		this.AggFunc = AggFunc;
-		this.dataType = dataType.getLegacyConstant();
+		this.dataType = dataType;
 	}
 
 	public String getName() {
@@ -57,11 +57,11 @@ public class DisplayField implements Serializable {
 		AggFunc = aggFunc;
 	}
 
-	public int getDataType() {
+	public QuestionType getDataType() {
 		return dataType;
 	}
 
-	public void setDataType(int dataType) {
+	public void setDataType(QuestionType dataType) {
 		this.dataType = dataType;
 	}
 }

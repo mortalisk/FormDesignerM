@@ -635,7 +635,7 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 		
 		// now the question
 		int quesId = ++nextQuestionId;
-		QuestionDef questionDef = new QuestionDef(quesId, i18n.question() + quesId, QuestionDef.QTN_TYPE_TEXT, "question" + quesId, pageDef);
+		QuestionDef questionDef = new QuestionDef(quesId, i18n.question() + quesId, QuestionType.TEXT.getLegacyConstant(), "question" + quesId, pageDef);
 		TreeItem quesDefItem = addImageItem(pageDefItem, questionDef.getText(), images.lookup(), questionDef, questionDef.getHelpText());
 		addFormDefItem(questionDef, pageDefItem);
 		tree.setSelectedItem(quesDefItem);

@@ -803,7 +803,7 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 				(userObj instanceof QuestionDef && ((QuestionDef)userObj).getDataType() ==  QuestionDef.QTN_TYPE_REPEAT) ){
 
 			int id = ++nextQuestionId;
-			QuestionDef questionDef = new QuestionDef(id,i18n.question()+id,QuestionDef.QTN_TYPE_TEXT,"question"+id,userObj);
+			QuestionDef questionDef = new QuestionDef(id,i18n.question()+id,QuestionType.TEXT.getLegacyConstant(),"question"+id,userObj);
 			item = addImageItem(item, questionDef.getText(), images.lookup(),questionDef,questionDef.getHelpText());
 			addFormDefItem(questionDef,item.getParentItem());
 			tree.setSelectedItem(item);

@@ -9,6 +9,7 @@ import org.openxdata.sharedlib.client.model.RepeatQtnsDef;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 
 /**
@@ -57,8 +58,10 @@ public class UiElementBuilder {
 			nodeset = "/" + formDef.getBinding() + "/" + qtn.getBinding();
 		bindNode.setAttribute(XformConstants.ATTRIBUTE_NAME_NODESET, nodeset);
 
-		if(qtn.getDataType() != QuestionDef.QTN_TYPE_REPEAT)
-			bindNode.setAttribute(XformConstants.ATTRIBUTE_NAME_TYPE, XformBuilderUtil.getXmlType(qtn.getDataType(),bindNode));	
+		if(qtn.getDataType() != QuestionDef.QTN_TYPE_REPEAT) {
+            QuestionType type = QuestionType.fromLegacyConstant(qtn.getDataType());
+			bindNode.setAttribute(XformConstants.ATTRIBUTE_NAME_TYPE, XformBuilderUtil.getXmlType(type,bindNode));
+        }
 		if(qtn.isRequired())
 			bindNode.setAttribute(XformConstants.ATTRIBUTE_NAME_REQUIRED, XformConstants.XPATH_VALUE_TRUE);
 		if(!qtn.isEnabled())
@@ -138,7 +141,8 @@ public class UiElementBuilder {
 		qtnDef.setDataNode(dataNode);
 
 		Element inputNode =  getXformUIElement(doc,qtnDef,XformConstants.ATTRIBUTE_NAME_REF,true);
-		inputNode.setAttribute(XformConstants.ATTRIBUTE_NAME_TYPE, XformBuilderUtil.getXmlType(qtnDef.getDataType(),inputNode));
+        QuestionType type = QuestionType.fromLegacyConstant(qtnDef.getDataType());
+		inputNode.setAttribute(XformConstants.ATTRIBUTE_NAME_TYPE, XformBuilderUtil.getXmlType(type,inputNode));
 		if(qtnDef.isRequired())
 			inputNode.setAttribute(XformConstants.ATTRIBUTE_NAME_REQUIRED, XformConstants.XPATH_VALUE_TRUE);
 		if(!qtnDef.isEnabled())

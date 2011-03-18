@@ -5,13 +5,13 @@ import java.util.Vector;
 
 import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.ModelConstants;
-import org.openxdata.sharedlib.client.model.QuestionDef;
 import org.openxdata.sharedlib.client.util.FormUtil;
 import org.openxdata.sharedlib.client.xpath.XPathExpression;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 import org.openxdata.sharedlib.client.model.Operator;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 /**
  * Utility methods used during the building of xforms documents.
@@ -39,47 +39,46 @@ public class XformBuilderUtil {
 	 *            the node having the type attribute.
 	 * @return the xsd type.
 	 */
-	public static String getXmlType(int type, Element node) {
+	public static String getXmlType(QuestionType type, Element node) {
 		if (node != null) {
-			if (type == QuestionDef.QTN_TYPE_VIDEO)
+			if (type == QuestionType.VIDEO)
 				node.setAttribute(XformConstants.ATTRIBUTE_NAME_FORMAT,
 						XformConstants.ATTRIBUTE_VALUE_VIDEO);
-			else if (type == QuestionDef.QTN_TYPE_AUDIO)
+			else if (type == QuestionType.AUDIO)
 				node.setAttribute(XformConstants.ATTRIBUTE_NAME_FORMAT,
 						XformConstants.ATTRIBUTE_VALUE_AUDIO);
-			else if (type == QuestionDef.QTN_TYPE_IMAGE)
+			else if (type == QuestionType.IMAGE)
 				node.setAttribute(XformConstants.ATTRIBUTE_NAME_FORMAT,
 						XformConstants.ATTRIBUTE_VALUE_IMAGE);
-			else if (type == QuestionDef.QTN_TYPE_GPS)
+			else if (type == QuestionType.GPS)
 				node.setAttribute(XformConstants.ATTRIBUTE_NAME_FORMAT,
 						XformConstants.ATTRIBUTE_VALUE_GPS);
 		}
 
-		switch (type) {
-		case QuestionDef.QTN_TYPE_BOOLEAN:
+		if(type == QuestionType.BOOLEAN) {
 			return XformConstants.DATA_TYPE_BOOLEAN;
-		case QuestionDef.QTN_TYPE_DATE:
+        } else if (type == QuestionType.DATE) {
 			return XformConstants.DATA_TYPE_DATE;
-		case QuestionDef.QTN_TYPE_DATE_TIME:
+        } else if (type == QuestionType.DATE_TIME) {
 			return XformConstants.DATA_TYPE_DATE_TIME;
-		case QuestionDef.QTN_TYPE_TIME:
+        } else if (type == QuestionType.TIME) {
 			return XformConstants.DATA_TYPE_TIME;
-		case QuestionDef.QTN_TYPE_DECIMAL:
+        } else if (type == QuestionType.DECIMAL) {
 			return XformConstants.DATA_TYPE_DECIMAL;
-		case QuestionDef.QTN_TYPE_NUMERIC:
+        } else if (type == QuestionType.NUMERIC) {
 			return XformConstants.DATA_TYPE_INT;
-		case QuestionDef.QTN_TYPE_TEXT:
-		case QuestionDef.QTN_TYPE_LIST_EXCLUSIVE:
-		case QuestionDef.QTN_TYPE_LIST_MULTIPLE:
-		case QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC:
+        } else if (type == QuestionType.TEXT ||
+                type == QuestionType.LIST_EXCLUSIVE ||
+                type == QuestionType.LIST_MULTIPLE ||
+                type == QuestionType.LIST_EXCLUSIVE_DYNAMIC) {
 			return XformConstants.DATA_TYPE_TEXT;
-		case QuestionDef.QTN_TYPE_GPS:
+        } else if (type == QuestionType.GPS) {
 			return FormUtil.getGpsTypeName();
-		case QuestionDef.QTN_TYPE_IMAGE:
-		case QuestionDef.QTN_TYPE_VIDEO:
-		case QuestionDef.QTN_TYPE_AUDIO:
+        } else if (type == QuestionType.IMAGE ||
+                type == QuestionType.VIDEO ||
+                type == QuestionType.AUDIO) {
 			return XformConstants.DATA_TYPE_BINARY;
-		case QuestionDef.QTN_TYPE_BARCODE:
+        } else if (type == QuestionType.BARCODE) {
 			return XformConstants.DATA_TYPE_BARCODE;
 		}
 

@@ -23,7 +23,7 @@ final public class OperatorWidget extends Composite implements ChangeHandler {
 
     private final DesignerMessages i18n = GWT.create(DesignerMessages.class);
     /** The current question data type. */
-    private int dataType = QuestionDef.QTN_TYPE_TEXT;
+    private QuestionType dataType = QuestionType.TEXT;
     /** The selection change listener. */
     private ItemSelectionListener itemSelectionListener;
     /** List box that contains the operators the user can select from */
@@ -51,7 +51,7 @@ final public class OperatorWidget extends Composite implements ChangeHandler {
      * @param dataType the data type.
      */
     public void setDataType(QuestionType dataType) {
-        this.dataType = dataType.getLegacyConstant();
+        this.dataType = dataType;
         buildOptionList();
     }
 
@@ -62,17 +62,17 @@ final public class OperatorWidget extends Composite implements ChangeHandler {
     private void buildOptionList() {
         operators.clear();
 
-        if (!(dataType == QuestionDef.QTN_TYPE_GPS || dataType == QuestionDef.QTN_TYPE_VIDEO
-                || dataType == QuestionDef.QTN_TYPE_AUDIO || dataType == QuestionDef.QTN_TYPE_IMAGE
-                || dataType == QuestionDef.QTN_TYPE_BARCODE)) {
+        if (!(dataType == QuestionType.GPS || dataType == QuestionType.VIDEO
+                || dataType == QuestionType.AUDIO || dataType == QuestionType.IMAGE
+                || dataType == QuestionType.BARCODE)) {
 
             addOperator(i18n.isEqualTo(), Operator.EQUAL);
             addOperator(i18n.isNotEqual(), Operator.NOT_EQUAL);
         }
 
-        if (dataType == QuestionDef.QTN_TYPE_DATE || dataType == QuestionDef.QTN_TYPE_DATE_TIME
-                || dataType == QuestionDef.QTN_TYPE_DECIMAL || dataType == QuestionDef.QTN_TYPE_NUMERIC
-                || dataType == QuestionDef.QTN_TYPE_TIME || dataType == QuestionDef.QTN_TYPE_REPEAT) {
+        if (dataType == QuestionType.DATE || dataType == QuestionType.DATE_TIME
+                || dataType == QuestionType.DECIMAL || dataType == QuestionType.NUMERIC
+                || dataType == QuestionType.TIME || dataType == QuestionType.REPEAT) {
 
             addOperator(i18n.isGreaterThan(), Operator.GREATER);
             addOperator(i18n.isGreaterThanOrEqual(), Operator.GREATER_EQUAL);
@@ -82,7 +82,7 @@ final public class OperatorWidget extends Composite implements ChangeHandler {
             addOperator(i18n.isNotBetween(), Operator.NOT_BETWEEN);
         }
 
-        if (dataType == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || dataType == QuestionDef.QTN_TYPE_LIST_MULTIPLE) {
+        if (dataType == QuestionType.LIST_EXCLUSIVE || dataType == QuestionType.LIST_MULTIPLE) {
             addOperator(i18n.isInList(), Operator.IN_LIST);
             addOperator(i18n.isNotInList(), Operator.NOT_IN_LIST);
         }

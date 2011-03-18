@@ -1,5 +1,7 @@
 package org.openxdata.designer.client.controller;
 
+import org.openxdata.sharedlib.client.model.QuestionType;
+
 
 /**
  * This interface is implemented by those classes that want to listen to events which
@@ -93,7 +95,7 @@ public interface IFormActionListener {
 	 */
 	public void moveToChild();
 	
-	public void addNewQuestion(int dataType);
+	public void addNewQuestion(QuestionType dataType);
 	
 	public void addNewPage();
 }

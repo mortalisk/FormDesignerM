@@ -44,6 +44,7 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.XMLParser;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 /**
  * Controls the interactions between the menu, tool bar and various views (eg
@@ -146,8 +147,8 @@ public class FormDesignerController implements IFormDesignerListener,
 	/**
 	 * @see org.openxdata.designer.client.controller.IFormActionListener#addNewQuestion()
 	 */
-	public void addNewQuestion(int dataType) {
-		leftPanel.addNewQuestion(dataType);
+	public void addNewQuestion(QuestionType dataType) {
+		leftPanel.addNewQuestion(dataType.getLegacyConstant());
 	}
 
 	public void addNewPage() {

@@ -644,7 +644,7 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 		pageDefItem.setState(true, true);
 	}
 	
-	public void addNewQuestion(int dataType){
+	public void addNewQuestion(QuestionType dataType){
 		if(inReadOnlyMode())
 			return;
 
@@ -660,7 +660,7 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 				item = addImageItem(item.getParentItem(), questionDef.getText(), images.lookup(),questionDef,questionDef.getHelpText());
 				addFormDefItem(questionDef,item.getParentItem());
 				
-				if(dataType == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || dataType == QuestionDef.QTN_TYPE_LIST_MULTIPLE)
+				if(dataType == QuestionType.LIST_EXCLUSIVE || dataType == QuestionType.LIST_MULTIPLE)
 					addNewOptionDef(questionDef, item);
 				
 				tree.setSelectedItem(item);
@@ -672,7 +672,7 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 				item = addImageItem(item.getParentItem().getParentItem(), questionDef.getText(), images.lookup(),questionDef,questionDef.getHelpText());
 				addFormDefItem(questionDef,item.getParentItem());
 				
-				if(dataType == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || dataType == QuestionDef.QTN_TYPE_LIST_MULTIPLE)
+				if(dataType == QuestionType.LIST_EXCLUSIVE || dataType == QuestionType.LIST_MULTIPLE)
 					addNewOptionDef(questionDef, item);
 				
 				tree.setSelectedItem(item);
@@ -684,7 +684,7 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 				item = addImageItem(item, questionDef.getText(), images.lookup(),questionDef,questionDef.getHelpText());
 				addFormDefItem(questionDef,item.getParentItem());
 				
-				if(dataType == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || dataType == QuestionDef.QTN_TYPE_LIST_MULTIPLE)
+				if(dataType == QuestionType.LIST_EXCLUSIVE || dataType == QuestionType.LIST_MULTIPLE)
 					addNewOptionDef(questionDef, item);
 				
 				tree.setSelectedItem(item);
@@ -704,7 +704,7 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 				item = addImageItem(parentItem, questionDef.getText(), images.lookup(),questionDef,questionDef.getHelpText());
 				addFormDefItem(questionDef,item.getParentItem());
 				
-				if(dataType == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || dataType == QuestionDef.QTN_TYPE_LIST_MULTIPLE)
+				if(dataType == QuestionType.LIST_EXCLUSIVE || dataType == QuestionType.LIST_MULTIPLE)
 					addNewOptionDef(questionDef, item);
 				
 				tree.setSelectedItem(item);
@@ -716,7 +716,7 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 			QuestionDef questionDef = (QuestionDef)item.getUserObject();
 			questionDef.setDataType(dataType);
 			
-			if(dataType == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || dataType == QuestionDef.QTN_TYPE_LIST_MULTIPLE)
+			if(dataType == QuestionType.LIST_EXCLUSIVE || dataType == QuestionType.LIST_MULTIPLE)
 				addNewOptionDef(questionDef, item);
 			
 			tree.setSelectedItem(item.getParentItem());

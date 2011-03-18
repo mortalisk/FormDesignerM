@@ -23,6 +23,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DecoratedStackPanel;
 import com.google.gwt.user.client.ui.Widget;
 import org.openxdata.sharedlib.client.locale.FormsConstants;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 
 /**
@@ -169,7 +170,7 @@ public class LeftPanel extends Composite {
 	 * @see org.openxdata.designer.client.controller.IFormActionListener#addNewQuestion()
 	 */
 	public void addNewQuestion(int dataType){
-		formsTreeView.addNewQuestion(dataType);
+		formsTreeView.addNewQuestion(QuestionType.fromLegacyConstant(dataType));
 	}
 	
 	public void addNewPage() {

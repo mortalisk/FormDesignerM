@@ -51,6 +51,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.xml.client.Element;
 import org.openxdata.designer.client.DesignerMessages;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 
 /**
@@ -712,11 +713,10 @@ public class DesignWidgetWrapper extends WidgetEx implements QuestionChangeListe
 
 	}	
 
-	public void onDataTypeChanged(QuestionDef sender,int dataType){
+	public void onDataTypeChanged(QuestionDef sender,QuestionType dataType){
 		if(widget instanceof Label)
 			return; //We do not change labels into data input widgets.
-
-		if(dataType == QuestionDef.QTN_TYPE_DATE){
+		if(dataType == QuestionType.DATE){
 			if(!(widget instanceof DatePickerEx)){
 				storePosition();
 				panel.remove(widget);
@@ -725,7 +725,7 @@ public class DesignWidgetWrapper extends WidgetEx implements QuestionChangeListe
 				refreshSize();
 			}
 		}
-		else if(dataType == QuestionDef.QTN_TYPE_DATE_TIME){
+		else if(dataType == QuestionType.DATE_TIME){
 			if(!(widget instanceof DateTimeWidget)){
 				storePosition();
 				panel.remove(widget);
@@ -734,7 +734,7 @@ public class DesignWidgetWrapper extends WidgetEx implements QuestionChangeListe
 				refreshSize();
 			}
 		}
-		else if(dataType == QuestionDef.QTN_TYPE_TIME){
+		else if(dataType == QuestionType.TIME){
 			if(!(widget instanceof TimeWidget)){
 				storePosition();
 				panel.remove(widget);
@@ -743,7 +743,7 @@ public class DesignWidgetWrapper extends WidgetEx implements QuestionChangeListe
 				refreshSize();
 			}
 		}
-		else if(dataType == QuestionDef.QTN_TYPE_TEXT || dataType == QuestionDef.QTN_TYPE_NUMERIC || dataType == QuestionDef.QTN_TYPE_DECIMAL){
+		else if(dataType == QuestionType.TEXT || dataType == QuestionType.NUMERIC || dataType == QuestionType.DECIMAL){
 			if(( !(widget instanceof TextBox || widget instanceof TextArea) || (widget instanceof DatePickerEx)) ){
 				storePosition();
 				panel.remove(widget);
@@ -752,7 +752,7 @@ public class DesignWidgetWrapper extends WidgetEx implements QuestionChangeListe
 				refreshSize();
 			}
 		}
-		else if(dataType == QuestionDef.QTN_TYPE_BOOLEAN){
+		else if(dataType == QuestionType.BOOLEAN){
 			if(!(widget instanceof ListBox || widget instanceof CheckBox)){
 				storePosition();
 				panel.remove(widget);
@@ -761,13 +761,13 @@ public class DesignWidgetWrapper extends WidgetEx implements QuestionChangeListe
 				refreshSize();
 			}
 		}
-		else if(dataType == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE){
+		else if(dataType == QuestionType.LIST_EXCLUSIVE){
 			if(!(widget instanceof ListBox || widget instanceof RadioButton)){
 				if((externalSource != null && externalSource.trim().length() > 0) ||
 						(displayField != null && displayField.trim().length() > 0) ||
 						(valueField != null && valueField.trim().length() > 0)){
 
-					onDataTypeChanged(sender,QuestionDef.QTN_TYPE_TEXT);
+					onDataTypeChanged(sender,QuestionType.TEXT);
 				}
 				else{
 					storePosition();
@@ -778,7 +778,7 @@ public class DesignWidgetWrapper extends WidgetEx implements QuestionChangeListe
 				}
 			}
 		}
-		else if(dataType == QuestionDef.QTN_TYPE_IMAGE){
+		else if(dataType == QuestionType.IMAGE){
 			if(!(widget instanceof Image)){
 				storePosition();
 				panel.remove(widget);
@@ -787,7 +787,7 @@ public class DesignWidgetWrapper extends WidgetEx implements QuestionChangeListe
 				refreshSize();
 			}
 		}
-		else if(dataType == QuestionDef.QTN_TYPE_VIDEO || dataType == QuestionDef.QTN_TYPE_VIDEO){
+		else if(dataType == QuestionType.VIDEO || dataType == QuestionType.VIDEO){
 			if(!(widget instanceof Hyperlink)){
 				storePosition();
 				panel.remove(widget);

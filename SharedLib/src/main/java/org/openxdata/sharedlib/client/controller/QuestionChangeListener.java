@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.openxdata.sharedlib.client.model.OptionDef;
 import org.openxdata.sharedlib.client.model.QuestionDef;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 
 /**
@@ -61,7 +62,7 @@ public interface QuestionChangeListener {
 	 * @param sender the question whose property value has changed.
 	 * @param dataType the new value of the property.
 	 */
-	public void onDataTypeChanged(QuestionDef sender,int dataType);
+	public void onDataTypeChanged(QuestionDef sender,QuestionType dataType);
 	
 	/**
 	 * Called when the list of options changes for a single or multiple select question.

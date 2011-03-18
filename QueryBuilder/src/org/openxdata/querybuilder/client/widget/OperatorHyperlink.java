@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import org.openxdata.querybuilder.client.Translations;
 import org.openxdata.sharedlib.client.model.Operator;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 
 /**
@@ -51,8 +52,8 @@ public class OperatorHyperlink extends Hyperlink implements ItemSelectionListene
 		DOM.sinkEvents(getElement(), DOM.getEventsSunk(getElement()) | Event.ONMOUSEDOWN );
 	}
 
-	public void setDataType(int dataType){
-		this.dataType = dataType;
+	public void setDataType(QuestionType dataType){
+		this.dataType = dataType.getLegacyConstant();
 
 		//We set the universal operator which is valid for all questions.
 		setText(OP_TEXT_EQUAL);

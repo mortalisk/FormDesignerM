@@ -1,6 +1,7 @@
 package org.openxdata.querybuilder.client.model;
 
 import org.openxdata.sharedlib.client.model.Operator;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 
 
@@ -63,7 +64,7 @@ public class FilterCondition extends FilterConditionRow {
 		return dataType;
 	}
 
-	public void setDataType(int dataType) {
-		this.dataType = dataType;
+	public void setDataType(QuestionType dataType) {
+		this.dataType = dataType.getLegacyConstant();
 	}
 }

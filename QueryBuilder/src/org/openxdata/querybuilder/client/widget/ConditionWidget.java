@@ -94,7 +94,7 @@ public class ConditionWidget extends Composite implements ItemSelectionListener,
 	public void onItemSelected(Object sender, Object item) {
 		if(sender == fieldWidget){
 			questionDef = (QuestionDef)item;
-			operatorHyperlink.setDataType(questionDef.getDataType().getLegacyConstant());
+			operatorHyperlink.setDataType(questionDef.getDataType());
 			valueWidget.setQuestionDef(questionDef);
 		}
 		else if(sender == operatorHyperlink){
@@ -148,7 +148,7 @@ public class ConditionWidget extends Composite implements ItemSelectionListener,
 		this.questionDef = questionDef;
 		
 		valueWidget.setQuestionDef(questionDef);
-		operatorHyperlink.setDataType(questionDef.getDataType().getLegacyConstant());
+		operatorHyperlink.setDataType(questionDef.getDataType());
 		fieldWidget.setQuestion(questionDef);
 	}
 	

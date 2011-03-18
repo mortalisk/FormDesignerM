@@ -51,7 +51,7 @@ public class QuestionDef implements Serializable{
 	private String helpText = ModelConstants.EMPTY_STRING;
 
 	/** The type of question. eg Numeric,Date,Text etc. */
-	private int dataType = QTN_TYPE_TEXT;
+	private QuestionType dataType = QuestionType.TEXT;
 
 	/** The value supplied as answer if the user has not supplied one. */
 	private String defaultValue;
@@ -184,7 +184,7 @@ public class QuestionDef implements Serializable{
 		setId(questionDef.getId());
 		setText(questionDef.getText());
 		setHelpText(questionDef.getHelpText());
-		setDataType(questionDef.getDataType().getLegacyConstant());
+		setDataType(questionDef.getDataType());
 		setDefaultValue(questionDef.getDefaultValue());
 		setVisible(questionDef.isVisible());
 		setEnabled(questionDef.isEnabled());
@@ -202,7 +202,7 @@ public class QuestionDef implements Serializable{
 		this(parent);
 		setId(id);
 		setText(text);
-		setDataType(type);
+		setDataType(QuestionType.fromLegacyConstant(type));
 		setVariableName(variableName);
 	}
 
@@ -228,7 +228,7 @@ public class QuestionDef implements Serializable{
 		setId(id);
 		setText(text);
 		setHelpText(helpText);
-		setDataType(type);
+		setDataType(QuestionType.fromLegacyConstant(type));
 		setDefaultValue(defaultValue);
 		setVisible(visible);
 		setEnabled(enabled);
@@ -263,16 +263,16 @@ public class QuestionDef implements Serializable{
 	}
 
 	public boolean isDate(){
-		return (dataType == QuestionDef.QTN_TYPE_DATE_TIME || 
-				dataType == QuestionDef.QTN_TYPE_DATE ||
-				dataType == QuestionDef.QTN_TYPE_TIME);
+		return (dataType == QuestionType.DATE_TIME || 
+				dataType == QuestionType.DATE ||
+				dataType == QuestionType.TIME);
 	}
 
 	public String getDefaultValueDisplay() {
 		if(isDate() && isDateFunction(defaultValue)){
-			if(dataType == QuestionDef.QTN_TYPE_TIME)
+			if(dataType == QuestionType.TIME)
 				return FormUtil.getTimeDisplayFormat().format(getDateFunctionValue(defaultValue));
-			else if(dataType == QuestionDef.QTN_TYPE_DATE_TIME)
+			else if(dataType == QuestionType.DATE_TIME)
 				return FormUtil.getDateTimeDisplayFormat().format(getDateFunctionValue(defaultValue));
 			else
 				return FormUtil.getDateDisplayFormat().format(getDateFunctionValue(defaultValue));
@@ -283,9 +283,9 @@ public class QuestionDef implements Serializable{
 
 	public String getDefaultValueSubmit() {
 		if(isDate() && isDateFunction(defaultValue)){
-			if(dataType == QuestionDef.QTN_TYPE_TIME)
+			if(dataType == QuestionType.TIME)
 				return FormUtil.getTimeSubmitFormat().format(new Date());
-			else if(dataType == QuestionDef.QTN_TYPE_DATE_TIME)
+			else if(dataType == QuestionType.DATE_TIME)
 				return FormUtil.getDateTimeSubmitFormat().format(new Date());
 			else
 				return FormUtil.getDateSubmitFormat().format(new Date());
@@ -377,17 +377,17 @@ public class QuestionDef implements Serializable{
 	}
 
 	public QuestionType getDataType() {
-		return QuestionType.fromLegacyConstant(dataType);
+		return dataType;
 	}
 
-	public void setDataType(int dataType) {
+	public void setDataType(QuestionType dataType) {
 		boolean changed = this.dataType != dataType;
 
 		this.dataType = dataType;
 
 		if(changed){
 			for(int index = 0; index < changeListeners.size(); index++)
-				changeListeners.get(index).onDataTypeChanged(this, dataType);
+				changeListeners.get(index).onDataTypeChanged(this, dataType.getLegacyConstant());
 		}
 	}
 
@@ -698,8 +698,8 @@ public class QuestionDef implements Serializable{
 				}
 			}
 
-			if(dataType != QuestionDef.QTN_TYPE_REPEAT) {
-                QuestionType questionType = QuestionType.fromLegacyConstant(dataType);
+			if(dataType != QuestionType.REPEAT) {
+                QuestionType questionType = dataType;
 				node.setAttribute(XformConstants.ATTRIBUTE_NAME_TYPE, XformBuilderUtil.getXmlType(questionType,node));
             }
 			if(node.getAttribute(XformConstants.ATTRIBUTE_NAME_NODESET) != null)
@@ -728,15 +728,15 @@ public class QuestionDef implements Serializable{
 				node.removeAttribute(XformConstants.ATTRIBUTE_NAME_VISIBLE);
 
 
-			if(!(dataType == QuestionDef.QTN_TYPE_IMAGE || dataType == QuestionDef.QTN_TYPE_AUDIO ||
-					dataType == QuestionDef.QTN_TYPE_VIDEO || dataType == QuestionDef.QTN_TYPE_GPS))
+			if(!(dataType == QuestionType.IMAGE || dataType == QuestionType.AUDIO ||
+					dataType == QuestionType.VIDEO || dataType == QuestionType.GPS))
 				node.removeAttribute(XformConstants.ATTRIBUTE_NAME_FORMAT);
 
-			if(!(dataType == QuestionDef.QTN_TYPE_IMAGE || dataType == QuestionDef.QTN_TYPE_AUDIO ||
-					dataType == QuestionDef.QTN_TYPE_VIDEO))
+			if(!(dataType == QuestionType.IMAGE || dataType == QuestionType.AUDIO ||
+					dataType == QuestionType.VIDEO))
 				controlNode.removeAttribute(XformConstants.ATTRIBUTE_NAME_MEDIATYPE);
 			else
-				UiElementBuilder.setMediaType(controlNode, dataType);
+				UiElementBuilder.setMediaType(controlNode, dataType.getLegacyConstant());
 			
 
 			if(dataNode != null)
@@ -838,11 +838,11 @@ public class QuestionDef implements Serializable{
 	}
 
 	public void updateNodeValue(Document doc, Element formNode,String value, boolean withData){
-		if((dataType == QuestionDef.QTN_TYPE_DATE || dataType == QuestionDef.QTN_TYPE_DATE_TIME)
+		if((dataType == QuestionType.DATE || dataType == QuestionType.DATE_TIME)
 				&& value != null && value.trim().length() > 0){
 
 			if(withData){
-				DateTimeFormat formatter = (dataType == QuestionDef.QTN_TYPE_DATE_TIME) ? FormUtil.getDateTimeSubmitFormat() : FormUtil.getDateSubmitFormat(); //DateTimeFormat.getFormat(); //new DateTimeFormat("yyyy-MM-dd");
+				DateTimeFormat formatter = (dataType == QuestionType.DATE_TIME) ? FormUtil.getDateTimeSubmitFormat() : FormUtil.getDateSubmitFormat(); //DateTimeFormat.getFormat(); //new DateTimeFormat("yyyy-MM-dd");
 
 				if(value.contains("now()") || value.contains("date()")
 						||value.contains("getdate()") || value.contains("today()")) {
@@ -871,7 +871,7 @@ public class QuestionDef implements Serializable{
 		}
 		else{
 			//TODO Check to see that this does not remove child model node of repeats
-			if(dataNode != null && dataType != QuestionDef.QTN_TYPE_REPEAT){
+			if(dataNode != null && dataType != QuestionType.REPEAT){
 				if(variableName.contains("@"))
 					updateAttributeValue(formNode,"");
 				else{
@@ -889,15 +889,15 @@ public class QuestionDef implements Serializable{
 	 * @return true if yes, else false.
 	 */
 	private boolean isBinaryType(){
-		return (dataType == QuestionDef.QTN_TYPE_IMAGE || dataType == QuestionDef.QTN_TYPE_VIDEO ||
-				dataType == QuestionDef.QTN_TYPE_AUDIO);
+		return (dataType == QuestionType.IMAGE || dataType == QuestionType.VIDEO ||
+				dataType == QuestionType.AUDIO);
 	}
 
 	private void updateAttributeValue(Element formNode, String value){
 		String xpath = variableName;		
 		Element elem = formNode;
 
-		if(dataType != QuestionDef.QTN_TYPE_REPEAT){
+		if(dataType != QuestionType.REPEAT){
 			int pos = xpath.lastIndexOf('@'); String attributeName = null;
 			if(pos > 0){
 				attributeName = xpath.substring(pos+1,xpath.length());
@@ -930,9 +930,9 @@ public class QuestionDef implements Serializable{
 
 		String name = dataNode.getNodeName();
 		if(name.equals(variableName)){ //equalsIgnoreCase was bug because our xpath lib is case sensitive
-			if(dataType != QuestionDef.QTN_TYPE_REPEAT)
+			if(dataType != QuestionType.REPEAT)
 				return;
-			if(dataType == QuestionDef.QTN_TYPE_REPEAT && formDef.getBinding().equals(dataNode.getParentNode().getNodeName()))
+			if(dataType == QuestionType.REPEAT && formDef.getBinding().equals(dataNode.getParentNode().getNodeName()))
 				return;
 		}
 
@@ -1004,7 +1004,7 @@ public class QuestionDef implements Serializable{
 			controlNode.setAttribute(XformConstants.ATTRIBUTE_NAME_REF,id);
 		}
 
-		if(dataType == QuestionDef.QTN_TYPE_REPEAT)
+		if(dataType == QuestionType.REPEAT)
 			getRepeatQtnsDef().updateDataNodes(dataNode);
 
 		formDef.updateRuleConditionValue(orgFormVarName+"/"+name, formDef.getBinding()+"/"+variableName);
@@ -1024,39 +1024,39 @@ public class QuestionDef implements Serializable{
 		
 		if((name.contains(XformConstants.NODE_NAME_INPUT_MINUS_PREFIX) || 
 				name.contains(XformConstants.NODE_NAME_UPLOAD_MINUS_PREFIX)) &&
-				dataType == QuestionDef.QTN_TYPE_LIST_MULTIPLE){
+				dataType == QuestionType.LIST_MULTIPLE){
 			xml = xml.replace(name, XformConstants.NODE_NAME_SELECT);
 			modified = true;
 		}
 		else if((name.contains(XformConstants.NODE_NAME_INPUT_MINUS_PREFIX) || 
 				name.contains(XformConstants.NODE_NAME_UPLOAD_MINUS_PREFIX)) &&
-				(dataType == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || dataType == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC)){
+				(dataType == QuestionType.LIST_EXCLUSIVE || dataType == QuestionType.LIST_EXCLUSIVE_DYNAMIC)){
 			xml = xml.replace(name, XformConstants.NODE_NAME_SELECT1);
 			modified = true;
 		}
 		else if(name.contains(XformConstants.NODE_NAME_SELECT1_MINUS_PREFIX) &&
-				dataType == QuestionDef.QTN_TYPE_LIST_MULTIPLE){
+				dataType == QuestionType.LIST_MULTIPLE){
 			xml = xml.replace(name, XformConstants.NODE_NAME_SELECT);
 			modified = true;
 		}
 		else if((name.contains(XformConstants.NODE_NAME_SELECT_MINUS_PREFIX) &&
 				!name.contains(XformConstants.NODE_NAME_SELECT1_MINUS_PREFIX)) && 
-				(dataType == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || dataType == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC)){
+				(dataType == QuestionType.LIST_EXCLUSIVE || dataType == QuestionType.LIST_EXCLUSIVE_DYNAMIC)){
 			xml = xml.replace(name, XformConstants.NODE_NAME_SELECT1);
 			modified = true;
 		}
 		else if((name.contains(XformConstants.NODE_NAME_SELECT1_MINUS_PREFIX) || 
 				name.contains(XformConstants.NODE_NAME_SELECT_MINUS_PREFIX)) &&
-				!(dataType == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE ||
-						dataType == QuestionDef.QTN_TYPE_LIST_MULTIPLE ||
-						dataType == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC ||
+				!(dataType == QuestionType.LIST_EXCLUSIVE ||
+						dataType == QuestionType.LIST_MULTIPLE ||
+						dataType == QuestionType.LIST_EXCLUSIVE_DYNAMIC ||
 						isMultiMedia(dataType))){
 			xml = xml.replace(name, XformConstants.NODE_NAME_INPUT);
 			modified = true;
 		}
 		else if(!(name.contains(XformConstants.NODE_NAME_UPLOAD_MINUS_PREFIX)) &&
-				(dataType == QuestionDef.QTN_TYPE_IMAGE || dataType == QuestionDef.QTN_TYPE_AUDIO ||
-						dataType == QuestionDef.QTN_TYPE_VIDEO)){
+				(dataType == QuestionType.IMAGE || dataType == QuestionType.AUDIO ||
+						dataType == QuestionType.VIDEO)){
 			xml = xml.replace(name, XformConstants.NODE_NAME_UPLOAD);
 			modified = true;
 		}
@@ -1075,9 +1075,9 @@ public class QuestionDef implements Serializable{
 		}
 	}
 
-	private boolean isMultiMedia(int dataType){
-		return dataType == QuestionDef.QTN_TYPE_IMAGE || dataType == QuestionDef.QTN_TYPE_AUDIO ||
-		dataType == QuestionDef.QTN_TYPE_VIDEO;
+	private boolean isMultiMedia(QuestionType dataType){
+		return dataType == QuestionType.IMAGE || dataType == QuestionType.AUDIO ||
+		dataType == QuestionType.VIDEO;
 	}
 
 	/**
@@ -1093,8 +1093,8 @@ public class QuestionDef implements Serializable{
 		if(list.getLength() > 0)
 			hintNode = (Element)list.item(0);
 
-		if(dataType == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE ||
-				dataType == QuestionDef.QTN_TYPE_LIST_MULTIPLE){
+		if(dataType == QuestionType.LIST_EXCLUSIVE ||
+				dataType == QuestionType.LIST_MULTIPLE){
 			if(options != null){
 				List<?> optns = (List<?>)options;
 				for(int i=0; i<optns.size(); i++){
@@ -1105,7 +1105,7 @@ public class QuestionDef implements Serializable{
 				}
 			}
 		}
-		else if(dataType == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC){
+		else if(dataType == QuestionType.LIST_EXCLUSIVE_DYNAMIC){
 			list = controlNode.getElementsByTagName(XformConstants.NODE_NAME_ITEMSET_MINUS_PREFIX);
 			if(list.getLength() > 0)
 				firstOptionNode = (Element)list.item(0);
@@ -1207,22 +1207,22 @@ public class QuestionDef implements Serializable{
 		setHelpText(questionDef.getHelpText());
 		setDefaultValue(questionDef.getDefaultValue());
 
-		int prevDataType = dataType;
+		QuestionType prevDataType = dataType;
 
 		//The old data type can only overwrite the new one if its not text (The new one is this question)
 		if(questionDef.getDataType() != QuestionType.TEXT)
-			setDataType(questionDef.getDataType().getLegacyConstant());
+			setDataType(questionDef.getDataType());
 
 		setEnabled(questionDef.isEnabled());
 		setRequired(questionDef.isRequired());
 		setLocked(questionDef.isLocked());
 		setVisible(questionDef.isVisible());
 
-		if((dataType == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || dataType == QuestionDef.QTN_TYPE_LIST_MULTIPLE) &&
+		if((dataType == QuestionType.LIST_EXCLUSIVE || dataType == QuestionType.LIST_MULTIPLE) &&
 				(questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE || questionDef.getDataType() == QuestionType.LIST_MULTIPLE) ){
 			refreshOptions(questionDef);
 
-			if(!(prevDataType == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || prevDataType == QuestionDef.QTN_TYPE_LIST_MULTIPLE)){
+			if(!(prevDataType == QuestionType.LIST_EXCLUSIVE || prevDataType == QuestionType.LIST_MULTIPLE)){
 				//A single or multiple select may have had options added on the client and so we do wanna
 				//lose them for instance when the server has text data type.
 				//TODO We may need to assign new option ids
@@ -1231,7 +1231,7 @@ public class QuestionDef implements Serializable{
 			}
 
 		}
-		else if(dataType == QuestionDef.QTN_TYPE_REPEAT && questionDef.getDataType() == QuestionType.REPEAT)
+		else if(dataType == QuestionType.REPEAT && questionDef.getDataType() == QuestionType.REPEAT)
 			getRepeatQtnsDef().refresh(questionDef.getRepeatQtnsDef()); //TODO Finish this
 	}
 
@@ -1372,7 +1372,7 @@ public class QuestionDef implements Serializable{
 
 		dataNode = (Element)result.elementAt(0);
 
-		if(dataType == QuestionDef.QTN_TYPE_REPEAT)
+		if(dataType == QuestionType.REPEAT)
 			getRepeatQtnsDef().updateDataNodes(dataNode);
 	}
 
@@ -1390,7 +1390,7 @@ public class QuestionDef implements Serializable{
 
 		String xpath = parentXpath + FormUtil.getNodePath(controlNode,parentXformNode);
 
-		if(dataType == QuestionDef.QTN_TYPE_REPEAT){
+		if(dataType == QuestionType.REPEAT){
 			Element parent = (Element)controlNode.getParentNode();
 			xpath = parentXpath + FormUtil.getNodePath(parent,parentXformNode);
 
@@ -1423,10 +1423,10 @@ public class QuestionDef implements Serializable{
 			parentLangNode.appendChild(node);
 		}
 
-		if(dataType == QuestionDef.QTN_TYPE_REPEAT)
+		if(dataType == QuestionType.REPEAT)
 			getRepeatQtnsDef().buildLanguageNodes(parentXpath,doc,parentXformNode,parentLangNode);
 
-		if(dataType == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || dataType == QuestionDef.QTN_TYPE_LIST_MULTIPLE){
+		if(dataType == QuestionType.LIST_EXCLUSIVE || dataType == QuestionType.LIST_MULTIPLE){
 			if(options != null){
 				List<?> optionsList = (List<?>)options;
 				for(int index = 0; index < optionsList.size(); index++)

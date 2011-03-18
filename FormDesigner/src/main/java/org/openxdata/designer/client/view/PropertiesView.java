@@ -46,6 +46,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 
 /**
@@ -715,18 +716,18 @@ public class PropertiesView extends Composite implements IFormSelectionListener,
 		String defaultValue = txtDefaultValue.getText();
 		QuestionDef questionDef = (QuestionDef) propertiesObj;
 		
-		if(questionDef.getDataType() == QuestionDef.QTN_TYPE_NUMERIC && 
+		if(questionDef.getDataType() == QuestionType.NUMERIC &&
 				!PropertiesViewHelper.isDefaultValueNumeric(defaultValue)){
 			
 			txtDefaultValue.setText("");
 			return false;
 		}
-		else if(questionDef.getDataType() == QuestionDef.QTN_TYPE_DECIMAL &&
+		else if(questionDef.getDataType() == QuestionType.DECIMAL &&
 				!PropertiesViewHelper.isDefaultValueDecimal(defaultValue)){
 			txtDefaultValue.setText("");
 			return false;
 		}
-		else if(questionDef.getDataType() == QuestionDef.QTN_TYPE_BOOLEAN &&
+		else if(questionDef.getDataType() == QuestionType.BOOLEAN &&
 				!PropertiesViewHelper.isDefaultValueBoolean(defaultValue)){			
 			txtDefaultValue.setText("");
 			return false;
@@ -744,17 +745,17 @@ public class PropertiesView extends Composite implements IFormSelectionListener,
 		boolean deleteKids = false;
 		int index = cbDataType.getSelectedIndex();
 		QuestionDef questionDef = (QuestionDef)propertiesObj;
-		if((questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE ||
-				questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_MULTIPLE) &&
+		if((questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE ||
+				questionDef.getDataType() == QuestionType.LIST_MULTIPLE) &&
 				!(index == DT_INDEX_SINGLE_SELECT || index == DT_INDEX_MULTIPLE_SELECT)){
 			if(questionDef.getOptionCount() > 0 && !Window.confirm(designerMessages.changeWidgetTypePrompt())){
-				index = (questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE) ? DT_INDEX_SINGLE_SELECT : DT_INDEX_MULTIPLE_SELECT;
+				index = (questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE) ? DT_INDEX_SINGLE_SELECT : DT_INDEX_MULTIPLE_SELECT;
 				cbDataType.setSelectedIndex(index);
 				return;
 			}
 			deleteKids = true;
 		}
-		else if((questionDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT) &&
+		else if((questionDef.getDataType() == QuestionType.REPEAT) &&
 				!(index == DT_INDEX_REPEAT)){
 			if(!Window.confirm(designerMessages.changeWidgetTypePrompt())){
 				index = DT_INDEX_REPEAT;
@@ -843,12 +844,12 @@ public class PropertiesView extends Composite implements IFormSelectionListener,
 		}
 
 		if(dataType == QuestionDef.QTN_TYPE_REPEAT && 
-				questionDef.getDataType() != QuestionDef.QTN_TYPE_REPEAT)
+				questionDef.getDataType() != QuestionType.REPEAT)
 			questionDef.setRepeatQtnsDef(new RepeatQtnsDef(questionDef));
 
 		questionDef.setDataType(dataType);
 
-		if(questionDef.getDataType() != QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC)
+		if(questionDef.getDataType() != QuestionType.LIST_EXCLUSIVE_DYNAMIC)
 			dynamicListsView.setEnabled(false);
 		else if(!dynamicListsView.isEnabled())
 			dynamicListsView.setQuestionDef(questionDef);
@@ -921,7 +922,7 @@ public class PropertiesView extends Composite implements IFormSelectionListener,
 		chkLocked.setValue(questionDef.isLocked());
 		chkRequired.setValue(questionDef.isRequired());
 
-		setDataType(questionDef.getDataType());
+		setDataType(questionDef.getDataType().getLegacyConstant());
 		
 		String calculationExpression = null;
 		Calculation calculation = Context.getFormDef().getCalculation(questionDef);

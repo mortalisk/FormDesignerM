@@ -250,6 +250,6 @@ public class ConditionWidget extends Composite implements ItemSelectionListener{
 	}
 	
 	private void setOperatorDataType(QuestionDef questionDef){
-		operatorWidget.setDataType(function == ModelConstants.FUNCTION_LENGTH ? QuestionDef.QTN_TYPE_NUMERIC : questionDef.getDataType());
+		operatorWidget.setDataType(function == ModelConstants.FUNCTION_LENGTH ? QuestionDef.QTN_TYPE_NUMERIC : questionDef.getDataType().getLegacyConstant());
 	}
 }

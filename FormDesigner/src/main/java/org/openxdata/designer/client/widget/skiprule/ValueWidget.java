@@ -44,6 +44,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import org.openxdata.sharedlib.client.locale.FormsConstants;
 import org.openxdata.sharedlib.client.model.Operator;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 
 /**
@@ -211,7 +212,7 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 	}
 
 	private void startEdit(){
-		if(questionDef.getDataType() == QuestionDef.QTN_TYPE_BOOLEAN){
+		if(questionDef.getDataType() == QuestionType.BOOLEAN){
 			MenuBar menuBar = new MenuBar(true);
 			menuBar.addItem(i18n.displayValueTrue(), true, new SelectItemCommand(i18n.displayValueTrue(),this));
 			menuBar.addItem(i18n.displayValueFalse(), true, new SelectItemCommand(i18n.displayValueFalse(),this));
@@ -221,8 +222,8 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 			popup.setPopupPosition(valueAnchor.getAbsoluteLeft(), valueAnchor.getAbsoluteTop() - 50);
 			popup.show();
 		}
-		else if( (questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_MULTIPLE
-				|| questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC) &&
+		else if( (questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE || questionDef.getDataType() == QuestionType.LIST_MULTIPLE
+				|| questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE_DYNAMIC) &&
 				(operator == Operator.EQUAL || operator == Operator.NOT_EQUAL) ){
 
 			MenuBar menuBar = new MenuBar(true);
@@ -230,7 +231,7 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 			int size = 0, maxSize = 0; String text;
 			List<OptionDef> options = questionDef.getOptions();
 
-			if(questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC){
+			if(questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE_DYNAMIC){
 				DynamicOptionDef dynamicOptionDef = formDef.getChildDynamicOptions(questionDef.getId());
 				if(dynamicOptionDef == null)
 					return;
@@ -270,8 +271,8 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 			popup.setPopupPosition(valueAnchor.getAbsoluteLeft(), valueAnchor.getAbsoluteTop() - height); //- height makes it fly upwards
 			popup.show();
 		}
-		else if( (questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_MULTIPLE
-				|| questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC) &&
+		else if( (questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE || questionDef.getDataType() == QuestionType.LIST_MULTIPLE
+				|| questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE_DYNAMIC) &&
 				(operator == Operator.IN_LIST || operator == Operator.NOT_IN_LIST) ){
 
 			String values = valueAnchor.getText();
@@ -283,7 +284,7 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 			VerticalPanel panel = new VerticalPanel();
 			List<OptionDef> options = questionDef.getOptions();
 
-			if(questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC){
+			if(questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE_DYNAMIC){
 				DynamicOptionDef dynamicOptionDef = formDef.getChildDynamicOptions(questionDef.getId());
 				if(dynamicOptionDef == null)
 					return;
@@ -398,9 +399,9 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 	}
 
 	private void addNumericKeyboardListener(){
-		if(questionDef.getDataType() == QuestionDef.QTN_TYPE_NUMERIC || questionDef.getDataType() == QuestionDef.QTN_TYPE_DECIMAL){
-			keyboardListener1 = FormUtil.getAllowNumericOnlyKeyboardListener(txtValue1, questionDef.getDataType() == QuestionDef.QTN_TYPE_NUMERIC ? false : true);
-			keyboardListener2 = FormUtil.getAllowNumericOnlyKeyboardListener(txtValue2, questionDef.getDataType() == QuestionDef.QTN_TYPE_NUMERIC ? false : true);
+		if(questionDef.getDataType() == QuestionType.NUMERIC || questionDef.getDataType() == QuestionType.DECIMAL){
+			keyboardListener1 = FormUtil.getAllowNumericOnlyKeyboardListener(txtValue1, questionDef.getDataType() == QuestionType.NUMERIC ? false : true);
+			keyboardListener2 = FormUtil.getAllowNumericOnlyKeyboardListener(txtValue2, questionDef.getDataType() == QuestionType.NUMERIC ? false : true);
 
 			handlerReg1 = txtValue1.addKeyPressHandler(keyboardListener1);
 			handlerReg2 = txtValue2.addKeyPressHandler(keyboardListener2);
@@ -460,11 +461,11 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 	public void onItemSelected(Object sender, Object item) {
 		if(sender instanceof SelectItemCommand){
 			popup.hide();
-			if(questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE ||
-					questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_MULTIPLE ||
-					questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC)
+			if(questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE ||
+					questionDef.getDataType() == QuestionType.LIST_MULTIPLE ||
+					questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE_DYNAMIC)
 				valueAnchor.setText(((OptionDef)item).getText());
-			else if(questionDef.getDataType() == QuestionDef.QTN_TYPE_BOOLEAN)
+			else if(questionDef.getDataType() == QuestionType.BOOLEAN)
 				valueAnchor.setText((String)item);
 		}
 	}
@@ -507,14 +508,14 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 				val = EMPTY_VALUE;
 		}
 
-		if(questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE){
+		if(questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE){
 			OptionDef optionDef = questionDef.getOptionWithText(val);
 			if(optionDef != null)
 				val = optionDef.getVariableName();
 			else
 				val = null;
 		}
-		else if(questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC){
+		else if(questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE_DYNAMIC){
 			DynamicOptionDef dynamicOptionDef = formDef.getChildDynamicOptions(questionDef.getId());
 			if(dynamicOptionDef != null){
 				OptionDef optionDef = dynamicOptionDef.getOptionWithText(val);
@@ -522,7 +523,7 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 					val = optionDef.getVariableName();
 			}
 		}
-		else if(questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_MULTIPLE){
+		else if(questionDef.getDataType() == QuestionType.LIST_MULTIPLE){
 			String[] options = val.split(LIST_SEPARATOR);
 			if(options == null || options.length == 0)
 				val = null;
@@ -538,7 +539,7 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 				}
 			}
 		}
-		else if(questionDef.getDataType() == QuestionDef.QTN_TYPE_BOOLEAN){
+		else if(questionDef.getDataType() == QuestionType.BOOLEAN){
 			if(val.equals(i18n.displayValueTrue()))
 				val = QuestionDef.TRUE_VALUE;
 			else if(val.equals(i18n.displayValueFalse()))
@@ -574,12 +575,12 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 				chkQuestionValue.setValue(true);
 			}
 
-			if(questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE){
+			if(questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE){
 				OptionDef optionDef = ((OptionDef)questionDef.getOptionWithValue(value));
 				if(optionDef != null)
 					sValue = optionDef.getText();
 			}
-			else if(questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC){
+			else if(questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE_DYNAMIC){
 				DynamicOptionDef dynamicOptionDef = formDef.getChildDynamicOptions(questionDef.getId());
 				if(dynamicOptionDef != null){
 					OptionDef optionDef = dynamicOptionDef.getOptionWithValue(value);
@@ -587,7 +588,7 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 						sValue = optionDef.getText();
 				}
 			}
-			else if(questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_MULTIPLE){
+			else if(questionDef.getDataType() == QuestionType.LIST_MULTIPLE){
 				String[] options = sValue.split(LIST_SEPARATOR);
 				if(options == null || options.length == 0)
 					sValue = null;
@@ -603,7 +604,7 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 					}
 				}
 			}
-			else if(questionDef.getDataType() == QuestionDef.QTN_TYPE_BOOLEAN){
+			else if(questionDef.getDataType() == QuestionType.BOOLEAN){
 				if(sValue.equals(QuestionDef.TRUE_VALUE))
 					sValue = i18n.displayValueTrue();
 				else if(sValue.equals(QuestionDef.FALSE_VALUE))
@@ -636,7 +637,7 @@ public class ValueWidget extends Composite implements ItemSelectionListener, Clo
 		MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
 
 		for(int i=0; i<formDef.getPageCount(); i++)
-			FormDesignerUtil.loadQuestions(false, formDef.getPageAt(i).getQuestions(),questionDef,oracle,false,questionDef.getDataType() != QuestionDef.QTN_TYPE_REPEAT, parentQuestionDef);
+			FormDesignerUtil.loadQuestions(false, formDef.getPageAt(i).getQuestions(),questionDef,oracle,false,questionDef.getDataType() != QuestionType.REPEAT, parentQuestionDef);
 
 		sgstField = new SuggestBox(oracle,txtValue1);
 

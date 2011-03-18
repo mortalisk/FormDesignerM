@@ -18,6 +18,7 @@ import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.TextBox;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 
 /**
@@ -170,15 +171,15 @@ public class FieldWidget extends Composite{
 		for(int i=0; i<questions.size(); i++){
 			QuestionDef questionDef = (QuestionDef)questions.elementAt(i);
 
-			if(questionDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT)
+			if(questionDef.getDataType() == QuestionType.REPEAT)
 				selectFirstQuestion(questionDef.getRepeatQtnsDef().getQuestions());
 			else{
 				if(forDynamicOptions){
 					if(questionDef == dynamicQuestionDef)
 						continue;
 
-					if(!(questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE ||
-							questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC))
+					if(!(questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE ||
+							questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE_DYNAMIC))
 						continue;
 				}
 

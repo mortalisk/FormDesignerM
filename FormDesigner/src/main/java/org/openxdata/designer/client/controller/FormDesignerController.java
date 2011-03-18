@@ -148,7 +148,7 @@ public class FormDesignerController implements IFormDesignerListener,
 	 * @see org.openxdata.designer.client.controller.IFormActionListener#addNewQuestion()
 	 */
 	public void addNewQuestion(QuestionType dataType) {
-		leftPanel.addNewQuestion(dataType.getLegacyConstant());
+		leftPanel.addNewQuestion(dataType);
 	}
 
 	public void addNewPage() {

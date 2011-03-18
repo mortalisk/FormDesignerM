@@ -387,9 +387,9 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 
 		String defaultValue = questionDef.getDefaultValue();
 
-		int type = questionDef.getDataType().getLegacyConstant();
-		if((type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC
-				|| type == QuestionDef.QTN_TYPE_LIST_MULTIPLE)
+		QuestionType type = questionDef.getDataType();
+		if((type == QuestionType.LIST_EXCLUSIVE || type == QuestionType.LIST_EXCLUSIVE_DYNAMIC
+				|| type == QuestionType.LIST_MULTIPLE)
 				&& widget instanceof ListBox){
 			List<OptionDef> options  = questionDef.getOptions();
 			int defaultValueIndex = 0;
@@ -407,7 +407,7 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 			}
 			listBox.setSelectedIndex(defaultValueIndex);
 		}
-		else if((type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC) && widget instanceof TextBox){ 
+		else if((type == QuestionType.LIST_EXCLUSIVE || type == QuestionType.LIST_EXCLUSIVE_DYNAMIC) && widget instanceof TextBox){
 			MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
 			FormUtil.loadOptions(questionDef.getOptions(),oracle);
 			if(widget.getParent() != null){
@@ -425,7 +425,7 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 			sgstBox.setTabIndex(((TextBox)widget).getTabIndex());
 			setupTextBoxEventListeners();
 		}
-		else if(type == QuestionDef.QTN_TYPE_BOOLEAN && widget instanceof ListBox){
+		else if(type == QuestionType.BOOLEAN && widget instanceof ListBox){
 			ListBox listBox = (ListBox)widget;
 			listBox.addItem("","");
 			listBox.addItem(constants.displayValueTrue(), QuestionDef.TRUE_VALUE);
@@ -439,13 +439,13 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 					listBox.setSelectedIndex(2);
 			}
 		}
-		else if(type == QuestionDef.QTN_TYPE_LIST_MULTIPLE && defaultValue != null 
+		else if(type == QuestionType.LIST_MULTIPLE && defaultValue != null
 				&& defaultValue.trim().length() > 0&& binding != null 
 				&& binding.trim().length() > 0 && widget instanceof CheckBox){
 			if(defaultValue.contains(binding))
 				((CheckBox)widget).setValue(true);
 		}
-		else if(type == QuestionDef.QTN_TYPE_DATE_TIME && widget instanceof DateTimeWidget){
+		else if(type == QuestionType.DATE_TIME && widget instanceof DateTimeWidget){
 			if(defaultValue != null && defaultValue.trim().length() > 0 && questionDef.isDate()){
 				if(QuestionDef.isDateFunction(defaultValue))
 					defaultValue = questionDef.getDefaultValueDisplay();
@@ -461,7 +461,7 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 			((TextBoxBase)widget).setText(""); //first init just incase we have default value
 
 			if(defaultValue != null && defaultValue.trim().length() > 0){
-				if(type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE){
+				if(type == QuestionType.LIST_EXCLUSIVE){
 					OptionDef optionDef = questionDef.getOptionWithValue(defaultValue);
 					if(optionDef != null)
 						((TextBox)widget).setText(optionDef.getText());
@@ -525,10 +525,10 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 	public void setAnswer(String answer){
 		questionDef.setAnswer(answer);
 
-		int type = questionDef.getDataType().getLegacyConstant();
+		QuestionType type = questionDef.getDataType();
 
-		if((type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC
-				|| type == QuestionDef.QTN_TYPE_LIST_MULTIPLE)
+		if((type == QuestionType.LIST_EXCLUSIVE || type == QuestionType.LIST_EXCLUSIVE_DYNAMIC
+				|| type == QuestionType.LIST_MULTIPLE)
 				&& widget instanceof ListBox){
 			List<OptionDef> options  = questionDef.getOptions();
 			int defaultValueIndex = 0;
@@ -543,7 +543,7 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 			}
 			listBox.setSelectedIndex(defaultValueIndex);
 		}
-		else if(type == QuestionDef.QTN_TYPE_BOOLEAN && widget instanceof ListBox){
+		else if(type == QuestionType.BOOLEAN && widget instanceof ListBox){
 			ListBox listBox = (ListBox)widget;
 			if(answer != null){
 				if(answer.equalsIgnoreCase(QuestionDef.TRUE_VALUE))
@@ -552,13 +552,13 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 					listBox.setSelectedIndex(2);
 			}
 		}
-		else if(type == QuestionDef.QTN_TYPE_LIST_MULTIPLE && answer != null 
+		else if(type == QuestionType.LIST_MULTIPLE && answer != null
 				&& answer.trim().length() > 0&& binding != null 
 				&& binding.trim().length() > 0 && widget instanceof CheckBox){
 			if(answer.contains(binding))
 				((CheckBox)widget).setValue(true);
 		}
-		else if(type == QuestionDef.QTN_TYPE_DATE_TIME && widget instanceof DateTimeWidget)
+		else if(type == QuestionType.DATE_TIME && widget instanceof DateTimeWidget)
 			((DateTimeWidget)widget).setText(answer);
 
 
@@ -566,7 +566,7 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 			((TextBoxBase)widget).setText(""); //first init just incase we have default value
 
 			if(answer != null && answer.trim().length() > 0){
-				if(type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE){
+				if(type == QuestionType.LIST_EXCLUSIVE){
 					OptionDef optionDef = questionDef.getOptionWithValue(answer);
 					if(optionDef != null)
 						((TextBox)widget).setText(optionDef.getText());
@@ -868,18 +868,18 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 		childWidgets.add(childWidget);
 
 		String defaultValue = questionDef.getDefaultValue();
-		int type = questionDef.getDataType().getLegacyConstant();
-		if((type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE ||
-				type == QuestionDef.QTN_TYPE_LIST_MULTIPLE)
+		QuestionType type = questionDef.getDataType();
+		if((type == QuestionType.LIST_EXCLUSIVE ||
+				type == QuestionType.LIST_MULTIPLE)
 				&& widget instanceof CheckBox && defaultValue != null){ 
 			if(childWidgets.size() == questionDef.getOptions().size()){
 				for(int index=0; index < childWidgets.size(); index++){
 					RuntimeWidgetWrapper kidWidget = childWidgets.get(index);
-					if((type == QuestionDef.QTN_TYPE_LIST_MULTIPLE && defaultValue.contains(kidWidget.getBinding())) ||
-							(type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE && defaultValue.equals(kidWidget.getBinding()))){
+					if((type == QuestionType.LIST_MULTIPLE && defaultValue.contains(kidWidget.getBinding())) ||
+							(type == QuestionType.LIST_EXCLUSIVE && defaultValue.equals(kidWidget.getBinding()))){
 
 						((CheckBox)((RuntimeWidgetWrapper)kidWidget).getWrappedWidget()).setValue(true);
-						if(type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE)
+						if(type == QuestionType.LIST_EXCLUSIVE)
 							break; //for this we can't select more than one.
 					}
 				}

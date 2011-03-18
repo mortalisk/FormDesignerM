@@ -911,11 +911,11 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 				Calculation calculation = formDef.getCalculation(widget.getQuestionDef());
 				String calcExpression = replaceCalcExpression(calculation.getCalculateExpression(),widget.getQuestionDef()); //calcExpression.replace(binding, answer);
 
-				int type = widget.getQuestionDef().getDataType().getLegacyConstant();
+				QuestionType type = widget.getQuestionDef().getDataType();
 				String answer = calcExpression;
 
 				if(calculation.getCalculateExpression().trim().indexOf(' ') > 0){
-					if(type == QuestionDef.QTN_TYPE_NUMERIC){
+					if(type == QuestionType.NUMERIC){
 						try{
 							answer = ""+FormUtil.evaluateIntExpression(calcExpression);
 						}
@@ -923,7 +923,7 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 							answer = FormUtil.evaluateStringExpression(calcExpression);
 						}
 					}
-					else if(type == QuestionDef.QTN_TYPE_DECIMAL){
+					else if(type == QuestionType.DECIMAL){
 						try{
 							answer = ""+FormUtil.evaluateDoubleExpression(calcExpression);
 						}
@@ -1089,8 +1089,8 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 	 * 					  allowed options for another question.
 	 */
 	private void updateDynamicOptions(QuestionDef questionDef){
-		int type = questionDef.getDataType().getLegacyConstant();
-		if(!(type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC))
+		QuestionType type = questionDef.getDataType();
+		if(!(type == QuestionType.LIST_EXCLUSIVE || type == QuestionType.LIST_EXCLUSIVE_DYNAMIC))
 			return;
 
 		//Get the dynamic option definition where this question is the parent.
@@ -1613,7 +1613,7 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 			if(qtnDef == null)
 				return "";
 
-			expression = expression.replace(formBinding+qtnBinding, getCalcExpressionAnswer(questionDef.getDataType().getLegacyConstant(),qtnDef,calcExpression));
+			expression = expression.replace(formBinding+qtnBinding, getCalcExpressionAnswer(questionDef.getDataType(),qtnDef,calcExpression));
 
 			if(pos2 > -1)
 				pos = expression.indexOf(formBinding);
@@ -1624,20 +1624,20 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 		return expression;
 	}
 
-	private String getCalcExpressionAnswer(int type, QuestionDef questionDef, String calcExpression){
+	private String getCalcExpressionAnswer(QuestionType type, QuestionDef questionDef, String calcExpression){
 		String answer = questionDef.getAnswer();
 		if(answer == null || answer.trim().length() == 0){
-			if(type == QuestionDef.QTN_TYPE_NUMERIC || type == QuestionDef.QTN_TYPE_DECIMAL)
+			if(type == QuestionType.NUMERIC || type == QuestionType.DECIMAL)
 				answer = "0";
-			else if(type == QuestionDef.QTN_TYPE_DATE || type == QuestionDef.QTN_TYPE_DATE_TIME ||
-					type == QuestionDef.QTN_TYPE_DATE_TIME)
+			else if(type == QuestionType.DATE || type == QuestionType.DATE_TIME ||
+					type == QuestionType.DATE_TIME)
 				answer = "";
 			else
 				answer = calcExpression.trim().indexOf(' ') > 0 ? "''" : "";
 		}
 
-		type = questionDef.getDataType().getLegacyConstant();
-		if(type ==  QuestionDef.QTN_TYPE_NUMERIC || type ==  QuestionDef.QTN_TYPE_DECIMAL)
+		QuestionType questionType = questionDef.getDataType();
+		if(questionType ==  QuestionType.NUMERIC || questionType ==  QuestionType.DECIMAL)
 			return answer;
 		else if(answer != null && answer.trim().length() > 0 && calcExpression.trim().indexOf(' ') > 0 && !answer.equals("''"))
 			return "'" + answer + "'";

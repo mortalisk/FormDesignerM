@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import org.openxdata.sharedlib.client.model.Operator;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 
 /**
@@ -250,6 +251,6 @@ public class ConditionWidget extends Composite implements ItemSelectionListener{
 	}
 	
 	private void setOperatorDataType(QuestionDef questionDef){
-		operatorWidget.setDataType(function == ModelConstants.FUNCTION_LENGTH ? QuestionDef.QTN_TYPE_NUMERIC : questionDef.getDataType().getLegacyConstant());
+		operatorWidget.setDataType(function == ModelConstants.FUNCTION_LENGTH ? QuestionType.NUMERIC : questionDef.getDataType());
 	}
 }

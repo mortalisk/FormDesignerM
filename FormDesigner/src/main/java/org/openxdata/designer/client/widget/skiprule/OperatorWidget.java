@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.ListBox;
 import org.openxdata.designer.client.DesignerMessages;
 import org.openxdata.sharedlib.client.model.Operator;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 /**
  * Widget used to display the condition operators (eg equal to, less than, greater than, etc)
@@ -49,8 +50,8 @@ final public class OperatorWidget extends Composite implements ChangeHandler {
      * 
      * @param dataType the data type.
      */
-    public void setDataType(int dataType) {
-        this.dataType = dataType;
+    public void setDataType(QuestionType dataType) {
+        this.dataType = dataType.getLegacyConstant();
         buildOptionList();
     }
 

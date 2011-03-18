@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 
 /**
@@ -197,7 +198,7 @@ public class DisplayColumnWidget extends Composite implements ItemSelectionListe
 		actionHyperlink.setAggregateFunctionMode(true);
 	}
 	
-	public int getDataType(){
-		return questionDef.getDataType().getLegacyConstant();
+	public QuestionType getDataType(){
+		return questionDef.getDataType();
 	}
 }

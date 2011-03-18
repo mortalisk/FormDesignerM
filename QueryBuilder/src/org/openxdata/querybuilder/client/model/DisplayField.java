@@ -1,6 +1,7 @@
 package org.openxdata.querybuilder.client.model;
 
 import java.io.Serializable;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 
 /**
@@ -24,12 +25,12 @@ public class DisplayField implements Serializable {
 		
 	}
 
-	public DisplayField(String name, String text, String AggFunc, int dataType) {
+	public DisplayField(String name, String text, String AggFunc, QuestionType dataType) {
 		super();
 		this.name = name;
 		this.text = text;
 		this.AggFunc = AggFunc;
-		this.dataType = dataType;
+		this.dataType = dataType.getLegacyConstant();
 	}
 
 	public String getName() {

@@ -56,6 +56,7 @@ import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.Node;
 import com.google.gwt.xml.client.NodeList;
 import com.google.gwt.xml.client.XMLParser;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 
 /**
@@ -775,7 +776,7 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 			if(!questionDef.isVisible() || (questionDef.isRequired() && (questionDef.isLocked() || !questionDef.isEnabled())) )
 				continue;
 			
-			int type = questionDef.getDataType();
+			int type = questionDef.getDataType().getLegacyConstant();
 			if(type == QuestionDef.QTN_TYPE_REPEAT && questionDef.getRepeatQtnsDef().getQuestions() == null)
 				continue;
 			
@@ -788,7 +789,7 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 					selectedDragController.selectWidget(widgetWrapper);
 			}
 
-			if(questionDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT){
+			if(questionDef.getDataType() == QuestionType.REPEAT){
 				widgetWrapper.setFontWeight("bold");
 				widgetWrapper.setFontStyle("italic");
 			}
@@ -847,14 +848,14 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 			x = 20 + selectedPanel.getAbsoluteLeft();
 			y += 40;
 
-			if(questionDef.getDataType() == QuestionDef.QTN_TYPE_IMAGE)
+			if(questionDef.getDataType() == QuestionType.IMAGE)
 				y += 195 + 30;
-			if(questionDef.getDataType() == QuestionDef.QTN_TYPE_VIDEO || questionDef.getDataType() == QuestionDef.QTN_TYPE_AUDIO)
+			if(questionDef.getDataType() == QuestionType.VIDEO || questionDef.getDataType() == QuestionType.AUDIO)
 				y += 75 + 30;
 
 			int rptIncr = 0;
 			if(i < questions.size()-1){
-				int dataType = ((QuestionDef)questions.get(i+1)).getDataType();
+				int dataType = ((QuestionDef)questions.get(i+1)).getDataType().getLegacyConstant();
 				if(dataType == QuestionDef.QTN_TYPE_REPEAT)
 					rptIncr = 90 + 50;
 				else if(dataType == QuestionDef.QTN_TYPE_IMAGE)
@@ -975,25 +976,25 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 			if(index > 0)
 				x += 205;
 
-			if(qtn.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || 
-					qtn.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC)
+			if(qtn.getDataType() == QuestionType.LIST_EXCLUSIVE ||
+					qtn.getDataType() == QuestionType.LIST_EXCLUSIVE_DYNAMIC)
 				widgetWrapper = addNewDropdownList(false);
-			else if(qtn.getDataType() == QuestionDef.QTN_TYPE_DATE)
+			else if(qtn.getDataType() == QuestionType.DATE)
 				widgetWrapper = addNewDatePicker(false);
-			else if(qtn.getDataType() == QuestionDef.QTN_TYPE_DATE_TIME)
+			else if(qtn.getDataType() == QuestionType.DATE_TIME)
 				widgetWrapper = addNewDateTimeWidget(false);
-			else if(qtn.getDataType() == QuestionDef.QTN_TYPE_TIME)
+			else if(qtn.getDataType() == QuestionType.TIME)
 				widgetWrapper = addNewTimeWidget(false);
-			else if(qtn.getDataType() == QuestionDef.QTN_TYPE_LIST_MULTIPLE){
+			else if(qtn.getDataType() == QuestionType.LIST_MULTIPLE){
 				widgetWrapper = addNewCheckBoxSet(qtn,false,index);
 				index += qtn.getOptions().size();
 			}
-			else if(qtn.getDataType() == QuestionDef.QTN_TYPE_BOOLEAN)
+			else if(qtn.getDataType() == QuestionType.BOOLEAN)
 				widgetWrapper = addNewDropdownList(false);
-			else if(qtn.getDataType() == QuestionDef.QTN_TYPE_IMAGE)
+			else if(qtn.getDataType() == QuestionType.IMAGE)
 				widgetWrapper = addNewPicture(select);
-			else if(qtn.getDataType() == QuestionDef.QTN_TYPE_VIDEO ||
-					qtn.getDataType() == QuestionDef.QTN_TYPE_AUDIO)
+			else if(qtn.getDataType() == QuestionType.VIDEO ||
+					qtn.getDataType() == QuestionType.AUDIO)
 				widgetWrapper = addNewVideoAudioSection(null,qtn.getText(),select);
 			else
 				widgetWrapper = addNewTextBox(select);

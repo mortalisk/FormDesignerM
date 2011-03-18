@@ -43,6 +43,7 @@ import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
 import com.google.gwt.xml.client.Node;
 import org.openxdata.designer.client.DesignerMessages;
 import org.openxdata.sharedlib.client.locale.FormsConstants;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 
 /**
@@ -173,7 +174,7 @@ public class DynamicListsView extends Composite implements ItemSelectionListener
 		}
 		
 		if(questionDef != null){
-			if(questionDef.getDataType() != QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC){
+			if(questionDef.getDataType() != QuestionType.LIST_EXCLUSIVE_DYNAMIC){
 				setEnabled(false);
 				return;
 			}
@@ -287,7 +288,7 @@ public class DynamicListsView extends Composite implements ItemSelectionListener
 		parentQuestionDef = (QuestionDef)item;
 
 		//we only allow option lists for single select and single select dynamic types.
-		int type = parentQuestionDef.getDataType();
+		int type = parentQuestionDef.getDataType().getLegacyConstant();
 		if(!(type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC))
 			return;
 

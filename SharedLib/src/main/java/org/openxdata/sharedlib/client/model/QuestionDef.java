@@ -184,7 +184,7 @@ public class QuestionDef implements Serializable{
 		setId(questionDef.getId());
 		setText(questionDef.getText());
 		setHelpText(questionDef.getHelpText());
-		setDataType(questionDef.getDataType());
+		setDataType(questionDef.getDataType().getLegacyConstant());
 		setDefaultValue(questionDef.getDefaultValue());
 		setVisible(questionDef.isVisible());
 		setEnabled(questionDef.isEnabled());
@@ -192,9 +192,9 @@ public class QuestionDef implements Serializable{
 		setRequired(questionDef.isRequired());
 		setVariableName(questionDef.getBinding());
 
-		if(getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || getDataType() == QuestionDef.QTN_TYPE_LIST_MULTIPLE)
+		if(getDataType() == QuestionType.LIST_EXCLUSIVE || getDataType() == QuestionType.LIST_MULTIPLE)
 			copyQuestionOptions(questionDef.getOptions());
-		else if(getDataType() == QuestionDef.QTN_TYPE_REPEAT)
+		else if(getDataType() == QuestionType.REPEAT)
 			this.options = new RepeatQtnsDef(questionDef.getRepeatQtnsDef());
 	}
 
@@ -376,8 +376,8 @@ public class QuestionDef implements Serializable{
 		this.text = text;
 	}
 
-	public int getDataType() {
-		return dataType;
+	public QuestionType getDataType() {
+		return QuestionType.fromLegacyConstant(dataType);
 	}
 
 	public void setDataType(int dataType) {
@@ -581,8 +581,8 @@ public class QuestionDef implements Serializable{
 	}
 
 	public void moveOptionUp(OptionDef optionDef){
-		if(!(getDataType()==QuestionDef.QTN_TYPE_LIST_EXCLUSIVE ||
-				getDataType()==QuestionDef.QTN_TYPE_LIST_MULTIPLE))
+		if(!(getDataType()==QuestionType.LIST_EXCLUSIVE ||
+				getDataType()==QuestionType.LIST_MULTIPLE))
 			return;
 
 		List<OptionDef> optns = (List<OptionDef>)options;
@@ -615,8 +615,8 @@ public class QuestionDef implements Serializable{
 	}
 
 	public void moveOptionDown(OptionDef optionDef){
-		if(!(getDataType()==QuestionDef.QTN_TYPE_LIST_EXCLUSIVE ||
-				getDataType()==QuestionDef.QTN_TYPE_LIST_MULTIPLE))
+		if(!(getDataType()==QuestionType.LIST_EXCLUSIVE ||
+				getDataType()==QuestionType.LIST_MULTIPLE))
 			return;
 
 		List<OptionDef> optns = (List<OptionDef>) options;
@@ -743,8 +743,8 @@ public class QuestionDef implements Serializable{
 				updateDataNode(doc,formDef,orgFormVarName);
 		}
 
-		if((getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE ||
-				getDataType() == QuestionDef.QTN_TYPE_LIST_MULTIPLE) && options != null){
+		if((getDataType() == QuestionType.LIST_EXCLUSIVE ||
+				getDataType() == QuestionType.LIST_MULTIPLE) && options != null){
 
 			boolean allOptionsNew = areAllOptionsNew();
 			List<OptionDef> newOptns = new ArrayList<OptionDef>();
@@ -770,7 +770,7 @@ public class QuestionDef implements Serializable{
 				moveOptionNodesUp(optionDef,getRefOption(optns,newOptns,currentIndex));
 			}
 		}
-		else if(getDataType() == QuestionDef.QTN_TYPE_REPEAT){
+		else if(getDataType() == QuestionType.REPEAT){
 			getRepeatQtnsDef().updateDoc(doc,xformsNode,formDef,formNode,modelNode,groupNode,withData,orgFormVarName);
 
 			if(controlNode != null)
@@ -1210,8 +1210,8 @@ public class QuestionDef implements Serializable{
 		int prevDataType = dataType;
 
 		//The old data type can only overwrite the new one if its not text (The new one is this question)
-		if(questionDef.getDataType() != QuestionDef.QTN_TYPE_TEXT)
-			setDataType(questionDef.getDataType());
+		if(questionDef.getDataType() != QuestionType.TEXT)
+			setDataType(questionDef.getDataType().getLegacyConstant());
 
 		setEnabled(questionDef.isEnabled());
 		setRequired(questionDef.isRequired());
@@ -1219,7 +1219,7 @@ public class QuestionDef implements Serializable{
 		setVisible(questionDef.isVisible());
 
 		if((dataType == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || dataType == QuestionDef.QTN_TYPE_LIST_MULTIPLE) &&
-				(questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_MULTIPLE) ){
+				(questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE || questionDef.getDataType() == QuestionType.LIST_MULTIPLE) ){
 			refreshOptions(questionDef);
 
 			if(!(prevDataType == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || prevDataType == QuestionDef.QTN_TYPE_LIST_MULTIPLE)){
@@ -1231,7 +1231,7 @@ public class QuestionDef implements Serializable{
 			}
 
 		}
-		else if(dataType == QuestionDef.QTN_TYPE_REPEAT && questionDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT)
+		else if(dataType == QuestionDef.QTN_TYPE_REPEAT && questionDef.getDataType() == QuestionType.REPEAT)
 			getRepeatQtnsDef().refresh(questionDef.getRepeatQtnsDef()); //TODO Finish this
 	}
 

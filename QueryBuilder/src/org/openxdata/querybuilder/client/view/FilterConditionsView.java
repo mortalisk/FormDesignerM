@@ -223,7 +223,7 @@ public class FilterConditionsView  extends Composite implements ConditionControl
 				row.setFirstValue(condition.getValue());
 				row.setSecondValue(condition.getSecondValue());
 				row.setOperator(condition.getOperator());
-				row.setDataType(questionDef.getDataType());
+				row.setDataType(questionDef.getDataType().getLegacyConstant());
 				groupDepth.get(((ConditionWidget)widget).getDepth()+"").addCondition(row);
 				return;
 			}

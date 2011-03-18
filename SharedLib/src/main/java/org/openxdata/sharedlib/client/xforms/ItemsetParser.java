@@ -12,6 +12,7 @@ import org.openxdata.sharedlib.client.model.QuestionDef;
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.Node;
 import com.google.gwt.xml.client.NodeList;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 /**
  * Parse itemset portions of xforms documents, together with their instance
@@ -124,7 +125,7 @@ public class ItemsetParser {
 				if (optionId == null) {
 					OptionDef optnDef = parentQuestionDef
 							.getOptionWithValue(parent);
-					if (parentQuestionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC) {
+					if (parentQuestionDef.getDataType() == QuestionType.LIST_EXCLUSIVE_DYNAMIC) {
 						DynamicOptionDef dynOptionsDef = formDef
 								.getChildDynamicOptions(parentQuestionDef
 										.getId());

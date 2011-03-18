@@ -53,6 +53,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import org.openxdata.designer.client.DesignerMessages;
 import org.openxdata.sharedlib.client.locale.FormsConstants;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 
 /**
@@ -1714,7 +1715,7 @@ public class DesignGroupView extends Composite implements WidgetSelectionListene
 	protected DesignWidgetWrapper addNewRadioButtonSet(QuestionDef questionDef, boolean vertically){
 		List<OptionDef> options = questionDef.getOptions();
 
-		if(questionDef.getDataType() == QuestionDef.QTN_TYPE_BOOLEAN){
+		if(questionDef.getDataType() == QuestionType.BOOLEAN){
 			options = new ArrayList<OptionDef>();
 			options.add(new OptionDef(1, i18n.displayValueTrue(), QuestionDef.TRUE_VALUE, questionDef));
 			options.add(new OptionDef(1, i18n.displayValueFalse(), QuestionDef.FALSE_VALUE, questionDef));

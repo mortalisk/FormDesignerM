@@ -146,7 +146,7 @@ public class Condition implements Serializable{
 			}
 
 			value = realValue;
-            int questionTypeInt = qn.getDataType();
+            int questionTypeInt = qn.getDataType().getLegacyConstant();
             QuestionType questionType = QuestionType.fromLegacyConstant(questionTypeInt);
 
             if (questionType == QuestionType.TEXT) {
@@ -453,7 +453,7 @@ public class Condition implements Serializable{
 	}
 
 	private DateTimeFormat getDateTimeSubmitFormat(QuestionDef qtn){
-		if(qtn.getDataType() == QuestionDef.QTN_TYPE_DATE_TIME)
+		if(qtn.getDataType() == QuestionType.DATE_TIME)
 			return FormUtil.getDateTimeSubmitFormat();
 		else
 			return FormUtil.getDateSubmitFormat();

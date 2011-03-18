@@ -19,6 +19,7 @@ import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.Node;
 import com.google.gwt.xml.client.NodeList;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 /**
  * Parse xforms documents and builds the form definition object model.
@@ -337,7 +338,7 @@ public class XformParser {
 						rptKidMap, currentPageNo, parentQtn, constraints,
 						orphanDynOptionQns);
 
-				if (qtn.getDataType() == QuestionDef.QTN_TYPE_REPEAT)
+				if (qtn.getDataType() == QuestionType.REPEAT)
 					questionDef = qtn;
 			} else if (XmlUtil.nodeNameEquals(tagname,
 					XformConstants.NODE_NAME_INPUT_MINUS_PREFIX)
@@ -871,7 +872,7 @@ public class XformParser {
 			formDef.addCalculation(new Calculation(qtn.getId(), child
 					.getAttribute(XformConstants.ATTRIBUTE_NAME_CALCULATE)));
 
-		if (qtn.getDataType() == QuestionDef.QTN_TYPE_REPEAT) {
+		if (qtn.getDataType() == QuestionType.REPEAT) {
 			RepeatQtnsDef repeatQtnsDef = new RepeatQtnsDef(qtn);
 			qtn.setRepeatQtnsDef(repeatQtnsDef);
 			repeatQtns.addElement(qtn);

@@ -425,19 +425,19 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 	private TreeItem loadQuestion(QuestionDef questionDef, TreeItem root){
 		TreeItem questionRoot = addImageItem(root, questionDef.getDisplayText(), images.lookup(),questionDef,questionDef.getHelpText());
 
-		if(questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || 
-				questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_MULTIPLE){
+		if(questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE ||
+				questionDef.getDataType() == QuestionType.LIST_MULTIPLE){
 			List<?> options = questionDef.getOptions();
 			for(int currentOptionNo=0; currentOptionNo < options.size(); currentOptionNo++){
 				OptionDef optionDef = (OptionDef)options.get(currentOptionNo);
 				addImageItem(questionRoot, optionDef.getText(), images.markRead(),optionDef,null);
 			}
 		}
-		else if(questionDef.getDataType() == QuestionDef.QTN_TYPE_BOOLEAN){
+		else if(questionDef.getDataType() == QuestionType.BOOLEAN){
 			addImageItem(questionRoot, i18n.displayValueTrue(), images.markRead(),null,null);
 			addImageItem(questionRoot, i18n.displayValueFalse(), images.markRead(),null,null);
 		}
-		else if(questionDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT)
+		else if(questionDef.getDataType() == QuestionType.REPEAT)
 			loadQuestions(questionDef.getRepeatQtnsDef().getQuestions(),questionRoot);
 
 		return questionRoot;

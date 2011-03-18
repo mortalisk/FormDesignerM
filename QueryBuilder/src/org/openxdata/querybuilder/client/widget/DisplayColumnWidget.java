@@ -198,6 +198,6 @@ public class DisplayColumnWidget extends Composite implements ItemSelectionListe
 	}
 	
 	public int getDataType(){
-		return questionDef.getDataType();
+		return questionDef.getDataType().getLegacyConstant();
 	}
 }

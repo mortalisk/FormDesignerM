@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.Widget;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 
 /**
@@ -114,8 +115,8 @@ public class FormDesignerUtil {
 			if(!dynamicOptions && refQuestion != null && refQuestion.getDataType() != questionDef.getDataType() && sameTypesOnly)
 				continue;
 			
-			if(dynamicOptions && !(questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE ||
-					questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC))
+			if(dynamicOptions && !(questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE ||
+					questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE_DYNAMIC))
 				continue;
 			
 			if(dynamicOptions && refQuestion == questionDef)
@@ -131,7 +132,7 @@ public class FormDesignerUtil {
 					
 			//Allowed for now since repeat questions will have ids which cant be equal to
 			//those of parents. But test this to ensure it does not bring in bugs.
-			if(questionDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT)
+			if(questionDef.getDataType() == QuestionType.REPEAT)
 				loadQuestions(includeBinding, questionDef.getRepeatQtnsDef().getQuestions(),refQuestion,oracle,dynamicOptions,sameTypesOnly, parentQuestionDef); 
 		}
 	}

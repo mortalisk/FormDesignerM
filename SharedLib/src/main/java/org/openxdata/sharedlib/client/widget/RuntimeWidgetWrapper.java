@@ -1142,7 +1142,7 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 	/**
 	 * @see org.openxdata.sharedlib.client.controller.QuestionChangeListener#onDataTypeChanged(QuestionDef, int)
 	 */
-	public void onDataTypeChanged(QuestionDef sender,int dataType){
+	public void onDataTypeChanged(QuestionDef sender, QuestionType dataType){
 
 	}
 

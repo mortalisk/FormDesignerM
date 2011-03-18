@@ -1187,7 +1187,7 @@ public class RuntimeGroupWidget extends Composite implements OpenFileDialogEvent
 
 	}
 
-	public void onDataTypeChanged(QuestionDef sender,int dataType){
+	public void onDataTypeChanged(QuestionDef sender, QuestionType dataType){
 
 	}
 

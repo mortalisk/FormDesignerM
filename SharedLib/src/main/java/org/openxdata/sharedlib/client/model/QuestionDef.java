@@ -387,7 +387,7 @@ public class QuestionDef implements Serializable{
 
 		if(changed){
 			for(int index = 0; index < changeListeners.size(); index++)
-				changeListeners.get(index).onDataTypeChanged(this, dataType.getLegacyConstant());
+				changeListeners.get(index).onDataTypeChanged(this, dataType);
 		}
 	}
 

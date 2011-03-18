@@ -20,6 +20,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.Widget;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 /**
  * This widget is the main tool bar for the form designer.
@@ -151,7 +152,7 @@ public class Toolbar extends Composite implements XformItemSelectHandler, XformL
 	
 	@UiHandler("btnAddQuestion")
 	public void handleAddQuestion(ClickEvent event) {
-		controller.addNewQuestion(QuestionDef.QTN_TYPE_TEXT);
+		controller.addNewQuestion(QuestionType.TEXT.getLegacyConstant());
 	}
 	
 	@UiHandler("btnDelete")

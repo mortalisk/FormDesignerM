@@ -146,8 +146,7 @@ public class Condition implements Serializable{
 			}
 
 			value = realValue;
-            int questionTypeInt = qn.getDataType().getLegacyConstant();
-            QuestionType questionType = QuestionType.fromLegacyConstant(questionTypeInt);
+            QuestionType questionType = qn.getDataType();
 
             if (questionType == QuestionType.TEXT) {
                 ret = isTextTrue(qn, validation);

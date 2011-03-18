@@ -288,8 +288,8 @@ public class DynamicListsView extends Composite implements ItemSelectionListener
 		parentQuestionDef = (QuestionDef)item;
 
 		//we only allow option lists for single select and single select dynamic types.
-		int type = parentQuestionDef.getDataType().getLegacyConstant();
-		if(!(type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC))
+		QuestionType type = parentQuestionDef.getDataType();
+		if(!(type == QuestionType.LIST_EXCLUSIVE || type == QuestionType.LIST_EXCLUSIVE_DYNAMIC))
 			return;
 
 		//Get the dynamic option definition object for which the selected
@@ -302,7 +302,7 @@ public class DynamicListsView extends Composite implements ItemSelectionListener
 			return;
 
 		//Populate the list of parent options from a single select question.
-		if(type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE){
+		if(type == QuestionType.LIST_EXCLUSIVE){
 			if(!(parentQuestionDef.getOptionCount() > 0)){
 
 				//we are creating new DynamicOptionDef() because we want to allow
@@ -322,7 +322,7 @@ public class DynamicListsView extends Composite implements ItemSelectionListener
 		}
 
 		//Populate the list of parent options from a dynamic selection list question.
-		if(type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC){
+		if(type == QuestionType.LIST_EXCLUSIVE_DYNAMIC){
 
 			if(dynamicOptionDef == null){
 				//we are creating new DynamicOptionDef() because we want to allow

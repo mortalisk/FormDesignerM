@@ -43,7 +43,7 @@ public class OperatorHyperlink extends Hyperlink implements ItemSelectionListene
 	public static final String OP_TEXT_NOT_NULL = i18n.isNotNull();
 
 	private PopupPanel popup;
-	private int dataType =  QuestionDef.QTN_TYPE_TEXT;
+	private QuestionType dataType =  QuestionType.TEXT;
 	private ItemSelectionListener itemSelectionListener;
 
 	public OperatorHyperlink(String text, String targetHistoryToken,ItemSelectionListener itemSelectionListener){
@@ -53,7 +53,7 @@ public class OperatorHyperlink extends Hyperlink implements ItemSelectionListene
 	}
 
 	public void setDataType(QuestionType dataType){
-		this.dataType = dataType.getLegacyConstant();
+		this.dataType = dataType;
 
 		//We set the universal operator which is valid for all questions.
 		setText(OP_TEXT_EQUAL);
@@ -81,16 +81,16 @@ public class OperatorHyperlink extends Hyperlink implements ItemSelectionListene
 
 		MenuBar menuBar = new MenuBar(true);
 
-		if(!(dataType == QuestionDef.QTN_TYPE_GPS || dataType == QuestionDef.QTN_TYPE_VIDEO ||
-				dataType == QuestionDef.QTN_TYPE_AUDIO || dataType == QuestionDef.QTN_TYPE_IMAGE)){
+		if(!(dataType == QuestionType.GPS || dataType == QuestionType.VIDEO ||
+				dataType == QuestionType.AUDIO || dataType == QuestionType.IMAGE)){
 			menuBar.addItem(OP_TEXT_EQUAL,true, new SelectItemCommand(OP_TEXT_EQUAL,this));
 			menuBar.addItem(OP_TEXT_NOT_EQUAL,true, new SelectItemCommand(OP_TEXT_NOT_EQUAL,this));
 			count += 2;
 		}
 
-		if(dataType == QuestionDef.QTN_TYPE_DATE || dataType == QuestionDef.QTN_TYPE_DATE_TIME ||
-				dataType == QuestionDef.QTN_TYPE_DECIMAL || dataType == QuestionDef.QTN_TYPE_NUMERIC ||
-				dataType == QuestionDef.QTN_TYPE_TIME || dataType == QuestionDef.QTN_TYPE_REPEAT){
+		if(dataType == QuestionType.DATE || dataType == QuestionType.DATE_TIME ||
+				dataType == QuestionType.DECIMAL || dataType == QuestionType.NUMERIC ||
+				dataType == QuestionType.TIME || dataType == QuestionType.REPEAT){
 
 			menuBar.addItem(OP_TEXT_GREATER_THAN,true,new SelectItemCommand(OP_TEXT_GREATER_THAN,this));	  
 			menuBar.addItem(OP_TEXT_GREATER_THAN_EQUAL,true, new SelectItemCommand(OP_TEXT_GREATER_THAN_EQUAL,this));	  
@@ -101,7 +101,7 @@ public class OperatorHyperlink extends Hyperlink implements ItemSelectionListene
 			count += 6;
 		}
 
-		if(dataType == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || dataType == QuestionDef.QTN_TYPE_LIST_MULTIPLE){		  
+		if(dataType == QuestionType.LIST_EXCLUSIVE || dataType == QuestionType.LIST_MULTIPLE){
 			menuBar.addItem(OP_TEXT_IN_LIST,true,new SelectItemCommand(OP_TEXT_IN_LIST,this));	  
 			menuBar.addItem(OP_TEXT_NOT_IN_LIST,true, new SelectItemCommand(OP_TEXT_NOT_IN_LIST,this));
 			count += 2;
@@ -111,7 +111,7 @@ public class OperatorHyperlink extends Hyperlink implements ItemSelectionListene
 		menuBar.addItem(OP_TEXT_NOT_NULL,true, new SelectItemCommand(OP_TEXT_NOT_NULL,this));
 		count += 2;
 
-		if(dataType == QuestionDef.QTN_TYPE_TEXT ){	  
+		if(dataType == QuestionType.TEXT ){
 			menuBar.addItem(OP_TEXT_STARTS_WITH,true,new SelectItemCommand(OP_TEXT_STARTS_WITH,this));	  
 			menuBar.addItem(OP_TEXT_NOT_START_WITH,true, new SelectItemCommand(OP_TEXT_NOT_START_WITH,this));	  
 			menuBar.addItem(OP_TEXT_CONTAINS,true,new SelectItemCommand(OP_TEXT_CONTAINS,this));	  

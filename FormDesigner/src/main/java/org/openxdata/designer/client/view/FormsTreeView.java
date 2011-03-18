@@ -47,6 +47,7 @@ import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 
 /**
@@ -566,7 +567,7 @@ public class FormsTreeView extends Composite implements SelectionHandler<TreeIte
 			Object userObj = item.getUserObject();
 			if(userObj instanceof QuestionDef){
 				int id = ++nextQuestionId;
-				QuestionDef questionDef = new QuestionDef(id,i18n.question()+id,QuestionDef.QTN_TYPE_TEXT,"question"+id,item.getParentItem().getUserObject());
+				QuestionDef questionDef = new QuestionDef(id,i18n.question()+id,QuestionType.TEXT.getLegacyConstant(),"question"+id,item.getParentItem().getUserObject());
 				item = addImageItem(item.getParentItem(), questionDef.getText(), images.lookup(),questionDef,questionDef.getHelpText());
 				addFormDefItem(questionDef,item.getParentItem());
 				tree.setSelectedItem(item);

@@ -198,11 +198,11 @@ public class QuestionDef implements Serializable{
 			this.options = new RepeatQtnsDef(questionDef.getRepeatQtnsDef());
 	}
 
-	public QuestionDef(int id,String text,  int type, String variableName,Object parent) {
+	public QuestionDef(int id,String text, QuestionType type, String variableName,Object parent) {
 		this(parent);
 		setId(id);
 		setText(text);
-		setDataType(QuestionType.fromLegacyConstant(type));
+		setDataType(type);
 		setVariableName(variableName);
 	}
 

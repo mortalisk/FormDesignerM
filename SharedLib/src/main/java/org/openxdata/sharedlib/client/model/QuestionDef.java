@@ -92,57 +92,6 @@ public class QuestionDef implements Serializable{
 	 */
 	private int id = ModelConstants.NULL_ID;
 
-	/** Text question type. */
-	public static final int QTN_TYPE_TEXT = 1;
-
-	/** Numeric question type. These are numbers without decimal points*/
-	public static final int QTN_TYPE_NUMERIC = 2;
-
-	/** Decimal question type. These are numbers with decimals */
-	public static final int QTN_TYPE_DECIMAL = 3;
-
-	/** Date question type. This has only date component without time. */
-	public static final int QTN_TYPE_DATE = 4;
-
-	/** Time question type. This has only time element without date*/
-	public static final int QTN_TYPE_TIME = 5;
-
-	/** This is a question with alist of options where not more than one option can be selected at a time. */
-	public static final int QTN_TYPE_LIST_EXCLUSIVE = 6;
-
-	/** This is a question with alist of options where more than one option can be selected at a time. */
-	public static final int QTN_TYPE_LIST_MULTIPLE = 7;
-
-	/** Date and Time question type. This has both the date and time components*/
-	public static final int QTN_TYPE_DATE_TIME = 8;
-
-	/** Question with true and false answers. */
-	public static final int QTN_TYPE_BOOLEAN = 9;
-
-	/** Question with repeat sets of questions. */
-	public static final int QTN_TYPE_REPEAT = 10;
-
-	/** Question with image. */
-	public static final int QTN_TYPE_IMAGE = 11;
-
-	/** Question with recorded video. */
-	public static final byte QTN_TYPE_VIDEO = 12;
-
-	/** Question with recoded audio. */
-	public static final byte QTN_TYPE_AUDIO = 13;
-
-	/** Question whose list of options varies basing on the value selected from another question.
-	 * An example of such a question would be countries where the list depends on the continent
-	 * selected in the continent question.
-	 */
-	public static final int QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC = 14;
-
-	/** Question with GPS cordinates. */
-	public static final int QTN_TYPE_GPS = 15;
-
-	/** Question with barcode cordinates. */
-	public static final int QTN_TYPE_BARCODE = 16;
-
 	/** The xforms model data node into which this question will feed its answer. */
 	private Element dataNode;
 

@@ -143,7 +143,7 @@ public class SqlBuilder {
 	private static String getFilter(FilterCondition condition){		
 		String filter = condition.getFieldName();
 		filter += getDBOperator(condition.getOperator());
-		filter += getQuotedValue(condition.getFirstValue(), condition.getDataType().getLegacyConstant(),condition.getOperator());
+		filter += getQuotedValue(condition.getFirstValue(), condition.getDataType(),condition.getOperator());
 		return filter;
 	}
 
@@ -190,17 +190,15 @@ public class SqlBuilder {
 		return null;
 	}
 
-	private static String getQuotedValue(String fieldVal,int dataType, Operator operator)
+	private static String getQuotedValue(String fieldVal,QuestionType dataType, Operator operator)
 	{
 		if(operator == Operator.IS_NULL || operator == Operator.IS_NOT_NULL)
 			return "";
 		
-		switch(dataType)
-		{
-		case QuestionDef.QTN_TYPE_TEXT:
-		case QuestionDef.QTN_TYPE_LIST_EXCLUSIVE:
-		case QuestionDef.QTN_TYPE_LIST_MULTIPLE:
-		case QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC:
+		if (dataType == QuestionType.TEXT ||
+		dataType ==  QuestionType.LIST_EXCLUSIVE||
+		dataType ==  QuestionType.LIST_MULTIPLE||
+		dataType ==  QuestionType.LIST_EXCLUSIVE_DYNAMIC)
 		{
 			if(operator == Operator.STARTS_WITH || operator == Operator.NOT_START_WITH)
 				return "'" + fieldVal + LIKE_SEPARATOR + "'";
@@ -211,11 +209,12 @@ public class SqlBuilder {
 			else
 				return "'" + fieldVal + "'";
 		}
-		case QuestionDef.QTN_TYPE_DATE:
+		if (dataType == QuestionType.DATE) {
 			return DATE_SEPARATOR + fieldVal + DATE_SEPARATOR;
-		default:
-			return " " + fieldVal + " ";
-		}
+        }
+		
+		return " " + fieldVal + " ";
+		
 	}
 
 	private static String getSQLInnerCombiner(String val)

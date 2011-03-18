@@ -12,6 +12,7 @@ import org.openxdata.sharedlib.client.model.FormDef;
 import org.openxdata.sharedlib.client.model.ModelConstants;
 import org.openxdata.sharedlib.client.model.Operator;
 import org.openxdata.sharedlib.client.model.QuestionDef;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 
 /**
@@ -142,7 +143,7 @@ public class SqlBuilder {
 	private static String getFilter(FilterCondition condition){		
 		String filter = condition.getFieldName();
 		filter += getDBOperator(condition.getOperator());
-		filter += getQuotedValue(condition.getFirstValue(),condition.getDataType(),condition.getOperator());
+		filter += getQuotedValue(condition.getFirstValue(), condition.getDataType().getLegacyConstant(),condition.getOperator());
 		return filter;
 	}
 

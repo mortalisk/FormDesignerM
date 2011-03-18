@@ -21,7 +21,7 @@ public class FilterCondition extends FilterConditionRow {
 	private String firstValue;
 	private String secondValue;
 	private Operator operator;
-	private int dataType;
+	private QuestionType dataType;
 	
 	
 	public FilterCondition(){
@@ -60,11 +60,11 @@ public class FilterCondition extends FilterConditionRow {
 		this.operator = operator;
 	}
 
-	public int getDataType() {
+	public QuestionType getDataType() {
 		return dataType;
 	}
 
 	public void setDataType(QuestionType dataType) {
-		this.dataType = dataType.getLegacyConstant();
+		this.dataType = dataType;
 	}
 }

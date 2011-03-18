@@ -776,11 +776,11 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 			if(!questionDef.isVisible() || (questionDef.isRequired() && (questionDef.isLocked() || !questionDef.isEnabled())) )
 				continue;
 			
-			int type = questionDef.getDataType().getLegacyConstant();
-			if(type == QuestionDef.QTN_TYPE_REPEAT && questionDef.getRepeatQtnsDef().getQuestions() == null)
+			QuestionType type = questionDef.getDataType();
+			if(type == QuestionType.REPEAT && questionDef.getRepeatQtnsDef().getQuestions() == null)
 				continue;
 			
-			if(!(type == QuestionDef.QTN_TYPE_VIDEO || type == QuestionDef.QTN_TYPE_AUDIO || type == QuestionDef.QTN_TYPE_IMAGE)){
+			if(!(type == QuestionType.VIDEO || type == QuestionType.AUDIO || type == QuestionType.IMAGE)){
 				widgetWrapper = addNewLabel(questionDef.getText(),false);
 				widgetWrapper.setBinding(questionDef.getBinding());
 				widgetWrapper.setTitle(questionDef.getText());
@@ -796,35 +796,35 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 
 			widgetWrapper = null;
 
-			if(!(type == QuestionDef.QTN_TYPE_VIDEO || type == QuestionDef.QTN_TYPE_AUDIO || type == QuestionDef.QTN_TYPE_IMAGE))
+			if(!(type == QuestionType.VIDEO || type == QuestionType.AUDIO || type == QuestionType.IMAGE))
 				x += (questionDef.getText().length() * 10);
 
-			if(type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE ||
-					type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC)
+			if(type == QuestionType.LIST_EXCLUSIVE ||
+					type == QuestionType.LIST_EXCLUSIVE_DYNAMIC)
 				widgetWrapper = addNewDropdownList(false);
-			else if(type == QuestionDef.QTN_TYPE_DATE)
+			else if(type == QuestionType.DATE)
 				widgetWrapper = addNewDatePicker(false);
-			else if(type == QuestionDef.QTN_TYPE_DATE_TIME)
+			else if(type == QuestionType.DATE_TIME)
 				widgetWrapper = addNewDateTimeWidget(false);
-			else if(type == QuestionDef.QTN_TYPE_TIME)
+			else if(type == QuestionType.TIME)
 				widgetWrapper = addNewTimeWidget(false);
-			else if(type == QuestionDef.QTN_TYPE_LIST_MULTIPLE){
+			else if(type == QuestionType.LIST_MULTIPLE){
 				widgetWrapper = addNewCheckBoxSet(questionDef,true,tabIndex);
 				tabIndex += questionDef.getOptions().size();
 			}
-			else if(type == QuestionDef.QTN_TYPE_BOOLEAN)
+			else if(type == QuestionType.BOOLEAN)
 				widgetWrapper = addNewDropdownList(false);
-			else if(type == QuestionDef.QTN_TYPE_REPEAT)
+			else if(type == QuestionType.REPEAT)
 				widgetWrapper = addNewRepeatSet(questionDef,false);
-			else if(type == QuestionDef.QTN_TYPE_IMAGE)
+			else if(type == QuestionType.IMAGE)
 				widgetWrapper = addNewPictureSection(questionDef.getBinding(),questionDef.getText(),false);
-			else if(type == QuestionDef.QTN_TYPE_VIDEO || type == QuestionDef.QTN_TYPE_AUDIO)
+			else if(type == QuestionType.VIDEO || type == QuestionType.AUDIO)
 				widgetWrapper = addNewVideoAudioSection(questionDef.getBinding(),questionDef.getText(),false);
 			else
 				widgetWrapper = addNewTextBox(false);
 
 			if(widgetWrapper != null){
-				if(!(type == QuestionDef.QTN_TYPE_IMAGE|| type == QuestionDef.QTN_TYPE_VIDEO|| type == QuestionDef.QTN_TYPE_AUDIO))
+				if(!(type == QuestionType.IMAGE|| type == QuestionType.VIDEO|| type == QuestionType.AUDIO))
 					widgetWrapper.setBinding(questionDef.getBinding());
 
 				widgetWrapper.setQuestionDef(questionDef);
@@ -855,12 +855,12 @@ public class DesignSurfaceView extends DesignGroupView implements SelectionHandl
 
 			int rptIncr = 0;
 			if(i < questions.size()-1){
-				int dataType = ((QuestionDef)questions.get(i+1)).getDataType().getLegacyConstant();
-				if(dataType == QuestionDef.QTN_TYPE_REPEAT)
+				QuestionType dataType = ((QuestionDef)questions.get(i+1)).getDataType();
+				if(dataType == QuestionType.REPEAT)
 					rptIncr = 90 + 50;
-				else if(dataType == QuestionDef.QTN_TYPE_IMAGE)
+				else if(dataType == QuestionType.IMAGE)
 					rptIncr = 195 + 30;
-				else if(dataType == QuestionDef.QTN_TYPE_VIDEO || dataType == QuestionDef.QTN_TYPE_AUDIO)
+				else if(dataType == QuestionType.VIDEO || dataType == QuestionType.AUDIO)
 					rptIncr = 75 + 30;
 			}
 

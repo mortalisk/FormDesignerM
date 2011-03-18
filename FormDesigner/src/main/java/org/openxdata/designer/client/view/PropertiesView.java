@@ -46,6 +46,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 
 /**
@@ -777,78 +778,78 @@ public class PropertiesView extends Composite implements IFormSelectionListener,
 	 * @param questionDef the question definition object.
 	 */
 	private void setQuestionDataType(QuestionDef questionDef){
-		int dataType = QuestionDef.QTN_TYPE_TEXT;
+		QuestionType dataType = QuestionType.TEXT;
 
 		switch(cbDataType.getSelectedIndex()){
 		case DT_INDEX_NUMBER:
 			txtDefaultValue.setEnabled(true);
-			dataType = QuestionDef.QTN_TYPE_NUMERIC;
+			dataType = QuestionType.NUMERIC;
 			break;
 		case DT_INDEX_DECIMAL:
 			txtDefaultValue.setEnabled(true);
-			dataType = QuestionDef.QTN_TYPE_DECIMAL;
+			dataType = QuestionType.DECIMAL;
 			break;
 		case DT_INDEX_DATE:
 			txtDefaultValue.setEnabled(true);
-			dataType = QuestionDef.QTN_TYPE_DATE;
+			dataType = QuestionType.DATE;
 			break;
 		case DT_INDEX_TIME:
 			txtDefaultValue.setEnabled(true);
-			dataType = QuestionDef.QTN_TYPE_TIME;
+			dataType = QuestionType.TIME;
 			break;
 		case DT_INDEX_DATE_TIME:
 			txtDefaultValue.setEnabled(true);
-			dataType = QuestionDef.QTN_TYPE_DATE_TIME;
+			dataType = QuestionType.DATE_TIME;
 			break;
 		case DT_INDEX_BOOLEAN:
 			txtDefaultValue.setEnabled(true);
-			dataType = QuestionDef.QTN_TYPE_BOOLEAN;
+			dataType = QuestionType.BOOLEAN;
 			break;
 		case DT_INDEX_SINGLE_SELECT:
 			txtDefaultValue.setEnabled(false);
-			dataType = QuestionDef.QTN_TYPE_LIST_EXCLUSIVE;
+			dataType = QuestionType.LIST_EXCLUSIVE;
 			break;
 		case DT_INDEX_MULTIPLE_SELECT:
 			txtDefaultValue.setEnabled(false);
-			dataType = QuestionDef.QTN_TYPE_LIST_MULTIPLE;
+			dataType = QuestionType.LIST_MULTIPLE;
 			break;
 		case DT_INDEX_REPEAT:
 			txtDefaultValue.setEnabled(false);
-			dataType = QuestionDef.QTN_TYPE_REPEAT;
+			dataType = QuestionType.REPEAT;
 			break;
 		case DT_INDEX_IMAGE:
 			txtDefaultValue.setEnabled(false);
-			dataType = QuestionDef.QTN_TYPE_IMAGE;
+			dataType = QuestionType.IMAGE;
 			break;
 		case DT_INDEX_VIDEO:
 			txtDefaultValue.setEnabled(false);
-			dataType = QuestionDef.QTN_TYPE_VIDEO;
+			dataType = QuestionType.VIDEO;
 			break;
 		case DT_INDEX_AUDIO:
 			txtDefaultValue.setEnabled(false);
-			dataType = QuestionDef.QTN_TYPE_AUDIO;
+			dataType = QuestionType.AUDIO;
 			break;
 		case DT_INDEX_SINGLE_SELECT_DYNAMIC:
 			txtDefaultValue.setEnabled(false);
-			dataType = QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC;
+			dataType = QuestionType.LIST_EXCLUSIVE_DYNAMIC;
 			break;
 		case DT_INDEX_GPS:
 			txtDefaultValue.setEnabled(true);
-			dataType = QuestionDef.QTN_TYPE_GPS;
+			dataType = QuestionType.GPS;
 			break;
 		case DT_INDEX_BARCODE:
 			txtDefaultValue.setEnabled(false);
-			dataType = QuestionDef.QTN_TYPE_BARCODE;
+			dataType = QuestionType.BARCODE;
 			break;
 		}
 
-		if(dataType == QuestionDef.QTN_TYPE_REPEAT && 
-				questionDef.getDataType() != QuestionDef.QTN_TYPE_REPEAT)
+		if(dataType == QuestionType.REPEAT && 
+				questionDef.getDataType() != QuestionType.REPEAT.getLegacyConstant())
 			questionDef.setRepeatQtnsDef(new RepeatQtnsDef(questionDef));
 
-		questionDef.setDataType(dataType);
+		questionDef.setDataType(dataType.getLegacyConstant());
 
-		if(questionDef.getDataType() != QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC)
+		if(questionDef.getDataType() != QuestionType.LIST_EXCLUSIVE_DYNAMIC.getLegacyConstant())
 			dynamicListsView.setEnabled(false);
 		else if(!dynamicListsView.isEnabled())
 			dynamicListsView.setQuestionDef(questionDef);

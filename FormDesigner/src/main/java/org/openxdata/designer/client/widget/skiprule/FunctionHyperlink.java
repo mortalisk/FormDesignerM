@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import org.openxdata.sharedlib.client.locale.FormsConstants;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 
 /**
@@ -37,7 +38,7 @@ public class FunctionHyperlink extends Hyperlink implements ItemSelectionListene
 	private PopupPanel popup;
 	
 	/** The data type of the currently selected question. */
-	private int dataType =  QuestionDef.QTN_TYPE_TEXT;
+	private QuestionType dataType =  QuestionType.TEXT;
 	
 	/** The listener to item selection events. */
 	private ItemSelectionListener itemSelectionListener;
@@ -62,9 +63,9 @@ public class FunctionHyperlink extends Hyperlink implements ItemSelectionListene
 	 * @param dataType the data type.
 	 */
 	public void setDataType(int dataType){
-		this.dataType = dataType;
+		this.dataType = QuestionType.fromLegacyConstant(dataType);
 		
-		setText((dataType == QuestionDef.QTN_TYPE_REPEAT) ? FUNCTION_TEXT_LENGTH : FUNCTION_TEXT_VALUE);
+		setText((this.dataType == QuestionType.REPEAT) ? FUNCTION_TEXT_LENGTH : FUNCTION_TEXT_VALUE);
 	}
 	  
 	@Override
@@ -87,12 +88,12 @@ public class FunctionHyperlink extends Hyperlink implements ItemSelectionListene
 		
 		MenuBar menuBar = new MenuBar(true);
 		
-		if(dataType != QuestionDef.QTN_TYPE_REPEAT){
+		if(dataType != QuestionType.REPEAT){
 			menuBar.addItem(FUNCTION_TEXT_VALUE,true, new SelectItemCommand(FUNCTION_TEXT_VALUE,this));
 			count += 1;
 		}
 		
-		if(dataType == QuestionDef.QTN_TYPE_TEXT || dataType == QuestionDef.QTN_TYPE_REPEAT){
+		if(dataType == QuestionType.TEXT || dataType == QuestionType.REPEAT){
 			menuBar.addItem(FUNCTION_TEXT_LENGTH,true, new SelectItemCommand(FUNCTION_TEXT_LENGTH,this));
 			count += 1;
 		}

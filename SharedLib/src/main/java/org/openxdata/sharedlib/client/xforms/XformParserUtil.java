@@ -9,6 +9,7 @@ import org.openxdata.sharedlib.client.model.QuestionDef;
 
 import com.google.gwt.xml.client.Element;
 import org.openxdata.sharedlib.client.model.Operator;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 
 /**
@@ -200,42 +201,42 @@ public class XformParserUtil {
 			if(type.equals(XformConstants.DATA_TYPE_TEXT) || type.indexOf("string") != -1 ){
 				String format = node.getAttribute(XformConstants.ATTRIBUTE_NAME_FORMAT);
 				if(XformConstants.ATTRIBUTE_VALUE_GPS.equals(format))
-					def.setDataType(QuestionDef.QTN_TYPE_GPS);
+					def.setDataType(QuestionType.GPS);
 				else
-					def.setDataType(QuestionDef.QTN_TYPE_TEXT);
+					def.setDataType(QuestionType.TEXT);
 			}
 			else if((type.equals("xsd:integer") || type.equals(XformConstants.DATA_TYPE_INT)) || (type.indexOf("integer") != -1 || (type.indexOf("int") != -1) && !type.equals("geopoint") ))
-				def.setDataType(QuestionDef.QTN_TYPE_NUMERIC);
+				def.setDataType(QuestionType.NUMERIC);
 			else if(type.equals("xsd:decimal") || type.indexOf("decimal") != -1 )
-				def.setDataType(QuestionDef.QTN_TYPE_DECIMAL);
+				def.setDataType(QuestionType.DECIMAL);
 			else if(type.equals("xsd:dateTime") || type.indexOf("dateTime") != -1 )
-				def.setDataType(QuestionDef.QTN_TYPE_DATE_TIME);
+				def.setDataType(QuestionType.DATE_TIME);
 			else if(type.equals("xsd:time") || type.indexOf("time") != -1 )
-				def.setDataType(QuestionDef.QTN_TYPE_TIME);
+				def.setDataType(QuestionType.TIME);
 			else if(type.equals(XformConstants.DATA_TYPE_DATE) || type.indexOf("date") != -1 )
-				def.setDataType(QuestionDef.QTN_TYPE_DATE);
+				def.setDataType(QuestionType.DATE);
 			else if(type.equals(XformConstants.DATA_TYPE_BOOLEAN) || type.indexOf("boolean") != -1 )
-				def.setDataType(QuestionDef.QTN_TYPE_BOOLEAN);
+				def.setDataType(QuestionType.BOOLEAN);
 			else if(type.equals(XformConstants.DATA_TYPE_BINARY) || type.indexOf("base64Binary") != -1 ){
 				String format = node.getAttribute(XformConstants.ATTRIBUTE_NAME_FORMAT);
 				if(XformConstants.ATTRIBUTE_VALUE_VIDEO.equals(format))
-					def.setDataType(QuestionDef.QTN_TYPE_VIDEO);
+					def.setDataType(QuestionType.VIDEO);
 				else if(XformConstants.ATTRIBUTE_VALUE_AUDIO.equals(format))
-					def.setDataType(QuestionDef.QTN_TYPE_AUDIO);
+					def.setDataType(QuestionType.AUDIO);
 				else
-					def.setDataType(QuestionDef.QTN_TYPE_IMAGE);
+					def.setDataType(QuestionType.IMAGE);
 			}
 			
 			else if(type.equalsIgnoreCase("binary")){
-				def.setDataType(QuestionDef.QTN_TYPE_IMAGE);
+				def.setDataType(QuestionType.IMAGE);
 			}
 			else if(type.equalsIgnoreCase("geopoint"))
-				def.setDataType(QuestionDef.QTN_TYPE_GPS);
+				def.setDataType(QuestionType.GPS);
 			else if(type.equalsIgnoreCase("barcode"))
-				def.setDataType(QuestionDef.QTN_TYPE_BARCODE);
+				def.setDataType(QuestionType.BARCODE);
 		}
 		else
-			def.setDataType(QuestionDef.QTN_TYPE_TEXT); //QTN_TYPE_REPEAT
+			def.setDataType(QuestionType.TEXT); //QTN_TYPE_REPEAT
 	}
 	
 	

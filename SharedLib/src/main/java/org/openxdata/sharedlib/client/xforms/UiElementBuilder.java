@@ -208,18 +208,18 @@ public class UiElementBuilder {
 			node.setAttribute(XformConstants.ATTRIBUTE_NAME_ID, qtnDef.getBinding());
 
 		//Make ODK happy.
-		setMediaType(node, type);
+		setMediaType(node, QuestionType.fromLegacyConstant(type));
 
 		return node;
 	}
 	
-	public static void setMediaType(Element node, int type){
+	public static void setMediaType(Element node, QuestionType type){
 		String mediatype = null;
-		if(type == QuestionDef.QTN_TYPE_IMAGE)
+		if(type == QuestionType.IMAGE)
 			mediatype = XformConstants.ATTRIBUTE_VALUE_IMAGE;
-		else if(type == QuestionDef.QTN_TYPE_AUDIO)
+		else if(type == QuestionType.AUDIO)
 			mediatype = XformConstants.ATTRIBUTE_VALUE_AUDIO;
-		else if(type == QuestionDef.QTN_TYPE_VIDEO)
+		else if(type == QuestionType.VIDEO)
 			mediatype = XformConstants.ATTRIBUTE_VALUE_VIDEO;
 		
 		if(mediatype != null)

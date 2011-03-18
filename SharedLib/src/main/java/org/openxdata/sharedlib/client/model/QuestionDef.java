@@ -736,7 +736,7 @@ public class QuestionDef implements Serializable{
 					dataType == QuestionType.VIDEO))
 				controlNode.removeAttribute(XformConstants.ATTRIBUTE_NAME_MEDIATYPE);
 			else
-				UiElementBuilder.setMediaType(controlNode, dataType.getLegacyConstant());
+				UiElementBuilder.setMediaType(controlNode, dataType);
 			
 
 			if(dataNode != null)

@@ -73,6 +73,7 @@ import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.Node;
 import com.google.gwt.xml.client.NodeList;
 import com.google.gwt.xml.client.XMLParser;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 
 /**
@@ -509,9 +510,9 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 		}
 		else if(s.equalsIgnoreCase(WidgetEx.WIDGET_TYPE_TEXTBOX)){
 			widget = new TextBox();
-			if(questionDef != null && (questionDef.getDataType() == QuestionDef.QTN_TYPE_NUMERIC 
-					|| questionDef.getDataType() == QuestionDef.QTN_TYPE_DECIMAL))
-				FormUtil.allowNumericOnly((TextBox)widget,questionDef.getDataType() == QuestionDef.QTN_TYPE_DECIMAL);
+			if(questionDef != null && (questionDef.getDataType() == QuestionType.NUMERIC
+					|| questionDef.getDataType() == QuestionType.DECIMAL))
+				FormUtil.allowNumericOnly((TextBox)widget,questionDef.getDataType() == QuestionType.DECIMAL);
 			((TextBox)widget).setTabIndex(tabIndex);
 		}
 		else if(s.equalsIgnoreCase(WidgetEx.WIDGET_TYPE_LABEL)){
@@ -575,7 +576,7 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 
 					String extension = "";
 					String contentType = "&contentType=video/3gpp";
-					if(questionDef.getDataType() == QuestionDef.QTN_TYPE_AUDIO)
+					if(questionDef.getDataType() == QuestionType.AUDIO)
 						contentType = "&contentType=audio/3gpp";
 
 					contentType += "&name="+questionDef.getBinding()+".3gp";
@@ -631,7 +632,7 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 			wrapper.setId(value);
 
 		if(questionDef != null){
-			if(questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC){
+			if(questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE_DYNAMIC){
 				questionDef.setOptions(null); //may have been set by the preview
 				if(wrapper.getFilterField() != null && wrapper.getFilterField().trim().length() > 0)
 					filtDynOptWidgetMap.put(questionDef, wrapper);
@@ -640,7 +641,7 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 			wrapper.setQuestionDef(questionDef,false);
 			ValidationRule validationRule = formDef.getValidationRule(questionDef);
 			wrapper.setValidationRule(validationRule);
-			if(validationRule != null && questionDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT)
+			if(validationRule != null && questionDef.getDataType() == QuestionType.REPEAT)
 				questionDef.setAnswer("0");
 
 			if(validationQtns.contains(questionDef) && isValidationWidget(wrapper)){
@@ -669,8 +670,8 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 					&& (wrapper.getWrappedWidget() instanceof TextBox || wrapper.getWrappedWidget() instanceof ListBox)
 					&& questionDef != null){
 
-				if(!(questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE
-						||questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_MULTIPLE)){
+				if(!(questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE
+						||questionDef.getDataType() == QuestionType.LIST_MULTIPLE)){
 					questionDef.setDataType(QuestionDef.QTN_TYPE_LIST_EXCLUSIVE);
 				}
 
@@ -910,7 +911,7 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 				Calculation calculation = formDef.getCalculation(widget.getQuestionDef());
 				String calcExpression = replaceCalcExpression(calculation.getCalculateExpression(),widget.getQuestionDef()); //calcExpression.replace(binding, answer);
 
-				int type = widget.getQuestionDef().getDataType();
+				int type = widget.getQuestionDef().getDataType().getLegacyConstant();
 				String answer = calcExpression;
 
 				if(calculation.getCalculateExpression().trim().indexOf(' ') > 0){
@@ -1088,7 +1089,7 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 	 * 					  allowed options for another question.
 	 */
 	private void updateDynamicOptions(QuestionDef questionDef){
-		int type = questionDef.getDataType();
+		int type = questionDef.getDataType().getLegacyConstant();
 		if(!(type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC))
 			return;
 
@@ -1612,7 +1613,7 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 			if(qtnDef == null)
 				return "";
 
-			expression = expression.replace(formBinding+qtnBinding, getCalcExpressionAnswer(questionDef.getDataType(),qtnDef,calcExpression));
+			expression = expression.replace(formBinding+qtnBinding, getCalcExpressionAnswer(questionDef.getDataType().getLegacyConstant(),qtnDef,calcExpression));
 
 			if(pos2 > -1)
 				pos = expression.indexOf(formBinding);
@@ -1635,7 +1636,7 @@ public class FormRunnerView extends Composite implements SelectionHandler<Intege
 				answer = calcExpression.trim().indexOf(' ') > 0 ? "''" : "";
 		}
 
-		type = questionDef.getDataType();
+		type = questionDef.getDataType().getLegacyConstant();
 		if(type ==  QuestionDef.QTN_TYPE_NUMERIC || type ==  QuestionDef.QTN_TYPE_DECIMAL)
 			return answer;
 		else if(answer != null && answer.trim().length() > 0 && calcExpression.trim().indexOf(' ') > 0 && !answer.equals("''"))

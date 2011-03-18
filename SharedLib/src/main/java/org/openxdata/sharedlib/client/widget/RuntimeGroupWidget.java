@@ -45,6 +45,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.Node;
 import com.google.gwt.xml.client.NodeList;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 /**
  * 
@@ -348,9 +349,9 @@ public class RuntimeGroupWidget extends Composite implements OpenFileDialogEvent
 		}
 		else if(s.equalsIgnoreCase(WidgetEx.WIDGET_TYPE_TEXTBOX)){
 			widget = new TextBox();
-			if(questionDef != null && (questionDef.getDataType() == QuestionDef.QTN_TYPE_NUMERIC 
-					|| questionDef.getDataType() == QuestionDef.QTN_TYPE_DECIMAL))
-				FormUtil.allowNumericOnly((TextBox)widget,questionDef.getDataType() == QuestionDef.QTN_TYPE_DECIMAL);
+			if(questionDef != null && (questionDef.getDataType() == QuestionType.NUMERIC
+					|| questionDef.getDataType() == QuestionType.DECIMAL))
+				FormUtil.allowNumericOnly((TextBox)widget,questionDef.getDataType() == QuestionType.DECIMAL);
 			((TextBox)widget).setTabIndex(tabIndex);
 		}
 		else if(s.equalsIgnoreCase(WidgetEx.WIDGET_TYPE_LABEL)){
@@ -394,7 +395,7 @@ public class RuntimeGroupWidget extends Composite implements OpenFileDialogEvent
 
 			String extension = "";//.3gp ".mpeg";
 			String contentType = "&contentType=video/3gpp";
-			if(questionDef.getDataType() == QuestionDef.QTN_TYPE_AUDIO)
+			if(questionDef.getDataType() == QuestionType.AUDIO)
 				contentType = "&contentType=audio/3gpp"; //"&contentType=audio/x-wav";
 			//extension = ".wav";
 
@@ -485,7 +486,7 @@ public class RuntimeGroupWidget extends Composite implements OpenFileDialogEvent
 		}
 
 		if(questionDef != null){
-			if(questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC){
+			if(questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE_DYNAMIC){
 				questionDef.setOptions(null); //may have been set by the preview
 				//if(wrapper.getWrappedWidget() instanceof ListBox || wrapper.getWrappedWidget() instanceof TextBox)
 				if(wrapper.getFilterField() != null && wrapper.getFilterField().trim().length() > 0)
@@ -514,8 +515,8 @@ public class RuntimeGroupWidget extends Composite implements OpenFileDialogEvent
 			if(externalSourceWidgets != null && wrapper.getExternalSource() != null && wrapper.getDisplayField() != null
 					&& (wrapper.getWrappedWidget() instanceof TextBox || wrapper.getWrappedWidget() instanceof ListBox)
 					&& questionDef != null
-					&& (wrapper.getQuestionDef().getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE
-							||wrapper.getQuestionDef().getDataType() == QuestionDef.QTN_TYPE_LIST_MULTIPLE)){
+					&& (wrapper.getQuestionDef().getDataType() == QuestionType.LIST_EXCLUSIVE
+							||wrapper.getQuestionDef().getDataType() == QuestionType.LIST_MULTIPLE)){
 				externalSourceWidgets.add(wrapper);
 				loadWidget = false;
 			}
@@ -892,9 +893,9 @@ public class RuntimeGroupWidget extends Composite implements OpenFileDialogEvent
 			widget.loadQuestion();
 
 		QuestionDef questionDef = widget.getQuestionDef();
-		if(questionDef != null && (questionDef.getDataType() == QuestionDef.QTN_TYPE_NUMERIC 
-				|| questionDef.getDataType() == QuestionDef.QTN_TYPE_DECIMAL))
-			FormUtil.allowNumericOnly((TextBox)widget.getWrappedWidget(),questionDef.getDataType() == QuestionDef.QTN_TYPE_DECIMAL);
+		if(questionDef != null && (questionDef.getDataType() == QuestionType.NUMERIC
+				|| questionDef.getDataType() == QuestionType.DECIMAL))
+			FormUtil.allowNumericOnly((TextBox)widget.getWrappedWidget(),questionDef.getDataType() == QuestionType.DECIMAL);
 
 		widget.refreshSize();
 		return widget;
@@ -992,7 +993,7 @@ public class RuntimeGroupWidget extends Composite implements OpenFileDialogEvent
 			else{
 				String extension = "";//.3gp ".mpeg";
 				String contentType = "&contentType=video/3gpp";
-				if(widgetWrapper.getQuestionDef().getDataType() == QuestionDef.QTN_TYPE_AUDIO)
+				if(widgetWrapper.getQuestionDef().getDataType() == QuestionType.AUDIO)
 					contentType = "&contentType=audio/3gpp"; //"&contentType=audio/x-wav";
 				//extension = ".wav";
 

@@ -45,6 +45,7 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.TextBoxBase;
 import com.google.gwt.user.client.ui.Widget;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 
 /**
@@ -274,7 +275,7 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 				if(event.getNativeKeyCode() == KeyCodes.KEY_TAB)
 					return;
 
-				if(questionDef != null && !(questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC)){
+				if(questionDef != null && !(questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE || questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE_DYNAMIC)){
 					questionDef.setAnswer(getTextBoxAnswer());
 
 					isValid();
@@ -348,7 +349,7 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 
 		((DateTimeWidget)widget).addKeyUpHandler(new KeyUpHandler(){
 			public void onKeyUp(KeyUpEvent event) {
-				if(questionDef != null && !(questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC)){
+				if(questionDef != null && !(questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE || questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE_DYNAMIC)){
 					questionDef.setAnswer(getTextBoxAnswer());
 
 					isValid();
@@ -386,7 +387,7 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 
 		String defaultValue = questionDef.getDefaultValue();
 
-		int type = questionDef.getDataType();
+		int type = questionDef.getDataType().getLegacyConstant();
 		if((type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC
 				|| type == QuestionDef.QTN_TYPE_LIST_MULTIPLE)
 				&& widget instanceof ListBox){
@@ -478,7 +479,7 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 			}
 		}
 
-		if(questionDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT)
+		if(questionDef.getDataType() == QuestionType.REPEAT)
 			questionDef.setAnswer("0");
 
 		if(!questionDef.isEnabled())
@@ -524,7 +525,7 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 	public void setAnswer(String answer){
 		questionDef.setAnswer(answer);
 
-		int type = questionDef.getDataType();
+		int type = questionDef.getDataType().getLegacyConstant();
 
 		if((type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC
 				|| type == QuestionDef.QTN_TYPE_LIST_MULTIPLE)
@@ -591,9 +592,9 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 	 */
 	private String fromSubmit2DisplayDate(String value){
 		try{
-			if(questionDef.getDataType() == QuestionDef.QTN_TYPE_TIME)
+			if(questionDef.getDataType() == QuestionType.TIME)
 				return FormUtil.getTimeDisplayFormat().format(FormUtil.getTimeSubmitFormat().parse(value));
-			else if(questionDef.getDataType() == QuestionDef.QTN_TYPE_DATE_TIME)
+			else if(questionDef.getDataType() == QuestionType.DATE_TIME)
 				return FormUtil.getDateTimeDisplayFormat().format(FormUtil.getDateTimeSubmitFormat().parse(value));
 			else
 				return FormUtil.getDateDisplayFormat().format(FormUtil.getDateSubmitFormat().parse(value));
@@ -685,7 +686,7 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 
 		try{
 			if(questionDef.isDate() && value != null && value.trim().length() > 0){
-				if(questionDef.getDataType() == QuestionDef.QTN_TYPE_TIME){
+				if(questionDef.getDataType() == QuestionType.TIME){
 					value = FormUtil.getTimeSubmitFormat().format(FormUtil.getTimeDisplayFormat().parse(value));
 
 					// ISO 8601 requires a colon in time zone offset (Java doesn't
@@ -693,7 +694,7 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 					if("yyyy-MM-dd'T'HH:mm:ssZ".equals(FormUtil.getTimeSubmitFormat().getPattern()))
 						value = value.substring(0, 22) + ":" + value.substring(22);
 				}
-				else if(questionDef.getDataType() == QuestionDef.QTN_TYPE_DATE_TIME){
+				else if(questionDef.getDataType() == QuestionType.DATE_TIME){
 					value = FormUtil.getDateTimeSubmitFormat().format(FormUtil.getDateTimeDisplayFormat().parse(value));
 
 					// ISO 8601 requires a colon in time zone offset (Java doesn't
@@ -713,9 +714,9 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 				panel.add(errorImage);
 
 			String format = FormUtil.getDateDisplayFormat().getPattern();
-			if(questionDef.getDataType() == QuestionDef.QTN_TYPE_TIME)
+			if(questionDef.getDataType() == QuestionType.TIME)
 				format = FormUtil.getTimeDisplayFormat().getPattern();
-			else if(questionDef.getDataType() == QuestionDef.QTN_TYPE_DATE_TIME)
+			else if(questionDef.getDataType() == QuestionType.DATE_TIME)
 				format = FormUtil.getDateTimeDisplayFormat().getPattern();
 
 			errorImage.setTitle(constants.wrongFormat() + " " + format);
@@ -743,7 +744,7 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 
 		String defaultValue = questionDef.getDefaultValueSubmit();
 
-		if(widget instanceof TextBox && questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE){
+		if(widget instanceof TextBox && questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE){
 			OptionDef optionDef = questionDef.getOptionWithText(((TextBox)widget).getText());
 			if(optionDef != null)
 				questionDef.setAnswer(optionDef.getVariableName());
@@ -785,8 +786,8 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 			}
 		}
 		else if(widget instanceof ListBox){
-			if(questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE ||
-					questionDef.getDataType() == QuestionDef.QTN_TYPE_BOOLEAN){
+			if(questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE ||
+					questionDef.getDataType() == QuestionType.BOOLEAN){
 				String value = null;
 				ListBox lb = (ListBox)widget;
 				if(lb.getSelectedIndex() >= 0)
@@ -801,13 +802,13 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 			}
 		}
 		else if(widget instanceof RadioButton){ //Should be before CheckBox
-			if(!(questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE ||
-					questionDef.getDataType() == QuestionDef.QTN_TYPE_BOOLEAN) || childWidgets == null)
+			if(!(questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE ||
+					questionDef.getDataType() == QuestionType.BOOLEAN) || childWidgets == null)
 				return;
 
 			String value = null;
 
-			if(questionDef.getDataType() == QuestionDef.QTN_TYPE_BOOLEAN)
+			if(questionDef.getDataType() == QuestionType.BOOLEAN)
 				value = questionDef.getAnswer();
 			else{
 				for(int index=0; index < childWidgets.size(); index++){
@@ -823,7 +824,7 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 			questionDef.setAnswer(value);
 		}
 		else if(widget instanceof CheckBox){
-			if(questionDef.getDataType() != QuestionDef.QTN_TYPE_LIST_MULTIPLE || childWidgets == null)
+			if(questionDef.getDataType() != QuestionType.LIST_MULTIPLE || childWidgets == null)
 				return;
 
 			String value = "";
@@ -867,7 +868,7 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 		childWidgets.add(childWidget);
 
 		String defaultValue = questionDef.getDefaultValue();
-		int type = questionDef.getDataType();
+		int type = questionDef.getDataType().getLegacyConstant();
 		if((type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE ||
 				type == QuestionDef.QTN_TYPE_LIST_MULTIPLE)
 				&& widget instanceof CheckBox && defaultValue != null){ 
@@ -887,7 +888,7 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 
 		((CheckBox)childWidget.getWrappedWidget()).addClickHandler(new ClickHandler(){
 			public void onClick(ClickEvent event){
-				if(questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE){
+				if(questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE){
 					if(((CheckBox)event.getSource()).getValue() == true)
 						questionDef.setAnswer(((RuntimeWidgetWrapper)((Widget)event.getSource()).getParent().getParent()).getBinding());
 					else
@@ -951,7 +952,7 @@ public class RuntimeWidgetWrapper extends WidgetEx implements QuestionChangeList
 			return false;
 		}
 
-		if(questionDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT){
+		if(questionDef.getDataType() == QuestionType.REPEAT){
 			boolean valid = false;
 			if((widget instanceof RuntimeGroupWidget))
 				valid = ((RuntimeGroupWidget)widget).isValid();

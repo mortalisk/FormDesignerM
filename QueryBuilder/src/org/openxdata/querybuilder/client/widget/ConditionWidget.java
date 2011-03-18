@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import org.openxdata.sharedlib.client.locale.FormsConstants;
 import org.openxdata.sharedlib.client.model.Operator;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 /**
  * 
@@ -69,7 +70,7 @@ public class ConditionWidget extends Composite implements ItemSelectionListener,
 		if(allowFieldSelection)
 			horizontalPanel.add(fieldWidget);
 		else{
-			if(questionDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT)
+			if(questionDef.getDataType() == QuestionType.REPEAT)
 				lbLabel.setText(i18n.count());
 			horizontalPanel.add(lbLabel);
 		}
@@ -93,7 +94,7 @@ public class ConditionWidget extends Composite implements ItemSelectionListener,
 	public void onItemSelected(Object sender, Object item) {
 		if(sender == fieldWidget){
 			questionDef = (QuestionDef)item;
-			operatorHyperlink.setDataType(questionDef.getDataType());
+			operatorHyperlink.setDataType(questionDef.getDataType().getLegacyConstant());
 			valueWidget.setQuestionDef(questionDef);
 		}
 		else if(sender == operatorHyperlink){
@@ -147,7 +148,7 @@ public class ConditionWidget extends Composite implements ItemSelectionListener,
 		this.questionDef = questionDef;
 		
 		valueWidget.setQuestionDef(questionDef);
-		operatorHyperlink.setDataType(questionDef.getDataType());
+		operatorHyperlink.setDataType(questionDef.getDataType().getLegacyConstant());
 		fieldWidget.setQuestion(questionDef);
 	}
 	

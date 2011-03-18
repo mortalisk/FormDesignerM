@@ -14,6 +14,7 @@ import org.openxdata.sharedlib.client.model.QuestionDef;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.NodeList;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 
 /**
@@ -77,9 +78,9 @@ public class ItemsetBuilder {
 
 				OptionDef parentOptionDef = null;
 				
-				if(parentQuestionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE)
+				if(parentQuestionDef.getDataType() == QuestionType.LIST_EXCLUSIVE)
 					parentOptionDef = parentQuestionDef.getOption(entry.getKey());
-				else if(parentQuestionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC)
+				else if(parentQuestionDef.getDataType() == QuestionType.LIST_EXCLUSIVE_DYNAMIC)
 					parentOptionDef = formDef.getDynamicOptionDef(parentQuestionDef.getId(), entry.getKey());
 				
 				if(parentOptionDef == null){
@@ -198,9 +199,9 @@ public class ItemsetBuilder {
 			List<OptionDef> list = entry.getValue();
 
 			OptionDef parentOptionDef = null;
-			if(parentQuestionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE)
+			if(parentQuestionDef.getDataType() == QuestionType.LIST_EXCLUSIVE)
 				parentOptionDef = parentQuestionDef.getOption(entry.getKey());
-			else if(parentQuestionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC)
+			else if(parentQuestionDef.getDataType() == QuestionType.LIST_EXCLUSIVE_DYNAMIC)
 				parentOptionDef = formDef.getDynamicOptionDef(parentQuestionDef.getId(), entry.getKey());
 			
 			if(parentOptionDef == null)

@@ -215,7 +215,7 @@ public class PageDef implements Serializable{
 				return def;
 
 			//Without this, then we have not validation and skip rules in repeat questions.
-			if(def.getDataType() == QuestionDef.QTN_TYPE_REPEAT && def.getRepeatQtnsDef() != null){
+			if(def.getDataType() == QuestionType.REPEAT && def.getRepeatQtnsDef() != null){
 				def = def.getRepeatQtnsDef().getQuestion(varName);
 				if(def != null)
 					return def;
@@ -256,7 +256,7 @@ public class PageDef implements Serializable{
 				return def;
 
 			//Without this, then we have not validation and skip rules in repeat questions.
-			if(def.getDataType() == QuestionDef.QTN_TYPE_REPEAT && def.getRepeatQtnsDef() != null){
+			if(def.getDataType() == QuestionType.REPEAT && def.getRepeatQtnsDef() != null){
 				def = def.getRepeatQtnsDef().getQuestion(id);
 				if(def != null)
 					return def;
@@ -296,7 +296,7 @@ public class PageDef implements Serializable{
 	 */
 	public boolean removeQuestion(QuestionDef qtnDef, FormDef formDef){
 		if(qtnDef.getControlNode() != null && qtnDef.getControlNode().getParentNode() != null){
-			if(qtnDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT)
+			if(qtnDef.getDataType() == QuestionType.REPEAT)
 				qtnDef.getControlNode().getParentNode().getParentNode().removeChild(qtnDef.getControlNode().getParentNode());
 			else
 				qtnDef.getControlNode().getParentNode().removeChild(qtnDef.getControlNode());
@@ -367,7 +367,7 @@ public class PageDef implements Serializable{
 		//Not relying on group node because some forms have no groups
 		Element controlNode = questionDef.getControlNode();
 		Element parentNode = controlNode != null ? (Element)controlNode.getParentNode() : null;
-		if(questionDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT && controlNode != null){
+		if(questionDef.getDataType() == QuestionType.REPEAT && controlNode != null){
 			controlNode = (Element)controlNode.getParentNode();
 			parentNode = (Element)parentNode.getParentNode();
 		}
@@ -400,7 +400,7 @@ public class PageDef implements Serializable{
 				QuestionDef qtnDef = (QuestionDef)list.get(i);
 				if(qtnDef.getControlNode() != null && parentNode != null){
 					Node sibNode = qtnDef.getControlNode();
-					if(qtnDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT)
+					if(qtnDef.getDataType() == QuestionType.REPEAT)
 						sibNode = sibNode.getParentNode();
 					parentNode.insertBefore(controlNode, sibNode);
 				}
@@ -442,7 +442,7 @@ public class PageDef implements Serializable{
 		//Not relying on group node because some forms have no groups
 		Element controlNode = questionDef.getControlNode();
 		Element parentNode = controlNode != null ? (Element)controlNode.getParentNode() : null;
-		if(questionDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT && controlNode != null){
+		if(questionDef.getDataType() == QuestionType.REPEAT && controlNode != null){
 			controlNode = (Element)controlNode.getParentNode();
 			parentNode = (Element)parentNode.getParentNode();
 		}
@@ -472,7 +472,7 @@ public class PageDef implements Serializable{
 					QuestionDef qtnDef = getNextSavedQuestion(list,i);
 					if(qtnDef.getControlNode() != null){
 						Node sibNode = qtnDef.getControlNode();
-						if(qtnDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT)
+						if(qtnDef.getDataType() == QuestionType.REPEAT)
 							sibNode = sibNode.getParentNode();
 						parentNode.insertBefore(controlNode, sibNode);
 					}
@@ -486,7 +486,7 @@ public class PageDef implements Serializable{
 							parentDataNode.removeChild(questionDef.getDataNode());
 
 							if(qtnDef.getDataNode() != null){
-								if(qtnDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT && qtnDef.getBinding().contains("/"))
+								if(qtnDef.getDataType() == QuestionType.REPEAT && qtnDef.getBinding().contains("/"))
 									parentDataNode.insertBefore(questionDef.getDataNode(), qtnDef.getDataNode().getParentNode());
 								else
 									parentDataNode.insertBefore(questionDef.getDataNode(), qtnDef.getDataNode());
@@ -678,7 +678,7 @@ public class PageDef implements Serializable{
 			QuestionDef questionDef = (QuestionDef)questions.elementAt(i);
 			if(questionDef.getDisplayText().equals(text))
 				return questionDef;
-			else if(questionDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT){
+			else if(questionDef.getDataType() == QuestionType.REPEAT){
 				questionDef = questionDef.getRepeatQtnsDef().getQuestionWithText(text);
 				if(questionDef != null)
 					return questionDef;
@@ -732,7 +732,7 @@ public class PageDef implements Serializable{
 		//Not relying on group node because some forms have no groups
 		Element controlNode = questionDef.getControlNode();
 		Element parentNode = controlNode != null ? (Element)controlNode.getParentNode() : null;
-		if(questionDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT && controlNode != null){
+		if(questionDef.getDataType() == QuestionType.REPEAT && controlNode != null){
 			controlNode = (Element)controlNode.getParentNode();
 			parentNode = (Element)parentNode.getParentNode();
 		}
@@ -748,7 +748,7 @@ public class PageDef implements Serializable{
 
 		if(refQuestionDef.getControlNode() != null){
 			Node sibNode = refQuestionDef.getControlNode();
-			if(refQuestionDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT)
+			if(refQuestionDef.getDataType() == QuestionType.REPEAT)
 				sibNode = sibNode.getParentNode();
 			parentNode.insertBefore(controlNode, sibNode);
 		}

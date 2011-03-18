@@ -14,6 +14,7 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.Widget;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 
 /**
@@ -75,8 +76,8 @@ public class QueryBuilderUtil {
 			if(!dynamicOptions && refQuestion != null && refQuestion.getDataType() != questionDef.getDataType() && sameTypesOnly)
 				continue;
 			
-			if(dynamicOptions && !(questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE ||
-					questionDef.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC))
+			if(dynamicOptions && !(questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE ||
+					questionDef.getDataType() == QuestionType.LIST_EXCLUSIVE_DYNAMIC))
 				continue;
 			
 			if(dynamicOptions && refQuestion == questionDef)
@@ -89,7 +90,7 @@ public class QueryBuilderUtil {
 			
 			//Allowed for now since repeat questions will have ids which cant be equal to
 			//those of parents.
-			if(questionDef.getDataType() == QuestionDef.QTN_TYPE_REPEAT)
+			if(questionDef.getDataType() == QuestionType.REPEAT)
 				loadQuestions(questionDef.getRepeatQtnsDef().getQuestions(),refQuestion,oracle,dynamicOptions,sameTypesOnly);
 		}
 	}

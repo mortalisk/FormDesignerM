@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 /**
  * 
@@ -54,8 +55,8 @@ public class AggregateFunctionHyperlink extends Hyperlink {
 		final Widget w = this;
 
 		//LocaleText.get("???")
-		if(questionDef.getDataType() == QuestionDef.QTN_TYPE_NUMERIC ||
-				questionDef.getDataType() == QuestionDef.QTN_TYPE_DECIMAL){
+		if(questionDef.getDataType() == QuestionType.NUMERIC ||
+				questionDef.getDataType() == QuestionType.DECIMAL){
 
 			menuBar.addItem(FUNC_TEXT_SUM,true, new Command(){
 				public void execute() {popup.hide(); ((Hyperlink)w).setText(FUNC_TEXT_SUM); actionListener.onSum(w);}});
@@ -64,11 +65,11 @@ public class AggregateFunctionHyperlink extends Hyperlink {
 				public void execute() {popup.hide(); ((Hyperlink)w).setText(FUNC_TEXT_AVG); actionListener.onAverage(w);}});
 		}
 
-		if(questionDef.getDataType() == QuestionDef.QTN_TYPE_NUMERIC ||
-				questionDef.getDataType() == QuestionDef.QTN_TYPE_DECIMAL ||
-				questionDef.getDataType() == QuestionDef.QTN_TYPE_DATE ||
-				questionDef.getDataType() == QuestionDef.QTN_TYPE_TIME ||
-				questionDef.getDataType() == QuestionDef.QTN_TYPE_DATE_TIME){
+		if(questionDef.getDataType() == QuestionType.NUMERIC ||
+				questionDef.getDataType() == QuestionType.DECIMAL ||
+				questionDef.getDataType() == QuestionType.DATE ||
+				questionDef.getDataType() == QuestionType.TIME ||
+				questionDef.getDataType() == QuestionType.DATE_TIME){
 
 			menuBar.addSeparator();
 			menuBar.addItem(FUNC_TEXT_MIN,true, new Command(){ //LocaleText.get("???")

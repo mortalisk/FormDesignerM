@@ -10,6 +10,7 @@ import org.openxdata.sharedlib.client.model.SkipRule;
 
 import com.google.gwt.xml.client.Element;
 import org.openxdata.sharedlib.client.model.Operator;
+import org.openxdata.sharedlib.client.model.QuestionType;
 
 
 /**
@@ -102,7 +103,7 @@ public class RelevantBuilder {
 				relevant = "/" + formDef.getBinding() + "/" + questionDef.getBinding();
 
 			String value = " '" + condition.getValue() + "'";
-			if(questionDef.getDataType() == QuestionDef.QTN_TYPE_BOOLEAN || questionDef.getDataType() == QuestionDef.QTN_TYPE_DECIMAL || questionDef.getDataType() == QuestionDef.QTN_TYPE_NUMERIC)
+			if(questionDef.getDataType() == QuestionType.BOOLEAN || questionDef.getDataType() == QuestionType.DECIMAL || questionDef.getDataType() == QuestionType.NUMERIC)
 				value = " " + condition.getValue();
 
             Operator operator = condition.getOperator();

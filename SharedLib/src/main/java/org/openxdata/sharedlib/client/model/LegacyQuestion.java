@@ -21,7 +21,7 @@ public final class LegacyQuestion implements Question {
 
     public Set<Operator> validOperators() {
         Set<Operator> operators = new HashSet<Operator>();
-        int dataType = legacyQuestion.getDataType();
+        int dataType = legacyQuestion.getDataType().getLegacyConstant();
         if (!(dataType == QuestionDef.QTN_TYPE_GPS
                 || dataType == QuestionDef.QTN_TYPE_VIDEO
                 || dataType == QuestionDef.QTN_TYPE_AUDIO

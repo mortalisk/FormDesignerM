@@ -58,8 +58,8 @@ public class UiElementBuilder {
 			nodeset = "/" + formDef.getBinding() + "/" + qtn.getBinding();
 		bindNode.setAttribute(XformConstants.ATTRIBUTE_NAME_NODESET, nodeset);
 
-		if(qtn.getDataType() != QuestionDef.QTN_TYPE_REPEAT) {
-            QuestionType type = QuestionType.fromLegacyConstant(qtn.getDataType());
+		if(qtn.getDataType() != QuestionType.REPEAT) {
+            QuestionType type = qtn.getDataType();
 			bindNode.setAttribute(XformConstants.ATTRIBUTE_NAME_TYPE, XformBuilderUtil.getXmlType(type,bindNode));
         }
 		if(qtn.isRequired())
@@ -90,8 +90,8 @@ public class UiElementBuilder {
 
 		addHelpTextNode(qtn,doc,uiNode,null);
 
-		if(qtn.getDataType() != QuestionDef.QTN_TYPE_REPEAT){
-			if(qtn.getDataType() == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC)
+		if(qtn.getDataType() != QuestionType.REPEAT){
+			if(qtn.getDataType() == QuestionType.LIST_EXCLUSIVE_DYNAMIC)
 				qtn.setFirstOptionNode(ItemsetBuilder.createDynamicOptionDefNode(doc,uiNode));
 			else{
 				List<OptionDef> options = qtn.getOptions();
@@ -141,7 +141,7 @@ public class UiElementBuilder {
 		qtnDef.setDataNode(dataNode);
 
 		Element inputNode =  getXformUIElement(doc,qtnDef,XformConstants.ATTRIBUTE_NAME_REF,true);
-        QuestionType type = QuestionType.fromLegacyConstant(qtnDef.getDataType());
+        QuestionType type = qtnDef.getDataType();
 		inputNode.setAttribute(XformConstants.ATTRIBUTE_NAME_TYPE, XformBuilderUtil.getXmlType(type,inputNode));
 		if(qtnDef.isRequired())
 			inputNode.setAttribute(XformConstants.ATTRIBUTE_NAME_REQUIRED, XformConstants.XPATH_VALUE_TRUE);
@@ -163,7 +163,7 @@ public class UiElementBuilder {
 
 		addHelpTextNode(qtnDef,doc,inputNode,null);
 
-		if(qtnDef.getDataType() != QuestionDef.QTN_TYPE_REPEAT){
+		if(qtnDef.getDataType() != QuestionType.REPEAT){
 			List<OptionDef> options = qtnDef.getOptions();
 			if(options != null && options.size() > 0){
 				for(int index=0; index<options.size(); index++){
@@ -190,7 +190,7 @@ public class UiElementBuilder {
 
 		String name = XformConstants.NODE_NAME_INPUT;
 
-		int type = qtnDef.getDataType();
+		int type = qtnDef.getDataType().getLegacyConstant();
 		if(type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE || type == QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC)
 			name = XformConstants.NODE_NAME_SELECT1;
 		else if(type == QuestionDef.QTN_TYPE_LIST_MULTIPLE)

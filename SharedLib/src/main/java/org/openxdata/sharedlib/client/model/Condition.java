@@ -146,37 +146,28 @@ public class Condition implements Serializable{
 			}
 
 			value = realValue;
-			switch(qn.getDataType()){
-			case QuestionDef.QTN_TYPE_TEXT:
-				ret = isTextTrue(qn,validation);
-				break;
-			case QuestionDef.QTN_TYPE_REPEAT:
-			case QuestionDef.QTN_TYPE_NUMERIC:
-				ret = isNumericTrue(qn,validation);
-				break;
-			case QuestionDef.QTN_TYPE_DATE:
-				ret = isDateTrue(qn,validation);
-				break;
-			case QuestionDef.QTN_TYPE_DATE_TIME:
-				ret = isDateTimeTrue(qn,validation);
-				break;
-			case QuestionDef.QTN_TYPE_DECIMAL:
-				ret = isDecimalTrue(qn,validation);
-				break;
-			case QuestionDef.QTN_TYPE_LIST_EXCLUSIVE:
-			case QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC:
-				ret = isListExclusiveTrue(qn,validation);
-				break;
-			case QuestionDef.QTN_TYPE_LIST_MULTIPLE:
-				ret = isListMultipleTrue(qn,validation);
-				break;
-			case QuestionDef.QTN_TYPE_TIME:
-				ret = isTimeTrue(qn,validation);
-				break;
-			case QuestionDef.QTN_TYPE_BOOLEAN:
-				ret = isTextTrue(qn,validation);
-				break;
-			}
+            int questionTypeInt = qn.getDataType();
+            QuestionType questionType = QuestionType.fromLegacyConstant(questionTypeInt);
+
+            if (questionType == QuestionType.TEXT) {
+                ret = isTextTrue(qn, validation);
+            } else if (questionType == QuestionType.NUMERIC || questionType == QuestionType.REPEAT) {
+                ret = isNumericTrue(qn, validation);
+            } else if (questionType == QuestionType.DATE) {
+                ret = isDateTrue(qn, validation);
+            } else if (questionType == QuestionType.DATE_TIME) {
+                ret = isDateTimeTrue(qn, validation);
+            } else if (questionType == QuestionType.DECIMAL) {
+                ret = isDecimalTrue(qn, validation);
+            } else if (questionType == QuestionType.LIST_EXCLUSIVE_DYNAMIC || questionType == QuestionType.LIST_EXCLUSIVE) {
+                ret = isListExclusiveTrue(qn, validation);
+            } else if (questionType == QuestionType.LIST_MULTIPLE) {
+                ret = isListMultipleTrue(qn, validation);
+            } else if (questionType == QuestionType.TIME) {
+                ret = isTimeTrue(qn, validation);
+            } else if (questionType == QuestionType.BOOLEAN) {
+                ret = isTextTrue(qn, validation);
+            }
 		}
 		catch(Exception ex){
 			ex.printStackTrace();

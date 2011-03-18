@@ -848,7 +848,7 @@ public class PropertiesView extends Composite implements IFormSelectionListener,
 				questionDef.getDataType() != QuestionType.REPEAT)
 			questionDef.setRepeatQtnsDef(new RepeatQtnsDef(questionDef));
 
-		questionDef.setDataType(dataType.getLegacyConstant());
+		questionDef.setDataType(dataType);
 
 
 		if(questionDef.getDataType() != QuestionType.LIST_EXCLUSIVE_DYNAMIC)

@@ -152,7 +152,7 @@ public class Toolbar extends Composite implements XformItemSelectHandler, XformL
 	
 	@UiHandler("btnAddQuestion")
 	public void handleAddQuestion(ClickEvent event) {
-		controller.addNewQuestion(QuestionType.TEXT.getLegacyConstant());
+		controller.addNewQuestion(QuestionType.TEXT);
 	}
 	
 	@UiHandler("btnDelete")

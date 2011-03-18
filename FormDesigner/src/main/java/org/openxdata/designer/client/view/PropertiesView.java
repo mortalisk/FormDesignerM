@@ -924,7 +924,7 @@ public class PropertiesView extends Composite implements IFormSelectionListener,
 		chkLocked.setValue(questionDef.isLocked());
 		chkRequired.setValue(questionDef.isRequired());
 
-		setDataType(questionDef.getDataType().getLegacyConstant());
+		setDataType(questionDef.getDataType());
 		
 		String calculationExpression = null;
 		Calculation calculation = Context.getFormDef().getCalculation(questionDef);
@@ -991,62 +991,60 @@ public class PropertiesView extends Composite implements IFormSelectionListener,
 	private void setDataType(QuestionType type){
 		int index = DT_INDEX_NONE;
 
-		switch(type){
-		case QuestionDef.QTN_TYPE_DATE:
+		if (type == QuestionType.DATE) {
 			index = DT_INDEX_DATE;
-			break;
-		case QuestionDef.QTN_TYPE_BOOLEAN:
+        }
+        else if (type == QuestionType.BOOLEAN) {
 			index = DT_INDEX_BOOLEAN;
-			break;
-		case QuestionDef.QTN_TYPE_DATE_TIME:
+        }
+		else if (type == QuestionType.DATE_TIME) {
 			index = DT_INDEX_DATE_TIME;
-			break;
-		case QuestionDef.QTN_TYPE_DECIMAL:
+			}
+		else if (type == QuestionType.DECIMAL) {
 			index = DT_INDEX_DECIMAL;
-			break;
-		case QuestionDef.QTN_TYPE_LIST_EXCLUSIVE:
+			}
+		else if (type == QuestionType.LIST_EXCLUSIVE) {
 			index = DT_INDEX_SINGLE_SELECT;
-			break;
-		case QuestionDef.QTN_TYPE_LIST_MULTIPLE:
+			}
+		else if (type == QuestionType.LIST_MULTIPLE) {
 			index = DT_INDEX_MULTIPLE_SELECT;
-			break;
-		case QuestionDef.QTN_TYPE_NUMERIC:
+			}
+		else if (type == QuestionType.NUMERIC) {
 			index = DT_INDEX_NUMBER;
-			break;
-		case QuestionDef.QTN_TYPE_REPEAT:
+			}
+		else if (type == QuestionType.REPEAT) {
 			index = DT_INDEX_REPEAT;
-			break;
-		case QuestionDef.QTN_TYPE_TEXT:
+			}
+		else if (type == QuestionType.TEXT) {
 			index = DT_INDEX_TEXT;
-			break;
-		case QuestionDef.QTN_TYPE_TIME:
+			}
+		else if (type == QuestionType.TIME) {
 			index = DT_INDEX_TIME;
-			break;
-		case QuestionDef.QTN_TYPE_IMAGE:
+			}
+		else if (type == QuestionType.IMAGE) {
 			index = DT_INDEX_IMAGE;
 			txtDefaultValue.setEnabled(false);
-			break;
-		case QuestionDef.QTN_TYPE_VIDEO:
+			}
+		else if (type == QuestionType.VIDEO) {
 			index = DT_INDEX_VIDEO;
 			txtDefaultValue.setEnabled(false);
-			break;
-		case QuestionDef.QTN_TYPE_AUDIO:
+			}
+		else if (type == QuestionType.AUDIO) {
 			index = DT_INDEX_AUDIO;
 			txtDefaultValue.setEnabled(false);
-			break;
-		case QuestionDef.QTN_TYPE_LIST_EXCLUSIVE_DYNAMIC:
+			}
+		else if (type == QuestionType.LIST_EXCLUSIVE_DYNAMIC) {
 			index = DT_INDEX_SINGLE_SELECT_DYNAMIC;
 			txtDefaultValue.setEnabled(false);
-			break;
-		case QuestionDef.QTN_TYPE_GPS:
+			}
+		else if (type == QuestionType.GPS) {
 			index = DT_INDEX_GPS;
 			txtDefaultValue.setEnabled(false);
-			break;
-		case QuestionDef.QTN_TYPE_BARCODE:
+			}
+		else if (type == QuestionType.BARCODE) {
 			index = DT_INDEX_BARCODE;
 			txtDefaultValue.setEnabled(false);
-			break;
-		}
+			}
 
 		cbDataType.setSelectedIndex(index);
 	}
